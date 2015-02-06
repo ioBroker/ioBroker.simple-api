@@ -1,7 +1,7 @@
 {
   "name": "iobroker.simple-api",
   "version": "0.0.1",
-  "description": "This adapter allows to communicate different web applications with ioBroker.",
+  "description": "RESTful interface for ioBroker.",
   "author": {
     "name": "bluefox",
     "email": "bluefox@ccu.io"

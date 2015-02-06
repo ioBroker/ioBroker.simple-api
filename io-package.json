@@ -3,7 +3,7 @@
         "name":                     "simple-api",
         "version":                  "0.0.1",
         "title":                    "simpleAPI Adapter",
-        "desc":                     "This adapter allows to read and write ioBroker objects and state with web restAPI",
+        "desc":                     "This adapter allows to read and write ioBroker objects and state with web RESTful API",
         "authors": [
             "bluefox <bluefox@ccu.io>"
         ],
@@ -12,7 +12,7 @@
         "mode":                     "daemon",
         "loglevel":                 "info",
         "icon":                     "socketio.png",
-        "keywords":                 ["web", "simpleAPI", "restAPI", "communication"],
+        "keywords":                 ["web", "simpleAPI", "RESTful", "communication"],
 		"enabled":                  true,
         "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.simple-api/master/admin/simple-api.png"
     },
