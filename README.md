@@ -19,11 +19,11 @@ For every requiest that returns JSON you can set parameter *prettyPrint* to get 
 
 * getPlainValue - read state value as text. You can specify more ids divided by semicolon
 
-  <pre>http://ip:8087/getPlainValue/admin.0.memHeapTotal<pre>
+  <pre>http://ip:8087/getPlainValue/admin.0.memHeapTotal</pre>
    
   31.19
   
-  <pre>http://ip:8087/getPlainValue/admin.0.memHeapTotal,	admin.0.memHeapUsed<pre>
+  <pre>http://ip:8087/getPlainValue/admin.0.memHeapTotal,	admin.0.memHeapUsed</pre>
   
   31.19
   
@@ -32,7 +32,7 @@ For every requiest that returns JSON you can set parameter *prettyPrint* to get 
 * get - read state and object data of state as json. You can specify more ids divided by semicolon.
   If more than one ID requested, the JSON array will be returned.
   
-  <pre>http://localhost:8087/get/admin.0.memHeapTotal/?prettyPrint<pre>
+  <pre>http://localhost:8087/get/admin.0.memHeapTotal/?prettyPrint</pre>
   
   <code>
   {
@@ -59,7 +59,7 @@ For every requiest that returns JSON you can set parameter *prettyPrint* to get 
     },
     "native": {}
   }
-  <code>
+  </code>
   
   ```http://ip:8087/get/admin.0.memHeapTotal,admin.0.memHeapUsed/?prettyPrint```
   <code>
@@ -113,7 +113,7 @@ For every requiest that returns JSON you can set parameter *prettyPrint* to get 
       "native": {}
     }
   ]
-  <code>
+  </code>
   
 * getBulk - read the states of more IDs with timestamp. You can specify more ids divided by semicolon.
   Always the JSON array will be returned.
@@ -131,7 +131,7 @@ For every requiest that returns JSON you can set parameter *prettyPrint* to get 
       "ts": 1423154754
     }
   ]
-  <code>
+  </code>
   
 * set - write the states with specified IDs. You can specifiy *wait* option in milliseconds to wait for answer from driver.
  
@@ -140,7 +140,7 @@ For every requiest that returns JSON you can set parameter *prettyPrint* to get 
        "id": "hm-rpc.0.IEQ12345.LEVEL",
        "value": 1
      }
-  <code>
+  </code>
   
   ```http://ip:8087/set/hm-rpc.0.IEQ12345.LEVEL?value=1&wait=5000&prettyPrint```
   <code>{
@@ -150,7 +150,7 @@ For every requiest that returns JSON you can set parameter *prettyPrint* to get 
        "from": "hm-rpc.0.IEQ12345.LEVEL",
        "lc": 1423155399
      }
-  <code>
+  </code>
   If no answer will be recieved in specified time, the *null* value will be returned. 
   In the first case the answer will be returned immediately and *ack* is false. In the second case *ack* is true. That means it was response from driver.
    
@@ -166,7 +166,7 @@ For every requiest that returns JSON you can set parameter *prettyPrint* to get 
       "error": "error: datapoint \"Anwesenheit\" not found"
     }
   ]
-  <code>
+  </code>
   You can send this request as POST too.
 
 * objects - get the list of all objects for pattern. If no pattern specified  all objects as JSON array will be returned.
@@ -206,8 +206,8 @@ For every requiest that returns JSON you can set parameter *prettyPrint* to get 
     "native": {}
   },
   ...
-  
-  <code>
+  </code>
+
   Get all control objects of adapter system.adapter.admin.0: 
     ```http://ip:8087/objects?pattern=system.adapter.admin.0*&prettyPrint```
     <code>
@@ -225,7 +225,7 @@ For every requiest that returns JSON you can set parameter *prettyPrint* to get 
     },
     ...
     
-    <code>
+    </code>
     
 * states - get the list of all states for pattern. If no pattern specified all states as JSON array will be returned.
 
@@ -254,8 +254,8 @@ For every requiest that returns JSON you can set parameter *prettyPrint* to get 
       "lc": 1423155084
     },
   ...
-  
-  <code>
+  </code>
+
   Get all control objects of adapter system.adapter.admin.0: 
     ```http://ip:8087/states?pattern=system.adapter.admin.0*&prettyPrint```
     <code>
@@ -305,4 +305,4 @@ For every requiest that returns JSON you can set parameter *prettyPrint* to get 
         "expire": 28115
       }
     }
-    <code>
+    </code>
