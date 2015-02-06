@@ -14,8 +14,12 @@ This is RESTFul interface to read the objects and states from ioBroker and to wr
 
 ## Usage
 Assume, we have no security and the server runs on default port 8087.
+
 For all queries the name or id of the state can be specified.
+
 For every requiest that returns JSON you can set parameter *prettyPrint* to get the output in human readable form.
+
+If authentication is enabled, two other fields are mandatory: <pre>?user=admin&pass=iobroker</pre>
 
 ### getPlainValue 
 Read state value as text. You can specify more ids divided by semicolon
