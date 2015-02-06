@@ -11,7 +11,7 @@
         "platform":                 "Javascript/Node.js",
         "mode":                     "daemon",
         "loglevel":                 "info",
-        "icon":                     "socketio.png",
+        "icon":                     "simple-api.png",
         "keywords":                 ["web", "simpleAPI", "RESTful", "communication"],
 		"enabled":                  true,
         "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.simple-api/master/admin/simple-api.png"
