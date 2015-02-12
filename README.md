@@ -4,9 +4,11 @@ ioBroker simple-api adapter
 This is RESTFul interface to read the objects and states from ioBroker and to write/control the states over HTTP Get/Post requests.
 
 ## Changelog
+### 0.0.2 (2015-02-12)
+* (bluefox) enable be a part of "web"
+
 ### 0.0.1 (2015-02-06)
 * (bluefox) initial commit
-
 
 ## Install
 
