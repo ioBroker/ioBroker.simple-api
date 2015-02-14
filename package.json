@@ -1,6 +1,6 @@
 {
   "name": "iobroker.simple-api",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "RESTful interface for ioBroker.",
   "author": {
     "name": "bluefox",
@@ -16,7 +16,6 @@
     "url": "https://github.com/ioBroker/ioBroker.simple-api"
   },
   "dependencies": {
-    "socket.io": "~1.1.0"
   },
   "devDependencies": {
     "grunt": "~0.4.4",
