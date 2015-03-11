@@ -4,6 +4,9 @@ ioBroker simple-api adapter
 This is RESTFul interface to read the objects and states from ioBroker and to write/control the states over HTTP Get/Post requests.
 
 ## Changelog
+### 0.0.4 (2015-03-11)
+* (bluefox) remove socket.io from file
+
 ### 0.0.3 (2015-02-13)
 * (bluefox) remove socket.io from dependencies
 

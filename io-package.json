@@ -1,7 +1,7 @@
 {
     "common": {
         "name":                     "simple-api",
-        "version":                  "0.0.3",
+        "version":                  "0.0.4",
         "title":                    "simpleAPI Adapter",
         "desc":                     "This adapter allows to read and write ioBroker objects and state with web RESTful API",
         "authors": [
@@ -12,6 +12,7 @@
         "mode":                     "daemon",
         "loglevel":                 "info",
         "icon":                     "simple-api.png",
+        "readme":                   "https://github.com/ioBroker/ioBroker.simple-api/blob/master/README.md",
         "keywords":                 ["web", "simpleAPI", "RESTful", "communication"],
 		"enabled":                  true,
         "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.simple-api/master/admin/simple-api.png"
