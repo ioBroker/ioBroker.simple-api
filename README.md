@@ -4,8 +4,9 @@ ioBroker simple-api adapter
 This is RESTFul interface to read the objects and states from ioBroker and to write/control the states over HTTP Get/Post requests.
 
 ## Changelog
-### 0.1.0 (2015-06-09)
+### 0.1.0 (2015-06-10)
 * (bluefox) change setForeignState api
+* (bluefox) support of user permissions
 
 ### 0.0.4 (2015-03-11)
 * (bluefox) remove socket.io from file

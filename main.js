@@ -6,15 +6,18 @@ var utils     = require(__dirname + '/lib/utils'); // Get common adapter utils
 var SimpleAPI = require(__dirname + '/lib/simpleapi.js');
 
 var webServer =  null;
+var fs = null;
 
 var adapter = utils.adapter({
     name: 'simple-api',
-    install: function (callback) {
-        if (typeof callback === 'function') callback();
-    },
     stateChange: function (id, state) {
         if (webServer && webServer.api) {
             webServer.api.stateChange(id, state);
+        }
+    },
+    objectChange: function (id, obj) {
+        if (webServer && webServer.api) {
+            webServer.api.objectChange(id, obj);
         }
     },
     unload: function (callback) {
@@ -34,6 +37,10 @@ var adapter = utils.adapter({
 
 function main() {
     if (adapter.config.secure) {
+        // subscribe on changes of permissions
+        adapter.subscribeForeignObjects('system.group.*');
+        adapter.subscribeForeignObjects('system.user.*');
+
         // Load certificates
         adapter.getForeignObject('system.certificates', function (err, obj) {
             if (err || !obj ||
@@ -59,7 +66,21 @@ function main() {
 }
 
 function requestProcessor(req, res) {
-    webServer.api.restApi(req, res);
+    if (req.url.indexOf('favicon.ico') != -1) {
+        if (!fs) fs = require('fs');
+        var stat = fs.statSync(__dirname + '/img/favicon.ico');
+
+        res.writeHead(200, {
+            'Content-Type': 'image/x-icon',
+            'Content-Length': stat.size
+        });
+
+        var readStream = fs.createReadStream(__dirname + '/img/favicon.ico');
+        // We replaced all the event handlers with a simple call to readStream.pipe()
+        readStream.pipe(res);
+    } else {
+        webServer.api.restApi(req, res);
+    }
 }
 
 //settings: {
