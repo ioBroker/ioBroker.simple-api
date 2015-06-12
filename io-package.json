@@ -24,6 +24,7 @@
         "secure":                   false,
         "bind":                     "0.0.0.0",
         "certPublic":               null,
-        "certPrivate":              null
+        "certPrivate":              null,
+        "defaultUser":              "admin"
     }
 }

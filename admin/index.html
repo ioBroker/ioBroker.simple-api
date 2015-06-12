@@ -15,10 +15,11 @@
             "de": "simpleAPI adapter settings",
             "ru": "simpleAPI adapter settings"
         },
-        "IP:":              {"de": "IP:",                     "ru": "IP:"},
-        "Port:":            {"de": "Port:",                   "ru": "Порт:"},
-        "Secure(HTTPS):":   {"de": "Verschlüsselung(HTTPS):", "ru": "Шифрование(HTTPS):"},
-        "Authentication:":  {"de": "Authentifikation:",       "ru": "Аутентификация:"},
+        "Run as:":          {"de": "Laufen unter Anwender:", "ru": "Запустить от пользователя:"},
+        "IP:":              {"de": "IP:",                        "ru": "IP:"},
+        "Port:":            {"de": "Port:",                      "ru": "Порт:"},
+        "Secure(HTTPS):":   {"de": "Verschlüsselung(HTTPS):",    "ru": "Шифрование(HTTPS):"},
+        "Authentication:":  {"de": "Authentifikation:",          "ru": "Аутентификация:"},
         "Public certificate:":    {"en": "Public certificate:",     "de": "Publikzertifikat:",       "ru": "'Public' сертификат:"},
         "Private certificate:":   {"en": "Private certificate:",    "de": "Privatzertifikat:",       "ru": "'Private' сертификат:"},
         "Set certificates or load it first in the system settings (right top).":    {
@@ -36,6 +37,13 @@
             $('#_certPublic').hide();
             $('#_certPrivate').hide();
         }
+
+        if ($('#auth').prop('checked')) {
+            $('#defaultUser').val('admin');
+            $('.defaultUser').hide();
+        } else {
+            $('.defaultUser').show();
+        }
     }
 
     // the function loadSettings has to exist ...
@@ -49,15 +57,16 @@
             $('#bind.value').val(settings.bind);
         });
 
-        for (var key in settings) {
+        $('.value').each(function () {
+            var key = $(this).attr('id');
             // example: select elements with id=key and class=value and insert value
             if ($('#' + key + '.value').attr('type') == 'checkbox') {
                 $('#' + key + '.value').prop('checked', settings[key]).change(function() {
                     if ($('#auth').prop('checked')) {
                         $('#secure').prop('checked', true);
                     }
-                    onChange();
                     showHideSettings();
+                    onChange();
                 });
             } else {
                 $('#' + key + '.value').val(settings[key]).change(function() {
@@ -66,10 +75,12 @@
                     onChange();
                 });
             }
-        }
+        });
+
 
         fillSelectCertificates('#certPublic',  'public',  settings.certPublic);
         fillSelectCertificates('#certPrivate', 'private', settings.certPrivate);
+        fillUsers('#defaultUser', settings.defaultUser);
         showHideSettings();
         onChange(false);
     }
@@ -114,7 +125,8 @@
             <td class="translate">Private certificate:</td>
             <td><select id="certPrivate" class="value"></select></td>
         </tr>
-        <tr><td class="translate">Authentication:</td><td><input  class="value" id="auth"   type="checkbox" /></td></tr>
+        <tr><td class="translate">Authentication:</td><td><input  class="value" id="auth" type="checkbox" /></td></tr>
+        <tr class="defaultUser"><td class="translate">Run as:</td><td><select class="value" id="defaultUser" /></td></tr>
 
     </table>
 </div>
