@@ -95,6 +95,10 @@ Gives [this](#usage) output back
 
 
 ## Changelog
+### 0.1.2 (2015-06-28)
+* (bluefox) add description in readme.md
+* (bluefox) change "toggle" for boolean and numbers
+
 ### 0.1.1 (2015-06-28)
 * (bluefox) change setForeignState api
 * (bluefox) add type to io-package.json
