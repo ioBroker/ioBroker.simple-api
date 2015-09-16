@@ -91,7 +91,7 @@ Of course the data point *javascript.0.test* must exist.
 ### objects
 ### states
 ### help
-Gives this output back
+Gives [this](#usage) output back
 
 
 ## Changelog
