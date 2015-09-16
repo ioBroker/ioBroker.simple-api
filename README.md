@@ -3,6 +3,97 @@ ioBroker simple-api adapter
 =================
 This is RESTFul interface to read the objects and states from ioBroker and to write/control the states over HTTP Get/Post requests.
 
+## Usage
+Call in browser ```http://ipaddress:8082/help``` to get the help about API. The result is:
+
+```
+{
+  "getPlainValue": "http://ipaddress:8082/getPlainValue/stateID",
+  "get": "http://ipaddress:8082/get/stateID/?prettyPrint",
+  "getBulk": "http://ipaddress:8082/getBulk/stateID1,stateID2/?prettyPrint",
+  "set": "http://ipaddress:8082/set/stateID?value=1&prettyPrint",
+  "toggle": "http://ipaddress:8082/toggle/stateID&prettyPrint",
+  "setBulk": "http://ipaddress:8082/setBulk?stateID1=0.7&stateID2=0&prettyPrint",
+  "objects": "http://ipaddress:8082/objects?pattern=system.adapter.admin.0*&prettyPrint",
+  "states": "http://ipaddress:8082/states?pattern=system.adapter.admin.0*&prettyPrint"
+}
+```
+
+### getPlainValue
+Call e.g.:
+```
+http://ipaddress:8082/getPlainValue/system.adapter.admin.0.alive
+```
+Result:
+```
+true
+```
+
+### get
+Call e.g.:
+```
+http://ipaddress:8082/get/system.adapter.admin.0.alive
+```
+Result:
+```
+{"val":true,"ack":true,"ts":1442432193,"from":"system.adapter.admin.0","lc":1442431190,"expire":23437,"_id":"system.adapter.admin.0.alive","type":"state","common":{"name":"admin.0.alive","type":"boolean","role":"indicator.state"},"native":{}}
+```
+or call e.g.:
+```
+http://ipaddress:8082/get/system.adapter.admin.0.alive?prettyPrint
+```
+Result:
+```
+{
+  "val": true,
+  "ack": true,
+  "ts": 1442432238,
+  "from": "system.adapter.admin.0",
+  "lc": 1442431190,
+  "expire": 28494,
+  "_id": "system.adapter.admin.0.alive",
+  "type": "state",
+  "common": {
+    "name": "admin.0.alive",
+    "type": "boolean",
+    "role": "indicator.state"
+  },
+  "native": {}
+}
+```
+
+### getBulk
+
+### set
+Call e.g.:
+```
+http://ipaddress:8082/set/javascript.0.test?value=1
+```
+Result:
+```
+{"id":"javascript.0.test","value":1}
+```
+or call e.g.:
+```
+http://ipaddress:8082/set/javascript.0.test?value=1&prettyPrint
+```
+Result:
+```
+{
+  "id": "javascript.0.test",
+  "value": 1
+}
+```
+Of course the data point *javascript.0.test* must exist.
+
+### toggle
+### setBulk
+### objects
+### states
+### help
+Gives this output back
+
+
 ## Changelog
 ### 0.1.1 (2015-06-28)
 * (bluefox) change setForeignState api
