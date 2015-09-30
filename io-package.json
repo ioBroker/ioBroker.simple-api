@@ -17,6 +17,7 @@
 		"enabled":                  true,
         "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.simple-api/master/admin/simple-api.png",
 		"type":                     "communication",
+        "stopBeforeUpdate":         true,
         "localLink":                "%protocol%://%ip%:%port%/get/system.adapter.simple-api.%instance%.uptime?prettyPrint"
     },
     "native": {
