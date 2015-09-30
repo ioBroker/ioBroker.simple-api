@@ -95,6 +95,9 @@ Gives [this](#usage) output back
 
 
 ## Changelog
+### 1.0.0 (2015-09-30)
+* (bluefox) stop adapter before update
+
 ### 0.1.2 (2015-06-28)
 * (bluefox) add description in readme.md
 * (bluefox) change "toggle" for boolean and numbers

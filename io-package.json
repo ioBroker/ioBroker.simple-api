@@ -1,7 +1,7 @@
 {
     "common": {
         "name":                     "simple-api",
-        "version":                  "0.1.2",
+        "version":                  "1.0.0",
         "title":                    "simpleAPI Adapter",
         "desc":                     "This adapter allows to read and write ioBroker objects and state with web RESTful API",
         "authors": [
