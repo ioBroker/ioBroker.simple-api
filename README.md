@@ -4,25 +4,25 @@ ioBroker simple-api adapter
 This is RESTFul interface to read the objects and states from ioBroker and to write/control the states over HTTP Get/Post requests.
 
 ## Usage
-Call in browser ```http://ipaddress:8082/help``` to get the help about API. The result is:
+Call in browser ```http://ipaddress:8087/help``` to get the help about API. The result is:
 
 ```
 {
-  "getPlainValue": "http://ipaddress:8082/getPlainValue/stateID",
-  "get": "http://ipaddress:8082/get/stateID/?prettyPrint",
-  "getBulk": "http://ipaddress:8082/getBulk/stateID1,stateID2/?prettyPrint",
-  "set": "http://ipaddress:8082/set/stateID?value=1&prettyPrint",
-  "toggle": "http://ipaddress:8082/toggle/stateID&prettyPrint",
-  "setBulk": "http://ipaddress:8082/setBulk?stateID1=0.7&stateID2=0&prettyPrint",
-  "objects": "http://ipaddress:8082/objects?pattern=system.adapter.admin.0*&prettyPrint",
-  "states": "http://ipaddress:8082/states?pattern=system.adapter.admin.0*&prettyPrint"
+  "getPlainValue": "http://ipaddress:8087/getPlainValue/stateID",
+  "get": "http://ipaddress:8087/get/stateID/?prettyPrint",
+  "getBulk": "http://ipaddress:8087/getBulk/stateID1,stateID2/?prettyPrint",
+  "set": "http://ipaddress:8087/set/stateID?value=1&prettyPrint",
+  "toggle": "http://ipaddress:8087/toggle/stateID&prettyPrint",
+  "setBulk": "http://ipaddress:8087/setBulk?stateID1=0.7&stateID2=0&prettyPrint",
+  "objects": "http://ipaddress:8087/objects?pattern=system.adapter.admin.0*&prettyPrint",
+  "states": "http://ipaddress:8087/states?pattern=system.adapter.admin.0*&prettyPrint"
 }
 ```
 
 ### getPlainValue
 Call e.g.:
 ```
-http://ipaddress:8082/getPlainValue/system.adapter.admin.0.alive
+http://ipaddress:8087/getPlainValue/system.adapter.admin.0.alive
 ```
 Result:
 ```
@@ -32,7 +32,7 @@ true
 ### get
 Call e.g.:
 ```
-http://ipaddress:8082/get/system.adapter.admin.0.alive
+http://ipaddress:8087/get/system.adapter.admin.0.alive
 ```
 Result:
 ```
@@ -40,7 +40,7 @@ Result:
 ```
 or call e.g.:
 ```
-http://ipaddress:8082/get/system.adapter.admin.0.alive?prettyPrint
+http://ipaddress:8087/get/system.adapter.admin.0.alive?prettyPrint
 ```
 Result:
 ```
@@ -67,7 +67,7 @@ Result:
 ### set
 Call e.g.:
 ```
-http://ipaddress:8082/set/javascript.0.test?value=1
+http://ipaddress:8087/set/javascript.0.test?value=1
 ```
 Result:
 ```
@@ -75,7 +75,7 @@ Result:
 ```
 or call e.g.:
 ```
-http://ipaddress:8082/set/javascript.0.test?value=1&prettyPrint
+http://ipaddress:8087/set/javascript.0.test?value=1&prettyPrint
 ```
 Result:
 ```
