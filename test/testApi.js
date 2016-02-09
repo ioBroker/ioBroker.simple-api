@@ -22,7 +22,10 @@ describe('Test RESTful API', function() {
             setup.startController(function (_objects, _states) {
                 objects = _objects;
                 states  = _states;
-                _done();
+                // give some time to start server
+                setTimeout(function () {
+                    _done();
+                }, 1000);
             });
         });
     });
@@ -228,7 +231,7 @@ describe('Test RESTful API', function() {
             console.log('states?pattern=system.adapter.* => ' + body);
             expect(error).to.be.not.ok;
             var states = JSON.parse(body);
-            expect(states['system.adapter.simple-api.0.uptime'].val).to.be.ok;
+            expect(states['system.adapter.simple-api.0.uptime'].val).to.be.least(0);
             done();
         });
     });
@@ -261,7 +264,7 @@ describe('Test RESTful API', function() {
         });
     });
 
-    after('Test RESTful API SSL: Stop js-controller', function (done) {
+    after('Test RESTful API: Stop js-controller', function (done) {
         this.timeout(6000);
         setup.stopController(function (normalTerminated) {
             console.log('Adapter normal terminated: ' + normalTerminated);

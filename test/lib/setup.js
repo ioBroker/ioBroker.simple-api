@@ -100,7 +100,7 @@ function installJsController(cb) {
         setTimeout(function () {
             client.destroy();
 
-            child_process.execSync('npm install iobroker.js-controller --prefix ./', {
+            child_process.execSync('npm install https://github.com/ioBroker/ioBroker.js-controller/tarball/master --prefix ./', {
                 cwd:   rootDir + 'tmp/',
                 stdio: [0, 1, 2]
             });

@@ -105,36 +105,6 @@ Of course the data point *javascript.0.test* must exist.
 Gives [this](#usage) output back
 
 
-## Changelog
-### 1.0.0 (2015-09-30)
-* (bluefox) stop adapter before update
-
-### 0.1.2 (2015-06-28)
-* (bluefox) add description in readme.md
-* (bluefox) change "toggle" for boolean and numbers
-
-### 0.1.1 (2015-06-28)
-* (bluefox) change setForeignState api
-* (bluefox) add type to io-package.json
-* (bluefox) enable run from "web"
-* (bluefox) add default user
-
-### 0.1.0 (2015-06-10)
-* (bluefox) change setForeignState api
-* (bluefox) support of user permissions
-
-### 0.0.4 (2015-03-11)
-* (bluefox) remove socket.io from file
-
-### 0.0.3 (2015-02-13)
-* (bluefox) remove socket.io from dependencies
-
-### 0.0.2 (2015-02-12)
-* (bluefox) enable be a part of "web"
-
-### 0.0.1 (2015-02-06)
-* (bluefox) initial commit
-
 ## Install
 
 ```node iobroker.js add simple-api```
@@ -448,3 +418,38 @@ Get the list of all states for pattern. If no pattern specified all states as JS
       }
     }
 </pre>
+
+
+## Changelog
+### 1.1.0 (2016-02-09)
+* (bluefox) fix toggle, objects, states, setBulk, POST
+* (bluefox) add tests
+
+### 1.0.0 (2015-09-30)
+* (bluefox) stop adapter before update
+
+### 0.1.2 (2015-06-28)
+* (bluefox) add description in readme.md
+* (bluefox) change "toggle" for boolean and numbers
+
+### 0.1.1 (2015-06-28)
+* (bluefox) change setForeignState api
+* (bluefox) add type to io-package.json
+* (bluefox) enable run from "web"
+* (bluefox) add default user
+
+### 0.1.0 (2015-06-10)
+* (bluefox) change setForeignState api
+* (bluefox) support of user permissions
+
+### 0.0.4 (2015-03-11)
+* (bluefox) remove socket.io from file
+
+### 0.0.3 (2015-02-13)
+* (bluefox) remove socket.io from dependencies
+
+### 0.0.2 (2015-02-12)
+* (bluefox) enable be a part of "web"
+
+### 0.0.1 (2015-02-06)
+* (bluefox) initial commit
