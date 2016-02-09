@@ -15,6 +15,7 @@ Call in browser ```http://ipaddress:8087/help``` to get the help about API. The 
   "toggle": "http://ipaddress:8087/toggle/stateID&prettyPrint",
   "setBulk": "http://ipaddress:8087/setBulk?stateID1=0.7&stateID2=0&prettyPrint",
   "objects": "http://ipaddress:8087/objects?pattern=system.adapter.admin.0*&prettyPrint",
+  "objects": "http://ipaddress:8087/objects?pattern=system.adapter.admin.0*&type=adapter&prettyPrint",
   "states": "http://ipaddress:8087/states?pattern=system.adapter.admin.0*&prettyPrint"
 }
 ```
@@ -63,7 +64,8 @@ Result:
 ```
 
 ### getBulk
-
+    get many states with one request
+    
 ### set
 Call e.g.:
 ```
@@ -87,9 +89,18 @@ Result:
 Of course the data point *javascript.0.test* must exist.
 
 ### toggle
+    toggles value:
+- boolean: true => false, false => true
+- number without limits: x => 100-x
+- number with limits: x => max - (x - min)
+
 ### setBulk
+    Set many states with one request. This request supports POST method too.
+     
 ### objects
+
 ### states
+
 ### help
 Gives [this](#usage) output back
 
