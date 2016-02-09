@@ -368,8 +368,9 @@ Get the list of all states for pattern. If no pattern specified all states as JS
   ...
 </pre>
 
-  Get all control objects of adapter system.adapter.admin.0: 
-<pre>http://ip:8087/states?pattern=system.adapter.admin.0*&prettyPrint</pre>
+ Get all control objects of adapter system.adapter.admin.0: 
+
+ <pre>http://ip:8087/states?pattern=system.adapter.admin.0*&prettyPrint</pre>
 <pre>
     {
       "system.adapter.admin.0.uptime": {
