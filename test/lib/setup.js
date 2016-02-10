@@ -488,6 +488,7 @@ function stopController(cb) {
             }, 0);
         }
     } else {
+        var timeout;
         if (objects) {
             console.log('Set system.adapter.' + pkg.name + '.0');
             objects.setObject('system.adapter.' + pkg.name + '.0', {
@@ -500,7 +501,10 @@ function stopController(cb) {
         pid.on('exit', function (code, signal) {
             if (pid) {
                 console.log('child process terminated due to receipt of signal ' + signal);
-
+                if (timeout) {
+                    clearTimeout(timeout);
+                    timeout = null;
+                }
                 if (objects) {
                     objects.destroy();
                     objects = null;
@@ -520,6 +524,10 @@ function stopController(cb) {
 
         pid.on('close', function (code, signal) {
             if (pid) {
+                if (timeout) {
+                    clearTimeout(timeout);
+                    timeout = null;
+                }
                 console.log('child process terminated due to receipt of signal ' + signal);
 
                 if (objects) {
@@ -541,7 +549,8 @@ function stopController(cb) {
 
         pid.kill('SIGTERM');
 
-        setTimeout(function () {
+        timeout = setTimeout(function () {
+            timeout = null;
             console.log('child process NOT terminated');
 
             if (objects) {
