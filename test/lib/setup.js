@@ -93,7 +93,7 @@ function installAdapter() {
         });
     } else {
         // add controller
-        child_process.fork('node_modules/iobroker.js-controller/iobroker.js add ' + adapterName.split('.').pop() + ' --enabled false', {
+        child_process.fork('node_modules/iobroker.js-controller/iobroker.js', ['add', adapterName.split('.').pop(), '--enabled', 'false'], {
             cwd:   rootDir + 'tmp',
             stdio: [0, 1, 2]
         });
@@ -107,7 +107,7 @@ function installJsController(cb) {
         if (fs.existsSync(rootDir + 'node_modules/iobroker.js-controller')) {
             // copy all
             // stop controller
-            child_process.fork('iobroker.js stop', {
+            child_process.fork('iobroker.js', ['stop'], {
                 cwd:   rootDir + 'node_modules/iobroker.js-controller',
                 stdio: [0, 1, 2]
             });
