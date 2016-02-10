@@ -1,11 +1,11 @@
 // check if tmp directory exists
-var fs              = require('fs');
-var path            = require('path');
-var child_process   = require('child_process');
+var fs            = require('fs');
+var path          = require('path');
+var child_process = require('child_process');
 
-var rootDir         = path.normalize(__dirname + '/../../');
-var pkg             = require(rootDir + 'package.json');
-var debug           = typeof v8debug === 'object';
+var rootDir       = path.normalize(__dirname + '/../../');
+var pkg           = require(rootDir + 'package.json');
+var debug         = typeof v8debug === 'object';
 
 var adapterName = path.normalize(rootDir).replace(/\\/g, '/').split('/');
 adapterName = adapterName[adapterName.length - 2];
@@ -32,9 +32,13 @@ function copyFileSync(source, target) {
 function copyFolderRecursiveSync(source, target, ignore) {
     var files = [];
 
+    var base = path.basename(source);
+    if (base === adapterName) {
+        base = pkg.name;
+    }
     //check if folder needs to be created or integrated
-    var targetFolder = path.join(target, path.basename(source));
-    if ( !fs.existsSync(targetFolder) ) {
+    var targetFolder = path.join(target, base);
+    if (!fs.existsSync(targetFolder)) {
         fs.mkdirSync(targetFolder);
     }
 
@@ -52,7 +56,7 @@ function copyFolderRecursiveSync(source, target, ignore) {
                 if (file.indexOf('grunt') !== -1) return;
                 if (file == 'chai') return;
                 if (file == 'mocha') return;
-                copyFolderRecursiveSync(curSource, targetFolder);
+                copyFolderRecursiveSync(curSource, targetFolder, ignore);
             } else {
                 copyFileSync(curSource, targetFolder);
             }
@@ -82,35 +86,37 @@ function restoreOriginalFiles() {
 
 function installAdapter() {
     // make first install
-    child_process.execSync('node node_modules/iobroker.js-controller/iobroker.js add ' + adapterName.split('.').pop(), {
-        cwd:   rootDir + 'tmp',
-        stdio: [0, 1, 2]
-    });
+    if (debug) {
+        child_process.execSync('node node_modules/iobroker.js-controller/iobroker.js add ' + adapterName.split('.').pop() + ' --enabled false', {
+            cwd:   rootDir + 'tmp',
+            stdio: [0, 1, 2]
+        });
+    } else {
+        // add controller
+        child_process.fork('node_modules/iobroker.js-controller/iobroker.js add ' + adapterName.split('.').pop() + ' --enabled false', {
+            cwd:   rootDir + 'tmp',
+            stdio: [0, 1, 2]
+        });
+    }
 }
 
 function installJsController(cb) {
     if (!fs.existsSync(rootDir + 'tmp/node_modules/iobroker.js-controller')) {
-        // check if port 9000 is free, else admin adapter will be added to running instance
-        var client = new require('net').Socket();
-        client.connect(9000, '127.0.0.1', function() {
-            console.error('One instance of ioBroker is running on this PC');
-            process.exit(0);
-        });
-
-        setTimeout(function () {
-            client.destroy();
-
-            child_process.execSync('npm install https://github.com/ioBroker/ioBroker.js-controller/tarball/master --prefix ./', {
-                cwd:   rootDir + 'tmp/',
+        // try to detect iobroker.js-controller in node_modules/iobroker.js-controller
+        // travis CI installs js-controller into node_modules
+        if (fs.existsSync(rootDir + 'node_modules/iobroker.js-controller')) {
+            // copy all
+            // stop controller
+            child_process.fork('iobroker.js stop', {
+                cwd:   rootDir + 'node_modules/iobroker.js-controller',
                 stdio: [0, 1, 2]
             });
-
-            // let npm install admin and run setup
             setTimeout(function () {
-                child_process.execSync('node node_modules/iobroker.js-controller/iobroker.js stop', {
-                    cwd:   rootDir + 'tmp',
-                    stdio: [0, 1, 2]
-                });
+                // copy all files into
+                if (!fs.existsSync(rootDir + 'tmp')) fs.mkdirSync(rootDir + 'tmp');
+                if (!fs.existsSync(rootDir + 'tmp/node_modules')) fs.mkdirSync(rootDir + 'tmp/node_modules');
+                copyFolderRecursiveSync(rootDir + 'node_modules/iobroker.js-controller', rootDir + 'tmp/node_modules/');
+                copyFolderRecursiveSync(rootDir + 'iobroker-data', rootDir + 'tmp/');
 
                 // change ports for object and state DBs
                 var config = require(rootDir + 'tmp/iobroker-data/iobroker.json');
@@ -122,8 +128,44 @@ function installJsController(cb) {
                 installAdapter();
                 storeOriginalFiles();
                 if (cb) cb(true);
-            }, 4000);
-        }, 1000);
+
+            }, 1000);
+        } else {
+            // check if port 9000 is free, else admin adapter will be added to running instance
+            var client = new require('net').Socket();
+            client.connect(9000, '127.0.0.1', function() {
+                console.error('One instance of ioBroker is running on this PC');
+                process.exit(0);
+            });
+
+            setTimeout(function () {
+                client.destroy();
+
+                child_process.execSync('npm install https://github.com/ioBroker/ioBroker.js-controller/tarball/master --prefix ./  --production', {
+                    cwd:   rootDir + 'tmp/',
+                    stdio: [0, 1, 2]
+                });
+
+                // let npm install admin and run setup
+                setTimeout(function () {
+                    child_process.execSync('node node_modules/iobroker.js-controller/iobroker.js stop', {
+                        cwd:   rootDir + 'tmp',
+                        stdio: [0, 1, 2]
+                    });
+
+                    // change ports for object and state DBs
+                    var config = require(rootDir + 'tmp/iobroker-data/iobroker.json');
+                    config.objects.port = 19001;
+                    config.states.port  = 19000;
+                    fs.writeFileSync(rootDir + 'tmp/iobroker-data/iobroker.json', JSON.stringify(config, null, 2));
+
+                    copyAdapterToController();
+                    installAdapter();
+                    storeOriginalFiles();
+                    if (cb) cb(true);
+                }, 4000);
+            }, 1000);
+        }
     } else {
         setTimeout(function () {
             if (cb) cb(false);
@@ -133,7 +175,7 @@ function installJsController(cb) {
 
 function copyAdapterToController() {
     // Copy adapter to tmp/node_modules/iobroker.adapter
-    copyFolderRecursiveSync(rootDir, rootDir + 'tmp/node_modules/', ['.idea', 'test', 'tmp']);
+    copyFolderRecursiveSync(rootDir, rootDir + 'tmp/node_modules/', ['.idea', 'test', 'tmp', '.git', 'iobroker.js-controller']);
     console.log('Adapter copied.');
 }
 
@@ -141,8 +183,13 @@ function clearControllerLog() {
     var dirPath = rootDir + 'tmp/log';
     var files;
     try {
-        files = fs.readdirSync(dirPath); }
-    catch(e) {
+        if (fs.existsSync(dirPath)) {
+            files = fs.readdirSync(dirPath);
+        } else {
+            files = [];
+            fs.mkdirSync(dirPath);
+        }
+    } catch(e) {
         console.error('Cannot read "' + dirPath + '"');
         return;
     }
@@ -174,14 +221,19 @@ function startAdapter(objects, states, callback) {
                 stdio: [0, 1, 2]
             });
         } else {
-            // start controller
-            pid = child_process.fork('node_modules/' + pkg.name + '/' + pkg.main, {
-                cwd:   rootDir + 'tmp',
-                stdio: [0, 1, 2]
-            });
+            if (fs.existsSync(rootDir + 'tmp/node_modules/' + pkg.name + '/' + pkg.main)) {
+                // start controller
+                pid = child_process.fork('node_modules/' + pkg.name + '/' + pkg.main, {
+                    cwd:   rootDir + 'tmp',
+                    stdio: [0, 1, 2]
+                });
+                console.log('Adapter started with PID: ' + pid);
+            } else {
+                console.error('Cannot find: ' + rootDir + 'tmp/node_modules/' + pkg.name + '/' + pkg.main);
+            }
         }
     } catch (error) {
-        console.log(JSON.stringify(error));
+        console.error(JSON.stringify(error));
     }
     if (callback) callback(objects, states);
 }
@@ -273,6 +325,7 @@ function stopController(cb) {
                 }
             });
         }
+
         pid.on('close', function (code, signal) {
             console.log('child process terminated due to receipt of signal ' + signal);
 
@@ -305,7 +358,6 @@ function stopController(cb) {
                 states.destroy();
                 states = null;
             }
-
 
             if (cb) {
                 cb(false);
