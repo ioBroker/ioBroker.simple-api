@@ -3,7 +3,7 @@ ioBroker simple-api adapter
 =================
 [![NPM version](http://img.shields.io/npm/v/iobroker.simple-api.svg)](https://www.npmjs.com/package/iobroker.simple-api)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.simple-api.svg)](https://www.npmjs.com/package/iobroker.simple-api)
-[![Tests](https://travis-ci.org/ioBroker/ioBroker.simple-api.svg?branch=master)](https://travis-ci.org/ioBroker/ioBroker.simple-api.svg?branch=master)
+[![Tests](https://travis-ci.org/ioBroker/ioBroker.simple-api.svg?branch=master)](https://travis-ci.org/ioBroker/ioBroker.simple-api)
 
 [![NPM](https://nodei.co/npm/iobroker.simple-api.png?downloads=true)](https://nodei.co/npm/iobroker.simple-api/)
 
