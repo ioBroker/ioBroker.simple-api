@@ -99,6 +99,22 @@ module.exports = function (grunt) {
                             srcDir + 'www/*.*'
                         ],
                         dest:    srcDir + 'www'
+                    },
+                    {
+                        expand:  true,
+                        flatten: true,
+                        src:     [
+                            srcDir + 'test/*.*'
+                        ],
+                        dest:    srcDir + 'test'
+                    },
+                    {
+                        expand:  true,
+                        flatten: true,
+                        src:     [
+                            srcDir + 'test/lib/*.*'
+                        ],
+                        dest:    srcDir + 'test/lib'
                     }
                 ]
             }
