@@ -1,7 +1,14 @@
 {
     "common": {
         "name":                     "simple-api",
-        "version": "1.1.0",
+        "version": "1.1.1",
+        "news": {
+            "1.1.1": {
+                "en":               "support of chained certificates",
+                "de":               "support of chained certificates",
+                "ru":               "support of chained certificates"
+            }
+        },
         "title":                    "simpleAPI Adapter",
         "desc":                     "This adapter allows to read and write ioBroker objects and state with web RESTful API",
         "authors": [
@@ -18,15 +25,17 @@
         "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.simple-api/master/admin/simple-api.png",
 		"type":                     "communication",
         "stopBeforeUpdate":         true,
-        "localLink":                "%protocol%://%ip%:%port%/get/system.adapter.simple-api.%instance%.uptime?prettyPrint"
+        "localLink":                "%protocol%://%ip%:%port%/get/system.adapter.simple-api.%instance%.uptime?prettyPrint",
+        "dependencies":             [{"js-controller": ">=0.10.1"}]
     },
     "native": {
         "port":                     8087,
         "auth":                     false,
         "secure":                   false,
         "bind":                     "0.0.0.0",
-        "certPublic":               null,
-        "certPrivate":              null,
+        "certPublic":               "",
+        "certPrivate":              "",
+        "certChained":              "",
         "defaultUser":              "admin"
     }
 }

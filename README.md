@@ -428,6 +428,9 @@ Get the list of all states for pattern. If no pattern specified all states as JS
 
 
 ## Changelog
+### 1.1.1 (2016-07-06)
+* (bluefox) support of chained certificates
+
 ### 1.1.0 (2016-02-09)
 * (bluefox) fix toggle, objects, states, setBulk, POST
 * (bluefox) add tests
