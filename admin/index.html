@@ -9,6 +9,12 @@
 <script type="text/javascript" src="../../js/translate.js"></script>
 <script type="text/javascript" src="../../js/adapter-settings.js"></script>
 
+<style>
+    .number {
+        width: 70px
+    }
+</style>
+
 <script type="text/javascript">
     systemDictionary = {
         "simpleAPI adapter settings": {
@@ -23,6 +29,26 @@
         "Public certificate:":    {"en": "Public certificate:",     "de": "Publikzertifikat:",       "ru": "'Public' сертификат:"},
         "Private certificate:":   {"en": "Private certificate:",    "de": "Privatzertifikat:",       "ru": "'Private' сертификат:"},
         "Chained certificate:":   {"en": "Chained certificate:",    "de": "Kettenzertifikat:",       "ru": "'Chained' сертификат:"},
+        "Let's Encrypt settings": {
+            "en": "Let's Encrypt settings",
+            "de": "Einstellungen Let's Encrypt",
+            "ru": "Настройкт Let's Encrypt"
+        },
+        "Use Lets Encrypt certificates:": {
+            "en": "Use Let's Encrypt certificates:",
+            "de": "Benutzen Let's Encrypt Zertifikate:",
+            "ru": "Использовать сертификаты Let's Encrypt:"
+        },
+        "Use this instance for automatic update:": {
+            "en": "Use this instance for automatic update:",
+            "de": "Benutze diese Instanz für automatische Updates:",
+            "ru": "Обновлять сертификаты в этом драйвере:"
+        },
+        "Port to check the domain:": {
+            "en": "Port to check the domain:",
+            "de": "Port um die Domain zu prüfen:",
+            "ru": "Порт для проверки доменного имени:"
+        },
         "Set certificates or load it first in the system settings (right top).":    {
             "en": "Set certificates or load it first in the system settings (right top).",
             "de": "Setze Zertificate oder lade die erst unter System/Einstellungen (oben rechts).",
@@ -35,13 +61,25 @@
             $('#_certPublic').show();
             $('#_certPrivate').show();
             $('#_certChained').show();
+            $('.le-settings').show();
+
+            if ($('#leEnabled').prop('checked')) {
+                $('.le-sub-settings').show();
+                if ($('#leUpdate').prop('checked')) {
+                    $('.le-sub-settings-update').show();
+                } else {
+                    $('.le-sub-settings-update').hide();
+                }
+            } else {
+                $('.le-sub-settings').hide();
+            }
         } else {
             $('#_certPublic').hide();
             $('#_certPrivate').hide();
             $('#_certChained').hide();
             $('#auth').prop('checked', false);
+            $('.le-settings').hide();
         }
-
         if ($('#auth').prop('checked')) {
             $('#defaultUser').val('admin');
             $('.defaultUser').hide();
@@ -53,6 +91,8 @@
     // the function loadSettings has to exist ...
     function load(settings, onChange) {
         if (!settings) return;
+
+        if (!settings.lePort) settings.lePort = 80;
 
         getIPs(function(ips) {
             for (var i = 0; i < ips.length; i++) {
@@ -136,6 +176,11 @@
         </tr>
         <tr><td class="translate">Authentication:</td><td><input  class="value" id="auth" type="checkbox" /></td></tr>
         <tr class="defaultUser"><td class="translate">Run as:</td><td><select class="value" id="defaultUser" /></td></tr>
+                <tr><td colspan="2">&nbsp;</td></tr>
+                <tr class="le-settings"><td colspan="2"><h3 class="translate">Let's Encrypt settings</h3></tr>
+                <tr class="le-settings"><td><label for="leEnabled" class="translate">Use Lets Encrypt certificates:</label></td><td><input  class="value" id="leEnabled"   type="checkbox" /></td></tr>
+                <tr class="le-settings le-sub-settings"><td><label for="leUpdate" class="translate">Use this instance for automatic update:</label></td><td><input  class="value" id="leUpdate" type="checkbox" /></td></tr>
+                <tr class="le-settings le-sub-settings le-sub-settings-update"><td><label for="lePort" class="translate">Port to check the domain:</label></td><td><input class="value number" id="lePort" type="number" size="5" maxlength="5" /></td></tr>
 
     </table>
 </div>
