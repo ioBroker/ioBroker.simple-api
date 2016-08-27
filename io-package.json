@@ -12,7 +12,7 @@
         "title":                    "simpleAPI Adapter",
         "desc":                     "This adapter allows to read and write ioBroker objects and state with web RESTful API",
         "authors": [
-            "bluefox <bluefox@ccu.io>"
+            "bluefox <dogafox@gmail.com>"
         ],
         "license":                  "MIT",
         "platform":                 "Javascript/Node.js",
