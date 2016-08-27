@@ -1,10 +1,10 @@
 {
   "name": "iobroker.simple-api",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "RESTful interface for ioBroker.",
   "author": {
     "name": "bluefox",
-    "email": "bluefox@ccu.io"
+    "email": "dogafox@gmail.com"
   },
   "homepage": "https://github.com/ioBroker/ioBroker.simple-api",
   "keywords": [

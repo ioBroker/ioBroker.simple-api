@@ -1,8 +1,13 @@
 {
     "common": {
         "name":                     "simple-api",
-        "version": "1.1.1",
+        "version": "1.2.0",
         "news": {
+            "1.2.0": {
+                "en":               "support of letsencrypt certificates",
+                "de":               "Unterstützung von letsencrypt Zertifikaten",
+                "ru":               "Поддержка letsencrypt сертификатов"
+            },
             "1.1.1": {
                 "en":               "support of chained certificates",
                 "de":               "support of chained certificates",

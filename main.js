@@ -4,9 +4,10 @@
 
 var utils     = require(__dirname + '/lib/utils'); // Get common adapter utils
 var SimpleAPI = require(__dirname + '/lib/simpleapi.js');
+var LE        = require(__dirname + '/lib/letsencrypt.js');
 
-var webServer =  null;
-var fs = null;
+var webServer = null;
+var fs        = null;
 
 var adapter = utils.adapter({
     name: 'simple-api',
@@ -42,8 +43,9 @@ function main() {
         adapter.subscribeForeignObjects('system.user.*');
 
         // Load certificates
-        adapter.getCertificates(function (err, certificates) {
+        adapter.getCertificates(function (err, certificates, leConfig) {
             adapter.config.certificates = certificates;
+            adapter.config.leConfig     = leConfig;
             webServer = initWebServer(adapter.config);
         });
     } else {
@@ -87,18 +89,9 @@ function initWebServer(settings) {
     };
 
     if (settings.port) {
-        if (settings.secure) {
-            if (!adapter.config.certificates) {
-                return null;
-            }
-        }
+        if (settings.secure && !adapter.config.certificates) return null;
 
-        if (settings.secure) {
-            server.server = require('https').createServer(adapter.config.certificates, requestProcessor);
-        } else {
-            server.server = require('http').createServer(requestProcessor);
-        }
-
+        server.server = LE.createServer(requestProcessor, settings, adapter.config.certificates, adapter.config.leConfig, adapter.log);
         server.server.__server = server;
     } else {
         adapter.log.error('port missing');
