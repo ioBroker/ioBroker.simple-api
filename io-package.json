@@ -36,7 +36,7 @@
         "certPublic":               "",
         "certPrivate":              "",
         "certChained":              "",
-        "defaultUser":              "admin"
+        "defaultUser":              "admin",
 
         "leEnabled":                false,
         "leUpdate":                 false,
