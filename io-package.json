@@ -1,8 +1,13 @@
 {
     "common": {
         "name":                     "simple-api",
-        "version": "1.2.0",
+        "version": "1.3.0",
         "news": {
+			"1.2.0": {
+                "en": 				"сompatible only with new admin",
+                "de": 				"Nur mit neuem Admin kompatibel",
+                "ru": 				"Совместимо только с новым админ-драйвером"
+            },
             "1.2.0": {
                 "en":               "support of letsencrypt certificates",
                 "de":               "Unterstützung von letsencrypt Zertifikaten",
@@ -31,7 +36,7 @@
 		"type":                     "communication",
         "stopBeforeUpdate":         true,
         "localLink":                "%protocol%://%ip%:%port%/get/system.adapter.simple-api.%instance%.uptime?prettyPrint",
-        "dependencies":             [{"js-controller": ">=0.10.1"}]
+        "dependencies":             [{"js-controller": ">=0.12.0"}]
     },
     "native": {
         "port":                     8087,

@@ -4,7 +4,7 @@
 
 var utils     = require(__dirname + '/lib/utils'); // Get common adapter utils
 var SimpleAPI = require(__dirname + '/lib/simpleapi.js');
-var LE        = require(__dirname + '/lib/letsencrypt.js');
+var LE        = require(utils.controllerDir + '/lib/letsencrypt.js');
 
 var webServer = null;
 var fs        = null;

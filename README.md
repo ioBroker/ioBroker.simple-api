@@ -428,6 +428,9 @@ Get the list of all states for pattern. If no pattern specified all states as JS
 
 
 ## Changelog
+### 1.3.0 (2016-08-30)
+* (bluefox) сompatible only with new admin
+
 ### 1.2.0 (2016-08-27)
 * (bluefox) support of letsencrypt certificates
 
