@@ -23,7 +23,7 @@ var adapter = utils.adapter({
     },
     unload: function (callback) {
         try {
-            adapter.log.info("terminating http" + (webServer.settings.secure ? "s" : "") + " server on port " + webServer.settings.port);
+            adapter.log.info('terminating http' + (webServer.settings.secure ? 's' : '') + ' server on port ' + webServer.settings.port);
             //if (webServer.api) webServer.api.close();
 
             callback();
@@ -54,7 +54,7 @@ function main() {
 }
 
 function requestProcessor(req, res) {
-    if (req.url.indexOf('favicon.ico') != -1) {
+    if (req.url.indexOf('favicon.ico') !== -1) {
         if (!fs) fs = require('fs');
         var stat = fs.statSync(__dirname + '/img/favicon.ico');
 
