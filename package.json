@@ -15,12 +15,6 @@
     "type": "git",
     "url": "https://github.com/ioBroker/ioBroker.simple-api"
   },
-  "optionalDependencies": {
-    "letsencrypt": "^2.1.5",
-    "le-challenge-fs": "^2.0.4",
-    "le-sni-auto": "^2.0.1",
-    "le-store-certbot": "^2.0.3"
-  },
   "dependencies": {
   },
   "devDependencies": {
