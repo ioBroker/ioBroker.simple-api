@@ -31,7 +31,7 @@ describe('Test RESTful API SSL', function() {
                 // give some time to start server
                 setTimeout(function () {
                     _done();
-                }, 1000);
+                }, 2000);
             });
         });
     });

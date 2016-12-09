@@ -25,7 +25,7 @@ describe('Test RESTful API', function() {
                 // give some time to start server
                 setTimeout(function () {
                     _done();
-                }, 1000);
+                }, 2000);
             });
         });
     });
