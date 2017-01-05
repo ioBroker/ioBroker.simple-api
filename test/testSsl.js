@@ -16,7 +16,7 @@ function checkConnectionOfAdapter(cb, counter) {
         return;
     }
 
-    states.getState('system.adapter.' + adapterShortName + '.0.alive', function (err, state) {
+    states.getState('system.adapter.simple-api.0.alive', function (err, state) {
         if (err) console.error(err);
         if (state && state.val) {
             if (cb) cb();
@@ -61,15 +61,7 @@ describe('Test RESTful API SSL', function() {
         checkConnectionOfAdapter(function (res) {
             if (res) console.log(res);
             expect(res).not.to.be.equal('Cannot check connection');
-            objects.setObject('system.adapter.simple-api.upload', {
-                    common: {
-                        "type": "number"
-                    },
-                    type: 'state'
-                },
-                function () {
-                    done();
-                });
+            done();
         });
     });
 
