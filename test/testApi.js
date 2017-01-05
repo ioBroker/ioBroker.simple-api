@@ -30,6 +30,23 @@ describe('Test RESTful API', function() {
         });
     });
 
+    it('Test ' + adapterShortName + ' adapter: Check if adapter started and create upload datapoint', function (done) {
+        this.timeout(60000);
+        checkConnectionOfAdapter(function (res) {
+            if (res) console.log(res);
+            expect(res).not.to.be.equal('Cannot check connection');
+            objects.setObject('system.adapter.simple-api.0.upload', {
+                    common: {
+                        "type": "number"
+                    },
+                    type: 'state'
+                },
+                function () {
+                    done();
+                });
+        });
+    });
+
     it('Test RESTful API: get - must return value', function (done) {
         request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', function (error, response, body) {
             console.log('get/system.adapter.simple-api.0.alive => ' + body);
