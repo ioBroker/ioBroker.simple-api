@@ -7,6 +7,26 @@ var states  = null;
 
 process.env.NO_PROXY = '127.0.0.1';
 
+function checkConnectionOfAdapter(cb, counter) {
+    counter = counter || 0;
+    console.log('Try check #' + counter);
+    if (counter > 30) {
+        if (cb) cb('Cannot check connection');
+        return;
+    }
+
+    states.getState('system.adapter.' + adapterShortName + '.0.alive', function (err, state) {
+        if (err) console.error(err);
+        if (state && state.val) {
+            if (cb) cb();
+        } else {
+            setTimeout(function () {
+                checkConnectionOfAdapter(cb, counter + 1);
+            }, 1000);
+        }
+    });
+}
+
 describe('Test RESTful API', function() {
     before('Test RESTful API: Start js-controller', function (_done) {
         this.timeout(600000); // because of first install from npm
@@ -30,7 +50,7 @@ describe('Test RESTful API', function() {
         });
     });
 
-    it('Test ' + adapterShortName + ' adapter: Check if adapter started and create upload datapoint', function (done) {
+    it('Test adapter: Check if adapter started and create upload datapoint', function (done) {
         this.timeout(60000);
         checkConnectionOfAdapter(function (res) {
             if (res) console.log(res);
