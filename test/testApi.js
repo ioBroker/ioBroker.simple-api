@@ -55,7 +55,7 @@ describe('Test RESTful API', function() {
         checkConnectionOfAdapter(function (res) {
             if (res) console.log(res);
             expect(res).not.to.be.equal('Cannot check connection');
-            objects.setObject('system.adapter.simple-api.0.upload', {
+            objects.setObject('system.adapter.simple-api.upload', {
                     common: {
                         "type": "number"
                     },
