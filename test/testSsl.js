@@ -8,6 +8,26 @@ var states  = null;
 process.env.NO_PROXY = '127.0.0.1';
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
+function checkConnectionOfAdapter(cb, counter) {
+    counter = counter || 0;
+    console.log('Try check #' + counter);
+    if (counter > 30) {
+        if (cb) cb('Cannot check connection');
+        return;
+    }
+
+    states.getState('system.adapter.simple-api.0.alive', function (err, state) {
+        if (err) console.error(err);
+        if (state && state.val) {
+            if (cb) cb();
+        } else {
+            setTimeout(function () {
+                checkConnectionOfAdapter(cb, counter + 1);
+            }, 1000);
+        }
+    });
+}
+
 describe('Test RESTful API SSL', function() {
     before('Test RESTful API SSL: Start js-controller', function (_done) {
         this.timeout(600000); // because of first install from npm
@@ -36,20 +56,12 @@ describe('Test RESTful API SSL', function() {
         });
     });
 
-    it('Test ' + adapterShortName + ' adapter: Check if adapter started and create upload datapoint', function (done) {
+    it('Test adapter: Check if adapter started and create upload datapoint', function (done) {
         this.timeout(60000);
         checkConnectionOfAdapter(function (res) {
             if (res) console.log(res);
             expect(res).not.to.be.equal('Cannot check connection');
-            objects.setObject('system.adapter.simple-api.0.upload', {
-                    common: {
-                        "type": "number"
-                    },
-                    type: 'state'
-                },
-                function () {
-                    done();
-                });
+            done();
         });
     });
 
