@@ -37,6 +37,17 @@ var adapter = utils.adapter({
 });
 
 function main() {
+    if (adapter.config.webInstance) {
+        console.log('Adapter runs as a part of web service');
+        adapter.log.warn('Adapter runs as a part of web service');
+        adapter.setForeignState('system.adapter.' + adapter.namespace + '.alive', false, true, function () {
+            setTimeout(function () {
+                process.exit();
+            }, 1000);
+        });
+        return;
+    }
+
     if (adapter.config.secure) {
         // subscribe on changes of permissions
         adapter.subscribeForeignObjects('system.group.*');

@@ -428,6 +428,9 @@ Get the list of all states for pattern. If no pattern specified all states as JS
 
 
 ## Changelog
+### 1.4.0 (2017-01-05)
+* (bluefox) new web server plugin support
+
 ### 1.3.0 (2016-08-30)
 * (bluefox) сompatible only with new admin
 

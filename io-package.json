@@ -1,9 +1,9 @@
 {
     "common": {
         "name":                     "simple-api",
-        "version": "1.3.0",
+        "version": "1.4.0",
         "news": {
-			"1.2.0": {
+			"1.3.0": {
                 "en": 				"сompatible only with new admin",
                 "de": 				"Nur mit neuem Admin kompatibel",
                 "ru": 				"Совместимо только с новым админ-драйвером"
@@ -29,6 +29,7 @@
         "mode":                     "daemon",
         "loglevel":                 "info",
         "icon":                     "simple-api.png",
+        "webExtension":             "lib/simpleapi.js",
         "readme":                   "https://github.com/ioBroker/ioBroker.simple-api/blob/master/README.md",
         "keywords":                 ["web", "simpleAPI", "RESTful", "communication"],
 		"enabled":                  true,
@@ -36,7 +37,7 @@
 		"type":                     "communication",
         "stopBeforeUpdate":         true,
         "localLink":                "%protocol%://%ip%:%port%/get/system.adapter.simple-api.%instance%.uptime?prettyPrint",
-        "dependencies":             [{"js-controller": ">=0.12.0"}]
+        "dependencies":             [{"js-controller": ">=0.15.0"}]
     },
     "native": {
         "port":                     8087,
@@ -47,6 +48,7 @@
         "certPrivate":              "",
         "certChained":              "",
         "defaultUser":              "admin",
+        "webInstance":              "",
 
         "leEnabled":                false,
         "leUpdate":                 false,
