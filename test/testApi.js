@@ -212,6 +212,7 @@ describe('Test RESTful API', function() {
         });
     });
 
+//TODO: Beim Get würde im Body nichts stehen!
     it('Test RESTful API: setBulk - must set values', function (done) {
         request('http://127.0.0.1:18183/setBulk/?system.adapter.simple-api.upload=50&system.adapter.simple-api.0.alive=false', function (error, response, body) {
             console.log('setBulk/?system.adapter.simple-api.upload=50&system.adapter.simple-api.0.alive=false => ' + body);
@@ -265,6 +266,11 @@ describe('Test RESTful API', function() {
         });
     });
 
+//TODO: Beim POST kann etwas im Body stehen, nicht aber laut der Schnittstellenbeschreibung, stateId und Wert sind in der URL kodiert
+//TODO: D. h., auch in den Testfällen müsste der body LEER sein!
+//            uri:    'https://127.0.0.1:18183/setBulk?system.adapter.simple-api.upload=50&system.adapter.simple-api.0.alive=false',
+//            method: 'POST',
+//            body:   ''
     it('Test RESTful API: setBulk(POST) - must set values', function (done) {
 
         request({
@@ -282,12 +288,39 @@ describe('Test RESTful API', function() {
             expect(obj[1].val).to.be.equal(false);
             expect(obj[1].id).to.equal('system.adapter.simple-api.0.alive');
 
+//TODO:             body = "";
             request('http://127.0.0.1:18183/getBulk/system.adapter.simple-api.upload,system.adapter.simple-api.0.alive', function (error, response, body) {
                 console.log('getBulk/system.adapter.simple-api.upload,system.adapter.simple-api.0.alive => ' + body);
                 expect(error).to.be.not.ok;
                 var obj = JSON.parse(body);
                 expect(obj[0].val).equal(50);
                 expect(obj[1].val).equal(false);
+                done();
+            });
+        });
+    });
+
+//TODO: Meine erste Testfunktion, bitte prüfen
+    it('Test RESTful API: setValueFromBody(POST) - must set one value', function (done) {
+        request({
+            uri: 'http://127.0.0.1:18183/setValueFromBody/?system.adapter.simple-api.upload',
+            method: 'POST',
+            body: '55'
+        }, function(error, response, body) {
+            console.log('setValueFromBody/?system.adapter.simple-api.upload => ' + JSON.stringify(body));
+            expect(error).to.be.not.ok;
+
+            var obj = JSON.parse(body);
+            expect(obj).to.be.ok;
+            expect(obj[0].val).to.be.equal(55);
+            expect(obj[0].id).to.equal('system.adapter.simple-api.upload');
+
+            body = "";
+            request('http://127.0.0.1:18183/getBulk/system.adapter.simple-api.upload', function (error, response, body) {
+                console.log('getBulk/system.adapter.simple-api.upload => ' + body);
+                expect(error).to.be.not.ok;
+                var obj = JSON.parse(body);
+                expect(obj[0].val).equal(55);
                 done();
             });
         });
