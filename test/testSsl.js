@@ -1,3 +1,6 @@
+/* jshint -W097 */// jshint strict:false
+/*jslint node: true */
+/*jshint expr: true*/
 var expect  = require('chai').expect;
 var setup   = require(__dirname + '/lib/setup');
 var request = require('request');
@@ -150,6 +153,30 @@ describe('Test RESTful API SSL', function() {
         });
     });
 
+    it('Test RESTful API SSL: setValueFromBody(POST) - must set values', function (done) {
+        request({
+            uri:    'https://127.0.0.1:18183/setValueFromBody?user=admin&pass=iobroker&system.adapter.simple-api.upload',
+            method: 'POST',
+            body:   '55'
+        }, function(error, response, body) {
+            console.log('setValueFromBody/?system.adapter.simple-api.upload => ' + JSON.stringify(body));
+            expect(error).to.be.not.ok;
+
+            var obj = JSON.parse(body);
+            expect(obj).to.be.ok;
+            expect(obj[0].val).to.be.equal(55);
+            expect(obj[0].id).to.equal('system.adapter.simple-api.upload');
+
+            body = "";
+            request('https://127.0.0.1:18183/getBulk/system.adapter.simple-api.upload?user=admin&pass=iobroker', function (error, response, body) {
+                console.log('getBulk/system.adapter.simple-api.upload => ' + body);
+                expect(error).to.be.not.ok;
+                var obj = JSON.parse(body);
+                expect(obj[0].val).equal(55);
+                done();
+            });
+        });
+});
     after('Test RESTful API SSL: Stop js-controller', function (done) {
         this.timeout(6000);
         setup.stopController(function (normalTerminated) {

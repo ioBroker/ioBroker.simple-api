@@ -1,3 +1,6 @@
+/* jshint -W097 */// jshint strict:false
+/*jslint node: true */
+/*jshint expr: true*/
 var expect  = require('chai').expect;
 var setup   = require(__dirname + '/lib/setup');
 var request = require('request');
@@ -316,6 +319,31 @@ describe('Test RESTful API', function() {
                 var obj = JSON.parse(body);
                 expect(obj[0].val).equal(51);
                 expect(obj[1].val).equal(false);
+                done();
+            });
+        });
+    });
+
+    it('Test RESTful API: setValueFromBody(POST) - must set one value', function (done) {
+        request({
+            uri: 'http://127.0.0.1:18183/setValueFromBody/?system.adapter.simple-api.upload',
+            method: 'POST',
+            body: '55'
+        }, function(error, response, body) {
+            console.log('setValueFromBody/?system.adapter.simple-api.upload => ' + JSON.stringify(body));
+            expect(error).to.be.not.ok;
+
+            var obj = JSON.parse(body);
+            expect(obj).to.be.ok;
+            expect(obj[0].val).to.be.equal(55);
+            expect(obj[0].id).to.equal('system.adapter.simple-api.upload');
+
+            body = "";
+            request('http://127.0.0.1:18183/getBulk/system.adapter.simple-api.upload', function (error, response, body) {
+                console.log('getBulk/system.adapter.simple-api.upload => ' + body);
+                expect(error).to.be.not.ok;
+                var obj = JSON.parse(body);
+                expect(obj[0].val).equal(55);
                 done();
             });
         });

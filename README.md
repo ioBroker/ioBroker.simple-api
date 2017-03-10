@@ -71,7 +71,7 @@ Result:
 
 ### getBulk
     get many states with one request
-    
+
 ### set
 Call e.g.:
 ```
@@ -101,8 +101,11 @@ Of course the data point *javascript.0.test* must exist.
 - number with limits: x => max - (x - min)
 
 ### setBulk
-    Set many states with one request. This request supports POST method too.
-     
+    Set many states with one request. This request supports POST method too, for POST data should be in body and not URL.
+
+### setValueFromBody
+    Allows to set the value of a given State be set by the POST body content.
+
 ### objects
 
 ### states
@@ -124,7 +127,7 @@ For every requiest that returns JSON you can set parameter *prettyPrint* to get 
 
 If authentication is enabled, two other fields are mandatory: <pre>?user=admin&pass=iobroker</pre>
 
-### getPlainValue 
+### getPlainValue
 Read state value as text. You can specify more ids divided by semicolon
 
 <pre>http://ip:8087/getPlainValue/admin.0.memHeapTotal</pre>
@@ -139,12 +142,12 @@ Read state value as text. You can specify more ids divided by semicolon
   17.52
 </pre>
 
-### get 
+### get
 Read state and object data of state as json. You can specify more ids divided by semicolon.
 If more than one ID requested, the JSON array will be returned.
-  
+
 <pre>http://localhost:8087/get/admin.0.memHeapTotal/?prettyPrint</pre>
-  
+
 <pre>
   {
     "val": 31.19,
@@ -171,7 +174,7 @@ If more than one ID requested, the JSON array will be returned.
     "native": {}
   }
 </pre>
-  
+
 <pre>http://ip:8087/get/admin.0.memHeapTotal,admin.0.memHeapUsed/?prettyPrint</pre>
 <pre>
   [
@@ -225,13 +228,13 @@ If more than one ID requested, the JSON array will be returned.
     }
   ]
 </pre>
-  
-### getBulk 
+
+### getBulk
 Read the states of more IDs with timestamp. You can specify more ids divided by semicolon.
 Always the JSON array will be returned.
-  
+
 <pre>http://ip:8087/getBulk/admin.0.memHeapTotal,admin.0.memHeapUsed/?prettyPrint</pre>
-  
+
 <pre>
   [
     {
@@ -244,17 +247,17 @@ Always the JSON array will be returned.
     }
   ]
 </pre>
-  
-### set 
+
+### set
 Write the states with specified IDs. You can specifiy *wait* option in milliseconds to wait for answer from driver.
- 
+
 <pre>http://ip:8087/set/hm-rpc.0.IEQ12345.LEVEL?value=1&prettyPrint</pre>
 <pre>{
        "id": "hm-rpc.0.IEQ12345.LEVEL",
        "value": 1
      }
 </pre>
-  
+
 <pre>http://ip:8087/set/hm-rpc.0.IEQ12345.LEVEL?value=1&wait=5000&prettyPrint</pre>
 <pre>{
        "val": 1,
@@ -265,10 +268,10 @@ Write the states with specified IDs. You can specifiy *wait* option in milliseco
      }
 </pre>
 
-If no answer will be recieved in specified time, the *null* value will be returned. 
+If no answer will be recieved in specified time, the *null* value will be returned.
 In the first case the answer will be returned immediately and *ack* is false. In the second case *ack* is true. That means it was response from driver.
-   
-### setBulk 
+
+### setBulk
 - write bulk of IDs in one request.
 
 <pre>http://ip:8087/setBulk?hm-rpc.0.FEQ1234567:1.LEVEL=0.7&Anwesenheit=0&prettyPrint</pre>
@@ -285,7 +288,7 @@ In the first case the answer will be returned immediately and *ack* is false. In
 </pre>
 You can send this request as POST too.
 
-### objects 
+### objects
 Get the list of all objects for pattern. If no pattern specified  all objects as JSON array will be returned.
 
 <pre>http://ip:8087/objects?prettyPrint</pre>
@@ -325,7 +328,7 @@ Get the list of all objects for pattern. If no pattern specified  all objects as
   ...
 </pre>
 
-  Get all control objects of adapter system.adapter.admin.0: 
+  Get all control objects of adapter system.adapter.admin.0:
 <pre>http://ip:8087/objects?pattern=system.adapter.admin.0*&prettyPrint</pre>
 <pre>
     {
@@ -341,10 +344,10 @@ Get the list of all objects for pattern. If no pattern specified  all objects as
       "native": {}
     },
     ...
-    
+
 </pre>
-    
-### states 
+
+### states
 Get the list of all states for pattern. If no pattern specified all states as JSON array will be returned.
 
 <pre>http://ip:8087/states?prettyPrint</pre>
@@ -374,7 +377,7 @@ Get the list of all states for pattern. If no pattern specified all states as JS
   ...
 </pre>
 
- Get all control objects of adapter system.adapter.admin.0: 
+ Get all control objects of adapter system.adapter.admin.0:
 
  <pre>http://ip:8087/states?pattern=system.adapter.admin.0*&prettyPrint</pre>
 <pre>
@@ -428,6 +431,9 @@ Get the list of all states for pattern. If no pattern specified all states as JS
 
 
 ## Changelog
+### 1.5.0 (2017-03-10)
+* (greyhound) Add new POST method setValueFromBody
+
 ### 1.4.0 (2017-01-05)
 * (bluefox) new web server plugin support
 

@@ -1,8 +1,13 @@
 {
     "common": {
         "name":                     "simple-api",
-        "version": "1.4.0",
+        "version": "1.5.0",
         "news": {
+            "1.5.0": {
+                "en": 				"Add new POST method setValueFromBody",
+                "de": 				"Neue POST-Methode setValueFromBody hinzugefügt",
+                "ru": 				"Add new POST method setValueFromBody"
+            },
             "1.4.0": {
                 "en": 				"can be used as web-extension",
                 "de": 				"Kann als Web-Extension benutzt werden",
