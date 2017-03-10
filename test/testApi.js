@@ -293,6 +293,34 @@ describe('Test RESTful API', function() {
         });
     });
 
+    it('Test RESTful API: setBulk(POST-GET-Mix) - must set values', function (done) {
+
+        request({
+            uri: 'http://127.0.0.1:18183/setBulk?system.adapter.simple-api.upload=51&system.adapter.simple-api.0.alive=false',
+            method: 'POST',
+            body: ''
+        }, function(error, response, body) {
+            console.log('setBulk/?system.adapter.simple-api.upload=51&system.adapter.simple-api.0.alive=false => ' + JSON.stringify(body));
+            expect(error).to.be.not.ok;
+
+            var obj = JSON.parse(body);
+            expect(obj).to.be.ok;
+            expect(obj[0].val).to.be.equal(51);
+            expect(obj[0].id).to.equal('system.adapter.simple-api.upload');
+            expect(obj[1].val).to.be.equal(false);
+            expect(obj[1].id).to.equal('system.adapter.simple-api.0.alive');
+
+            request('http://127.0.0.1:18183/getBulk/system.adapter.simple-api.upload,system.adapter.simple-api.0.alive', function (error, response, body) {
+                console.log('getBulk/system.adapter.simple-api.upload,system.adapter.simple-api.0.alive => ' + body);
+                expect(error).to.be.not.ok;
+                var obj = JSON.parse(body);
+                expect(obj[0].val).equal(51);
+                expect(obj[1].val).equal(false);
+                done();
+            });
+        });
+    });
+
     after('Test RESTful API: Stop js-controller', function (done) {
         this.timeout(6000);
         setup.stopController(function (normalTerminated) {
