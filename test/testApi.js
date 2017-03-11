@@ -326,7 +326,7 @@ describe('Test RESTful API', function() {
 
     it('Test RESTful API: setValueFromBody(POST) - must set one value', function (done) {
         request({
-            uri: 'http://127.0.0.1:18183/setValueFromBody/?system.adapter.simple-api.upload',
+            uri: 'http://127.0.0.1:18183/setValueFromBody/system.adapter.simple-api.upload',
             method: 'POST',
             body: '55'
         }, function(error, response, body) {

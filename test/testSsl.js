@@ -155,7 +155,7 @@ describe('Test RESTful API SSL', function() {
 
     it('Test RESTful API SSL: setValueFromBody(POST) - must set values', function (done) {
         request({
-            uri: 'https://127.0.0.1:18183/setValueFromBody?user=admin&pass=iobroker&system.adapter.simple-api.upload',
+            uri: 'https://127.0.0.1:18183/setValueFromBody/system.adapter.simple-api.upload?user=admin&pass=iobroker&',
             method: 'POST',
             body:   '55'
         }, function(error, response, body) {
