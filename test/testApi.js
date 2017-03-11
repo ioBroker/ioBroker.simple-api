@@ -338,7 +338,6 @@ describe('Test RESTful API', function() {
             expect(obj[0].val).to.be.equal(55);
             expect(obj[0].id).to.equal('system.adapter.simple-api.upload');
 
-            body = "";
             request('http://127.0.0.1:18183/getBulk/system.adapter.simple-api.upload', function (error, response, body) {
                 console.log('getBulk/system.adapter.simple-api.upload => ' + body);
                 expect(error).to.be.not.ok;
