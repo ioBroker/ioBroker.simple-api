@@ -248,6 +248,7 @@ describe('Test RESTful API as Owner-User', function() {
         }, function(error, response, body) {
             console.log('setValueFromBody/?system.adapter.simple-api.upload => ' + JSON.stringify(body));
             expect(body).to.be.equal('error: permissionError');
+            done();
         });
     });
 
