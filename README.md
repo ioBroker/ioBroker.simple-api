@@ -431,6 +431,11 @@ Get the list of all states for pattern. If no pattern specified all states as JS
 
 
 ## Changelog
+
+### 1.6.0 (2017-06-29)
+* (Apollon77) Optimize Permission handling
+* (Apollon77) add possibility to only allow access to states where user is also owner
+
 ### 1.5.0 (2017-03-10)
 * (greyhound) Add new POST method setValueFromBody
 
