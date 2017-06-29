@@ -22,6 +22,7 @@
             "ru": "simpleAPI adapter settings"
         },
         "Run as:":          {"de": "Laufen unter Anwender:", "ru": "Запустить от пользователя:"},
+        "Allow only when User is Owner:":          {"de": "Nue erlauben wenn Anwender auch Besitzer ist:", "ru": "Allow only when User is Owner:"},
         "IP:":              {"de": "IP:",                        "ru": "IP:"},
         "Port:":            {"de": "Port:",                      "ru": "Порт:"},
         "Secure(HTTPS):":   {"de": "Verschlüsselung(HTTPS):",    "ru": "Шифрование(HTTPS):"},
@@ -205,6 +206,7 @@
         </tr>
         <tr class="no-if-extend"><td><label for="auth" class="translate">Authentication:</label></td><td><input  class="value" id="auth" type="checkbox" /></td></tr>
         <tr class="no-if-extend defaultUser"><td><label for="defaultUser" class="translate">Run as:</label></td><td><select class="value" id="defaultUser"></select></td></tr>
+        <tr class="no-if-extend defaultUser"><td><label for="onlyAllowWhenUserIsOwner" class="translate">Allow only when User is Owner:</label></td><td><input  class="value" id="onlyAllowWhenUserIsOwner" type="checkbox" /></td></tr>
         <tr class="no-if-extend"><td colspan="2">&nbsp;</td></tr>
         <tr class="no-if-extend le-settings"><td colspan="2"><h3 class="translate">Let's Encrypt settings</h3></tr>
         <tr class="no-if-extend le-settings"><td><label for="leEnabled" class="translate">Use Lets Encrypt certificates:</label></td><td><input  class="value" id="leEnabled"   type="checkbox" /></td></tr>
