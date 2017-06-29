@@ -1,11 +1,17 @@
 {
   "name": "iobroker.simple-api",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "RESTful interface for ioBroker.",
   "author": {
     "name": "bluefox",
     "email": "dogafox@gmail.com"
   },
+  "contributors" : [
+      {
+        "name": "Apollon77",
+        "email": "ingo@fischer-ka.de"
+      }
+  ],
   "homepage": "https://github.com/ioBroker/ioBroker.simple-api",
   "keywords": [
     "ioBroker",
