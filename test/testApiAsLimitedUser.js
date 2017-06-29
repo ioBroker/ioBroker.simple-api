@@ -30,8 +30,8 @@ function checkConnectionOfAdapter(cb, counter) {
     });
 }
 
-describe('Test RESTful API as User', function() {
-    before('Test RESTful API as User: Start js-controller', function (_done) {
+describe('Test RESTful API as Owner-User', function() {
+    before('Test RESTful API as Owner-User: Start js-controller', function (_done) {
         this.timeout(600000); // because of first install from npm
         var brokerStarted   = false;
         setup.setupController(function () {
@@ -156,7 +156,7 @@ describe('Test RESTful API as User', function() {
         });
     });
 
-    it('Test RESTful API as User: get - must return value', function (done) {
+    it('Test RESTful API as Owner-User: get - must return value', function (done) {
         request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', function (error, response, body) {
             console.log('get/system.adapter.simple-api.0.alive => ' + body);
             expect(error).to.be.not.ok;
@@ -195,7 +195,7 @@ describe('Test RESTful API as User', function() {
         });
     });
 
-    it('Test RESTful API as User: getPlainValue - must return plain value', function (done) {
+    it('Test RESTful API as Owner-User: getPlainValue - must return plain value', function (done) {
         request('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', function (error, response, body) {
             console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
             expect(error).to.be.not.ok;
@@ -204,7 +204,7 @@ describe('Test RESTful API as User', function() {
         });
     });
 
-    it('Test RESTful API as User: getPlainValue 4 Test-Endpoint - must return plain value', function (done) {
+    it('Test RESTful API as Owner-User: getPlainValue 4 Test-Endpoint - must return plain value', function (done) {
         request('http://127.0.0.1:18183/getPlainValue/javascript.0.test', function (error, response, body) {
             console.log('getPlainValue/javascript.0.test => ' + body);
             expect(error).to.be.not.ok;
@@ -213,7 +213,7 @@ describe('Test RESTful API as User', function() {
         });
     });
 
-    it('Test RESTful API as User: set 4 Test-Endpoint  - must set value', function (done) {
+    it('Test RESTful API as Owner-User: set 4 Test-Endpoint  - must set value', function (done) {
         request('http://127.0.0.1:18183/set/javascript.0.test?val=2', function (error, response, body) {
             console.log('set/javascript.0.test?val=false => ' + body);
             expect(error).to.be.not.ok;
@@ -230,7 +230,7 @@ describe('Test RESTful API as User', function() {
         });
     });
 
-    it('Test RESTful API as User: set - must set value', function (done) {
+    it('Test RESTful API as Owner-User: set - must set value', function (done) {
         request('http://127.0.0.1:18183/set/system.adapter.simple-api.0.alive?val=false', function (error, response, body) {
             console.log('set/system.adapter.simple-api.0.alive?val=false => ' + body);
             expect(error).to.be.not.ok;
@@ -247,7 +247,7 @@ describe('Test RESTful API as User', function() {
         });
     });
 
-    it('Test RESTful API as User: set - must set val', function (done) {
+    it('Test RESTful API as Owner-User: set - must set val', function (done) {
         request('http://127.0.0.1:18183/set/system.adapter.simple-api.0.alive?val=true', function (error, response, body) {
             console.log('set/system.adapter.simple-api.0.alive?val=true => ' + body);
             expect(error).to.be.not.ok;
@@ -264,7 +264,7 @@ describe('Test RESTful API as User', function() {
         });
     });
 
-    it('Test RESTful API as User: toggle - must toggle boolean value to false', function (done) {
+    it('Test RESTful API as Owner-User: toggle - must toggle boolean value to false', function (done) {
         request('http://127.0.0.1:18183/toggle/system.adapter.simple-api.0.alive', function (error, response, body) {
             console.log('toggle/system.adapter.simple-api.0.alive => ' + body);
             expect(error).to.be.not.ok;
@@ -282,7 +282,7 @@ describe('Test RESTful API as User', function() {
         });
     });
 
-    it('Test RESTful API as User: toggle - must toggle boolean value to true', function (done) {
+    it('Test RESTful API as Owner-User: toggle - must toggle boolean value to true', function (done) {
         request('http://127.0.0.1:18183/toggle/system.adapter.simple-api.0.alive', function (error, response, body) {
             console.log('toggle/system.adapter.simple-api.0.alive => ' + body);
             expect(error).to.be.not.ok;
@@ -300,7 +300,7 @@ describe('Test RESTful API as User', function() {
         });
     });
 
-    it('Test RESTful API as User: toggle - must toggle number value to 100', function (done) {
+    it('Test RESTful API as Owner-User: toggle - must toggle number value to 100', function (done) {
         request('http://127.0.0.1:18183/toggle/system.adapter.simple-api.upload', function (error, response, body) {
             console.log('toggle/system.adapter.simple-api.upload => ' + body);
             expect(error).to.be.not.ok;
@@ -335,7 +335,7 @@ describe('Test RESTful API as User', function() {
         });
     });
 
-    it('Test RESTful API as User: setBulk - must set values', function (done) {
+    it('Test RESTful API as Owner-User: setBulk - must set values', function (done) {
         request('http://127.0.0.1:18183/setBulk/?system.adapter.simple-api.upload=50&system.adapter.simple-api.0.alive=false&javascript.0.test=3', function (error, response, body) {
             console.log('setBulk/?system.adapter.simple-api.upload=50&system.adapter.simple-api.0.alive=false&javascript.0.test=3 => ' + body);
             expect(error).to.be.not.ok;
@@ -361,7 +361,7 @@ describe('Test RESTful API as User', function() {
         });
     });
 
-    it('Test RESTful API as User: objects - must return objects', function (done) {
+    it('Test RESTful API as Owner-User: objects - must return objects', function (done) {
         request('http://127.0.0.1:18183/objects?pattern=system.adapter.*', function (error, response, body) {
             console.log('objects?pattern=system.adapter.* => ' + body);
             expect(body).to.be.equal('error: permissionError');
@@ -369,7 +369,7 @@ describe('Test RESTful API as User', function() {
         });
     });
 
-    it('Test RESTful API as User: objects - must return objects', function (done) {
+    it('Test RESTful API as Owner-User: objects - must return objects', function (done) {
         request('http://127.0.0.1:18183/objects?pattern=system.adapter.*&type=instance', function (error, response, body) {
             console.log('objects?pattern=system.adapter.* => ' + body);
             expect(body).to.be.equal('error: permissionError');
@@ -377,7 +377,7 @@ describe('Test RESTful API as User', function() {
         });
     });
 
-    it('Test RESTful API as User: states - must return states', function (done) {
+    it('Test RESTful API as Owner-User: states - must return states', function (done) {
         request('http://127.0.0.1:18183/states?pattern=system.adapter.*', function (error, response, body) {
             console.log('states?pattern=system.adapter.* => ' + body);
             expect(body).to.be.equal('error: permissionError');
@@ -385,7 +385,7 @@ describe('Test RESTful API as User', function() {
         });
     });
 
-    it('Test RESTful API as User: setBulk(POST) - must set values', function (done) {
+    it('Test RESTful API as Owner-User: setBulk(POST) - must set values', function (done) {
 
         request({
             uri: 'http://127.0.0.1:18183/setBulk',
@@ -416,7 +416,7 @@ describe('Test RESTful API as User', function() {
         });
     });
 
-    it('Test RESTful API as User: setBulk(POST-GET-Mix) - must set values', function (done) {
+    it('Test RESTful API as Owner-User: setBulk(POST-GET-Mix) - must set values', function (done) {
 
         request({
             uri: 'http://127.0.0.1:18183/setBulk?system.adapter.simple-api.upload=51&system.adapter.simple-api.0.alive=false',
@@ -444,7 +444,7 @@ describe('Test RESTful API as User', function() {
         });
     });
 
-    it('Test RESTful API as User: setValueFromBody(POST) - must set one value', function (done) {
+    it('Test RESTful API as Owner-User: setValueFromBody(POST) - must set one value', function (done) {
         request({
             uri: 'http://127.0.0.1:18183/setValueFromBody/system.adapter.simple-api.upload',
             method: 'POST',
@@ -468,7 +468,7 @@ describe('Test RESTful API as User', function() {
         });
     });
 
-    after('Test RESTful API as User: Stop js-controller', function (done) {
+    after('Test RESTful API as Owner-User: Stop js-controller', function (done) {
         this.timeout(6000);
         setup.stopController(function (normalTerminated) {
             console.log('Adapter normal terminated: ' + normalTerminated);
