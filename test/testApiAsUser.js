@@ -207,7 +207,7 @@ describe('Test RESTful API', function() {
         request('http://127.0.0.1:18183/getPlainValue/javascript.0.test', function (error, response, body) {
             console.log('getPlainValue/javascript.0.test => ' + body);
             expect(error).to.be.not.ok;
-            expect(body).equal(1);
+            expect(body).equal('1');
             done();
         });
     });
