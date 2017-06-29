@@ -58,6 +58,7 @@
         "certPrivate":              "",
         "certChained":              "",
         "defaultUser":              "admin",
+        "onlyAllowWhenUserIsOwner": false,
         "webInstance":              "",
 
         "leEnabled":                false,
