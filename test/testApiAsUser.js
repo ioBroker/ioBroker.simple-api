@@ -75,7 +75,7 @@ describe('Test RESTful API', function() {
                   },
                   "state": {
                     "list": false,
-                    "read": false,
+                    "read": true,
                     "write": true,
                     "create": false,
                     "delete": false
