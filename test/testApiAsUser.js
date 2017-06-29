@@ -59,7 +59,7 @@ describe('Test RESTful API', function() {
         checkConnectionOfAdapter(function (res) {
             if (res) console.log(res);
             expect(res).not.to.be.equal('Cannot check connection');
-            context.adapter.setForeignObject('system.group.writer', {
+            objects.setObject('system.group.writer', {
               "common": {
                 "name": "Writer",
                 "desc": "",
@@ -110,7 +110,7 @@ describe('Test RESTful API', function() {
             }, function (err) {
                 expect(err).to.be.null;
 
-                context.adapter.setForeignObject('system.user.myuser', {
+                objects.setObject('system.user.myuser', {
                     "type": "user",
                     "common": {
                         "name": "myuser",
@@ -125,7 +125,7 @@ describe('Test RESTful API', function() {
                     }
                 }, function (err) {
                     expect(err).to.be.null;
-                    context.objects.setObject('javascript.0.test', {
+                    objects.setObject('javascript.0.test', {
                         common: {
                             name: 'test',
                             type: 'number',
@@ -145,7 +145,10 @@ describe('Test RESTful API', function() {
                         }
                     }, function (err) {
                         expect(err).to.be.null;
-                        done();
+                        states.setState('javascript.0.test',1, function(err) {
+                            expect(err).to.be.null;
+                            done();
+                        });
                     });
                 });
             });
