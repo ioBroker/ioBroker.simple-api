@@ -4,9 +4,9 @@
         "version": "1.6.0",
         "news": {
             "1.6.0": {
-                "en": 				"Optimize Permission handling and add possibility to only allow access to states where user is also owner",
-                "de": 				"Berechtigungsbehandlung optimiert und Möglichkeit eingebaut nur den Zugriff auf Zustände zu erlauben wo der Benutzer auch Besitzer ist",
-                "ru": 				"Optimize Permission handling and add possibility to only allow access to states where user is also owner"
+                "en": 				"Optimize Permission handling and add possibility to only allow access to states where user is also owner (needs js-contrioller 1.1.1!), fix handling of url-encoded values",
+                "de": 				"Berechtigungsbehandlung optimiert und Möglichkeit eingebaut nur den Zugriff auf Zustände zu erlauben wo der Benutzer auch Besitzer ist (benötigt js-controller 1.1.1), Behandlung von URL-kodierten Werten korrigiert",
+                "ru": 				"Optimize Permission handling and add possibility to only allow access to states where user is also owner (needs js-contrioller 1.1.1!), fix handling of url-encoded values"
             },
             "1.5.1": {
                 "en": 				"Add new POST method setValueFromBody",

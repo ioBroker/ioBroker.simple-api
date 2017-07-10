@@ -432,9 +432,10 @@ Get the list of all states for pattern. If no pattern specified all states as JS
 
 ## Changelog
 
-### 1.6.0 (2017-06-29)
+### 1.6.0 (2017-07-10)
+* (Apollon77) Fix handling of URL-encoded values, they are now decoded properly
 * (Apollon77) Optimize Permission handling
-* (Apollon77) add possibility to only allow access to states where user is also owner
+* (Apollon77) add possibility to only allow access to states where user is also owner, finally works correct with js-controller 1.1.1!
 
 ### 1.5.0 (2017-03-10)
 * (greyhound) Add new POST method setValueFromBody
