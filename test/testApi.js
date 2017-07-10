@@ -58,7 +58,23 @@ describe('Test RESTful API', function() {
         checkConnectionOfAdapter(function (res) {
             if (res) console.log(res);
             expect(res).not.to.be.equal('Cannot check connection');
-            done();
+            objects.setObject('javascript.0.test-string', {
+                common: {
+                    name: 'test',
+                    type: 'string',
+                    role: 'value',
+                    def: ''
+                },
+                native: {
+                },
+                type: 'state'
+            }, function (err) {
+                expect(err).to.be.null;
+                states.setState('javascript.0.test-string','', function(err) {
+                    expect(err).to.be.null;
+                    done();
+                });
+            });
         });
     });
 
@@ -122,6 +138,40 @@ describe('Test RESTful API', function() {
                 console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
                 expect(error).to.be.not.ok;
                 expect(body).equal('false');
+                done();
+            });
+        });
+    });
+
+    it('Test RESTful API: set - must set easy string value', function (done) {
+        request('http://127.0.0.1:18183/set/javascript.0.test-string?val=bla', function (error, response, body) {
+            console.log('set/javascript.0.test-string?val=bla => ' + body);
+            expect(error).to.be.not.ok;
+            var obj = JSON.parse(body);
+            expect(obj).to.be.ok;
+            expect(obj.val).to.be.false;
+            expect(obj.id).to.equal('javascript.0.test-string');
+            request('http://127.0.0.1:18183/getPlainValue/javascript.0.test-string', function (error, response, body) {
+                console.log('getPlainValue/javascript.0.test-string => ' + body);
+                expect(error).to.be.not.ok;
+                expect(body).equal('bla');
+                done();
+            });
+        });
+    });
+
+    it('Test RESTful API: set - must set encoded string value', function (done) {
+        request('http://127.0.0.1:18183/set/javascript.0.test-string?val=bla%26fasel%2efoo%3D', function (error, response, body) {
+            console.log('set/javascript.0.test-string?val=bla%20fasel%2efoo => ' + body);
+            expect(error).to.be.not.ok;
+            var obj = JSON.parse(body);
+            expect(obj).to.be.ok;
+            expect(obj.val).to.be.false;
+            expect(obj.id).to.equal('javascript.0.test-string');
+            request('http://127.0.0.1:18183/getPlainValue/javascript.0.test-string', function (error, response, body) {
+                console.log('getPlainValue/javascript.0.test-string => ' + body);
+                expect(error).to.be.not.ok;
+                expect(body).equal('bla&fasel.foo=');
                 done();
             });
         });
