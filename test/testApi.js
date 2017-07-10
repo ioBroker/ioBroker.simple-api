@@ -149,7 +149,7 @@ describe('Test RESTful API', function() {
             expect(error).to.be.not.ok;
             var obj = JSON.parse(body);
             expect(obj).to.be.ok;
-            expect(obj.val).to.be.false;
+            expect(obj.val).equal('bla');
             expect(obj.id).to.equal('javascript.0.test-string');
             request('http://127.0.0.1:18183/getPlainValue/javascript.0.test-string', function (error, response, body) {
                 console.log('getPlainValue/javascript.0.test-string => ' + body);
@@ -166,7 +166,7 @@ describe('Test RESTful API', function() {
             expect(error).to.be.not.ok;
             var obj = JSON.parse(body);
             expect(obj).to.be.ok;
-            expect(obj.val).to.be.false;
+            expect(obj.val).equal('bla&fasel.foo=');
             expect(obj.id).to.equal('javascript.0.test-string');
             request('http://127.0.0.1:18183/getPlainValue/javascript.0.test-string', function (error, response, body) {
                 console.log('getPlainValue/javascript.0.test-string => ' + body);
