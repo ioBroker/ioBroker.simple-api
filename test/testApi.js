@@ -141,7 +141,7 @@ describe('Test RESTful API', function() {
                 request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', function (error, response, body) {
                     console.log('get/system.adapter.simple-api.0.alive => ' + body);
                     expect(error).to.be.not.ok;
-                    expect(body).equal('false');
+                    expect(JSON.parse(body).val).equal(false);
                     done();
                 });
             });
@@ -163,7 +163,7 @@ describe('Test RESTful API', function() {
                 request('http://127.0.0.1:18183/get/javascript.0.test-string', function (error, response, body) {
                     console.log('get/javascript.0.test-string => ' + body);
                     expect(error).to.be.not.ok;
-                    expect(body).equal('bla');
+                    expect(JSON.parse(body).val).equal('bla');
                     done();
                 });
             });
@@ -185,7 +185,7 @@ describe('Test RESTful API', function() {
                 request('http://127.0.0.1:18183/get/javascript.0.test-string', function (error, response, body) {
                     console.log('get/javascript.0.test-string => ' + body);
                     expect(error).to.be.not.ok;
-                    expect(body).equal('bla&fasel.foo=hummer hey');
+                    expect(JSON.parse(body).val).equal('bla&fasel.foo=hummer hey');
                     done();
                 });
             });
