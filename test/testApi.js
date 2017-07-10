@@ -161,17 +161,17 @@ describe('Test RESTful API', function() {
     });
 
     it('Test RESTful API: set - must set encoded string value', function (done) {
-        request('http://127.0.0.1:18183/set/javascript.0.test-string?val=bla%26fasel%2efoo%3D', function (error, response, body) {
+        request('http://127.0.0.1:18183/set/javascript.0.test-string?val=bla%26fasel%2efoo%3Dhummer+hey', function (error, response, body) {
             console.log('set/javascript.0.test-string?val=bla%20fasel%2efoo => ' + body);
             expect(error).to.be.not.ok;
             var obj = JSON.parse(body);
             expect(obj).to.be.ok;
-            expect(obj.val).equal('bla&fasel.foo=');
+            expect(obj.val).equal('bla&fasel.foo=hummer hey');
             expect(obj.id).to.equal('javascript.0.test-string');
             request('http://127.0.0.1:18183/getPlainValue/javascript.0.test-string', function (error, response, body) {
                 console.log('getPlainValue/javascript.0.test-string => ' + body);
                 expect(error).to.be.not.ok;
-                expect(body).equal('bla&fasel.foo=');
+                expect(body).equal('bla&fasel.foo=hummer hey');
                 done();
             });
         });
