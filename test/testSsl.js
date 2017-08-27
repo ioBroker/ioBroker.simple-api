@@ -34,6 +34,8 @@ function checkConnectionOfAdapter(cb, counter) {
 describe('Test RESTful API SSL', function() {
     before('Test RESTful API SSL: Start js-controller', function (_done) {
         this.timeout(600000); // because of first install from npm
+        setup.adapterStarted = false;
+
         var brokerStarted   = false;
         setup.setupController(function () {
             var config = setup.getAdapterConfig();

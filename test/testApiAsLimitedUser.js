@@ -33,6 +33,8 @@ function checkConnectionOfAdapter(cb, counter) {
 describe('Test RESTful API as Owner-User', function() {
     before('Test RESTful API as Owner-User: Start js-controller', function (_done) {
         this.timeout(600000); // because of first install from npm
+        setup.adapterStarted = false;
+
         var brokerStarted   = false;
         setup.setupController(function () {
             var config = setup.getAdapterConfig();

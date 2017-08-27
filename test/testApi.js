@@ -35,6 +35,7 @@ describe('Test RESTful API', function() {
         this.timeout(600000); // because of first install from npm
         var brokerStarted   = false;
         setup.setupController(function () {
+            setup.adapterStarted = false;
             var config = setup.getAdapterConfig();
             // enable adapter
             config.common.enabled = true;
