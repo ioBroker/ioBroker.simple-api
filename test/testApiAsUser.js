@@ -385,7 +385,7 @@ describe('Test RESTful API as User', function() {
         request('http://127.0.0.1:18183/objects?pattern=system.adapter.*', function (error, response, body) {
             console.log('objects?pattern=system.adapter.* => ' + body);
             expect(body).to.be.equal('error: permissionError');
-            expect(response.statusCode).to.equal(500);
+            expect(response.statusCode).to.equal(401);
             done();
         });
     });
@@ -394,7 +394,7 @@ describe('Test RESTful API as User', function() {
         request('http://127.0.0.1:18183/objects?pattern=system.adapter.*&type=instance', function (error, response, body) {
             console.log('objects?pattern=system.adapter.* => ' + body);
             expect(body).to.be.equal('error: permissionError');
-            expect(response.statusCode).to.equal(500);
+            expect(response.statusCode).to.equal(401);
             done();
         });
     });
@@ -403,7 +403,7 @@ describe('Test RESTful API as User', function() {
         request('http://127.0.0.1:18183/states?pattern=system.adapter.*', function (error, response, body) {
             console.log('states?pattern=system.adapter.* => ' + body);
             expect(body).to.be.equal('error: permissionError');
-            expect(response.statusCode).to.equal(500);
+            expect(response.statusCode).to.equal(401);
             done();
         });
     });
