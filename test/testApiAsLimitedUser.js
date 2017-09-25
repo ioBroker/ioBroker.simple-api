@@ -163,6 +163,7 @@ describe('Test RESTful API as Owner-User', function() {
             console.log('get/system.adapter.simple-api.0.alive => ' + body);
             expect(error).to.be.not.ok;
             expect(body).to.be.equal('error: permissionError');
+            expect(response.statusCode).to.equal(500);
             done();
         });
     });
@@ -171,6 +172,7 @@ describe('Test RESTful API as Owner-User', function() {
         request('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', function (error, response, body) {
             console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
             expect(body).to.be.equal('error: permissionError');
+            expect(response.statusCode).to.equal(500);
             done();
         });
     });
@@ -180,6 +182,7 @@ describe('Test RESTful API as Owner-User', function() {
             console.log('getPlainValue/javascript.0.test => ' + body);
             expect(error).to.be.not.ok;
             expect(body).equal('1');
+            expect(response.statusCode).to.equal(200);
             done();
         });
     });
@@ -192,10 +195,12 @@ describe('Test RESTful API as Owner-User', function() {
             expect(obj).to.be.ok;
             expect(obj.val).to.be.equal(2);
             expect(obj.id).to.equal('javascript.0.test');
+            expect(response.statusCode).to.equal(200);
             request('http://127.0.0.1:18183/getPlainValue/javascript.0.test', function (error, response, body) {
                 console.log('getPlainValue/javascript.0.test => ' + body);
                 expect(error).to.be.not.ok;
                 expect(body).equal('2');
+                expect(response.statusCode).to.equal(200);
                 done();
             });
         });
@@ -205,6 +210,7 @@ describe('Test RESTful API as Owner-User', function() {
         request('http://127.0.0.1:18183/set/system.adapter.simple-api.0.alive?val=false', function (error, response, body) {
             console.log('set/system.adapter.simple-api.0.alive?val=false => ' + body);
             expect(body).to.be.equal('error: permissionError');
+            expect(response.statusCode).to.equal(500);
             done();
         });
     });
@@ -213,6 +219,7 @@ describe('Test RESTful API as Owner-User', function() {
         request('http://127.0.0.1:18183/set/system.adapter.simple-api.0.alive?val=true', function (error, response, body) {
             console.log('set/system.adapter.simple-api.0.alive?val=true => ' + body);
             expect(body).to.be.equal('error: permissionError');
+            expect(response.statusCode).to.equal(500);
             done();
         });
     });
@@ -222,6 +229,7 @@ describe('Test RESTful API as Owner-User', function() {
         request('http://127.0.0.1:18183/objects?pattern=system.adapter.*', function (error, response, body) {
             console.log('objects?pattern=system.adapter.* => ' + body);
             expect(body).to.be.equal('error: permissionError');
+            expect(response.statusCode).to.equal(500);
             done();
         });
     });
@@ -230,6 +238,7 @@ describe('Test RESTful API as Owner-User', function() {
         request('http://127.0.0.1:18183/objects?pattern=system.adapter.*&type=instance', function (error, response, body) {
             console.log('objects?pattern=system.adapter.* => ' + body);
             expect(body).to.be.equal('error: permissionError');
+            expect(response.statusCode).to.equal(500);
             done();
         });
     });
@@ -238,6 +247,7 @@ describe('Test RESTful API as Owner-User', function() {
         request('http://127.0.0.1:18183/states?pattern=system.adapter.*', function (error, response, body) {
             console.log('states?pattern=system.adapter.* => ' + body);
             expect(body).to.be.equal('error: permissionError');
+            expect(response.statusCode).to.equal(500);
             done();
         });
     });
@@ -250,6 +260,7 @@ describe('Test RESTful API as Owner-User', function() {
         }, function(error, response, body) {
             console.log('setValueFromBody/?system.adapter.simple-api.upload => ' + JSON.stringify(body));
             expect(body).to.be.equal('error: permissionError');
+            expect(response.statusCode).to.equal(500);
             done();
         });
     });
