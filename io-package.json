@@ -1,8 +1,13 @@
 {
     "common": {
         "name":                     "simple-api",
-        "version": "1.6.0",
+        "version": "1.6.1",
         "news": {
+            "1.6.1": {
+                "en": 				"Fix statuscode for setBulk and optimize permission errors",
+                "de": 				"Statuscode für setBulk korrigiert und Rechte-Fehler optimiert",
+                "ru": 				"Fix statuscode for setBulk and optimize permission errors"
+            },
             "1.6.0": {
                 "en": 				"Optimize Permission handling and add possibility to only allow access to states where user is also owner (needs js-contrioller 1.1.1!), fix handling of url-encoded values",
                 "de": 				"Berechtigungsbehandlung optimiert und Möglichkeit eingebaut nur den Zugriff auf Zustände zu erlauben wo der Benutzer auch Besitzer ist (benötigt js-controller 1.1.1), Behandlung von URL-kodierten Werten korrigiert",
