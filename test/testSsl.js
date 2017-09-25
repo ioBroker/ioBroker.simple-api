@@ -105,6 +105,7 @@ describe('Test RESTful API SSL', function() {
             expect(obj.native).to.be.ok;
             expect(obj.common.name).to.equal("simple-api.0.alive");
             expect(obj.common.role).to.equal("indicator.state");
+            expect(response.statusCode).to.equal(200);
             done();
         });
     });
@@ -143,6 +144,7 @@ describe('Test RESTful API SSL', function() {
             expect(obj[0].id).to.equal('system.adapter.simple-api.upload');
             expect(obj[1].val).to.be.equal(false);
             expect(obj[1].id).to.equal('system.adapter.simple-api.0.alive');
+            expect(response.statusCode).to.equal(200);
 
             request('https://127.0.0.1:18183/getBulk/system.adapter.simple-api.upload,system.adapter.simple-api.0.alive?user=admin&pass=iobroker', function (error, response, body) {
                 console.log('getBulk/system.adapter.simple-api.upload,system.adapter.simple-api.0.alive => ' + body);
@@ -150,6 +152,7 @@ describe('Test RESTful API SSL', function() {
                 var obj = JSON.parse(body);
                 expect(obj[0].val).equal(50);
                 expect(obj[1].val).equal(false);
+                expect(response.statusCode).to.equal(200);
                 done();
             });
         });
@@ -168,6 +171,7 @@ describe('Test RESTful API SSL', function() {
             expect(obj).to.be.ok;
             expect(obj[0].val).to.be.equal(55);
             expect(obj[0].id).to.equal('system.adapter.simple-api.upload');
+            expect(response.statusCode).to.equal(200);
 
             body = "";
             request('https://127.0.0.1:18183/getBulk/system.adapter.simple-api.upload?user=admin&pass=iobroker', function (error, response, body) {
@@ -175,6 +179,7 @@ describe('Test RESTful API SSL', function() {
                 expect(error).to.be.not.ok;
                 var obj = JSON.parse(body);
                 expect(obj[0].val).equal(55);
+                expect(response.statusCode).to.equal(200);
                 done();
             });
         });
