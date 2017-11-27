@@ -108,7 +108,7 @@ describe('Test RESTful API', function() {
             expect(obj.val).to.be.true;
             expect(obj.ack).to.be.true;
             expect(obj.ts).to.be.ok;
-            expect(obj.from).to.equal("system.adapter.simple-api.0");
+            //expect(obj.from).to.equal("system.adapter.simple-api.0");
             expect(obj.type).to.equal("state");
             expect(obj._id).to.equal("system.adapter.simple-api.0.alive");
             expect(obj.common).to.be.ok;
