@@ -1,8 +1,13 @@
 {
     "common": {
         "name":                     "simple-api",
-        "version": "1.6.1",
+        "version": "1.6.2",
         "news": {
+            "1.6.2": {
+                "en": 				"Fix decoding problems",
+                "de": 				"Dekodierungsprobleme behoben",
+                "ru": 				"Fix decoding problems"
+            },
             "1.6.1": {
                 "en": 				"Fix statuscode for setBulk and optimize permission errors",
                 "de": 				"Statuscode für setBulk korrigiert und Rechte-Fehler optimiert",

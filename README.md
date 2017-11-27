@@ -432,6 +432,9 @@ Get the list of all states for pattern. If no pattern specified all states as JS
 
 ## Changelog
 
+### 1.6.2 (2017-11-27)
+* (Apollon77) Fix decoding problems
+
 ### 1.6.1 (2017-09-25)
 * (Apollon77) Fix statuscode for setBulk and optimize permission errors
 
