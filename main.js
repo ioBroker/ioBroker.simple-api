@@ -9,7 +9,7 @@ var LE        = require(utils.controllerDir + '/lib/letsencrypt.js');
 var webServer = null;
 var fs        = null;
 
-var adapter = utils.adapter({
+var adapter = new utils.Adapter({
     name: 'simple-api',
     stateChange: function (id, state) {
         if (webServer && webServer.api) {
