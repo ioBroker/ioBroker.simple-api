@@ -304,7 +304,7 @@ describe('Test RESTful API', function() {
     });
 
     it('Test RESTful API: setBulk - must set values', function (done) {
-        request('http://127.0.0.1:18183/setBulk/?system.adapter.simple-api.upload=50&system.adapter.simple-api.0.alive=false', function (error, response, body) {
+        request('http://127.0.0.1:18183/setBulk?system.adapter.simple-api.upload=50&system.adapter.simple-api.0.alive=false', function (error, response, body) {
             console.log('setBulk/?system.adapter.simple-api.upload=50&system.adapter.simple-api.0.alive=false => ' + body);
             expect(error).to.be.not.ok;
 
