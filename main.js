@@ -99,7 +99,10 @@ function initWebServer(settings) {
         settings:  settings
     };
 
+    settings.port = parseInt(settings.port, 10);
+
     if (settings.port) {
+
         if (settings.secure && !adapter.config.certificates) return null;
 
         server.server = LE.createServer(requestProcessor, settings, adapter.config.certificates, adapter.config.leConfig, adapter.log);
@@ -111,7 +114,7 @@ function initWebServer(settings) {
 
     if (server.server) {
         adapter.getPort(settings.port, function (port) {
-            if (port != settings.port && !adapter.config.findNextPort) {
+            if (port !== settings.port && !adapter.config.findNextPort) {
                 adapter.log.error('port ' + settings.port + ' already in use');
                 process.exit(1);
             }
