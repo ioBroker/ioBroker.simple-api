@@ -149,6 +149,7 @@ describe('Test RESTful API as Owner-User', function() {
                     }, function (err) {
                         expect(err).to.be.null;
                         states.setState('javascript.0.test',1, function(err) {
+                            console.log('END javascript.0.test ' + err);
                             expect(err).to.be.null;
                             done();
                         });
@@ -159,6 +160,7 @@ describe('Test RESTful API as Owner-User', function() {
     });
 
     it('Test RESTful API as Owner-User: get - must return value', function (done) {
+        console.log('START get/system.adapter.simple-api.0.alive');
         request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', function (error, response, body) {
             console.log('get/system.adapter.simple-api.0.alive => ' + body);
             expect(error).to.be.not.ok;
