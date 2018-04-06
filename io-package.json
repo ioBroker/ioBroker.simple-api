@@ -1,7 +1,7 @@
 {
     "common": {
         "name":                     "simple-api",
-        "version": "1.6.2",
+        "version": "1.6.3",
         "news": {
             "1.6.2": {
                 "en": 				"Fix decoding problems",
