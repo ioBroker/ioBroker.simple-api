@@ -12,7 +12,7 @@ install:
   - ps: 'Install-Product node $env:nodejs_version $env:platform'
   - npm install
   - npm install winston@2.3.1
-  - 'npm install https://github.com/Apollon77/ioBroker.js-controller/tarball/master --production'
+  - 'npm install https://github.com/ioBroker/ioBroker.js-controller/tarball/master --production'
 test_script:
   - echo %cd%
   - node --version
