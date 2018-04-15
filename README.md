@@ -432,6 +432,9 @@ Get the list of all states for pattern. If no pattern specified all states as JS
 
 ## Changelog
 
+### 1.6.3 (2018-04-15)
+* (Apollon77) Return used character encoding (UTF-8)
+
 ### 1.6.2 (2017-11-27)
 * (Apollon77) Fix decoding problems
 

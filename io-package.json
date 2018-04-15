@@ -3,6 +3,17 @@
         "name":                     "simple-api",
         "version": "1.6.3",
         "news": {
+            "1.6.3": {
+                "en": "Return used character encoding (UTF-8)",
+                "de": "Zeichencodierung zurückgegeben (UTF-8)",
+                "ru": "Возвращаемое кодирование символов (UTF-8)",
+                "pt": "Retornar a codificação de caracteres usados ​​(UTF-8)",
+                "nl": "Gebruikte tekencodering retourneren (UTF-8)",
+                "fr": "Renvoie le codage de caractères utilisé (UTF-8)",
+                "it": "Restituisci codifica caratteri usati (UTF-8)",
+                "es": "Devuelve la codificación de caracteres usados ​​(UTF-8)",
+                "pl": "Zwróć używane kodowanie znaków (UTF-8)"
+            },
             "1.6.2": {
                 "en": 				"Fix decoding problems",
                 "de": 				"Dekodierungsprobleme behoben",
