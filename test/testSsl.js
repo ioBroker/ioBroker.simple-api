@@ -150,8 +150,8 @@ describe('Test RESTful API SSL', function() {
                 console.log('getBulk/system.adapter.simple-api.upload,system.adapter.simple-api.0.alive => ' + body);
                 expect(error).to.be.not.ok;
                 var obj = JSON.parse(body);
-                expect(obj[0].val).equal(50);
-                expect(obj[1].val).equal(false);
+                expect(obj['system.adapter.simple-api.upload'].val).equal(50);
+                expect(obj['system.adapter.simple-api.0.alive'].val).equal(false);
                 expect(response.statusCode).to.equal(200);
                 done();
             });
@@ -178,7 +178,7 @@ describe('Test RESTful API SSL', function() {
                 console.log('getBulk/system.adapter.simple-api.upload => ' + body);
                 expect(error).to.be.not.ok;
                 var obj = JSON.parse(body);
-                expect(obj[0].val).equal(55);
+                expect(obj['system.adapter.simple-api.upload'].val).equal(55);
                 expect(response.statusCode).to.equal(200);
                 done();
             });
