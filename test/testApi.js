@@ -320,8 +320,8 @@ describe('Test RESTful API', function() {
                 console.log('getBulk/system.adapter.simple-api.upload,system.adapter.simple-api.0.alive => ' + body);
                 expect(error).to.be.not.ok;
                 var obj = JSON.parse(body);
-                expect(obj[0].val).equal(50);
-                expect(obj[1].val).equal(false);
+                expect(obj['system.adapter.simple-api.upload'].val).equal(50);
+                expect(obj['system.adapter.simple-api.0.alive'].val).equal(false);
                 expect(response.statusCode).to.equal(200);
                 done();
             });
@@ -385,9 +385,9 @@ describe('Test RESTful API', function() {
                 console.log('getBulk/system.adapter.simple-api.upload,system.adapter.simple-api.0.alive,javascript.0.test-string => ' + body);
                 expect(error).to.be.not.ok;
                 var obj = JSON.parse(body);
-                expect(obj[0].val).equal(50);
-                expect(obj[1].val).equal(false);
-                expect(obj[2].val).equal('bla&fasel.foo=hummer hey');
+                expect(obj['system.adapter.simple-api.upload'].val).equal(50);
+                expect(obj['system.adapter.simple-api.0.alive'].val).equal(false);
+                expect(obj['javascript.0.test-string'].val).equal('bla&fasel.foo=hummer hey');
                 expect(response.statusCode).to.equal(200);
                 done();
             });
@@ -416,8 +416,8 @@ describe('Test RESTful API', function() {
                 console.log('getBulk/system.adapter.simple-api.upload,system.adapter.simple-api.0.alive => ' + body);
                 expect(error).to.be.not.ok;
                 var obj = JSON.parse(body);
-                expect(obj[0].val).equal(51);
-                expect(obj[1].val).equal(false);
+                expect(obj['system.adapter.simple-api.upload'].val).equal(51);
+                expect(obj['system.adapter.simple-api.0.alive'].val).equal(false);
                 expect(response.statusCode).to.equal(200);
                 done();
             });
@@ -443,7 +443,7 @@ describe('Test RESTful API', function() {
                 console.log('getBulk/system.adapter.simple-api.upload => ' + body);
                 expect(error).to.be.not.ok;
                 var obj = JSON.parse(body);
-                expect(obj[0].val).equal(55);
+                expect(obj['system.adapter.simple-api.upload'].val).equal(55);
                 expect(response.statusCode).to.equal(200);
                 done();
             });
