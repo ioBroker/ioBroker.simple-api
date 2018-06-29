@@ -1,8 +1,19 @@
 {
     "common": {
-        "name":                     "simple-api",
-        "version": "1.6.3",
+        "name": "simple-api",
+        "version": "2.0.0",
         "news": {
+            "2.0.0": {
+                "en": "BREAKING CHANGE: getBulk is returning data in a different structure",
+                "de": "BREAKING CHANGE: getBulk gibt Daten in einer anderen Struktur zurück",
+                "ru": "BREAKING CHANGE: getBulk возвращает данные в другой структуре",
+                "pt": "BREAKING CHANGE: o getBulk está retornando dados em uma estrutura diferente",
+                "nl": "BREAKING CHANGE: getBulk retourneert gegevens in een andere structuur",
+                "fr": "BREAKING CHANGE: getBulk renvoie des données dans une structure différente",
+                "it": "BREAKING CHANGE: getBulk restituisce i dati in una struttura diversa",
+                "es": "BREAKING CHANGE: getBulk está devolviendo datos en una estructura diferente",
+                "pl": "ZMIANA ZMIAN: getBulk zwraca dane w innej strukturze"
+            },
             "1.6.3": {
                 "en": "Return used character encoding (UTF-8)",
                 "de": "Zeichencodierung zurückgegeben (UTF-8)",

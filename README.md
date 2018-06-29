@@ -70,7 +70,7 @@ Result:
 ```
 
 ### getBulk
-    get many states with one request
+    get many states with one request, returned as object with ID as key and val/ts as subobject
 
 ### set
 Call e.g.:
@@ -236,16 +236,16 @@ Always the JSON array will be returned.
 <pre>http://ip:8087/getBulk/admin.0.memHeapTotal,admin.0.memHeapUsed/?prettyPrint</pre>
 
 <pre>
-  [
-    {
-      "val": 31.19,
-      "ts": 1423154754
-    },
-    {
-      "val": 15.6,
-      "ts": 1423154754
-    }
-  ]
+  {
+      "admin.0.memHeapTotal": {
+          "val": 31.19,
+          "ts": 1423154754
+      },
+      "admin.0.memHeapUsed": {
+          "val": 15.6,
+          "ts": 1423154754
+      }
+  }
 </pre>
 
 ### set
@@ -431,6 +431,9 @@ Get the list of all states for pattern. If no pattern specified all states as JS
 
 
 ## Changelog
+
+### 2.0.0 (2018-06-29)
+* (Giermann) BREAKING CHANGE: getBulk is returning data in a different structure
 
 ### 1.6.3 (2018-04-15)
 * (Apollon77) Return used character encoding (UTF-8)
