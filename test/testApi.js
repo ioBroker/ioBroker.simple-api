@@ -113,7 +113,7 @@ describe('Test RESTful API', function() {
             expect(obj._id).to.equal("system.adapter.simple-api.0.alive");
             expect(obj.common).to.be.ok;
             expect(obj.native).to.be.ok;
-            expect(obj.common.name).to.equal("simple-api.0.alive");
+            expect(obj.common.name).to.equal("simple-api.0 alive");
             expect(obj.common.role).to.equal("indicator.state");
             expect(response.statusCode).to.equal(200);
             done();
@@ -124,7 +124,7 @@ describe('Test RESTful API', function() {
         request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive%23test', function (error, response, body) {
             console.log('get/system.adapter.simple-api.0.alive%23test => ' + body);
             expect(error).to.be.not.ok;
-            expect(body).to.be.equal('error: datapoint "system.adapter.simple-api.0.alive#test" not found');
+            expect(body).to.be.equal('"error: datapoint \\"system.adapter.simple-api.0.alive#test\\" not found"');
             expect(response.statusCode).to.equal(500);
             done();
         });

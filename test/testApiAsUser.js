@@ -190,7 +190,7 @@ describe('Test RESTful API as User', function() {
             expect(obj._id).to.equal("system.adapter.simple-api.0.alive");
             expect(obj.common).to.be.ok;
             expect(obj.native).to.be.ok;
-            expect(obj.common.name).to.equal("simple-api.0.alive");
+            expect(obj.common.name).to.equal("simple-api.0 alive");
             expect(obj.common.role).to.equal("indicator.state");
             expect(response.statusCode).to.equal(200);
             done();
