@@ -1,8 +1,19 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.0.0",
+        "version": "2.0.1",
         "news": {
+            "2.0.1": {
+                "en": "Fix decoding of #",
+                "de": "Decodierung von # korrigieren",
+                "ru": "Исправить декодирование #",
+                "pt": "Corrigir a decodificação de #",
+                "nl": "Fix decoding van #",
+                "fr": "Correction du décodage de #",
+                "it": "Correggere la decodificazione di #",
+                "es": "Fijar la decodificación de #",
+                "pl": "Napraw dekodowanie #"
+            },
             "2.0.0": {
                 "en": "BREAKING CHANGE: getBulk is returning data in a different structure",
                 "de": "BREAKING CHANGE: getBulk gibt Daten in einer anderen Struktur zurück",
