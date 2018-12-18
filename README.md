@@ -432,7 +432,7 @@ Get the list of all states for pattern. If no pattern specified all states as JS
 
 ## Changelog
 
-### 2.0.1 (2018-12-17)
+### 2.0.2 (2018-12-17)
 * (Apollon77) fix decoding for state Ids with # in it
 
 ### 2.0.0 (2018-06-29)

@@ -1,6 +1,6 @@
 {
   "name": "iobroker.simple-api",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "RESTful interface for ioBroker.",
   "author": {
     "name": "bluefox",

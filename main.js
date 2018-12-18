@@ -2,44 +2,53 @@
 /*jslint node: true */
 'use strict';
 
-const utils     = require(__dirname + '/lib/utils'); // Get common adapter utils
-const SimpleAPI = require(__dirname + '/lib/simpleapi.js');
-const LE        = require(utils.controllerDir + '/lib/letsencrypt.js');
+const utils         = require('./lib/utils'); // Get common adapter utils
+const SimpleAPI     = require('./lib/simpleapi.js');
+const LE            = require(utils.controllerDir + '/lib/letsencrypt.js');
+const adapterName   = require('./package.json').name.split('.').pop();
 
 let webServer = null;
 let fs        = null;
 
-const adapter = new utils.Adapter({
-    name: 'simple-api',
-    stateChange: function (id, state) {
-        if (webServer && webServer.api) {
-            webServer.api.stateChange(id, state);
-        }
-    },
-    objectChange: function (id, obj) {
-        if (webServer && webServer.api) {
-            webServer.api.objectChange(id, obj);
-        }
-    },
-    unload: function (callback) {
-        try {
-            adapter.log.info('terminating http' + (webServer.settings.secure ? 's' : '') + ' server on port ' + webServer.settings.port);
-            //if (webServer.api) webServer.api.close();
+let adapter;
 
-            callback();
-        } catch (e) {
-            callback();
-        }
-    },
-    ready: main
-});
+function startAdapter(options) {
+    options = options || {};
+    Object.assign(options, {
+        name: adapterName,
+        stateChange: (id, state) => {
+            if (webServer && webServer.api) {
+                webServer.api.stateChange(id, state);
+            }
+        },
+        objectChange: (id, obj) => {
+            if (webServer && webServer.api) {
+                webServer.api.objectChange(id, obj);
+            }
+        },
+        unload: callback => {
+            try {
+                adapter.log.info('terminating http' + (webServer.settings.secure ? 's' : '') + ' server on port ' + webServer.settings.port);
+                //if (webServer.api) webServer.api.close();
+
+                callback();
+            } catch (e) {
+                callback();
+            }
+        },
+        ready: main
+    });
+
+    adapter = new utils.Adapter(options);
+    return adapter;
+}
 
 function main() {
     if (adapter.config.webInstance) {
         console.log('Adapter runs as a part of web service');
         adapter.log.warn('Adapter runs as a part of web service');
         adapter.setForeignState('system.adapter.' + adapter.namespace + '.alive', false, true, () =>
-            setTimeout(() => process.exit(), 1000));
+            setTimeout(() => adapter.terminate ? adapter.terminate() : process.exit(), 1000));
         return;
     }
 
@@ -85,7 +94,6 @@ function requestProcessor(req, res) {
 //    "cache":  false
 //}
 function initWebServer(settings) {
-
     const server = {
         app:       null,
         server:    null,
@@ -104,14 +112,22 @@ function initWebServer(settings) {
         server.server.__server = server;
     } else {
         adapter.log.error('port missing');
-        process.exit(1);
+        if (adapter.terminate) {
+            adapter.terminate(1);
+        } else {
+            process.exit(1);
+        }
     }
 
     if (server.server) {
         adapter.getPort(settings.port, port => {
             if (port !== settings.port && !adapter.config.findNextPort) {
                 adapter.log.error('port ' + settings.port + ' already in use');
-                process.exit(1);
+                if (adapter.terminate) {
+                    adapter.terminate(1);
+                } else {
+                    process.exit(1);
+                }
             }
             server.server.listen(port);
             adapter.log.info('http' + (settings.secure ? 's' : '') + ' server listening on port ' + port);
@@ -125,4 +141,12 @@ function initWebServer(settings) {
     } else {
         return null;
     }
+}
+
+// If started as allInOne mode => return function to create instance
+if (typeof module !== undefined && module.parent) {
+    module.exports = startAdapter;
+} else {
+    // or start the instance directly
+    startAdapter();
 }

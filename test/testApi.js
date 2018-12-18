@@ -127,7 +127,7 @@ describe('Test RESTful API', function () {
     });
 
     it('Test RESTful API: get - must return error', function (done) {
-        request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.#alive%23test', (error, response, body) => {
+        request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.%23alive%23test', (error, response, body) => {
             console.log('get/system.adapter.simple-api.0.alive#%23test => ' + body);
             expect(error).to.be.not.ok;
             expect(body).to.be.equal('"error: datapoint \\"system.adapter.simple-api.0.#alive#test\\" not found"');

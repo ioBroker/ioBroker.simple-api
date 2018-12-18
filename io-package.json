@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.0.1",
+        "version": "2.0.2",
         "news": {
-            "2.0.1": {
+            "2.0.2": {
                 "en": "Fix decoding of #",
                 "de": "Decodierung von # korrigieren",
                 "ru": "Исправить декодирование #",
@@ -92,6 +92,7 @@
         "readme":                   "https://github.com/ioBroker/ioBroker.simple-api/blob/master/README.md",
         "keywords":                 ["web", "simpleAPI", "RESTful", "communication"],
 		"enabled":                  true,
+        "compact":                  true,
         "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.simple-api/master/admin/simple-api.png",
 		"type":                     "communication",
         "stopBeforeUpdate":         true,
