@@ -18,25 +18,23 @@ function checkConnectionOfAdapter(cb, counter) {
         return;
     }
 
-    states.getState('system.adapter.simple-api.0.alive', function (err, state) {
+    states.getState('system.adapter.simple-api.0.alive', (err, state) => {
         if (err) console.error(err);
         if (state && state.val) {
             if (cb) cb();
         } else {
-            setTimeout(function () {
-                checkConnectionOfAdapter(cb, counter + 1);
-            }, 1000);
+            setTimeout(() => checkConnectionOfAdapter(cb, counter + 1), 1000);
         }
     });
 }
 
-describe('Test RESTful API', function() {
+describe('Test RESTful API', function () {
     before('Test RESTful API: Start js-controller', function (_done) {
         this.timeout(600000); // because of first install from npm
         var brokerStarted   = false;
         setup.adapterStarted = false;
 
-        setup.setupController(function () {
+        setup.setupController(() => {
             var config = setup.getAdapterConfig();
             // enable adapter
             config.common.enabled = true;
@@ -44,21 +42,19 @@ describe('Test RESTful API', function() {
             config.native.port = 18183;
             setup.setAdapterConfig(config.common, config.native);
 
-            setup.startController(function (_objects, _states) {
+            setup.startController((_objects, _states) => {
                 objects = _objects;
                 states  = _states;
                 // give some time to start server
-                setTimeout(function () {
-                    _done();
-                }, 2000);
+                setTimeout(() => _done(), 2000);
             });
         });
     });
 
     it('Test adapter: Check if adapter started and create upload datapoint', function (done) {
         this.timeout(60000);
-        checkConnectionOfAdapter(function (res) {
-            if (res) console.log(res);
+        checkConnectionOfAdapter(res => {
+            res && console.log(res);
             expect(res).not.to.be.equal('Cannot check connection');
             objects.setObject('javascript.0.test-string', {
                 common: {
@@ -70,9 +66,9 @@ describe('Test RESTful API', function() {
                 native: {
                 },
                 type: 'state'
-            }, function (err) {
+            }, err => {
                 expect(err).to.be.null;
-                states.setState('javascript.0.test-string','', function(err) {
+                states.setState('javascript.0.test-string','', err => {
                     expect(err).to.be.null;
                     done();
                 });
@@ -81,7 +77,7 @@ describe('Test RESTful API', function() {
     });
 
     it('Test RESTful API: get - must return value', function (done) {
-        request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', function (error, response, body) {
+        request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', (error, response, body) => {
             console.log('get/system.adapter.simple-api.0.alive => ' + body);
             expect(error).to.be.not.ok;
             var obj = JSON.parse(body);
@@ -121,10 +117,20 @@ describe('Test RESTful API', function() {
     });
 
     it('Test RESTful API: get - must return error', function (done) {
-        request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive%23test', function (error, response, body) {
+        request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive%23test', (error, response, body) => {
             console.log('get/system.adapter.simple-api.0.alive%23test => ' + body);
             expect(error).to.be.not.ok;
             expect(body).to.be.equal('"error: datapoint \\"system.adapter.simple-api.0.alive#test\\" not found"');
+            expect(response.statusCode).to.equal(500);
+            done();
+        });
+    });
+
+    it('Test RESTful API: get - must return error', function (done) {
+        request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.#alive%23test', (error, response, body) => {
+            console.log('get/system.adapter.simple-api.0.alive#%23test => ' + body);
+            expect(error).to.be.not.ok;
+            expect(body).to.be.equal('"error: datapoint \\"system.adapter.simple-api.0.#alive#test\\" not found"');
             expect(response.statusCode).to.equal(500);
             done();
         });

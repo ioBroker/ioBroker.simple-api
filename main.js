@@ -2,14 +2,14 @@
 /*jslint node: true */
 'use strict';
 
-var utils     = require(__dirname + '/lib/utils'); // Get common adapter utils
-var SimpleAPI = require(__dirname + '/lib/simpleapi.js');
-var LE        = require(utils.controllerDir + '/lib/letsencrypt.js');
+const utils     = require(__dirname + '/lib/utils'); // Get common adapter utils
+const SimpleAPI = require(__dirname + '/lib/simpleapi.js');
+const LE        = require(utils.controllerDir + '/lib/letsencrypt.js');
 
-var webServer = null;
-var fs        = null;
+let webServer = null;
+let fs        = null;
 
-var adapter = new utils.Adapter({
+const adapter = new utils.Adapter({
     name: 'simple-api',
     stateChange: function (id, state) {
         if (webServer && webServer.api) {
@@ -31,20 +31,15 @@ var adapter = new utils.Adapter({
             callback();
         }
     },
-    ready: function () {
-        main();
-    }
+    ready: main
 });
 
 function main() {
     if (adapter.config.webInstance) {
         console.log('Adapter runs as a part of web service');
         adapter.log.warn('Adapter runs as a part of web service');
-        adapter.setForeignState('system.adapter.' + adapter.namespace + '.alive', false, true, function () {
-            setTimeout(function () {
-                process.exit();
-            }, 1000);
-        });
+        adapter.setForeignState('system.adapter.' + adapter.namespace + '.alive', false, true, () =>
+            setTimeout(() => process.exit(), 1000));
         return;
     }
 
@@ -54,7 +49,7 @@ function main() {
         adapter.subscribeForeignObjects('system.user.*');
 
         // Load certificates
-        adapter.getCertificates(function (err, certificates, leConfig) {
+        adapter.getCertificates((err, certificates, leConfig) => {
             adapter.config.certificates = certificates;
             adapter.config.leConfig     = leConfig;
             webServer = initWebServer(adapter.config);
@@ -67,14 +62,14 @@ function main() {
 function requestProcessor(req, res) {
     if (req.url.indexOf('favicon.ico') !== -1) {
         if (!fs) fs = require('fs');
-        var stat = fs.statSync(__dirname + '/img/favicon.ico');
+        const stat = fs.statSync(__dirname + '/img/favicon.ico');
 
         res.writeHead(200, {
             'Content-Type': 'image/x-icon',
             'Content-Length': stat.size
         });
 
-        var readStream = fs.createReadStream(__dirname + '/img/favicon.ico');
+        const readStream = fs.createReadStream(__dirname + '/img/favicon.ico');
         // We replaced all the event handlers with a simple call to readStream.pipe()
         readStream.pipe(res);
     } else {
@@ -91,7 +86,7 @@ function requestProcessor(req, res) {
 //}
 function initWebServer(settings) {
 
-    var server = {
+    const server = {
         app:       null,
         server:    null,
         api:       null,
@@ -113,7 +108,7 @@ function initWebServer(settings) {
     }
 
     if (server.server) {
-        adapter.getPort(settings.port, function (port) {
+        adapter.getPort(settings.port, port => {
             if (port !== settings.port && !adapter.config.findNextPort) {
                 adapter.log.error('port ' + settings.port + ' already in use');
                 process.exit(1);
