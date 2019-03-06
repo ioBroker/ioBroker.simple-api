@@ -2,11 +2,13 @@
 /*jslint node: true */
 /*jshint expr: true*/
 var expect  = require('chai').expect;
-var setup   = require(__dirname + '/lib/setup');
+var setup   = require('./lib/setup');
 var request = require('request');
 
 var objects = null;
 var states  = null;
+
+const PORT = 18183;
 
 process.env.NO_PROXY = '127.0.0.1';
 
@@ -36,12 +38,12 @@ describe('Test RESTful API as Owner-User', function() {
         setup.adapterStarted = false;
 
         var brokerStarted   = false;
-        setup.setupController(function () {
-            var config = setup.getAdapterConfig();
+        setup.setupController(() => {
+            const config = setup.getAdapterConfig();
             // enable adapter
             config.common.enabled = true;
             config.common.loglevel = 'debug';
-            config.native.port = 18183;
+            config.native.port = PORT;
             config.native.defaultUser = 'myuser';
             config.native.onlyAllowWhenUserIsOwner = true;
             setup.setAdapterConfig(config.common, config.native);
@@ -50,9 +52,7 @@ describe('Test RESTful API as Owner-User', function() {
                 objects = _objects;
                 states  = _states;
                 // give some time to start server
-                setTimeout(function () {
-                    _done();
-                }, 2000);
+                setTimeout(() => _done(), 2000);
             });
         });
     });
@@ -71,8 +71,8 @@ describe('Test RESTful API as Owner-User', function() {
                 ],
                 "acl": {
                   "object": {
-                    "list": false,
-                    "read": false,
+                    "list": true,
+                    "read": true,
                     "write": false,
                     "delete": false
                   },
@@ -161,7 +161,7 @@ describe('Test RESTful API as Owner-User', function() {
 
     it('Test RESTful API as Owner-User: get - must return value', function (done) {
         console.log('START get/system.adapter.simple-api.0.alive');
-        request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', function (error, response, body) {
+        request('http://127.0.0.1:' + PORT + '/get/system.adapter.simple-api.0.alive', (error, response, body) => {
             console.log('get/system.adapter.simple-api.0.alive => ' + body);
             expect(error).to.be.not.ok;
             expect(body).to.be.equal('error: permissionError');
@@ -171,7 +171,7 @@ describe('Test RESTful API as Owner-User', function() {
     });
 
     it('Test RESTful API as Owner-User: getPlainValue - must return plain value', function (done) {
-        request('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', function (error, response, body) {
+        request('http://127.0.0.1:' + PORT + '/getPlainValue/system.adapter.simple-api.0.alive', (error, response, body) => {
             console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
             expect(body).to.be.equal('error: permissionError');
             expect(response.statusCode).to.equal(401);
@@ -180,7 +180,7 @@ describe('Test RESTful API as Owner-User', function() {
     });
 
     it('Test RESTful API as Owner-User: getPlainValue 4 Test-Endpoint - must return plain value', function (done) {
-        request('http://127.0.0.1:18183/getPlainValue/javascript.0.test', function (error, response, body) {
+        request('http://127.0.0.1:' + PORT + '/getPlainValue/javascript.0.test', (error, response, body) => {
             console.log('getPlainValue/javascript.0.test => ' + body);
             expect(error).to.be.not.ok;
             expect(body).equal('1');
@@ -190,7 +190,7 @@ describe('Test RESTful API as Owner-User', function() {
     });
 
     it('Test RESTful API as Owner-User: set 4 Test-Endpoint  - must set value', function (done) {
-        request('http://127.0.0.1:18183/set/javascript.0.test?val=2', function (error, response, body) {
+        request('http://127.0.0.1:' + PORT + '/set/javascript.0.test?val=2', function (error, response, body) {
             console.log('set/javascript.0.test?val=false => ' + body);
             expect(error).to.be.not.ok;
             var obj = JSON.parse(body);
@@ -198,7 +198,7 @@ describe('Test RESTful API as Owner-User', function() {
             expect(obj.val).to.be.equal(2);
             expect(obj.id).to.equal('javascript.0.test');
             expect(response.statusCode).to.equal(200);
-            request('http://127.0.0.1:18183/getPlainValue/javascript.0.test', function (error, response, body) {
+            request('http://127.0.0.1:' + PORT + '/getPlainValue/javascript.0.test', (error, response, body) => {
                 console.log('getPlainValue/javascript.0.test => ' + body);
                 expect(error).to.be.not.ok;
                 expect(body).equal('2');
@@ -209,7 +209,7 @@ describe('Test RESTful API as Owner-User', function() {
     });
 
     it('Test RESTful API as Owner-User: set - must set value', function (done) {
-        request('http://127.0.0.1:18183/set/system.adapter.simple-api.0.alive?val=false', function (error, response, body) {
+        request('http://127.0.0.1:' + PORT + '/set/system.adapter.simple-api.0.alive?val=false', function (error, response, body) {
             console.log('set/system.adapter.simple-api.0.alive?val=false => ' + body);
             expect(body).to.be.equal('error: permissionError');
             expect(response.statusCode).to.equal(401);
@@ -218,7 +218,7 @@ describe('Test RESTful API as Owner-User', function() {
     });
 
     it('Test RESTful API as Owner-User: set - must set val', function (done) {
-        request('http://127.0.0.1:18183/set/system.adapter.simple-api.0.alive?val=true', function (error, response, body) {
+        request('http://127.0.0.1:' + PORT + '/set/system.adapter.simple-api.0.alive?val=true', function (error, response, body) {
             console.log('set/system.adapter.simple-api.0.alive?val=true => ' + body);
             expect(body).to.be.equal('error: permissionError');
             expect(response.statusCode).to.equal(401);
@@ -228,7 +228,7 @@ describe('Test RESTful API as Owner-User', function() {
 
 
     it('Test RESTful API as Owner-User: objects - must return objects', function (done) {
-        request('http://127.0.0.1:18183/objects?pattern=system.adapter.*', function (error, response, body) {
+        request('http://127.0.0.1:' + PORT + '/objects?pattern=system.adapter.*', (error, response, body) => {
             console.log('objects?pattern=system.adapter.* => ' + body);
             expect(body).to.be.equal('error: permissionError');
             expect(response.statusCode).to.equal(401);
@@ -237,7 +237,7 @@ describe('Test RESTful API as Owner-User', function() {
     });
 
     it('Test RESTful API as Owner-User: objects - must return objects', function (done) {
-        request('http://127.0.0.1:18183/objects?pattern=system.adapter.*&type=instance', function (error, response, body) {
+        request('http://127.0.0.1:' + PORT + '/objects?pattern=system.adapter.*&type=instance', function (error, response, body) {
             console.log('objects?pattern=system.adapter.* => ' + body);
             expect(body).to.be.equal('error: permissionError');
             expect(response.statusCode).to.equal(401);
@@ -246,7 +246,7 @@ describe('Test RESTful API as Owner-User', function() {
     });
 
     it('Test RESTful API as Owner-User: states - must return states', function (done) {
-        request('http://127.0.0.1:18183/states?pattern=system.adapter.*', function (error, response, body) {
+        request('http://127.0.0.1:' + PORT + '/states?pattern=system.adapter.*', function (error, response, body) {
             console.log('states?pattern=system.adapter.* => ' + body);
             expect(body).to.be.equal('error: permissionError');
             expect(response.statusCode).to.equal(401);
@@ -256,10 +256,10 @@ describe('Test RESTful API as Owner-User', function() {
 
     it('Test RESTful API as Owner-User: setValueFromBody(POST) - must set one value', function (done) {
         request({
-            uri: 'http://127.0.0.1:18183/setValueFromBody/system.adapter.simple-api.upload',
+            uri: 'http://127.0.0.1:' + PORT + '/setValueFromBody/system.adapter.simple-api.upload',
             method: 'POST',
             body: '55'
-        }, function(error, response, body) {
+        }, (error, response, body) => {
             console.log('setValueFromBody/?system.adapter.simple-api.upload => ' + JSON.stringify(body));
             expect(body).to.be.equal('error: permissionError');
             expect(response.statusCode).to.equal(401);
@@ -269,7 +269,7 @@ describe('Test RESTful API as Owner-User', function() {
 
     after('Test RESTful API as Owner-User: Stop js-controller', function (done) {
         this.timeout(6000);
-        setup.stopController(function (normalTerminated) {
+        setup.stopController(normalTerminated => {
             console.log('Adapter normal terminated: ' + normalTerminated);
             done();
         });
