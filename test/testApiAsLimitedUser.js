@@ -190,7 +190,7 @@ describe('Test RESTful API as Owner-User', function() {
     });
 
     it('Test RESTful API as Owner-User: set 4 Test-Endpoint  - must set value', function (done) {
-        request('http://127.0.0.1:' + PORT + '/set/javascript.0.test?val=2', function (error, response, body) {
+        request('http://127.0.0.1:' + PORT + '/set/javascript.0.test?val=2', (error, response, body) => {
             console.log('set/javascript.0.test?val=false => ' + body);
             expect(error).to.be.not.ok;
             var obj = JSON.parse(body);
@@ -209,7 +209,7 @@ describe('Test RESTful API as Owner-User', function() {
     });
 
     it('Test RESTful API as Owner-User: set - must set value', function (done) {
-        request('http://127.0.0.1:' + PORT + '/set/system.adapter.simple-api.0.alive?val=false', function (error, response, body) {
+        request('http://127.0.0.1:' + PORT + '/set/system.adapter.simple-api.0.alive?val=false', (error, response, body) => {
             console.log('set/system.adapter.simple-api.0.alive?val=false => ' + body);
             expect(body).to.be.equal('error: permissionError');
             expect(response.statusCode).to.equal(401);
@@ -218,7 +218,7 @@ describe('Test RESTful API as Owner-User', function() {
     });
 
     it('Test RESTful API as Owner-User: set - must set val', function (done) {
-        request('http://127.0.0.1:' + PORT + '/set/system.adapter.simple-api.0.alive?val=true', function (error, response, body) {
+        request('http://127.0.0.1:' + PORT + '/set/system.adapter.simple-api.0.alive?val=true', (error, response, body) => {
             console.log('set/system.adapter.simple-api.0.alive?val=true => ' + body);
             expect(body).to.be.equal('error: permissionError');
             expect(response.statusCode).to.equal(401);
@@ -229,24 +229,25 @@ describe('Test RESTful API as Owner-User', function() {
 
     it('Test RESTful API as Owner-User: objects - must return objects', function (done) {
         request('http://127.0.0.1:' + PORT + '/objects?pattern=system.adapter.*', (error, response, body) => {
-            console.log('objects?pattern=system.adapter.* => ' + body);
-            expect(body).to.be.equal('error: permissionError');
-            expect(response.statusCode).to.equal(401);
+            //console.log('objects?pattern=system.adapter.* => ' + body);
+            expect(!!body).to.be.true;
+            expect(response.statusCode).to.equal(200);
             done();
         });
     });
 
     it('Test RESTful API as Owner-User: objects - must return objects', function (done) {
-        request('http://127.0.0.1:' + PORT + '/objects?pattern=system.adapter.*&type=instance', function (error, response, body) {
-            console.log('objects?pattern=system.adapter.* => ' + body);
-            expect(body).to.be.equal('error: permissionError');
-            expect(response.statusCode).to.equal(401);
+        request('http://127.0.0.1:' + PORT + '/objects?pattern=system.adapter.*&type=instance', (error, response, body) => {
+            //console.log('objects?pattern=system.adapter.* => ' + body);
+            //expect(body).to.be.equal('error: permissionError');
+            expect(!!body).to.be.true;
+            expect(response.statusCode).to.equal(200);
             done();
         });
     });
 
     it('Test RESTful API as Owner-User: states - must return states', function (done) {
-        request('http://127.0.0.1:' + PORT + '/states?pattern=system.adapter.*', function (error, response, body) {
+        request('http://127.0.0.1:' + PORT + '/states?pattern=system.adapter.*', (error, response, body) => {
             console.log('states?pattern=system.adapter.* => ' + body);
             expect(body).to.be.equal('error: permissionError');
             expect(response.statusCode).to.equal(401);
