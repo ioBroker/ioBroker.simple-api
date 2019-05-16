@@ -35,7 +35,6 @@ describe('Test RESTful API as User', function() {
         this.timeout(600000); // because of first install from npm
         setup.adapterStarted = false;
 
-        var brokerStarted   = false;
         setup.setupController(function () {
             var config = setup.getAdapterConfig();
             // enable adapter
@@ -49,9 +48,7 @@ describe('Test RESTful API as User', function() {
                 objects = _objects;
                 states  = _states;
                 // give some time to start server
-                setTimeout(function () {
-                    _done();
-                }, 2000);
+                setTimeout(() => _done(), 2000);
             });
         });
     });
@@ -70,13 +67,13 @@ describe('Test RESTful API as User', function() {
                 ],
                 "acl": {
                   "object": {
-                    "list": false,
-                    "read": false,
+                    "list": true,
+                    "read": true,
                     "write": false,
                     "delete": false
                   },
                   "state": {
-                    "list": false,
+                    "list": true,
                     "read": true,
                     "write": true,
                     "create": false,
@@ -384,8 +381,8 @@ describe('Test RESTful API as User', function() {
     it('Test RESTful API as User: objects - must return objects', function (done) {
         request('http://127.0.0.1:18183/objects?pattern=system.adapter.*', (error, response, body) => {
             console.log('objects?pattern=system.adapter.* => ' + body);
-            expect(body).to.be.equal('error: permissionError');
-            expect(response.statusCode).to.equal(401);
+            expect(body).to.be.not.equal('error: permissionError');
+            expect(response.statusCode).to.equal(200);
             done();
         });
     });
@@ -393,8 +390,8 @@ describe('Test RESTful API as User', function() {
     it('Test RESTful API as User: objects - must return objects', function (done) {
         request('http://127.0.0.1:18183/objects?pattern=system.adapter.*&type=instance', (error, response, body) => {
             console.log('objects?pattern=system.adapter.* => ' + body);
-            expect(body).to.be.equal('error: permissionError');
-            expect(response.statusCode).to.equal(401);
+            expect(body).to.be.not.equal('error: permissionError');
+            expect(response.statusCode).to.equal(200);
             done();
         });
     });
@@ -402,8 +399,8 @@ describe('Test RESTful API as User', function() {
     it('Test RESTful API as User: states - must return states', function (done) {
         request('http://127.0.0.1:18183/states?pattern=system.adapter.*', (error, response, body) => {
             console.log('states?pattern=system.adapter.* => ' + body);
-            expect(body).to.be.equal('error: permissionError');
-            expect(response.statusCode).to.equal(401);
+            expect(body).to.be.not.equal('error: permissionError');
+            expect(response.statusCode).to.equal(200);
             done();
         });
     });

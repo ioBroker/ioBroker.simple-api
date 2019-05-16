@@ -325,6 +325,9 @@ describe('Test RESTful API', function () {
             expect(error).to.be.not.ok;
 
             var obj = JSON.parse(body);
+
+            console.log(JSON.stringify(obj, null, 2))
+
             expect(obj).to.be.ok;
             expect(obj[0].val).to.be.equal(50);
             expect(obj[0].id).to.equal('system.adapter.simple-api.upload');
