@@ -111,6 +111,35 @@
         } else {
             showHideSettings();
         }
+
+        if (typeof getAdapterInstances !== 'undefined') {
+            getAdapterInstances("history", function (result) {
+                if (result) {
+                    var text = '';
+                    for (var r = 0; r < result.length; r++) {
+                        var name = result[r]._id.substring('system.adapter.'.length);
+                        text += '<option value="' + name + '" ' + (settings.dataSource === name ? 'selected' : '') + '>' + name + '</option>';
+                    }
+                    $('#dataSource').append(text);
+                    showHideSettings();
+                }
+            });
+
+            getAdapterInstances("sql", function (result) {
+                if (result) {
+                    var text = '';
+                    for (var r = 0; r < result.length; r++) {
+                        var name = result[r]._id.substring('system.adapter.'.length);
+                        text += '<option value="' + name + '" ' + (settings.dataSource === name ? 'selected' : '') + '>' + name + '</option>';
+                    }
+                    $('#dataSource').append(text);
+                    showHideSettings();
+                }
+            });            
+        } else {
+            showHideSettings();
+        }
+        
         onChange(false);
     }
 
@@ -169,6 +198,10 @@
         <tr class="no-if-extend le-settings"><td><label for="leEnabled" class="translate">Use Lets Encrypt certificates:</label></td><td><input  class="value" id="leEnabled"   type="checkbox" /></td></tr>
         <tr class="no-if-extend le-settings le-sub-settings"><td><label for="leUpdate" class="translate">Use this instance for automatic update:</label></td><td><input  class="value" id="leUpdate" type="checkbox" /></td></tr>
         <tr class="no-if-extend le-settings le-sub-settings le-sub-settings-update"><td><label for="lePort" class="translate">Port to check the domain:</label></td><td><input class="value number" id="lePort" type="number" size="5" maxlength="5" /></td></tr>
+        <tr><td><label for="dataSource" class="translate">Select data source:</label></td><td><select class="value" id="dataSource">
+            <option value=""  class="translate">none</option>
+            <option value="*" class="translate">all</option>
+        </select></td></tr>
 
     </table>
 </div>

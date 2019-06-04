@@ -15,6 +15,7 @@ systemDictionary = {
     "Extend WEB adapter:":    {"en": "Extend WEB adapter:",     "de": "Erweitere WEB Adapter:",  "ru": "Подключить к WEB драйверу:"},
     "all":                    {"en": "all",                     "de": "alle",                    "ru": "все"},
     "Listen on all IPs":      {"en": "Listen on all IPs",       "de": "Alle IPs zulassen",       "ru": "Открыть для всех IP адресов"},
+    "Select data source:":    {"en": "Select data source:",     "de": "Datenquelle auswählen:",  "ru": "Выберите источник данных"},
     "Let's Encrypt settings": {
         "en": "Let's Encrypt settings",
         "de": "Einstellungen Let's Encrypt",
