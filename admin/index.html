@@ -53,6 +53,11 @@
                 $('.defaultUser').show();
             }
         }
+        if ($('#dataSource').val()) {
+            $('.allDatapoints').show();
+        } else {
+            $('.allDatapoints').hide();
+        }
     }
 
     // the function loadSettings has to exist ...
@@ -82,6 +87,7 @@
             } else {
                 $('#' + key + '.value').val(settings[key]).on('change', function() {
                     if (key === 'webInstance') showHideSettings();
+                    if (key === 'dataSource') showHideSettings();
                     onChange();
                 }).on('keyup', function() {
                     onChange();
@@ -201,7 +207,7 @@
         <tr><td><label for="dataSource" class="translate">Select data source:</label></td><td><select class="value" id="dataSource">
             <option value=""  class="translate">none</option>
         </select></td></tr>
-
+        <tr class="allDataPoints"><td><label for="allDatapoints" class="translate">Show all datapoints:</label></td><td><input  class="value" id="allDatapoints" type="checkbox" /></td></tr>
     </table>
 </div>
 </html>
