@@ -23,6 +23,11 @@ Call in browser ```http://ipaddress:8087/help``` to get the help about API. The 
   "objects": "http://ipaddress:8087/objects?pattern=system.adapter.admin.0*&prettyPrint",
   "objects": "http://ipaddress:8087/objects?pattern=system.adapter.admin.0*&type=adapter&prettyPrint",
   "states": "http://ipaddress:8087/states?pattern=system.adapter.admin.0*&prettyPrint"
+  "search": "http://192.168.0.24:8087/search?pattern=system.adapter.admin.0*&prettyPrint",
+  "query": "http://192.168.0.24:8087/query/stateID1,stateID2/?prettyPrint"
+  "query": "http://192.168.0.24:8087/query/stateID1,stateID2/?noHistory=true&prettyPrint"
+  "query": "http://192.168.0.24:8087/query/stateID1,stateID2/?dateFrom=2019-06-06T12:00:00.000Z&d&prettyPrint"
+  "query": "http://192.168.0.24:8087/query/stateID1,stateID2/?dateFrom=2019-06-06T12:00:00.000Z&dateTo=2019-06-06T12:00:00.000Z&prettyPrint"
 }
 ```
 
@@ -110,6 +115,15 @@ Of course the data point *javascript.0.test* must exist.
 
 ### states
 
+### search
+    Is a data source (History, SQL) in the configuration is set, then only the data points known to the data source are listed.
+    If the option 'List all data points' has been activated or no data source has been specified, all data points will be listed.
+    This command is needed for the Grafana JSON / SimpleJSON Plugin.
+
+### query
+    If a data source (History, SQL) has been specified, the data from the specified data points are read out for the specified period, otherwise only the current value is read out.
+    This command is needed for the Grafana JSON / SimpleJSON Plugin.
+    
 ### help
 Gives [this](#usage) output back
 
