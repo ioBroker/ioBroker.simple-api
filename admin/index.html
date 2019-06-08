@@ -142,7 +142,18 @@
                     showHideSettings();
                 }
             });            
-        } else {
+
+            getAdapterInstances("influxdb", function (result) {
+                if (result) {
+                    var text = '';
+                    for (var r = 0; r < result.length; r++) {
+                        var name = result[r]._id.substring('system.adapter.'.length);
+                        text += '<option value="' + name + '" ' + (settings.dataSource === name ? 'selected' : '') + '>' + name + '</option>';
+                    }
+                    $('#dataSource').append(text);
+                    showHideSettings();
+                }
+            });            } else {
             showHideSettings();
         }
         
