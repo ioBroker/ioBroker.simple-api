@@ -1,8 +1,19 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.0.2",
+        "version": "2.0.3",
         "news": {
+            "2.0.3": {
+                "en": "Added command set for the Grafana plugins JSON / SimpleJSON.",
+                "de": "Befehlssatz für die Grafana-Plugins JSON / SimpleJSON hinzugefügt.",
+                "ru": "Добавлен набор команд для плагинов Grafana JSON / SimpleJSON.",
+                "pt": "Adicionado conjunto de comandos para os plugins Grafana JSON / SimpleJSON.",
+                "nl": "Toegevoegde opdrachtset voor de Grafana-plug-ins JSON / SimpleJSON.",
+                "fr": "Ajout du jeu de commandes pour les plugins Grafana JSON / SimpleJSON.",
+                "it": "Aggiunto set di comandi per i plugin Grafana JSON / SimpleJSON.",
+                "es": "Agregado conjunto de comandos para los complementos de Grafana JSON / SimpleJSON.",
+                "pl": "Dodano zestaw poleceń dla wtyczek Grafana JSON / SimpleJSON."
+            },
             "2.0.2": {
                 "en": "Fix decoding of #",
                 "de": "Decodierung von # korrigieren",
@@ -81,7 +92,8 @@
         "desc":                     "This adapter allows to read and write ioBroker objects and state with web RESTful API",
         "authors": [
             "bluefox <dogafox@gmail.com>",
-            "Apollon77 <ingo@fischer-ka.de>"
+            "Apollon77 <ingo@fischer-ka.de>",
+            "Marco.K <marco@kaminski-net.de>"
         ],
         "license":                  "MIT",
         "platform":                 "Javascript/Node.js",
@@ -113,6 +125,9 @@
 
         "leEnabled":                false,
         "leUpdate":                 false,
-        "leCheckPort":              80
+        "leCheckPort":              80,
+
+        "dataSource":               "",
+        "allDatapoints":            false
     }
 }
