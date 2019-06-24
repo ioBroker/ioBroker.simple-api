@@ -3,6 +3,18 @@
         "name": "simple-api",
         "version": "2.0.3",
         "news": {
+            "2.0.3": {
+                "en": "errors when used as web extension fixed",
+                "de": "Fehler bei Verwendung als Web Extension behoben",
+                "ru": "исправлены ошибки при использовании в качестве веб-расширения",
+                "pt": "erros quando usados como extensão web",
+                "nl": "fouten bij gebruik als vastgemaakte webextensie",
+                "fr": "les erreurs lorsqu’elles sont utilisées comme extension web sont corrigées",
+                "it": "errori quando usato come estensione web fissa",
+                "es": "errores cuando se utiliza como extensión web fija",
+                "pl": "naprawione błędy używane jako rozszerzenie WWW",
+                "zh-cn": "用作Web扩展时修复的错误"
+            },
             "2.0.2": {
                 "en": "Fix decoding of #",
                 "de": "Decodierung von # korrigieren",
