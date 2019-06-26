@@ -432,6 +432,9 @@ Get the list of all states for pattern. If no pattern specified all states as JS
 
 ## Changelog
 
+### 2.0.5 (2019-06-26)
+* (Apollon77) remove logging
+
 ### 2.0.4 (2019-06-23)
 * (Apollon77) fix usage as web extension
 
