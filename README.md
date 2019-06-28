@@ -534,6 +534,12 @@ If no data source was specified or the noHistory parameter is passed, then only 
 
 ## Changelog
 
+### 2.0.5 (2019-06-26)
+* (Apollon77) remove logging
+
+### 2.0.4 (2019-06-23)
+* (Apollon77) fix usage as web extension
+
 ### 2.0.3 (2019-06-08)
 * (Marco.K) Added command set for the Grafana plugins JSON / SimpleJSON.
 
