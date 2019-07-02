@@ -23,6 +23,11 @@ Call in browser ```http://ipaddress:8087/help``` to get the help about API. The 
   "objects": "http://ipaddress:8087/objects?pattern=system.adapter.admin.0*&prettyPrint",
   "objects": "http://ipaddress:8087/objects?pattern=system.adapter.admin.0*&type=adapter&prettyPrint",
   "states": "http://ipaddress:8087/states?pattern=system.adapter.admin.0*&prettyPrint"
+  "search": "http://192.168.0.24:8087/search?pattern=system.adapter.admin.0*&prettyPrint",
+  "query": "http://192.168.0.24:8087/query/stateID1,stateID2/?prettyPrint"
+  "query": "http://192.168.0.24:8087/query/stateID1,stateID2/?noHistory=true&prettyPrint"
+  "query": "http://192.168.0.24:8087/query/stateID1,stateID2/?dateFrom=2019-06-06T12:00:00.000Z&d&prettyPrint"
+  "query": "http://192.168.0.24:8087/query/stateID1,stateID2/?dateFrom=2019-06-06T12:00:00.000Z&dateTo=2019-06-06T12:00:00.000Z&prettyPrint"
 }
 ```
 
@@ -110,6 +115,15 @@ Of course the data point *javascript.0.test* must exist.
 
 ### states
 
+### search
+    Is a data source (History, SQL) in the configuration is set, then only the data points known to the data source are listed.
+    If the option 'List all data points' has been activated or no data source has been specified, all data points will be listed.
+    This command is needed for the Grafana JSON / SimpleJSON Plugin.
+
+### query
+    If a data source (History, SQL) has been specified, the data from the specified data points are read out for the specified period, otherwise only the current value is read out.
+    This command is needed for the Grafana JSON / SimpleJSON Plugin.
+    
 ### help
 Gives [this](#usage) output back
 
@@ -429,6 +443,94 @@ Get the list of all states for pattern. If no pattern specified all states as JS
     }
 </pre>
 
+### search
+Is a data source (History, SQL) in the configuration is set, then only the data points known to the data source are listed.
+If the option 'List all data points' has been activated or no data source has been specified, all data points will be listed.
+
+<pre>http://ip:8087/search?pattern=system.adapter.admin.0*&prettyPrint</pre>
+<pre>
+  {
+    "system.adapter.admin.0.outputCount",
+    "system.adapter.admin.0.inputCount",
+    "system.adapter.admin.0.uptime",
+    "system.adapter.admin.0.memRss",
+    "system.adapter.admin.0.memHeapTotal",
+    "system.adapter.admin.0.memHeapUsed",
+    "system.adapter.admin.0.cputime",
+    "system.adapter.admin.0.cpu",
+    "system.adapter.admin.0.connected",
+    "system.adapter.admin.0.alive"
+  }
+</pre>
+
+### query
+If a data source (History, SQL) has been specified, the data from the specified data points are read out for the specified period.
+
+<pre>http://ip:8087/query/system.host.iobroker-dev.load,system.host.iobroker-dev.memHeapUsed/?prettyPrint&dateFrom=2019-06-08T01:00:00.000Z&dateTo=2019-06-08T01:00:10.000Z</pre>
+<pre>
+  [
+    {
+      "target": "system.host.iobroker-dev.load",
+      "datapoints": [
+        [
+          0.12,
+          1559955600000
+        ],
+        [
+          0.46,
+          1559955601975
+        ],
+        [
+          0.44,
+          1559955610000
+        ]
+      ]
+    },
+    {
+      "target": "system.host.iobroker-dev.memHeapUsed",
+      "datapoints": [
+        [
+          23.01,
+          1559955600000
+        ],
+        [
+          22.66,
+          1559955601975
+        ],
+        [
+          22.69,
+          1559955610000
+        ]
+      ]
+    }
+  ]
+</pre>
+
+If no data source was specified or the noHistory parameter is passed, then only the current value of the data point is read out.
+
+<pre>http://ip:8087/query/system.host.iobroker-dev.load,system.host.iobroker-dev.memHeapUsed/?prettyPrint&noHistory=true</pre>
+<pre>
+  [
+    {
+      "target": "system.host.iobroker-dev.load",
+      "datapoints": [
+        [
+          0.58,
+          1559970500342
+        ]
+      ]
+    },
+    {
+      "target": "system.host.iobroker-dev.memHeapUsed",
+      "datapoints": [
+        [
+          21.53,
+          1559970500342
+        ]
+      ]
+    }
+  ]
+</pre>
 
 ## Changelog
 
@@ -437,6 +539,9 @@ Get the list of all states for pattern. If no pattern specified all states as JS
 
 ### 2.0.4 (2019-06-23)
 * (Apollon77) fix usage as web extension
+
+### 2.0.3 (2019-06-08)
+* (Marco.K) Added command set for the Grafana plugins JSON / SimpleJSON.
 
 ### 2.0.2 (2018-12-17)
 * (Apollon77) fix decoding for state Ids with # in it

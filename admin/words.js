@@ -4,7 +4,7 @@ systemDictionary = {
         "ru": "simpleAPI adapter settings"
     },
     "Run as:":          {"de": "Laufen unter Anwender:", "ru": "Запустить от пользователя:"},
-    "Allow only when User is Owner:":          {"de": "Nue erlauben wenn Anwender auch Besitzer ist:", "ru": "Allow only when User is Owner:"},
+    "Allow only when User is Owner:":          {"de": "Nur erlauben wenn Anwender auch Besitzer ist:", "ru": "Allow only when User is Owner:"},
     "IP:":              {"de": "IP:",                        "ru": "IP:"},
     "Port:":            {"de": "Port:",                      "ru": "Порт:"},
     "Secure(HTTPS):":   {"de": "Verschlüsselung(HTTPS):",    "ru": "Шифрование(HTTPS):"},
@@ -15,6 +15,8 @@ systemDictionary = {
     "Extend WEB adapter:":    {"en": "Extend WEB adapter:",     "de": "Erweitere WEB Adapter:",  "ru": "Подключить к WEB драйверу:"},
     "all":                    {"en": "all",                     "de": "alle",                    "ru": "все"},
     "Listen on all IPs":      {"en": "Listen on all IPs",       "de": "Alle IPs zulassen",       "ru": "Открыть для всех IP адресов"},
+    "Select data source:":    {"en": "Select data source:",     "de": "Datenquelle auswählen:",  "ru": "Выберите источник данных:"},
+    "List all datapoints:":   {"en": "List all datapoints:",    "de": "Alle Datenpunkte auflisten:",  "ru": "Список всех точек данных:"},
     "Let's Encrypt settings": {
         "en": "Let's Encrypt settings",
         "de": "Einstellungen Let's Encrypt",
