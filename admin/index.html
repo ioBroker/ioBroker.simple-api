@@ -118,46 +118,36 @@
             showHideSettings();
         }
 
-        if (typeof getAdapterInstances !== 'undefined') {
-            getAdapterInstances("history", function (result) {
-                if (result) {
-                    var text = '';
-                    for (var r = 0; r < result.length; r++) {
-                        var name = result[r]._id.substring('system.adapter.'.length);
-                        text += '<option value="' + name + '" ' + (settings.dataSource === name ? 'selected' : '') + '>' + name + '</option>';
-                    }
-                    $('#dataSource').append(text);
-                    showHideSettings();
-                }
-            });
-
-            getAdapterInstances("sql", function (result) {
-                if (result) {
-                    var text = '';
-                    for (var r = 0; r < result.length; r++) {
-                        var name = result[r]._id.substring('system.adapter.'.length);
-                        text += '<option value="' + name + '" ' + (settings.dataSource === name ? 'selected' : '') + '>' + name + '</option>';
-                    }
-                    $('#dataSource').append(text);
-                    showHideSettings();
-                }
-            });            
-
-            getAdapterInstances("influxdb", function (result) {
-                if (result) {
-                    var text = '';
-                    for (var r = 0; r < result.length; r++) {
-                        var name = result[r]._id.substring('system.adapter.'.length);
-                        text += '<option value="' + name + '" ' + (settings.dataSource === name ? 'selected' : '') + '>' + name + '</option>';
-                    }
-                    $('#dataSource').append(text);
-                    showHideSettings();
-                }
-            });            } else {
-            showHideSettings();
-        }
+        getHistoryInstances(settings);
         
         onChange(false);
+    }
+
+
+    function getHistoryInstances(settings) {
+        socket.emit('getObjectView', 'system', 'instance', {startkey: 'system.adapter.', endkey: 'system.adapter.\u9999'}, function (err, doc) {
+            if (err) {
+                console.error(err);
+            } else {
+                if (doc.rows.length) {
+                    var result = [];
+                    for (var i = 0; i < doc.rows.length; i++) {
+                        result.push(doc.rows[i].value);
+                    }
+                    result = result.filter(function (adp) {
+                        return adp && adp.common && adp.common.getHistory;
+                    });
+                    
+                    var text = '';
+                    for (var r = 0; r < result.length; r++) {
+                        var name = result[r]._id.substring('system.adapter.'.length);
+                        text += '<option value="' + name + '" ' + (settings.dataSource === name ? 'selected' : '') + '>' + name + '</option>';
+                    }
+                    $('#dataSource').append(text);
+                    showHideSettings();
+                }
+            }
+        });
     }
 
     // ... and the function save has to exist.
