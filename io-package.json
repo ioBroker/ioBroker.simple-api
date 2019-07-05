@@ -1,8 +1,19 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.0.5",
+        "version": "2.1.0",
         "news": {
+            "2.1.0": {
+                "en": "Added command set for the Grafana plugins JSON / SimpleJSON.",
+                "de": "Befehlssatz für die Grafana-Plugins JSON / SimpleJSON hinzugefügt.",
+                "ru": "Добавлен набор команд для плагинов Grafana JSON / SimpleJSON.",
+                "pt": "Adicionado conjunto de comandos para os plugins Grafana JSON / SimpleJSON.",
+                "nl": "Toegevoegde opdrachtset voor de Grafana-plug-ins JSON / SimpleJSON.",
+                "fr": "Ajout du jeu de commandes pour les plugins Grafana JSON / SimpleJSON.",
+                "it": "Aggiunto set di comandi per i plugin Grafana JSON / SimpleJSON.",
+                "es": "Agregado conjunto de comandos para los complementos de Grafana JSON / SimpleJSON.",
+                "pl": "Dodano zestaw poleceń dla wtyczek Grafana JSON / SimpleJSON."
+            },
             "2.0.5": {
                 "en": "errors when used as web extension fixed",
                 "de": "Fehler bei Verwendung als Web Extension behoben",
@@ -14,17 +25,6 @@
                 "es": "errores cuando se utiliza como extensión web fija",
                 "pl": "naprawione błędy używane jako rozszerzenie WWW",
                 "zh-cn": "用作Web扩展时修复的错误"
-            },
-            "2.0.3": {
-                "en": "Added command set for the Grafana plugins JSON / SimpleJSON.",
-                "de": "Befehlssatz für die Grafana-Plugins JSON / SimpleJSON hinzugefügt.",
-                "ru": "Добавлен набор команд для плагинов Grafana JSON / SimpleJSON.",
-                "pt": "Adicionado conjunto de comandos para os plugins Grafana JSON / SimpleJSON.",
-                "nl": "Toegevoegde opdrachtset voor de Grafana-plug-ins JSON / SimpleJSON.",
-                "fr": "Ajout du jeu de commandes pour les plugins Grafana JSON / SimpleJSON.",
-                "it": "Aggiunto set di comandi per i plugin Grafana JSON / SimpleJSON.",
-                "es": "Agregado conjunto de comandos para los complementos de Grafana JSON / SimpleJSON.",
-                "pl": "Dodano zestaw poleceń dla wtyczek Grafana JSON / SimpleJSON."
             },
             "2.0.2": {
                 "en": "Fix decoding of #",
