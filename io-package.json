@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.1.0",
+        "version": "2.1.1",
         "news": {
+            "2.1.1": {
+                "en": "getBulk response enhance and id added, documentation updated",
+                "de": "Die Antwort von getBulk wurde erweitert und die ID hinzugefügt. Die Dokumentation wurde aktualisiert",
+                "ru": "улучшен ответ getBulk и добавлен id, обновлена документация",
+                "pt": "Aumento da resposta do getBulk e id adicionados, documentação atualizada",
+                "nl": "GetBulk-reactie verbeteren en id toegevoegd, documentatie bijgewerkt",
+                "fr": "Réponse getBulk améliorée et identifiant ajouté, documentation mise à jour",
+                "it": "Miglioramento della risposta getBulk e ID aggiunto, documentazione aggiornata",
+                "es": "Respuesta de GetBulk mejorada e ID agregada, documentación actualizada",
+                "pl": "Dodano poprawkę odpowiedzi i getBulk, zaktualizowano dokumentację",
+                "zh-cn": "getBulk响应增强和id添加，文档更新"
+            },
             "2.1.0": {
                 "en": "Added command set for the Grafana plugins JSON / SimpleJSON.",
                 "de": "Befehlssatz für die Grafana-Plugins JSON / SimpleJSON hinzugefügt.",

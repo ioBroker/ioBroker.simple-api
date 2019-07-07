@@ -75,7 +75,7 @@ Result:
 ```
 
 ### getBulk
-    get many states with one request, returned as object with ID as key and val/ts as subobject
+    get many states with one request, returned as array of objects in order of list in request and id/val/ts as subobject
 
 ### set
 Call e.g.:
