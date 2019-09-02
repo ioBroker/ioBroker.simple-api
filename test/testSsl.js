@@ -1,15 +1,18 @@
-/* jshint -W097 */// jshint strict:false
-/*jslint node: true */
-/*jshint expr: true*/
-var expect  = require('chai').expect;
-var setup   = require(__dirname + '/lib/setup');
-var request = require('request');
+/* jshint -W097 */
+/* jshint strict: false */
+/* jslint node: true */
+/* jshint expr: true*/
 
-var objects = null;
-var states  = null;
+const expect  = require('chai').expect;
+const setup   = require('./lib/setup');
+const request = require('request');
+
+let objects = null;
+let states  = null;
 
 process.env.NO_PROXY = '127.0.0.1';
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+const TEST_STATE_ID = 'simple-api.0.testNumber';
 
 function checkConnectionOfAdapter(cb, counter) {
     counter = counter || 0;
@@ -19,26 +22,44 @@ function checkConnectionOfAdapter(cb, counter) {
         return;
     }
 
-    states.getState('system.adapter.simple-api.0.alive', function (err, state) {
+    states.getState('system.adapter.simple-api.0.alive', (err, state) => {
         if (err) console.error(err);
         if (state && state.val) {
-            if (cb) cb();
+            cb && cb();
         } else {
-            setTimeout(function () {
-                checkConnectionOfAdapter(cb, counter + 1);
-            }, 1000);
+            setTimeout(() => checkConnectionOfAdapter(cb, counter + 1), 1000);
         }
     });
 }
 
-describe('Test RESTful API SSL', function() {
+function createTestState(cb) {
+    objects.setObject(TEST_STATE_ID, {
+        _id: TEST_STATE_ID,
+        type: 'state',
+        common: {
+            name: 'Test state',
+            type: 'number',
+            read: true,
+            write: false,
+            role: 'indicator.state',
+            unit: '%',
+            def: 0,
+            desc: 'test state'
+        },
+        native: {}
+    }, () => {
+        states.setState(TEST_STATE_ID, {val: 0, ack: true}, cb && cb);
+    });
+}
+
+describe('Test RESTful API SSL', function () {
     before('Test RESTful API SSL: Start js-controller', function (_done) {
         this.timeout(600000); // because of first install from npm
         setup.adapterStarted = false;
 
-        var brokerStarted   = false;
-        setup.setupController(function () {
-            var config = setup.getAdapterConfig();
+        const brokerStarted   = false;
+        setup.setupController(() => {
+            const config = setup.getAdapterConfig();
             // enable adapter
             config.common.enabled = true;
             config.common.loglevel = 'debug';
@@ -50,22 +71,21 @@ describe('Test RESTful API SSL', function() {
 
             setup.setAdapterConfig(config.common, config.native);
 
-            setup.startController(function (_objects, _states) {
+            setup.startController((_objects, _states) => {
                 objects = _objects;
                 states  = _states;
                 // give some time to start server
-                setTimeout(function () {
-                    _done();
-                }, 2000);
+                setTimeout(() => createTestState(() => _done()), 2000);
             });
         });
     });
 
-    it('Test adapter: Check if adapter started and create upload datapoint', function (done) {
-        this.timeout(60000);
-        checkConnectionOfAdapter(function (res) {
-            if (res) console.log(res);
+    it('Test adapter: Check if adapter started and create upload datapoint', done => {
+        checkConnectionOfAdapter(res => {
+            res && console.log(res);
+
             expect(res).not.to.be.equal('Cannot check connection');
+
             objects.setObject('javascript.0.test-number', {
                 common: {
                     name: 'test',
@@ -84,13 +104,13 @@ describe('Test RESTful API SSL', function() {
                 });
             });
         });
-    });
+    }).timeout(60000);
 
-    it('Test RESTful API SSL: get - must return value', function (done) {
-        request('https://127.0.0.1:18183/get/system.adapter.simple-api.0.alive?user=admin&pass=iobroker', function (error, response, body) {
+    it('Test RESTful API SSL: get - must return value', done => {
+        request('https://127.0.0.1:18183/get/system.adapter.simple-api.0.alive?user=admin&pass=iobroker', (error, response, body) => {
             console.log('get/system.adapter.simple-api.0.alive => ' + body);
             expect(error).to.be.not.ok;
-            var obj = JSON.parse(body);
+            const obj = JSON.parse(body);
             //{
             //    "val" : true,
             //    "ack" : true,
@@ -126,8 +146,8 @@ describe('Test RESTful API SSL', function() {
         });
     });
 
-    it('Test RESTful API SSL: get with no credentials', function (done) {
-        request('https://127.0.0.1:18183/get/system.adapter.simple-api.0.alive?user=admin&pass=io', function (error, response, body) {
+    it('Test RESTful API SSL: get with no credentials', done => {
+        request('https://127.0.0.1:18183/get/system.adapter.simple-api.0.alive?user=admin&pass=io', (error, response, body) => {
             console.log('get/system.adapter.simple-api.0.alive => ' + body);
             expect(error).to.be.not.ok;
             expect(response.statusCode).to.be.equal(401);
@@ -135,8 +155,8 @@ describe('Test RESTful API SSL', function() {
         });
     });
 
-    it('Test RESTful API SSL: get with wrong credentials', function (done) {
-        request('https://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', function (error, response, body) {
+    it('Test RESTful API SSL: get with wrong credentials', done => {
+        request('https://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', (error, response, body) => {
             console.log('get/system.adapter.simple-api.0.alive => ' + body);
             expect(error).to.be.not.ok;
             expect(response.statusCode).to.be.equal(401);
@@ -144,28 +164,28 @@ describe('Test RESTful API SSL', function() {
         });
     });
 
-    it('Test RESTful API SSL: setBulk(POST) - must set values', function (done) {
+    it('Test RESTful API SSL: setBulk(POST) - must set values', done => {
 
         request({
             uri:    'https://127.0.0.1:18183/setBulk?user=admin&pass=iobroker',
             method: 'POST',
-            body:   'javascript.0.test-number=50&system.adapter.simple-api.0.alive=false'
-        }, function(error, response, body) {
-            console.log('setBulk/?javascript.0.test-number=50&system.adapter.simple-api.0.alive=false => ' + JSON.stringify(body));
+            body:   `${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false`
+        }, (error, response, body) => {
+            console.log(`setBulk/?${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false => ` + JSON.stringify(body));
             expect(error).to.be.not.ok;
 
-            var obj = JSON.parse(body);
+            const obj = JSON.parse(body);
             expect(obj).to.be.ok;
             expect(obj[0].val).to.be.equal(50);
-            expect(obj[0].id).to.equal('javascript.0.test-number');
+            expect(obj[0].id).to.equal(TEST_STATE_ID);
             expect(obj[1].val).to.be.equal(false);
             expect(obj[1].id).to.equal('system.adapter.simple-api.0.alive');
             expect(response.statusCode).to.equal(200);
 
-            request('https://127.0.0.1:18183/getBulk/javascript.0.test-number,system.adapter.simple-api.0.alive?user=admin&pass=iobroker', function (error, response, body) {
-                console.log('getBulk/javascript.0.test-number,system.adapter.simple-api.0.alive => ' + body);
+            request(`https://127.0.0.1:18183/getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive?user=admin&pass=iobroker`, (error, response, body) => {
+                console.log(`getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive => ` + body);
                 expect(error).to.be.not.ok;
-                var obj = JSON.parse(body);
+                const obj = JSON.parse(body);
                 expect(obj[0].val).equal(50);
                 expect(obj[1].val).equal(false);
                 expect(response.statusCode).to.equal(200);
@@ -174,26 +194,26 @@ describe('Test RESTful API SSL', function() {
         });
     });
 
-    it('Test RESTful API SSL: setValueFromBody(POST) - must set values', function (done) {
+    it('Test RESTful API SSL: setValueFromBody(POST) - must set values', done => {
         request({
-            uri: 'https://127.0.0.1:18183/setValueFromBody/javascript.0.test-number?user=admin&pass=iobroker&',
+            uri: `https://127.0.0.1:18183/setValueFromBody/${TEST_STATE_ID}?user=admin&pass=iobroker&`,
             method: 'POST',
             body:   '55'
-        }, function(error, response, body) {
-            console.log('setValueFromBody/?javascript.0.test-number => ' + JSON.stringify(body));
+        }, (error, response, body) => {
+            console.log(`setValueFromBody/?${TEST_STATE_ID} => ` + JSON.stringify(body));
             expect(error).to.be.not.ok;
 
-            var obj = JSON.parse(body);
+            const obj = JSON.parse(body);
             expect(obj).to.be.ok;
             expect(obj[0].val).to.be.equal(55);
-            expect(obj[0].id).to.equal('javascript.0.test-number');
+            expect(obj[0].id).to.equal(TEST_STATE_ID);
             expect(response.statusCode).to.equal(200);
 
-            body = "";
-            request('https://127.0.0.1:18183/getBulk/javascript.0.test-number?user=admin&pass=iobroker', function (error, response, body) {
-                console.log('getBulk/javascript.0.test-number => ' + body);
+            body = '';
+            request(`https://127.0.0.1:18183/getBulk/${TEST_STATE_ID}?user=admin&pass=iobroker`, (error, response, body) => {
+                console.log(`getBulk/${TEST_STATE_ID} => ` + body);
                 expect(error).to.be.not.ok;
-                var obj = JSON.parse(body);
+                const obj = JSON.parse(body);
                 expect(obj[0].val).equal(55);
                 expect(response.statusCode).to.equal(200);
                 done();
@@ -202,7 +222,7 @@ describe('Test RESTful API SSL', function() {
 });
     after('Test RESTful API SSL: Stop js-controller', function (done) {
         this.timeout(6000);
-        setup.stopController(function (normalTerminated) {
+        setup.stopController(normalTerminated => {
             console.log('Adapter normal terminated: ' + normalTerminated);
             done();
         });
