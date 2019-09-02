@@ -328,33 +328,33 @@ describe('Test RESTful API as User', function() {
     });
 
     it('Test RESTful API as User: toggle - must toggle number value to 100', function (done) {
-        request('http://127.0.0.1:18183/toggle/system.adapter.simple-api.upload', (error, response, body) => {
-            console.log('toggle/system.adapter.simple-api.upload => ' + body);
+        request('http://127.0.0.1:18183/toggle/javascript.0.test-number', (error, response, body) => {
+            console.log('toggle/javascript.0.test-number => ' + body);
             expect(error).to.be.not.ok;
             var obj = JSON.parse(body);
             expect(obj).to.be.ok;
             expect(obj.val).to.be.equal(100);
-            expect(obj.id).to.equal('system.adapter.simple-api.upload');
+            expect(obj.id).to.equal('javascript.0.test-number');
             expect(response.statusCode).to.equal(200);
 
-            request('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.upload', (error, response, body) => {
-                console.log('getPlainValue/system.adapter.simple-api.upload => ' + body);
+            request('http://127.0.0.1:18183/getPlainValue/javascript.0.test-number', (error, response, body) => {
+                console.log('getPlainValue/javascript.0.test-number => ' + body);
                 expect(error).to.be.not.ok;
                 expect(body).equal('100');
                 expect(response.statusCode).to.equal(200);
-                request('http://127.0.0.1:18183/set/system.adapter.simple-api.upload?val=49', (error, response, body) => {
-                    console.log('set/system.adapter.simple-api.upload?val=49 => ' + body);
-                    request('http://127.0.0.1:18183/toggle/system.adapter.simple-api.upload', (error, response, body) => {
-                        console.log('toggle/system.adapter.simple-api.upload => ' + body);
+                request('http://127.0.0.1:18183/set/javascript.0.test-number?val=49', (error, response, body) => {
+                    console.log('set/javascript.0.test-number?val=49 => ' + body);
+                    request('http://127.0.0.1:18183/toggle/javascript.0.test-number', (error, response, body) => {
+                        console.log('toggle/javascript.0.test-number => ' + body);
                         expect(error).to.be.not.ok;
                         var obj = JSON.parse(body);
                         expect(obj).to.be.ok;
                         expect(obj.val).to.be.equal(51);
-                        expect(obj.id).to.equal('system.adapter.simple-api.upload');
+                        expect(obj.id).to.equal('javascript.0.test-number');
                         expect(response.statusCode).to.equal(200);
 
-                        request('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.upload', (error, response, body) => {
-                            console.log('getPlainValue/system.adapter.simple-api.upload => ' + body);
+                        request('http://127.0.0.1:18183/getPlainValue/javascript.0.test-number', (error, response, body) => {
+                            console.log('getPlainValue/javascript.0.test-number => ' + body);
                             expect(error).to.be.not.ok;
                             expect(body).equal('51');
                             expect(response.statusCode).to.equal(200);
@@ -367,22 +367,22 @@ describe('Test RESTful API as User', function() {
     });
 
     it('Test RESTful API as User: setBulk - must set values', function (done) {
-        request('http://127.0.0.1:18183/setBulk/?system.adapter.simple-api.upload=50&system.adapter.simple-api.0.alive=false&javascript.0.test=3', (error, response, body) => {
-            console.log('setBulk/?system.adapter.simple-api.upload=50&system.adapter.simple-api.0.alive=false&javascript.0.test=3 => ' + body);
+        request('http://127.0.0.1:18183/setBulk/?javascript.0.test-number=50&system.adapter.simple-api.0.alive=false&javascript.0.test=3', (error, response, body) => {
+            console.log('setBulk/?javascript.0.test-number=50&system.adapter.simple-api.0.alive=false&javascript.0.test=3 => ' + body);
             expect(error).to.be.not.ok;
 
             var obj = JSON.parse(body);
             expect(obj).to.be.ok;
             expect(obj[0].val).to.be.equal(50);
-            expect(obj[0].id).to.equal('system.adapter.simple-api.upload');
+            expect(obj[0].id).to.equal('javascript.0.test-number');
             expect(obj[1].val).to.be.equal(false);
             expect(obj[1].id).to.equal('system.adapter.simple-api.0.alive');
             expect(obj[2].val).to.be.equal(3);
             expect(obj[2].id).to.equal('javascript.0.test');
             expect(response.statusCode).to.equal(200);
 
-            request('http://127.0.0.1:18183/getBulk/system.adapter.simple-api.upload,system.adapter.simple-api.0.alive,javascript.0.test', (error, response, body) => {
-                console.log('getBulk/system.adapter.simple-api.upload,system.adapter.simple-api.0.alive&javascript.0.test => ' + body);
+            request('http://127.0.0.1:18183/getBulk/javascript.0.test-number,system.adapter.simple-api.0.alive,javascript.0.test', (error, response, body) => {
+                console.log('getBulk/javascript.0.test-number,system.adapter.simple-api.0.alive&javascript.0.test => ' + body);
                 expect(error).to.be.not.ok;
                 var obj = JSON.parse(body);
                 expect(obj[0].val).equal(50);
@@ -426,23 +426,23 @@ describe('Test RESTful API as User', function() {
         request({
             uri: 'http://127.0.0.1:18183/setBulk',
             method: 'POST',
-            body: 'system.adapter.simple-api.upload=50&system.adapter.simple-api.0.alive=false&javascript.0.test=4'
+            body: 'javascript.0.test-number=50&system.adapter.simple-api.0.alive=false&javascript.0.test=4'
         }, function(error, response, body) {
-            console.log('setBulk/?system.adapter.simple-api.upload=50&system.adapter.simple-api.0.alive=false&javascript.0.test=4 => ' + JSON.stringify(body));
+            console.log('setBulk/?javascript.0.test-number=50&system.adapter.simple-api.0.alive=false&javascript.0.test=4 => ' + JSON.stringify(body));
             expect(error).to.be.not.ok;
 
             var obj = JSON.parse(body);
             expect(obj).to.be.ok;
             expect(obj[0].val).to.be.equal(50);
-            expect(obj[0].id).to.equal('system.adapter.simple-api.upload');
+            expect(obj[0].id).to.equal('javascript.0.test-number');
             expect(obj[1].val).to.be.equal(false);
             expect(obj[1].id).to.equal('system.adapter.simple-api.0.alive');
             expect(obj[2].val).to.be.equal(4);
             expect(obj[2].id).to.equal('javascript.0.test');
             expect(response.statusCode).to.equal(200);
 
-            request('http://127.0.0.1:18183/getBulk/system.adapter.simple-api.upload,system.adapter.simple-api.0.alive,javascript.0.test', (error, response, body) => {
-                console.log('getBulk/system.adapter.simple-api.upload,system.adapter.simple-api.0.alive,javascript.0.test => ' + body);
+            request('http://127.0.0.1:18183/getBulk/javascript.0.test-number,system.adapter.simple-api.0.alive,javascript.0.test', (error, response, body) => {
+                console.log('getBulk/javascript.0.test-number,system.adapter.simple-api.0.alive,javascript.0.test => ' + body);
                 expect(error).to.be.not.ok;
                 var obj = JSON.parse(body);
                 expect(obj[0].val).equal(50);
@@ -457,24 +457,24 @@ describe('Test RESTful API as User', function() {
     it('Test RESTful API as User: setBulk(POST-GET-Mix) - must set values', function (done) {
 
         request({
-            uri: 'http://127.0.0.1:18183/setBulk?system.adapter.simple-api.upload=51&system.adapter.simple-api.0.alive=false',
+            uri: 'http://127.0.0.1:18183/setBulk?javascript.0.test-number=51&system.adapter.simple-api.0.alive=false',
             method: 'POST',
             body: ''
         }, function(error, response, body) {
-            console.log('setBulk/?system.adapter.simple-api.upload=51&system.adapter.simple-api.0.alive=false => ' + JSON.stringify(body));
+            console.log('setBulk/?javascript.0.test-number=51&system.adapter.simple-api.0.alive=false => ' + JSON.stringify(body));
             expect(error).to.be.not.ok;
             expect(response.statusCode).to.equal(200);
 
             var obj = JSON.parse(body);
             expect(obj).to.be.ok;
             expect(obj[0].val).to.be.equal(51);
-            expect(obj[0].id).to.equal('system.adapter.simple-api.upload');
+            expect(obj[0].id).to.equal('javascript.0.test-number');
             expect(obj[1].val).to.be.equal(false);
             expect(obj[1].id).to.equal('system.adapter.simple-api.0.alive');
             expect(response.statusCode).to.equal(200);
 
-            request('http://127.0.0.1:18183/getBulk/system.adapter.simple-api.upload,system.adapter.simple-api.0.alive', (error, response, body) => {
-                console.log('getBulk/system.adapter.simple-api.upload,system.adapter.simple-api.0.alive => ' + body);
+            request('http://127.0.0.1:18183/getBulk/javascript.0.test-number,system.adapter.simple-api.0.alive', (error, response, body) => {
+                console.log('getBulk/javascript.0.test-number,system.adapter.simple-api.0.alive => ' + body);
                 expect(error).to.be.not.ok;
                 var obj = JSON.parse(body);
                 expect(obj[0].val).equal(51);
@@ -487,21 +487,21 @@ describe('Test RESTful API as User', function() {
 
     it('Test RESTful API as User: setValueFromBody(POST) - must set one value', function (done) {
         request({
-            uri: 'http://127.0.0.1:18183/setValueFromBody/system.adapter.simple-api.upload',
+            uri: 'http://127.0.0.1:18183/setValueFromBody/javascript.0.test-number',
             method: 'POST',
             body: '55'
         }, function(error, response, body) {
-            console.log('setValueFromBody/?system.adapter.simple-api.upload => ' + JSON.stringify(body));
+            console.log('setValueFromBody/?javascript.0.test-number => ' + JSON.stringify(body));
             expect(error).to.be.not.ok;
 
             var obj = JSON.parse(body);
             expect(obj).to.be.ok;
             expect(obj[0].val).to.be.equal(55);
-            expect(obj[0].id).to.equal('system.adapter.simple-api.upload');
+            expect(obj[0].id).to.equal('javascript.0.test-number');
             expect(response.statusCode).to.equal(200);
 
-            request('http://127.0.0.1:18183/getBulk/system.adapter.simple-api.upload', (error, response, body) => {
-                console.log('getBulk/system.adapter.simple-api.upload => ' + body);
+            request('http://127.0.0.1:18183/getBulk/javascript.0.test-number', (error, response, body) => {
+                console.log('getBulk/javascript.0.test-number => ' + body);
                 expect(error).to.be.not.ok;
                 var obj = JSON.parse(body);
                 expect(obj[0].val).equal(55);

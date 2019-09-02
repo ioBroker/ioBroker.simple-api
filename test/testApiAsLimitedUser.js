@@ -273,11 +273,11 @@ describe('Test RESTful API as Owner-User', function() {
 
     it('Test RESTful API as Owner-User: setValueFromBody(POST) - must set one value', function (done) {
         request({
-            uri: 'http://127.0.0.1:' + PORT + '/setValueFromBody/system.adapter.simple-api.upload',
+            uri: 'http://127.0.0.1:' + PORT + '/setValueFromBody/javascript.0.test-number',
             method: 'POST',
             body: '55'
         }, (error, response, body) => {
-            console.log('setValueFromBody/?system.adapter.simple-api.upload => ' + JSON.stringify(body));
+            console.log('setValueFromBody/?javascript.0.test-number => ' + JSON.stringify(body));
             expect(body).to.be.equal('error: permissionError');
             expect(response.statusCode).to.equal(401);
             done();
