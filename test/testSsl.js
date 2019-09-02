@@ -66,7 +66,23 @@ describe('Test RESTful API SSL', function() {
         checkConnectionOfAdapter(function (res) {
             if (res) console.log(res);
             expect(res).not.to.be.equal('Cannot check connection');
-            done();
+            objects.setObject('javascript.0.test-number', {
+                common: {
+                    name: 'test',
+                    type: 'number',
+                    role: 'value',
+                    def: 0
+                },
+                native: {
+                },
+                type: 'state'
+            }, err => {
+                expect(err).to.be.null;
+                states.setState('javascript.0.test-number', 0, err => {
+                    expect(err).to.be.null;
+                    done();
+                });
+            });
         });
     });
 

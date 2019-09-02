@@ -70,7 +70,23 @@ describe('Test RESTful API', function () {
                 expect(err).to.be.null;
                 states.setState('javascript.0.test-string','', err => {
                     expect(err).to.be.null;
-                    done();
+                    objects.setObject('javascript.0.test-number', {
+                        common: {
+                            name: 'test',
+                            type: 'number',
+                            role: 'value',
+                            def: 0
+                        },
+                        native: {
+                        },
+                        type: 'state'
+                    }, err => {
+                        expect(err).to.be.null;
+                        states.setState('javascript.0.test-number', 0, err => {
+                            expect(err).to.be.null;
+                            done();
+                        });
+                    });
                 });
             });
         });

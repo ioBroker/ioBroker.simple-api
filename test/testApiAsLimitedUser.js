@@ -151,7 +151,23 @@ describe('Test RESTful API as Owner-User', function() {
                         states.setState('javascript.0.test',1, function(err) {
                             console.log('END javascript.0.test ' + err);
                             expect(err).to.be.null;
-                            done();
+                            objects.setObject('javascript.0.test-number', {
+                                common: {
+                                    name: 'test',
+                                    type: 'number',
+                                    role: 'value',
+                                    def: 0
+                                },
+                                native: {
+                                },
+                                type: 'state'
+                            }, err => {
+                                expect(err).to.be.null;
+                                states.setState('javascript.0.test-number', 0, err => {
+                                    expect(err).to.be.null;
+                                    done();
+                                });
+                            });
                         });
                     });
                 });
