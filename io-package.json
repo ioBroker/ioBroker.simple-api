@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.1.1",
+        "version": "2.1.2",
         "news": {
+            "2.1.2": {
+                "en": "fix compact mode",
+                "de": "Kompaktmodus korrigieren",
+                "ru": "исправить компактный режим",
+                "pt": "corrigir modo compacto",
+                "nl": "fix compacte modus",
+                "fr": "mode compact fixe",
+                "it": "correzione della modalità compatta",
+                "es": "arreglar el modo compacto",
+                "pl": "napraw tryb kompaktowy",
+                "zh-cn": "修复紧凑模式"
+            },
             "2.1.1": {
                 "en": "getBulk response enhance and id added, documentation updated",
                 "de": "Die Antwort von getBulk wurde erweitert und die ID hinzugefügt. Die Dokumentation wurde aktualisiert",

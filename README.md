@@ -534,6 +534,9 @@ If no data source was specified or the noHistory parameter is passed, then only 
 
 ## Changelog
 
+### 2.1.2 (2019-09-05)
+* (Apollon77) fix compact mode
+
 ### 2.1.0 (2019-07-05)
 * (Marco.K) Added command set for the Grafana plugins JSON / SimpleJSON. Usage see https://forum.iobroker.net/topic/23033/aufruf-modifikation-simpleapi-adapter-iobroker-als-datenquelle-f%C3%BCr-grafana
 

@@ -28,9 +28,11 @@ function startAdapter(options) {
         },
         unload: callback => {
             try {
-                adapter.log.info('terminating http' + (webServer.settings.secure ? 's' : '') + ' server on port ' + webServer.settings.port);
-                //if (webServer.api) webServer.api.close();
-
+                if (webServer && webServer.server) {
+                    adapter.log.info('terminating http' + (webServer.settings.secure ? 's' : '') + ' server on port ' + webServer.settings.port);
+                    webServer.server.close();
+                    webServer.server = null;
+                }
                 callback();
             } catch (e) {
                 callback();
