@@ -73,7 +73,7 @@ describe('Test RESTful API', function () {
         });
     });
 
-    it('Test adapter: Check if adapter started and create upload datapoint', done => {
+    it('Test adapter: Check if adapter started and create datapoint', done => {
         checkConnectionOfAdapter(res => {
             res && console.log(res);
             expect(res).not.to.be.equal('Cannot check connection');
@@ -157,7 +157,7 @@ describe('Test RESTful API', function () {
         request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive%23test', (error, response, body) => {
             console.log('get/system.adapter.simple-api.0.alive%23test => ' + body);
             expect(error).to.be.not.ok;
-            expect(body).to.be.equal('"error: datapoint \\"system.adapter.simple-api.0.alive#test\\" not found"');
+            expect(body).to.be.equal('{"error":"datapoint \\"system.adapter.simple-api.0.alive#test\\" not found"}');
             expect(response.statusCode).to.equal(500);
             done();
         });
@@ -167,7 +167,7 @@ describe('Test RESTful API', function () {
         request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.%23alive%23test', (error, response, body) => {
             console.log('get/system.adapter.simple-api.0.alive#%23test => ' + body);
             expect(error).to.be.not.ok;
-            expect(body).to.be.equal('"error: datapoint \\"system.adapter.simple-api.0.#alive#test\\" not found"');
+            expect(body).to.be.equal('{"error":"datapoint \\"system.adapter.simple-api.0.#alive#test\\" not found"}');
             expect(response.statusCode).to.equal(500);
             done();
         });
@@ -265,12 +265,40 @@ describe('Test RESTful API', function () {
             const obj = JSON.parse(body);
             expect(obj).to.be.ok;
             expect(obj.val).to.be.true;
+            expect(typeof obj.val).to.be.equal('boolean');
             expect(obj.id).to.equal('system.adapter.simple-api.0.alive');
             expect(response.statusCode).to.equal(200);
             request('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', (error, response, body) => {
                 console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
                 expect(error).to.be.not.ok;
                 expect(body).equal('true');
+                expect(response.statusCode).to.equal(200);
+                done();
+            });
+        });
+    });
+
+    it('Test RESTful API: set - must have ack true', done => {
+        request('http://127.0.0.1:18183/set/system.adapter.simple-api.0.alive?val=true&ack=true', (error, response, body) => {
+            console.log('set/system.adapter.simple-api.0.alive?val=true => ' + body);
+            expect(error).to.be.not.ok;
+            const obj = JSON.parse(body);
+            expect(obj).to.be.ok;
+            expect(obj.val).to.be.true;
+            expect(typeof obj.val).to.be.equal('boolean');
+            expect(obj.id).to.equal('system.adapter.simple-api.0.alive');
+            expect(response.statusCode).to.equal(200);
+            request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', (error, response, body) => {
+                console.log('get/system.adapter.simple-api.0.alive => ' + body);
+                try {
+                    body = JSON.parse(body);
+                } catch (e) {
+                    expect(e).to.be.false;
+                }
+
+                expect(error).to.be.not.ok;
+                expect(body.val).equal(true);
+                expect(body.ack).equal(true);
                 expect(response.statusCode).to.equal(200);
                 done();
             });
@@ -284,6 +312,7 @@ describe('Test RESTful API', function () {
             const obj = JSON.parse(body);
             expect(obj).to.be.ok;
             expect(obj.val).to.be.false;
+            expect(typeof obj.val).to.be.equal('boolean');
             expect(obj.id).to.equal('system.adapter.simple-api.0.alive');
             expect(response.statusCode).to.equal(200);
 
@@ -324,6 +353,7 @@ describe('Test RESTful API', function () {
             const obj = JSON.parse(body);
             expect(obj).to.be.ok;
             expect(obj.val).to.be.equal(100);
+            expect(typeof obj.val).to.be.equal('number');
             expect(obj.id).to.equal(TEST_STATE_ID);
             expect(response.statusCode).to.equal(200);
 

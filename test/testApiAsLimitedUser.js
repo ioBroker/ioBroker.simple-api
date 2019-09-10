@@ -201,7 +201,7 @@ describe('Test RESTful API as Owner-User', function () {
         request('http://127.0.0.1:' + PORT + '/get/system.adapter.simple-api.0.alive', (error, response, body) => {
             console.log('get/system.adapter.simple-api.0.alive => ' + body);
             expect(error).to.be.not.ok;
-            expect(body).to.be.equal('error: permissionError');
+            expect(body).to.be.equal('{"error":"permissionError"}');
             expect(response.statusCode).to.equal(401);
             done();
         });
@@ -248,7 +248,7 @@ describe('Test RESTful API as Owner-User', function () {
     it('Test RESTful API as Owner-User: set - must set value', done => {
         request('http://127.0.0.1:' + PORT + '/set/system.adapter.simple-api.0.alive?val=false', (error, response, body) => {
             console.log('set/system.adapter.simple-api.0.alive?val=false => ' + body);
-            expect(body).to.be.equal('error: permissionError');
+            expect(body).to.be.equal('{"error":"permissionError"}');
             expect(response.statusCode).to.equal(401);
             done();
         });
@@ -257,7 +257,7 @@ describe('Test RESTful API as Owner-User', function () {
     it('Test RESTful API as Owner-User: set - must set val', done => {
         request('http://127.0.0.1:' + PORT + '/set/system.adapter.simple-api.0.alive?val=true', (error, response, body) => {
             console.log('set/system.adapter.simple-api.0.alive?val=true => ' + body);
-            expect(body).to.be.equal('error: permissionError');
+            expect(body).to.be.equal('{"error":"permissionError"}');
             expect(response.statusCode).to.equal(401);
             done();
         });
@@ -286,7 +286,7 @@ describe('Test RESTful API as Owner-User', function () {
     it('Test RESTful API as Owner-User: states - must return states', done => {
         request('http://127.0.0.1:' + PORT + '/states?pattern=system.adapter.*', (error, response, body) => {
             console.log('states?pattern=system.adapter.* => ' + body);
-            expect(body).to.be.equal('error: permissionError');
+            expect(body).to.be.equal('{"error":"permissionError"}');
             expect(response.statusCode).to.equal(401);
             done();
         });
@@ -299,7 +299,7 @@ describe('Test RESTful API as Owner-User', function () {
             body: '55'
         }, (error, response, body) => {
             console.log(`setValueFromBody/?${TEST_STATE_ID} => ${JSON.stringify(body)}`);
-            expect(body).to.be.equal('error: permissionError');
+            expect(body).to.be.equal('{"error":"permissionError"}');
             expect(response.statusCode).to.equal(401);
             done();
         });

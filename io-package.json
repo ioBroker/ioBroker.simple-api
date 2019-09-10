@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.1.2",
+        "version": "2.2.0",
         "news": {
+            "2.2.0": {
+                "en": "New flags are now supported: ack and type\nReturn error codes as JSON if no pretty print defined",
+                "de": "Neue Flags werden jetzt unterstützt: ack und type\nGibt Fehlercodes als JSON zurück, wenn kein hübscher Ausdruck definiert ist",
+                "ru": "Теперь поддерживаются новые флаги: ack и type\nВернуть коды ошибок в формате JSON, если не определена симпатичная печать",
+                "pt": "Novos sinalizadores agora são suportados: ack e type\nRetornar códigos de erro como JSON se nenhuma impressão bonita estiver definida",
+                "nl": "Nieuwe vlaggen worden nu ondersteund: ack en type\nRetourneer foutcodes als JSON als er geen mooie afdruk is gedefinieerd",
+                "fr": "Les nouveaux drapeaux sont maintenant supportés: ack et type\nRenvoie les codes d'erreur au format JSON si aucune jolie impression n'est définie",
+                "it": "Ora sono supportati nuovi flag: ack e type\nRestituisce i codici di errore come JSON se non è stata definita una stampa carina",
+                "es": "Ahora se admiten nuevas banderas: ack y type\nDevuelve los códigos de error como JSON si no hay una impresión bonita definida",
+                "pl": "Obsługiwane są teraz nowe flagi: ack i type\nZwróć kody błędów jako JSON, jeśli nie zdefiniowano ładnego wydruku",
+                "zh-cn": "现在支持新标志：ack和type\n如果没有定义漂亮的打印，则将错误代码返回为JSON"
+            },
             "2.1.2": {
                 "en": "fix compact mode",
                 "de": "Kompaktmodus korrigieren",
