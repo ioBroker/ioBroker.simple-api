@@ -78,10 +78,7 @@
             // example: select elements with id=key and class=value and insert value
             if ($('#' + key + '.value').attr('type') === 'checkbox') {
                 $('#' + key + '.value').prop('checked', settings[key]).on('change', function() {
-                    if ($('#auth').prop('checked')) {
-                        $('#secure').prop('checked', true);
-                    }
-                    showHideSettings();
+                    showHideSettings($(this).attr('id'));
                     onChange();
                 });
             } else {
@@ -119,10 +116,9 @@
         }
 
         getHistoryInstances(settings);
-        
+
         onChange(false);
     }
-
 
     function getHistoryInstances(settings) {
         socket.emit('getObjectView', 'system', 'instance', {startkey: 'system.adapter.', endkey: 'system.adapter.\u9999'}, function (err, doc) {
@@ -137,7 +133,7 @@
                     result = result.filter(function (adp) {
                         return adp && adp.common && adp.common.getHistory;
                     });
-                    
+
                     var text = '';
                     for (var r = 0; r < result.length; r++) {
                         var name = result[r]._id.substring('system.adapter.'.length);

@@ -2,30 +2,20 @@
 /*jslint node: true */
 'use strict';
 
-const utils = require('@iobroker/adapter-core'); // Get common adapter utils
-const SimpleAPI     = require('./lib/simpleapi.js');
-const LE            = require(utils.controllerDir + '/lib/letsencrypt.js');
-const adapterName   = require('./package.json').name.split('.').pop();
+const utils       = require('@iobroker/adapter-core'); // Get common adapter utils
+const SimpleAPI   = require('./lib/simpleapi.js');
+const LE          = require(utils.controllerDir + '/lib/letsencrypt.js');
+const adapterName = require('./package.json').name.split('.').pop();
 
 let webServer = null;
 let fs        = null;
-
 let adapter;
 
 function startAdapter(options) {
     options = options || {};
     Object.assign(options, {
         name: adapterName,
-        stateChange: (id, state) => {
-            if (webServer && webServer.api) {
-                webServer.api.stateChange(id, state);
-            }
-        },
-        objectChange: (id, obj) => {
-            if (webServer && webServer.api) {
-                webServer.api.objectChange(id, obj);
-            }
-        },
+        stateChange: (id, state) => webServer && webServer.api && webServer.api.stateChange(id, state),
         unload: callback => {
             try {
                 if (webServer && webServer.server) {
@@ -33,10 +23,10 @@ function startAdapter(options) {
                     webServer.server.close();
                     webServer.server = null;
                 }
-                callback();
             } catch (e) {
-                callback();
+
             }
+            callback();
         },
         ready: main
     });
@@ -55,10 +45,6 @@ function main() {
     }
 
     if (adapter.config.secure) {
-        // subscribe on changes of permissions
-        adapter.subscribeForeignObjects('system.group.*');
-        adapter.subscribeForeignObjects('system.user.*');
-
         // Load certificates
         adapter.getCertificates((err, certificates, leConfig) => {
             adapter.config.certificates = certificates;
@@ -72,7 +58,7 @@ function main() {
 
 function requestProcessor(req, res) {
     if (req.url.indexOf('favicon.ico') !== -1) {
-        if (!fs) fs = require('fs');
+        fs = fs || require('fs');
         const stat = fs.statSync(__dirname + '/img/favicon.ico');
 
         res.writeHead(200, {

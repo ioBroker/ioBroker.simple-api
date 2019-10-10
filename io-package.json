@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.2.0",
+        "version": "2.3.0",
         "news": {
+            "2.3.0": {
+                "en": "Admin 3 is now supported\nNPM packages were updated",
+                "de": "Admin 3 wird jetzt unterstützt\nNPM-Pakete wurden aktualisiert",
+                "ru": "Admin 3 теперь поддерживается\nПакеты NPM были обновлены",
+                "pt": "Admin 3 agora é suportado\nPacotes NPM foram atualizados",
+                "nl": "Admin 3 wordt nu ondersteund\nNPM-pakketten zijn bijgewerkt",
+                "fr": "Admin 3 est maintenant supporté\nLes packages NPM ont été mis à jour",
+                "it": "Admin 3 è ora supportato\nI pacchetti NPM sono stati aggiornati",
+                "es": "Admin 3 ahora es compatible\nSe actualizaron los paquetes de NPM",
+                "pl": "Administrator 3 jest teraz obsługiwany\nPakiety NPM zostały zaktualizowane",
+                "zh-cn": "现在支持管理员3\nNPM软件包已更新"
+            },
             "2.2.0": {
                 "en": "New flags are now supported: ack and type\nReturn error codes as JSON if no pretty print defined",
                 "de": "Neue Flags werden jetzt unterstützt: ack und type\nGibt Fehlercodes als JSON zurück, wenn kein hübscher Ausdruck definiert ist",
@@ -94,50 +106,21 @@
                 "it": "Restituisci codifica caratteri usati (UTF-8)",
                 "es": "Devuelve la codificación de caracteres usados ​​(UTF-8)",
                 "pl": "Zwróć używane kodowanie znaków (UTF-8)"
-            },
-            "1.6.2": {
-                "en": 				"Fix decoding problems",
-                "de": 				"Dekodierungsprobleme behoben",
-                "ru": 				"Fix decoding problems"
-            },
-            "1.6.1": {
-                "en": 				"Fix statuscode for setBulk and optimize permission errors",
-                "de": 				"Statuscode für setBulk korrigiert und Rechte-Fehler optimiert",
-                "ru": 				"Fix statuscode for setBulk and optimize permission errors"
-            },
-            "1.6.0": {
-                "en": 				"Optimize Permission handling and add possibility to only allow access to states where user is also owner (needs js-contrioller 1.1.1!), fix handling of url-encoded values",
-                "de": 				"Berechtigungsbehandlung optimiert und Möglichkeit eingebaut nur den Zugriff auf Zustände zu erlauben wo der Benutzer auch Besitzer ist (benötigt js-controller 1.1.1), Behandlung von URL-kodierten Werten korrigiert",
-                "ru": 				"Optimize Permission handling and add possibility to only allow access to states where user is also owner (needs js-contrioller 1.1.1!), fix handling of url-encoded values"
-            },
-            "1.5.1": {
-                "en": 				"Add new POST method setValueFromBody",
-                "de": 				"Neue POST-Methode setValueFromBody hinzugefügt",
-                "ru": 				"Add new POST method setValueFromBody"
-            },
-            "1.4.0": {
-                "en": 				"can be used as web-extension",
-                "de": 				"Kann als Web-Extension benutzt werden",
-                "ru": 				"Может использоватся, как Web-плагин"
-            },
-			"1.3.0": {
-                "en": 				"сompatible only with new admin",
-                "de": 				"Nur mit neuem Admin kompatibel",
-                "ru": 				"Совместимо только с новым админ-драйвером"
-            },
-            "1.2.0": {
-                "en":               "support of letsencrypt certificates",
-                "de":               "Unterstützung von letsencrypt Zertifikaten",
-                "ru":               "Поддержка letsencrypt сертификатов"
-            },
-            "1.1.1": {
-                "en":               "support of chained certificates",
-                "de":               "support of chained certificates",
-                "ru":               "support of chained certificates"
             }
         },
-        "title":                    "simpleAPI Adapter",
-        "desc":                     "This adapter allows to read and write ioBroker objects and state with web RESTful API",
+        "title":                    "Simple RESTful API",
+        "desc":                     {
+            "en": "This adapter allows to read and write ioBroker objects and state with web RESTful API",
+            "de": "Dieser Adapter ermöglicht das Lesen und Schreiben von ioBroker-Objekten und den Status mit der Web-RESTful-API",
+            "ru": "Этот адаптер позволяет читать и записывать объекты и состояния ioBroker с помощью веб-RESTful API",
+            "pt": "Esse adaptador permite ler e gravar objetos ioBroker e declarar com a API RESTful da web",
+            "nl": "Deze adapter maakt het mogelijk om ioBroker-objecten te lezen en te schrijven en aan te geven met de web RESTful API",
+            "fr": "Cet adaptateur permet de lire et d'écrire des objets et des états ioBroker avec l'API Web RESTful",
+            "it": "Questo adattatore consente di leggere e scrivere oggetti e stato di ioBroker con l'API RESTful web",
+            "es": "Este adaptador permite leer y escribir objetos y estados ioBroker con API RESTful web",
+            "pl": "Ten adapter umożliwia odczyt i zapis obiektów ioBroker oraz ich stan za pomocą web RESTful API",
+            "zh-cn": "该适配器允许使用Web RESTful API读写ioBroker对象和状态"
+        },
         "authors": [
             "bluefox <dogafox@gmail.com>",
             "Apollon77 <ingo@fischer-ka.de>",
@@ -149,6 +132,7 @@
         "loglevel":                 "info",
         "icon":                     "simple-api.png",
         "webExtension":             "lib/simpleapi.js",
+        "materialize":              true,
         "readme":                   "https://github.com/ioBroker/ioBroker.simple-api/blob/master/README.md",
         "keywords":                 ["web", "simpleAPI", "RESTful", "communication"],
 		"enabled":                  true,
