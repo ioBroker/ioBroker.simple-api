@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.3.1",
+        "version": "2.3.2",
         "news": {
-            "2.3.1": {
+            "2.3.2": {
                 "en": "Admin 3 is now supported\nNPM packages were updated",
                 "de": "Admin 3 wird jetzt unterstützt\nNPM-Pakete wurden aktualisiert",
                 "ru": "Admin 3 теперь поддерживается\nПакеты NPM были обновлены",
