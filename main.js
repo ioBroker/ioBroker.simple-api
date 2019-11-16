@@ -93,8 +93,9 @@ function initWebServer(settings) {
     settings.port = parseInt(settings.port, 10);
 
     if (settings.port) {
-
-        if (settings.secure && !adapter.config.certificates) return null;
+        if (settings.secure && !adapter.config.certificates) {
+            return null;
+        }
 
         server.server = LE.createServer(requestProcessor, settings, adapter.config.certificates, adapter.config.leConfig, adapter.log);
         server.server.__server = server;

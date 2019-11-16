@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.3.2",
+        "version": "2.3.3",
         "news": {
+            "2.3.3": {
+              "en": "Added response code for unknown commands",
+              "de": "Antwortcode für unbekannte Befehle hinzugefügt",
+              "ru": "Добавлен код ответа для неизвестных команд",
+              "pt": "Adicionado código de resposta para comandos desconhecidos",
+              "nl": "Reactiecode toegevoegd voor onbekende opdrachten",
+              "fr": "Ajout du code de réponse pour les commandes inconnues",
+              "it": "Aggiunto codice di risposta per comandi sconosciuti",
+              "es": "Código de respuesta agregado para comandos desconocidos",
+              "pl": "Dodano kod odpowiedzi dla nieznanych poleceń",
+              "zh-cn": "添加了未知命令的响应代码"
+            },
             "2.3.2": {
                 "en": "Admin 3 is now supported\nNPM packages were updated",
                 "de": "Admin 3 wird jetzt unterstützt\nNPM-Pakete wurden aktualisiert",
