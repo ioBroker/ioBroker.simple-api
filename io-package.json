@@ -1,19 +1,19 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.3.3",
+        "version": "2.4.0",
         "news": {
             "2.3.3": {
-              "en": "Added response code for unknown commands",
-              "de": "Antwortcode für unbekannte Befehle hinzugefügt",
-              "ru": "Добавлен код ответа для неизвестных команд",
-              "pt": "Adicionado código de resposta para comandos desconhecidos",
-              "nl": "Reactiecode toegevoegd voor onbekende opdrachten",
-              "fr": "Ajout du code de réponse pour les commandes inconnues",
-              "it": "Aggiunto codice di risposta per comandi sconosciuti",
-              "es": "Código de respuesta agregado para comandos desconocidos",
-              "pl": "Dodano kod odpowiedzi dla nieznanych poleceń",
-              "zh-cn": "添加了未知命令的响应代码"
+                "en": "Added response code for unknown commands",
+                "de": "Antwortcode für unbekannte Befehle hinzugefügt",
+                "ru": "Добавлен код ответа для неизвестных команд",
+                "pt": "Adicionado código de resposta para comandos desconhecidos",
+                "nl": "Reactiecode toegevoegd voor onbekende opdrachten",
+                "fr": "Ajout du code de réponse pour les commandes inconnues",
+                "it": "Aggiunto codice di risposta per comandi sconosciuti",
+                "es": "Código de respuesta agregado para comandos desconocidos",
+                "pl": "Dodano kod odpowiedzi dla nieznanych poleceń",
+                "zh-cn": "添加了未知命令的响应代码"
             },
             "2.3.2": {
                 "en": "Admin 3 is now supported\nNPM packages were updated",
@@ -120,8 +120,8 @@
                 "pl": "Zwróć używane kodowanie znaków (UTF-8)"
             }
         },
-        "title":                    "Simple RESTful API",
-        "desc":                     {
+        "title": "Simple RESTful API",
+        "desc": {
             "en": "This adapter allows to read and write ioBroker objects and state with web RESTful API",
             "de": "Dieser Adapter ermöglicht das Lesen und Schreiben von ioBroker-Objekten und den Status mit der Web-RESTful-API",
             "ru": "Этот адаптер позволяет читать и записывать объекты и состояния ioBroker с помощью веб-RESTful API",
@@ -138,40 +138,52 @@
             "Apollon77 <ingo@fischer-ka.de>",
             "Marco.K <marco@kaminski-net.de>"
         ],
-        "license":                  "MIT",
-        "platform":                 "Javascript/Node.js",
-        "mode":                     "daemon",
-        "loglevel":                 "info",
-        "icon":                     "simple-api.png",
-        "webExtension":             "lib/simpleapi.js",
-        "materialize":              true,
-        "readme":                   "https://github.com/ioBroker/ioBroker.simple-api/blob/master/README.md",
-        "keywords":                 ["web", "simpleAPI", "RESTful", "communication"],
-		"enabled":                  true,
-        "compact":                  true,
-        "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.simple-api/master/admin/simple-api.png",
-		"type":                     "communication",
-        "stopBeforeUpdate":         true,
-        "localLink":                "%protocol%://%ip%:%port%/get/system.adapter.simple-api.%instance%.uptime?prettyPrint",
-        "dependencies":             [{"js-controller": ">=0.15.0"}]
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "mode": "daemon",
+        "loglevel": "info",
+        "icon": "simple-api.png",
+        "webExtension": "lib/simpleapi.js",
+        "materialize": true,
+        "readme": "https://github.com/ioBroker/ioBroker.simple-api/blob/master/README.md",
+        "keywords": [
+            "web",
+            "simpleAPI",
+            "RESTful",
+            "communication"
+        ],
+        "enabled": true,
+        "compact": true,
+        "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.simple-api/master/admin/simple-api.png",
+        "type": "communication",
+        "stopBeforeUpdate": true,
+        "localLink": "%protocol%://%ip%:%port%/get/system.adapter.simple-api.%instance%.uptime?prettyPrint",
+        "dependencies": [
+            {
+                "js-controller": ">=0.15.0"
+            }
+        ],
+        "plugins": {
+            "sentry": {
+                "dsn": "https://1ad1b116fa644ec29e6f5d724b39f999@sentry.iobroker.net/12"
+            }
+        }
     },
     "native": {
-        "port":                     8087,
-        "auth":                     false,
-        "secure":                   false,
-        "bind":                     "0.0.0.0",
-        "certPublic":               "",
-        "certPrivate":              "",
-        "certChained":              "",
-        "defaultUser":              "admin",
+        "port": 8087,
+        "auth": false,
+        "secure": false,
+        "bind": "0.0.0.0",
+        "certPublic": "",
+        "certPrivate": "",
+        "certChained": "",
+        "defaultUser": "admin",
         "onlyAllowWhenUserIsOwner": false,
-        "webInstance":              "",
-
-        "leEnabled":                false,
-        "leUpdate":                 false,
-        "leCheckPort":              80,
-
-        "dataSource":               "",
-        "allDatapoints":            false
+        "webInstance": "",
+        "leEnabled": false,
+        "leUpdate": false,
+        "leCheckPort": 80,
+        "dataSource": "",
+        "allDatapoints": false
     }
 }

@@ -118,8 +118,18 @@ function initWebServer(settings) {
                     process.exit(1);
                 }
             }
-            server.server.listen(port);
-            adapter.log.info('http' + (settings.secure ? 's' : '') + ' server listening on port ' + port);
+            if (server.server) {
+                server.server.listen(port);
+                adapter.log.info('http' + (settings.secure ? 's' : '') + ' server listening on port ' + port);
+            }
+            else {
+                adapter.log.error('server initialization failed');
+                if (adapter.terminate) {
+                    adapter.terminate(1);
+                } else {
+                    process.exit(1);
+                }
+            }
         });
     }
 

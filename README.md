@@ -9,6 +9,8 @@
 
 This is RESTFul interface to read the objects and states from ioBroker and to write/control the states over HTTP Get/Post requests.
 
+**This adapter uses Sentry libraries to automatically report exceptions and code errors to me as the developer.** More details see below!
+
 ## Usage
 Call in browser ```http://ipaddress:8087/help``` to get the help about API. The result is:
 
@@ -546,7 +548,16 @@ If no data source was specified or the noHistory parameter is passed, then only 
   ]
 </pre>
 
+## What is Sentry and what is reported to the servers?
+Sentry.io is a way for developers to get an overview about errors from their applications. And exactly this is implemented in this adapter.
+
+When the adapter crashes or an other Code error happens, this error message that also appears in the ioBroker log is submitted to our own Sentry server hosted in germany. When you allowed iobroker GmbH to collect diagnostic data then also your installation ID (this is just a unique ID **without** any additional infos about you, email, name or such) is included. This allows Sentry to group errors and show how many unique users are affected by such an error. All of this helps me to provide error free adapters that basically never crashs.
+
 ## Changelog
+
+### 2.4.0 (2020-04-12)
+* (Apollon77) Add Sentry support with js-controller 3.0
+* (Apollon77) 
 
 ### 2.3.3 (2019-11-16)
 * (bluefox) Added response code for unknown commands
@@ -645,7 +656,7 @@ If no data source was specified or the noHistory parameter is passed, then only 
 ## License
 The MIT License (MIT)
 
-Copyright (c) 2015-2019 bluefox <dogafox@gmail.com>
+Copyright (c) 2015-2020 bluefox <dogafox@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
