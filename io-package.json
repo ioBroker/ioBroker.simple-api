@@ -3,6 +3,18 @@
         "name": "simple-api",
         "version": "2.4.0",
         "news": {
+            "2.4.0": {
+                "en": "Fixed potential crash and add Sentry error reporting for js-controller 3.0",
+                "de": "Möglicher Absturz behoben und Sentry-Fehlerberichterstattung für js-controller 3.0 hinzugefügt",
+                "ru": "Исправлено потенциальное падение и добавление отчетов об ошибках Sentry для js-controller 3.0",
+                "pt": "Corrigido um possível travamento e adicionar relatórios de erros do Sentry para o js-controller 3.0",
+                "nl": "Mogelijke crash opgelost en Sentry-foutrapportage voor js-controller 3.0 toegevoegd",
+                "fr": "Correction d'un crash potentiel et ajout d'un rapport d'erreurs Sentry pour js-controller 3.0",
+                "it": "Risolto il problema di arresto potenziale e aggiunta della segnalazione degli errori di Sentry per js-controller 3.0",
+                "es": "Se corrigió el bloqueo potencial y se agregó el informe de errores Sentry para js-controller 3.0",
+                "pl": "Naprawiono potencjalną awarię i dodano raportowanie błędów Sentry dla js-kontrolera 3.0",
+                "zh-cn": "修复了潜在的崩溃并为js-controller 3.0添加了Sentry错误报告"
+            },
             "2.3.3": {
                 "en": "Added response code for unknown commands",
                 "de": "Antwortcode für unbekannte Befehle hinzugefügt",

@@ -557,7 +557,7 @@ When the adapter crashes or an other Code error happens, this error message that
 
 ### 2.4.0 (2020-04-12)
 * (Apollon77) Add Sentry support with js-controller 3.0
-* (Apollon77) 
+* (Apollon77) fix potential crash
 
 ### 2.3.3 (2019-11-16)
 * (bluefox) Added response code for unknown commands
