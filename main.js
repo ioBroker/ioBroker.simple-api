@@ -111,18 +111,56 @@ function initWebServer(settings) {
     if (server.server) {
         adapter.getPort(settings.port, port => {
             if (port !== settings.port && !adapter.config.findNextPort) {
-                adapter.log.error('port ' + settings.port + ' already in use');
+                adapter.log.error(`port ${settings.port} already in use`);
                 if (adapter.terminate) {
                     adapter.terminate(1);
                 } else {
                     process.exit(1);
                 }
+                return;
             }
+
             if (server.server) {
-                server.server.listen(port);
+                try {
+                    server.server.on('error', e => {
+                        if (e.toString().includes('EACCES') && port <= 1024) {
+                            adapter.log.error(`node.js process has no rights to start server on the port ${port}.\n` +
+                                `Do you know that on linux you need special permissions for ports under 1024?\n` +
+                                `You can call in shell following scrip to allow it for node.js: "iobroker fix"`
+                            );
+                        } else {
+                            adapter.log.error(`Cannot start server on ${settings.bind || '0.0.0.0'}:${port}: ${e}`);
+                        }
+
+                        if (adapter.terminate) {
+                            adapter.terminate(1);
+                        } else {
+                            process.exit(1);
+                        }
+                    });
+
+                    // create web server
+                    server.server.listen(port, (!settings.bind || settings.bind === '0.0.0.0') ? undefined : settings.bind || undefined);
+
+                } catch (e) {
+                    if (e.toString().includes('EACCES') && port <= 1024) {
+                        return adapter.log.error(`node.js process has no rights to start server on the port ${port}.\n` +
+                            `Do you know that on linux you need special permissions for ports under 1024?\n` +
+                            `You can call in shell following scrip to allow it for node.js: "iobroker fix"`
+                        );
+                    } else {
+                        adapter.log.error(`Cannot start server on ${settings.bind || '0.0.0.0'}:${port}: ${e}`);
+                    }
+                    if (adapter.terminate) {
+                        adapter.terminate(1);
+                    } else {
+                        process.exit(1);
+                    }
+                    return;
+                }
+
                 adapter.log.info('http' + (settings.secure ? 's' : '') + ' server listening on port ' + port);
-            }
-            else {
+            } else {
                 adapter.log.error('server initialization failed');
                 if (adapter.terminate) {
                     adapter.terminate(1);

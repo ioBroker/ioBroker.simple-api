@@ -3,6 +3,18 @@
         "name": "simple-api",
         "version": "2.4.0",
         "news": {
+            "2.4.1": {
+                "en": "Caught the web server errors",
+                "de": "Fehler beim Webserver",
+                "ru": "Поймали ошибки веб-сервера",
+                "pt": "Detectou os erros do servidor web",
+                "nl": "Betrapte de webserverfouten",
+                "fr": "Pris les erreurs du serveur Web",
+                "it": "Catturati gli errori del web server",
+                "es": "Atrapado los errores del servidor web",
+                "pl": "Wyłapał błędy serwera WWW",
+                "zh-cn": "捕获了Web服务器错误"
+            },
             "2.4.0": {
                 "en": "Fixed potential crash and add Sentry error reporting for js-controller 3.0",
                 "de": "Möglicher Absturz behoben und Sentry-Fehlerberichterstattung für js-controller 3.0 hinzugefügt",
