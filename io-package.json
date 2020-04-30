@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.4.2",
+        "version": "2.4.3",
         "news": {
-            "2.4.2": {
+            "2.4.3": {
                 "en": "Caught the web server errors",
                 "de": "Fehler beim Webserver",
                 "ru": "Поймали ошибки веб-сервера",
