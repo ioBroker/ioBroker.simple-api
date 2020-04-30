@@ -1,6 +1,6 @@
 {
     "name": "iobroker.simple-api",
-    "version": "2.4.1",
+    "version": "2.4.2",
     "description": "RESTful interface for ioBroker.",
     "author": {
         "name": "bluefox",
@@ -30,7 +30,7 @@
     },
     "devDependencies": {
         "gulp": "^4.0.2",
-        "mocha": "^7.1.1",
+        "mocha": "^7.1.2",
         "chai": "^4.2.0",
         "request": "^2.88.2"
     },
