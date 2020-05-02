@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.4.3",
+        "version": "2.4.4",
         "news": {
+            "2.4.4": {
+                "en": "cases fixed where permission errors crashed the adapter",
+                "de": "Fälle behoben, in denen Berechtigungsfehler den Adapter zum Absturz brachten",
+                "ru": "исправлены случаи, когда при сбое адаптера возникали ошибки",
+                "pt": "casos corrigidos em que os erros de permissão travavam o adaptador",
+                "nl": "gevallen opgelost waarbij toestemmingsfouten de adapter crashten",
+                "fr": "cas résolus où des erreurs d'autorisation faisaient planter l'adaptateur",
+                "it": "casi risolti in cui gli errori di autorizzazione causavano l'arresto anomalo dell'adattatore",
+                "es": "Se corrigieron los casos donde los errores de permiso bloquearon el adaptador",
+                "pl": "naprawiono przypadki, w których błędy uprawnień powodowały awarię adaptera",
+                "zh-cn": "解决了权限错误导致适配器崩溃的问题"
+            },
             "2.4.3": {
                 "en": "Caught the web server errors",
                 "de": "Fehler beim Webserver",
