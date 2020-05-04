@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.4.4",
+        "version": "2.4.5",
         "news": {
+            "2.4.5": {
+                "en": "webserver initialization optimized again to prevent errors with imvalid certificates",
+                "de": "Die Webserver-Initialisierung wurde erneut optimiert, um Fehler mit ungültigen Zertifikaten zu vermeiden",
+                "ru": "Инициализация веб-сервера снова оптимизирована для предотвращения ошибок с недействительными сертификатами",
+                "pt": "inicialização do servidor da web otimizada novamente para evitar erros com certificados inválidos",
+                "nl": "de initialisatie van de webserver is opnieuw geoptimaliseerd om fouten met ongeldige certificaten te voorkomen",
+                "fr": "initialisation du serveur Web optimisée à nouveau pour éviter les erreurs avec des certificats non valides",
+                "it": "inizializzazione del server web nuovamente ottimizzata per prevenire errori con certificati non validi",
+                "es": "inicialización del servidor web optimizada nuevamente para evitar errores con certificados no válidos",
+                "pl": "inicjalizacja serwera WWW została ponownie zoptymalizowana, aby zapobiec błędom z nieprawidłowymi certyfikatami",
+                "zh-cn": "再次优化了Web服务器的初始化，以防止证书无效导致的错误"
+            },
             "2.4.4": {
                 "en": "cases fixed where permission errors crashed the adapter",
                 "de": "Fälle behoben, in denen Berechtigungsfehler den Adapter zum Absturz brachten",

@@ -1,45 +1,45 @@
 {
-    "name": "iobroker.simple-api",
-    "version": "2.4.4",
-    "description": "RESTful interface for ioBroker.",
-    "author": {
-        "name": "bluefox",
-        "email": "dogafox@gmail.com"
+  "name": "iobroker.simple-api",
+  "version": "2.4.5",
+  "description": "RESTful interface for ioBroker.",
+  "author": {
+    "name": "bluefox",
+    "email": "dogafox@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Apollon77",
+      "email": "ingo@fischer-ka.de"
     },
-    "contributors": [
-        {
-            "name": "Apollon77",
-            "email": "ingo@fischer-ka.de"
-        },
-        {
-            "name": "Marco.K",
-            "email": "marco@kaminski-net.de"
-        }
-    ],
-    "homepage": "https://github.com/ioBroker/ioBroker.simple-api",
-    "keywords": [
-        "ioBroker",
-        "web"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/ioBroker/ioBroker.simple-api"
-    },
-    "dependencies": {
-        "@iobroker/adapter-core": "^2.4.0"
-    },
-    "devDependencies": {
-        "gulp": "^4.0.2",
-        "mocha": "^7.1.2",
-        "chai": "^4.2.0",
-        "request": "^2.88.2"
-    },
-    "bugs": {
-        "url": "https://github.com/ioBroker/ioBroker.simple-api/issues"
-    },
-    "main": "main.js",
-    "scripts": {
-        "test": "node node_modules/mocha/bin/mocha --exit"
-    },
-    "license": "MIT"
+    {
+      "name": "Marco.K",
+      "email": "marco@kaminski-net.de"
+    }
+  ],
+  "homepage": "https://github.com/ioBroker/ioBroker.simple-api",
+  "keywords": [
+    "ioBroker",
+    "web"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ioBroker/ioBroker.simple-api"
+  },
+  "dependencies": {
+    "@iobroker/adapter-core": "^2.4.0"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "mocha": "^7.1.2",
+    "chai": "^4.2.0",
+    "request": "^2.88.2"
+  },
+  "bugs": {
+    "url": "https://github.com/ioBroker/ioBroker.simple-api/issues"
+  },
+  "main": "main.js",
+  "scripts": {
+    "test": "node node_modules/mocha/bin/mocha --exit"
+  },
+  "license": "MIT"
 }
