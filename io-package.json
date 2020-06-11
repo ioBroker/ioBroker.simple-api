@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.4.5",
+        "version": "2.4.6",
         "news": {
+            "2.4.6": {
+                "en": "Make sure adapter is showing correct error when webserver can not be initialized (Sentry IOBROKER-SIMPLE-API-7)",
+                "de": "Stellen Sie sicher, dass der Adapter den richtigen Fehler anzeigt, wenn der Webserver nicht initialisiert werden kann (Sentry IOBROKER-SIMPLE-API-7).",
+                "ru": "Убедитесь, что адаптер показывает правильную ошибку, когда веб-сервер не может быть инициализирован (Sentry IOBROKER-SIMPLE-API-7)",
+                "pt": "Verifique se o adaptador está mostrando o erro correto quando o servidor da web não pode ser inicializado (Sentry IOBROKER-SIMPLE-API-7)",
+                "nl": "Zorg ervoor dat de adapter de juiste fout toont wanneer de webserver niet kan worden geïnitialiseerd (Sentry IOBROKER-SIMPLE-API-7)",
+                "fr": "Assurez-vous que l'adaptateur affiche une erreur correcte lorsque le serveur Web ne peut pas être initialisé (Sentry IOBROKER-SIMPLE-API-7)",
+                "it": "Assicurarsi che l'adattatore mostri l'errore corretto quando il server web non può essere inizializzato (Sentry IOBROKER-SIMPLE-API-7)",
+                "es": "Asegúrese de que el adaptador muestre el error correcto cuando el servidor web no se puede inicializar (Sentry IOBROKER-SIMPLE-API-7)",
+                "pl": "Upewnij się, że adapter wyświetla prawidłowy błąd, gdy nie można zainicjować serwera WWW (Sentry IOBROKER-SIMPLE-API-7)",
+                "zh-cn": "当无法初始化Web服务器时，请确保适配器显示正确的错误（Sentry IOBROKER-SIMPLE-API-7）"
+            },
             "2.4.5": {
                 "en": "webserver initialization optimized again to prevent errors with imvalid certificates",
                 "de": "Die Webserver-Initialisierung wurde erneut optimiert, um Fehler mit ungültigen Zertifikaten zu vermeiden",
