@@ -187,7 +187,7 @@ describe('Test RESTful API as User(No rights)', function() {
     it('Test RESTful API as User:(No rights) getPlainValue - must return plain value', done => {
         request('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', (error, response, body) => {
             console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
-            expect(body).to.be.equal('error: permissionError');
+            expect(body).to.be.equal('error: Error: permissionError');
             expect(response.statusCode).to.equal(401);
             done();
         });
@@ -196,7 +196,7 @@ describe('Test RESTful API as User(No rights)', function() {
     it('Test RESTful API as User:(No rights) getPlainValue 4 Test-Endpoint - must return plain value', done => {
         request('http://127.0.0.1:18183/getPlainValue/javascript.0.test', (error, response, body) => {
             console.log('getPlainValue/javascript.0.test => ' + body);
-            expect(body).to.be.equal('error: permissionError');
+            expect(body).to.be.equal('error: Error: permissionError');
             expect(response.statusCode).to.equal(401);
             done();
         });

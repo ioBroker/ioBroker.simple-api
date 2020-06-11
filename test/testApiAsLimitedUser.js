@@ -210,7 +210,7 @@ describe('Test RESTful API as Owner-User', function () {
     it('Test RESTful API as Owner-User: getPlainValue - must return plain value', done => {
         request('http://127.0.0.1:' + PORT + '/getPlainValue/system.adapter.simple-api.0.alive', (error, response, body) => {
             console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
-            expect(body).to.be.equal('error: permissionError');
+            expect(body).to.be.equal('error: Error: permissionError');
             expect(response.statusCode).to.equal(401);
             done();
         });
