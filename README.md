@@ -550,7 +550,7 @@ If no data source was specified or the noHistory parameter is passed, then only 
 
 ## Changelog
 
-### __WORK IN PROGRESS__
+### 2.4.7 (2020-08-17)
 * (Apollon77) check that targets are an array for "query" requests (Sentry IOBROKER-SIMPLE-API-F)
 
 ### 2.4.6 (2020-06-11)

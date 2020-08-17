@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.4.6",
+        "version": "2.4.7",
         "news": {
+            "2.4.7": {
+                "en": "check that targets are an array for \"query\" requests (Sentry IOBROKER-SIMPLE-API-F)",
+                "de": "Überprüfen Sie, ob Ziele ein Array für \"Abfrageanforderungen\" sind (Sentry IOBROKER-SIMPLE-API-F).",
+                "ru": "проверьте, что цели являются массивом для запросов \"query\" (Sentry IOBROKER-SIMPLE-API-F)",
+                "pt": "verifique se os alvos são uma matriz para solicitações de \"consulta\" (Sentry IOBROKER-SIMPLE-API-F)",
+                "nl": "controleer of doelen een array zijn voor \"query\" -verzoeken (Sentry IOBROKER-SIMPLE-API-F)",
+                "fr": "vérifier que les cibles sont un tableau pour les requêtes \"query\" (Sentry IOBROKER-SIMPLE-API-F)",
+                "it": "controlla che i target siano un array per le richieste di \"query\" (Sentry IOBROKER-SIMPLE-API-F)",
+                "es": "comprobar que los objetivos son una matriz para las solicitudes de \"consulta\" (Sentry IOBROKER-SIMPLE-API-F)",
+                "pl": "sprawdź, czy cele są tablicą dla żądań „zapytań” (Sentry IOBROKER-SIMPLE-API-F)",
+                "zh-cn": "检查目标是否为“查询”请求的数组（Sentry IOBROKER-SIMPLE-API-F）"
+            },
             "2.4.6": {
                 "en": "Make sure adapter is showing correct error when webserver can not be initialized (Sentry IOBROKER-SIMPLE-API-7)",
                 "de": "Stellen Sie sicher, dass der Adapter den richtigen Fehler anzeigt, wenn der Webserver nicht initialisiert werden kann (Sentry IOBROKER-SIMPLE-API-7).",
