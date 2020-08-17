@@ -550,6 +550,9 @@ If no data source was specified or the noHistory parameter is passed, then only 
 
 ## Changelog
 
+### __WORK IN PROGRESS__
+* (Apollon77) check that targets are an array for "query" requests (Sentry IOBROKER-SIMPLE-API-F)
+
 ### 2.4.6 (2020-06-11)
 * (Apollon77) Make sure adapter is showing correct error when webserver can not be initialized (Sentry IOBROKER-SIMPLE-API-7)
 
