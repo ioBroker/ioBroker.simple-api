@@ -232,7 +232,7 @@
         "localLink": "%protocol%://%ip%:%port%/get/system.adapter.simple-api.%instance%.uptime?prettyPrint",
         "dependencies": [
             {
-                "js-controller": ">=0.15.0"
+                "js-controller": ">=2.0.0"
             }
         ],
         "plugins": {

@@ -59,16 +59,29 @@ function main() {
 function requestProcessor(req, res) {
     if (req.url.indexOf('favicon.ico') !== -1) {
         fs = fs || require('fs');
-        const stat = fs.statSync(__dirname + '/img/favicon.ico');
+        let stat;
+        try {
+            if (fs.existsSync(__dirname + '/img/favicon.ico')) {
+                stat = fs.statSync(__dirname + '/img/favicon.ico');
+            }
+        } catch (err) {
+            // no special handling
+        }
+        if (stat) {
+            res.writeHead(200, {
+                'Content-Type': 'image/x-icon',
+                'Content-Length': stat.size
+            });
 
-        res.writeHead(200, {
-            'Content-Type': 'image/x-icon',
-            'Content-Length': stat.size
-        });
+            const readStream = fs.createReadStream(__dirname + '/img/favicon.ico');
+            // We replaced all the event handlers with a simple call to readStream.pipe()
+            readStream.pipe(res);
+        } else {
+            res.writeHead(404, {'Content-Type': 'text/plain'});
+            res.write('404 Not Found\n');
+            res.end();
+        }
 
-        const readStream = fs.createReadStream(__dirname + '/img/favicon.ico');
-        // We replaced all the event handlers with a simple call to readStream.pipe()
-        readStream.pipe(res);
     } else {
         webServer.api.restApi(req, res);
     }
