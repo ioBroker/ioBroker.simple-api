@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.4.7",
+        "version": "2.4.8",
         "news": {
+            "2.4.8": {
+                "en": "Make sure missing favico file locally is not throwing exceptions (Sentry IOBROKER-SIMPLE-API-G)",
+                "de": "Stellen Sie sicher, dass die lokal fehlende Favico-Datei keine Ausnahmen auslöst (Sentry IOBROKER-SIMPLE-API-G).",
+                "ru": "Убедитесь, что отсутствующий файл favico локально не вызывает исключений (Sentry IOBROKER-SIMPLE-API-G)",
+                "pt": "Certifique-se de que o arquivo favico ausente localmente não esteja gerando exceções (Sentry IOBROKER-SIMPLE-API-G)",
+                "nl": "Zorg ervoor dat het ontbrekende favico-bestand lokaal geen uitzonderingen genereert (Sentry IOBROKER-SIMPLE-API-G)",
+                "fr": "Assurez-vous que le fichier favico manquant localement ne génère pas d'exceptions (Sentry IOBROKER-SIMPLE-API-G)",
+                "it": "Assicurati che il file favico mancante localmente non generi eccezioni (Sentry IOBROKER-SIMPLE-API-G)",
+                "es": "Asegúrese de que el archivo favico faltante localmente no arroje excepciones (Sentry IOBROKER-SIMPLE-API-G)",
+                "pl": "Upewnij się, że brakujący lokalnie plik Favico nie powoduje wyjątków (Sentry IOBROKER-SIMPLE-API-G)",
+                "zh-cn": "确保本地丢失的favico文件不会引发异常（Sentry IOBROKER-SIMPLE-API-G）"
+            },
             "2.4.7": {
                 "en": "check that targets are an array for \"query\" requests (Sentry IOBROKER-SIMPLE-API-F)",
                 "de": "Überprüfen Sie, ob Ziele ein Array für \"Abfrageanforderungen\" sind (Sentry IOBROKER-SIMPLE-API-F).",

@@ -550,7 +550,7 @@ If no data source was specified or the noHistory parameter is passed, then only 
 
 ## Changelog
 
-### __WORK IN PROGRESS__
+### 2.4.8 (2020-09-17)
 * (Apollon77) Make sure missing favico file locally is not throwing exceptions (Sentry IOBROKER-SIMPLE-API-G)
 
 ### 2.4.7 (2020-08-17)
