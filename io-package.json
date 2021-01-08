@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.5.0",
+        "version": "2.5.1",
         "news": {
+            "2.5.1": {
+                "en": "Support of new Let's Encrypt (only with js-controller 3.2.x)",
+                "de": "Unterstützung des neuen Let's Encrypt (nur mit js-controller 3.2.x)",
+                "ru": "Поддержка нового Let's Encrypt (только с js-controller 3.2.x)",
+                "pt": "Suporte do novo Let's Encrypt (apenas com js-controller 3.2.x)",
+                "nl": "Ondersteuning van nieuwe Let's Encrypt (alleen met js-controller 3.2.x)",
+                "fr": "Prise en charge du nouveau Let's Encrypt (uniquement avec js-controller 3.2.x)",
+                "it": "Supporto del nuovo Let's Encrypt (solo con js-controller 3.2.x)",
+                "es": "Soporte del nuevo Let's Encrypt (solo con js-controller 3.2.x)",
+                "pl": "Obsługa nowego Let's Encrypt (tylko z js-controller 3.2.x)",
+                "zh-cn": "支持新的Let's Encrypt（仅适用于js-controller 3.2.x）"
+            },
             "2.4.8": {
                 "en": "Make sure missing favico file locally is not throwing exceptions (Sentry IOBROKER-SIMPLE-API-G)",
                 "de": "Stellen Sie sicher, dass die lokal fehlende Favico-Datei keine Ausnahmen auslöst (Sentry IOBROKER-SIMPLE-API-G).",
