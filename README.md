@@ -552,7 +552,7 @@ If no data source was specified or the noHistory parameter is passed, then only 
 	### __WORK IN PROGRESS__
 -->
 ## Changelog
-### __WORK IN PROGRESS__
+### 2.5.2 (2021-01-09)
 * (bluefox) Support of new Let's Encrypt (only with js-controller 3.2.x)
 
 ### 2.4.8 (2020-09-17)
