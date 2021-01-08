@@ -94,7 +94,7 @@ function requestProcessor(req, res) {
 //    "bind":   "0.0.0.0", // "::"
 //    "cache":  false
 //}
-function initWebServer(settings) {
+async function initWebServer(settings) {
     const server = {
         app:       null,
         server:    null,
@@ -111,7 +111,7 @@ function initWebServer(settings) {
         }
 
         try {
-            server.server = LE.createServer(requestProcessor, settings, adapter.config.certificates, adapter.config.leConfig, adapter.log);
+            server.server = await LE.createServer(requestProcessor, settings, adapter.config.certificates, adapter.config.leConfig, adapter.log, adapter);
         } catch (err) {
             adapter.log.error(`Cannot create webserver: ${err}`);
             adapter.terminate ? adapter.terminate(utils.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION) : process.exit(utils.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);

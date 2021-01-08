@@ -547,8 +547,13 @@ If no data source was specified or the noHistory parameter is passed, then only 
     }
   ]
 </pre>
-
+<!--
+	Placeholder for the next version (at the beginning of the line):
+	### __WORK IN PROGRESS__
+-->
 ## Changelog
+### __WORK IN PROGRESS__
+* (bluefox) Support of new Let's Encrypt (only with js-controller 3.2.x)
 
 ### 2.4.8 (2020-09-17)
 * (Apollon77) Make sure missing favico file locally is not throwing exceptions (Sentry IOBROKER-SIMPLE-API-G)
