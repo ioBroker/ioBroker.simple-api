@@ -35,24 +35,23 @@ function startAdapter(options) {
     return adapter;
 }
 
-function main() {
+async function main() {
     if (adapter.config.webInstance) {
         console.log('Adapter runs as a part of web service');
         adapter.log.warn('Adapter runs as a part of web service');
-        adapter.setForeignState('system.adapter.' + adapter.namespace + '.alive', false, true, () =>
+        return adapter.setForeignState('system.adapter.' + adapter.namespace + '.alive', false, true, () =>
             setTimeout(() => adapter.terminate ? adapter.terminate() : process.exit(), 1000));
-        return;
     }
 
     if (adapter.config.secure) {
         // Load certificates
-        adapter.getCertificates((err, certificates, leConfig) => {
+        adapter.getCertificates(async (err, certificates, leConfig) => {
             adapter.config.certificates = certificates;
             adapter.config.leConfig     = leConfig;
-            webServer = initWebServer(adapter.config);
+            webServer = await initWebServer(adapter.config);
         });
     } else {
-        webServer = initWebServer(adapter.config);
+        webServer = await initWebServer(adapter.config);
     }
 }
 

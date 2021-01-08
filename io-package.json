@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.4.9",
+        "version": "2.4.10",
         "news": {
-            "2.4.9": {
+            "2.4.10": {
                 "en": "Support of new Let's Encrypt (only with js-controller 3.2.x)",
                 "de": "Unterstützung des neuen Let's Encrypt (nur mit js-controller 3.2.x)",
                 "ru": "Поддержка нового Let's Encrypt (только с js-controller 3.2.x)",
