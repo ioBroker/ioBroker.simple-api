@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.5.2",
+        "version": "2.5.3",
         "news": {
+            "2.5.3": {
+                "en": "Make sure that delayed answers are not crashing (Sentry IOBROKER-SIMPLE-API-Z)",
+                "de": "Stellen Sie sicher, dass verzögerte Antworten nicht abstürzen (Sentry IOBROKER-SIMPLE-API-Z)",
+                "ru": "Убедитесь, что отложенные ответы не вызывают сбоев (Sentry IOBROKER-SIMPLE-API-Z)",
+                "pt": "Certifique-se de que as respostas atrasadas não estejam travando (Sentry IOBROKER-SIMPLE-API-Z)",
+                "nl": "Zorg ervoor dat vertraagde antwoorden niet crashen (Sentry IOBROKER-SIMPLE-API-Z)",
+                "fr": "Assurez-vous que les réponses différées ne plantent pas (Sentry IOBROKER-SIMPLE-API-Z)",
+                "it": "Assicurati che le risposte ritardate non si blocchino (Sentry IOBROKER-SIMPLE-API-Z)",
+                "es": "Asegúrese de que las respuestas retrasadas no se bloqueen (Sentry IOBROKER-SIMPLE-API-Z)",
+                "pl": "Upewnij się, że opóźnione odpowiedzi nie ulegają awarii (Sentry IOBROKER-SIMPLE-API-Z)",
+                "zh-cn": "确保延迟的答案不会崩溃（Sentry IOBROKER-SIMPLE-API-Z）"
+            },
             "2.5.2": {
                 "en": "Support of new Let's Encrypt (only with js-controller 3.2.x)",
                 "de": "Unterstützung des neuen Let's Encrypt (nur mit js-controller 3.2.x)",
