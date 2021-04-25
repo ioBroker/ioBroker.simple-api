@@ -180,7 +180,8 @@
                 "fr": "Ajout du jeu de commandes pour les plugins Grafana JSON / SimpleJSON.",
                 "it": "Aggiunto set di comandi per i plugin Grafana JSON / SimpleJSON.",
                 "es": "Agregado conjunto de comandos para los complementos de Grafana JSON / SimpleJSON.",
-                "pl": "Dodano zestaw poleceń dla wtyczek Grafana JSON / SimpleJSON."
+                "pl": "Dodano zestaw poleceń dla wtyczek Grafana JSON / SimpleJSON.",
+                "zh-cn": "为Grafana插件JSON / SimpleJSON添加了命令集。"
             },
             "2.0.5": {
                 "en": "errors when used as web extension fixed",
@@ -203,7 +204,8 @@
                 "fr": "Correction du décodage de #",
                 "it": "Correggere la decodificazione di #",
                 "es": "Fijar la decodificación de #",
-                "pl": "Napraw dekodowanie #"
+                "pl": "Napraw dekodowanie #",
+                "zh-cn": "修正＃的解码"
             },
             "2.0.0": {
                 "en": "BREAKING CHANGE: getBulk is returning data in a different structure",
@@ -214,7 +216,8 @@
                 "fr": "BREAKING CHANGE: getBulk renvoie des données dans une structure différente",
                 "it": "BREAKING CHANGE: getBulk restituisce i dati in una struttura diversa",
                 "es": "BREAKING CHANGE: getBulk está devolviendo datos en una estructura diferente",
-                "pl": "ZMIANA ZMIAN: getBulk zwraca dane w innej strukturze"
+                "pl": "ZMIANA ZMIAN: getBulk zwraca dane w innej strukturze",
+                "zh-cn": "突破性变化：getBulk以不同的结构返回数据"
             },
             "1.6.3": {
                 "en": "Return used character encoding (UTF-8)",
@@ -225,7 +228,8 @@
                 "fr": "Renvoie le codage de caractères utilisé (UTF-8)",
                 "it": "Restituisci codifica caratteri usati (UTF-8)",
                 "es": "Devuelve la codificación de caracteres usados ​​(UTF-8)",
-                "pl": "Zwróć używane kodowanie znaków (UTF-8)"
+                "pl": "Zwróć używane kodowanie znaków (UTF-8)",
+                "zh-cn": "返回使用的字符编码（UTF-8）"
             }
         },
         "title": "Simple RESTful API",
