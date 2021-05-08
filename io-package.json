@@ -233,6 +233,18 @@
             }
         },
         "title": "Simple RESTful API",
+        "titleLang": {
+            "en": "Simple RESTful API",
+            "de": "Einfache RESTful API",
+            "ru": "Простой RESTful API",
+            "pt": "API RESTful simples",
+            "nl": "Eenvoudige RESTful API",
+            "fr": "API RESTful simple",
+            "it": "API RESTful semplice",
+            "es": "API RESTful simple",
+            "pl": "Prosty interfejs API RESTful",
+            "zh-cn": "简单的RESTful API"
+        },
         "desc": {
             "en": "This adapter allows to read and write ioBroker objects and state with web RESTful API",
             "de": "Dieser Adapter ermöglicht das Lesen und Schreiben von ioBroker-Objekten und den Status mit der Web-RESTful-API",
@@ -279,7 +291,10 @@
             "sentry": {
                 "dsn": "https://1ad1b116fa644ec29e6f5d724b39f999@sentry.iobroker.net/12"
             }
-        }
+        },
+        "connectionType": "none",
+        "dataSource": "none",
+        "tier": 3
     },
     "native": {
         "port": 8087,
