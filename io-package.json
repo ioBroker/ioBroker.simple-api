@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.5.3",
+        "version": "2.6.0",
         "news": {
+            "2.6.0": {
+                "en": "Also URL-Decode the path parts like state ids\nOptimize for js-controller 3.3",
+                "de": "Auch URL-Dekodieren Sie die Pfadteile wie Status-IDs\nOptimieren für js-controller 3.3",
+                "ru": "Также URL-декодирование частей пути, таких как идентификаторы состояний\nОптимизировать под js-controller 3.3",
+                "pt": "Além disso, decodifique por URL as partes do caminho, como ids de estado\nOtimize para js-controller 3.3",
+                "nl": "Ook URL-decodeer de paddelen zoals status-id's\nOptimaliseren voor js-controller 3.3",
+                "fr": "Décodez également par URL les parties du chemin telles que les identifiants d'état\nOptimiser pour js-controller 3.3",
+                "it": "Anche URL-Decodifica le parti del percorso come gli ID di stato\nOttimizza per js-controller 3.3",
+                "es": "También URL: decodifica las partes de la ruta como los identificadores de estado\nOptimizar para js-controller 3.3",
+                "pl": "Odkoduj również adresy URL części ścieżki, takie jak identyfikatory stanów\nOptymalizacja pod kątem kontrolera js 3.3",
+                "zh-cn": "还可以对路径部分（如状态ID）进行URL解码\n针对js-controller 3.3进行优化"
+            },
             "2.5.3": {
                 "en": "Make sure that delayed answers are not crashing (Sentry IOBROKER-SIMPLE-API-Z)",
                 "de": "Stellen Sie sicher, dass verzögerte Antworten nicht abstürzen (Sentry IOBROKER-SIMPLE-API-Z)",

@@ -555,7 +555,7 @@ If no data source was specified or the noHistory parameter is passed, then only 
 -->
 ## Changelog
 
-### __WORK IN PROGRESS__
+### 2.6.0 (2021-05-09)
 * (Apollon77) Also URL-Decode the path parts like state ids
 * (Apollon77) Optimize for js-controller 3.3
 
