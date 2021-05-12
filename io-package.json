@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "simple-api",
-        "version": "2.6.0",
+        "version": "2.6.1",
         "news": {
+            "2.6.1": {
+                "en": "Catch error in request parsing when malformed (Sentry IOBROKER-SIMPLE-API-16)",
+                "de": "Catch-Fehler beim Parsen von Anforderungen bei Fehlform (Sentry IOBROKER-SIMPLE-API-16)",
+                "ru": "Ошибка перехвата при синтаксическом разборе запроса при неправильном формате (Sentry IOBROKER-SIMPLE-API-16)",
+                "pt": "Erro de captura na análise da solicitação quando malformado (Sentry IOBROKER-SIMPLE-API-16)",
+                "nl": "Vang een fout op bij het parseren van verzoeken bij een onjuiste indeling (Sentry IOBROKER-SIMPLE-API-16)",
+                "fr": "Erreur de capture lors de l'analyse de la demande en cas de malformation (Sentry IOBROKER-SIMPLE-API-16)",
+                "it": "Errore di rilevamento durante l'analisi della richiesta quando non è corretto (Sentry IOBROKER-SIMPLE-API-16)",
+                "es": "Detectar el error en el análisis de la solicitud cuando tiene un formato incorrecto (Sentry IOBROKER-SIMPLE-API-16)",
+                "pl": "Błąd przechwytywania podczas analizowania żądania, gdy jest zniekształcony (Sentry IOBROKER-SIMPLE-API-16)",
+                "zh-cn": "格式错误的请求分析中捕获错误（Sentry IOBROKER-SIMPLE-API-16）"
+            },
             "2.6.0": {
                 "en": "Also URL-Decode the path parts like state ids\nOptimize for js-controller 3.3",
                 "de": "Auch URL-Dekodieren Sie die Pfadteile wie Status-IDs\nOptimieren für js-controller 3.3",
@@ -230,18 +242,6 @@
                 "es": "BREAKING CHANGE: getBulk está devolviendo datos en una estructura diferente",
                 "pl": "ZMIANA ZMIAN: getBulk zwraca dane w innej strukturze",
                 "zh-cn": "突破性变化：getBulk以不同的结构返回数据"
-            },
-            "1.6.3": {
-                "en": "Return used character encoding (UTF-8)",
-                "de": "Zeichencodierung zurückgegeben (UTF-8)",
-                "ru": "Возвращаемое кодирование символов (UTF-8)",
-                "pt": "Retornar a codificação de caracteres usados ​​(UTF-8)",
-                "nl": "Gebruikte tekencodering retourneren (UTF-8)",
-                "fr": "Renvoie le codage de caractères utilisé (UTF-8)",
-                "it": "Restituisci codifica caratteri usati (UTF-8)",
-                "es": "Devuelve la codificación de caracteres usados ​​(UTF-8)",
-                "pl": "Zwróć używane kodowanie znaków (UTF-8)",
-                "zh-cn": "返回使用的字符编码（UTF-8）"
             }
         },
         "title": "Simple RESTful API",
