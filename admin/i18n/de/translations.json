@@ -9,7 +9,7 @@
     "Ignore warning": "Warnung ignorieren",
     "Let's Encrypt settings": "Let's Encrypt Einstellungen",
     "List all datapoints:": "Alle Datenpunkte auflisten",
-    "Listen on all IPs": "Auf alle IPs hören",
+    "Listen on all IPs": "Anfragen für alle IPs beantworten",
     "Port to check the domain:": "Port um die Erreichbarkeit der Domain zu prüfen",
     "Port:": "Port",
     "Private certificate:": "Privates Zertifikat",
