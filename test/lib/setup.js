@@ -1,7 +1,5 @@
-/* jshint -W097 */
-/* jshint strict: false */
-/* jslint node: true */
-'use strict';
+/* jshint -W097 */// jshint strict:false
+/*jslint node: true */
 // check if tmp directory exists
 const fs            = require('fs');
 const path          = require('path');
@@ -28,17 +26,21 @@ let states;
 let pid = null;
 
 function copyFileSync(source, target) {
+
     let targetFile = target;
 
     //if target is a directory a new file with the same name will be created
-    if (fs.existsSync(target) && fs.lstatSync(target).isDirectory()) {
-        targetFile = path.join(target, path.basename(source));
+    if (fs.existsSync(target)) {
+        if ( fs.lstatSync( target ).isDirectory() ) {
+            targetFile = path.join(target, path.basename(source));
+        }
     }
 
     try {
         fs.writeFileSync(targetFile, fs.readFileSync(source));
-    } catch (err) {
-        console.log(`file copy error: ${source} -> ${targetFile} (error ignored)`);
+    }
+    catch (err) {
+        console.log('file copy error: ' +source +' -> ' + targetFile + ' (error ignored)');
     }
 }
 
@@ -318,9 +320,9 @@ function installJsController(cb) {
             setTimeout(function () {
                 client.destroy();
                 if (!fs.existsSync(rootDir + 'tmp/node_modules/' + appName + '.js-controller')) {
-                    console.log('installJsController: no js-controller => install from git');
+                    console.log('installJsController: no js-controller => install dev build from npm');
 
-                    child_process.execSync('npm install https://github.com/' + appName + '/' + appName + '.js-controller/tarball/master --prefix ./  --production', {
+                    child_process.execSync('npm install ' + appName + '.js-controller@dev --prefix ./ --production', {
                         cwd:   rootDir + 'tmp/',
                         stdio: [0, 1, 2]
                     });
@@ -467,8 +469,30 @@ function setupController(cb) {
             objs = {'system.config': {}};
         }
 
-        cb && cb(objs['system.config']);
+        if (cb) cb(objs['system.config']);
     });
+}
+
+function getSecret() {
+    var dataDir = rootDir + 'tmp/' + appName + '-data/';
+
+    try {
+        var objs = fs.readFileSync(dataDir + 'objects.json');
+        objs = JSON.parse(objs);
+
+        return objs['system.config'].native.secret;
+    } catch (e) {
+        console.warn("Could not load secret. Reason: " + e);
+        return null;
+    }
+}
+
+function encrypt (key, value) {
+    var result = '';
+    for (var i = 0; i < value.length; ++i) {
+        result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
+    }
+    return result;
 }
 
 function startAdapter(objects, states, callback) {
@@ -527,13 +551,13 @@ function startController(isStartAdapter, onObjectChange, onStateChange, callback
         const Objects = require(rootDir + 'tmp/node_modules/' + appName + '.js-controller/lib/objects/objectsInMemServer');
         objects = new Objects({
             connection: {
-                "type" : "file",
-                "host" : "127.0.0.1",
-                "port" : 19001,
-                "user" : "",
-                "pass" : "",
-                "noFileCache": false,
-                "connectTimeout": 2000
+                'type' : 'file',
+                'host' : '127.0.0.1',
+                'port' : 19001,
+                'user' : '',
+                'pass' : '',
+                'noFileCache': false,
+                'connectTimeout': 2000
             },
             logger: {
                 silly: function (msg) {
@@ -682,7 +706,7 @@ function stopController(cb) {
         }
     });
 
-    timeout = setTimeout(() => {
+    timeout = setTimeout(function () {
         timeout = null;
         console.log('child process NOT terminated');
 
@@ -724,4 +748,6 @@ if (typeof module !== undefined && module.parent) {
     module.exports.appName          = appName;
     module.exports.adapterName      = adapterName;
     module.exports.adapterStarted   = adapterStarted;
+    module.exports.getSecret        = getSecret;
+    module.exports.encrypt          = encrypt;
 }
