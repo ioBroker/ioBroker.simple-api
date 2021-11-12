@@ -19,7 +19,7 @@ function startAdapter(options) {
         unload: callback => {
             try {
                 if (webServer && webServer.server) {
-                    adapter.log.info('terminating http' + (webServer.settings.secure ? 's' : '') + ' server on port ' + webServer.settings.port);
+                    adapter.log.info(`terminating http${webServer.settings.secure ? 's' : ''} server on port ${webServer.settings.port}`);
                     webServer.server.close();
                     webServer.server = null;
                 }
@@ -39,7 +39,7 @@ async function main() {
     if (adapter.config.webInstance) {
         console.log('Adapter runs as a part of web service');
         adapter.log.warn('Adapter runs as a part of web service');
-        return adapter.setForeignState('system.adapter.' + adapter.namespace + '.alive', false, true, () =>
+        return adapter.setForeignState(`system.adapter.${adapter.namespace}.alive`, false, true, () =>
             setTimeout(() => adapter.terminate ? adapter.terminate() : process.exit(), 1000));
     }
 
@@ -171,7 +171,7 @@ async function initWebServer(settings) {
                     serverListening = true;
                 });
 
-                adapter.log.info('http' + (settings.secure ? 's' : '') + ' server listening on port ' + port);
+                adapter.log.info(`http${settings.secure ? 's' : ''} server listening on port ${port}`);
             } else {
                 adapter.log.error('server initialization failed');
                 if (adapter.terminate) {
