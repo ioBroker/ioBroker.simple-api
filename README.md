@@ -580,7 +580,7 @@ If no data source was specified or the noHistory parameter is passed, then only 
 	### __WORK IN PROGRESS__
 -->
 ## Changelog
-### __WORK IN PROGRESS__
+### 2.6.2 (2021-11-12)
 * (bluefox) Support of new flags for `getPlainValue`: `json` and `noStringify`
 
 ### 2.6.1 (2021-05-13)
@@ -606,7 +606,7 @@ If no data source was specified or the noHistory parameter is passed, then only 
 * (Apollon77) Make sure adapter is showing correct error when webserver can not be initialized (Sentry IOBROKER-SIMPLE-API-7)
 
 ### 2.4.5 (2020-05-04)
-* (Apollon77) webserver initialization optimized again to prevent errors with imvalid certificates 
+* (Apollon77) webserver initialization optimized again to prevent errors with imvalid certificates
 
 ### 2.4.4 (2020-05-02)
 * (Apollon77) Make sure Permission errors do not crash adapter (Sentry IOBROKER-SIMPLE-API-3)
@@ -737,4 +737,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-

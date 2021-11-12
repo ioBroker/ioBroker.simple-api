@@ -1,328 +1,172 @@
 {
-    "common": {
-        "name": "simple-api",
-        "version": "2.6.1",
-        "news": {
-            "2.6.1": {
-                "en": "Catch error in request parsing when malformed (Sentry IOBROKER-SIMPLE-API-16)",
-                "de": "Catch-Fehler beim Parsen von Anforderungen bei Fehlform (Sentry IOBROKER-SIMPLE-API-16)",
-                "ru": "Ошибка перехвата при синтаксическом разборе запроса при неправильном формате (Sentry IOBROKER-SIMPLE-API-16)",
-                "pt": "Erro de captura na análise da solicitação quando malformado (Sentry IOBROKER-SIMPLE-API-16)",
-                "nl": "Vang een fout op bij het parseren van verzoeken bij een onjuiste indeling (Sentry IOBROKER-SIMPLE-API-16)",
-                "fr": "Erreur de capture lors de l'analyse de la demande en cas de malformation (Sentry IOBROKER-SIMPLE-API-16)",
-                "it": "Errore di rilevamento durante l'analisi della richiesta quando non è corretto (Sentry IOBROKER-SIMPLE-API-16)",
-                "es": "Detectar el error en el análisis de la solicitud cuando tiene un formato incorrecto (Sentry IOBROKER-SIMPLE-API-16)",
-                "pl": "Błąd przechwytywania podczas analizowania żądania, gdy jest zniekształcony (Sentry IOBROKER-SIMPLE-API-16)",
-                "zh-cn": "格式错误的请求分析中捕获错误（Sentry IOBROKER-SIMPLE-API-16）"
-            },
-            "2.6.0": {
-                "en": "Also URL-Decode the path parts like state ids\nOptimize for js-controller 3.3",
-                "de": "Auch URL-Dekodieren Sie die Pfadteile wie Status-IDs\nOptimieren für js-controller 3.3",
-                "ru": "Также URL-декодирование частей пути, таких как идентификаторы состояний\nОптимизировать под js-controller 3.3",
-                "pt": "Além disso, decodifique por URL as partes do caminho, como ids de estado\nOtimize para js-controller 3.3",
-                "nl": "Ook URL-decodeer de paddelen zoals status-id's\nOptimaliseren voor js-controller 3.3",
-                "fr": "Décodez également par URL les parties du chemin telles que les identifiants d'état\nOptimiser pour js-controller 3.3",
-                "it": "Anche URL-Decodifica le parti del percorso come gli ID di stato\nOttimizza per js-controller 3.3",
-                "es": "También URL: decodifica las partes de la ruta como los identificadores de estado\nOptimizar para js-controller 3.3",
-                "pl": "Odkoduj również adresy URL części ścieżki, takie jak identyfikatory stanów\nOptymalizacja pod kątem kontrolera js 3.3",
-                "zh-cn": "还可以对路径部分（如状态ID）进行URL解码\n针对js-controller 3.3进行优化"
-            },
-            "2.5.3": {
-                "en": "Make sure that delayed answers are not crashing (Sentry IOBROKER-SIMPLE-API-Z)",
-                "de": "Stellen Sie sicher, dass verzögerte Antworten nicht abstürzen (Sentry IOBROKER-SIMPLE-API-Z)",
-                "ru": "Убедитесь, что отложенные ответы не вызывают сбоев (Sentry IOBROKER-SIMPLE-API-Z)",
-                "pt": "Certifique-se de que as respostas atrasadas não estejam travando (Sentry IOBROKER-SIMPLE-API-Z)",
-                "nl": "Zorg ervoor dat vertraagde antwoorden niet crashen (Sentry IOBROKER-SIMPLE-API-Z)",
-                "fr": "Assurez-vous que les réponses différées ne plantent pas (Sentry IOBROKER-SIMPLE-API-Z)",
-                "it": "Assicurati che le risposte ritardate non si blocchino (Sentry IOBROKER-SIMPLE-API-Z)",
-                "es": "Asegúrese de que las respuestas retrasadas no se bloqueen (Sentry IOBROKER-SIMPLE-API-Z)",
-                "pl": "Upewnij się, że opóźnione odpowiedzi nie ulegają awarii (Sentry IOBROKER-SIMPLE-API-Z)",
-                "zh-cn": "确保延迟的答案不会崩溃（Sentry IOBROKER-SIMPLE-API-Z）"
-            },
-            "2.5.2": {
-                "en": "Support of new Let's Encrypt (only with js-controller 3.2.x)",
-                "de": "Unterstützung des neuen Let's Encrypt (nur mit js-controller 3.2.x)",
-                "ru": "Поддержка нового Let's Encrypt (только с js-controller 3.2.x)",
-                "pt": "Suporte do novo Let's Encrypt (apenas com js-controller 3.2.x)",
-                "nl": "Ondersteuning van nieuwe Let's Encrypt (alleen met js-controller 3.2.x)",
-                "fr": "Prise en charge du nouveau Let's Encrypt (uniquement avec js-controller 3.2.x)",
-                "it": "Supporto del nuovo Let's Encrypt (solo con js-controller 3.2.x)",
-                "es": "Soporte del nuevo Let's Encrypt (solo con js-controller 3.2.x)",
-                "pl": "Obsługa nowego Let's Encrypt (tylko z js-controller 3.2.x)",
-                "zh-cn": "支持新的Let's Encrypt（仅适用于js-controller 3.2.x）"
-            },
-            "2.4.8": {
-                "en": "Make sure missing favico file locally is not throwing exceptions (Sentry IOBROKER-SIMPLE-API-G)",
-                "de": "Stellen Sie sicher, dass die lokal fehlende Favico-Datei keine Ausnahmen auslöst (Sentry IOBROKER-SIMPLE-API-G).",
-                "ru": "Убедитесь, что отсутствующий файл favico локально не вызывает исключений (Sentry IOBROKER-SIMPLE-API-G)",
-                "pt": "Certifique-se de que o arquivo favico ausente localmente não esteja gerando exceções (Sentry IOBROKER-SIMPLE-API-G)",
-                "nl": "Zorg ervoor dat het ontbrekende favico-bestand lokaal geen uitzonderingen genereert (Sentry IOBROKER-SIMPLE-API-G)",
-                "fr": "Assurez-vous que le fichier favico manquant localement ne génère pas d'exceptions (Sentry IOBROKER-SIMPLE-API-G)",
-                "it": "Assicurati che il file favico mancante localmente non generi eccezioni (Sentry IOBROKER-SIMPLE-API-G)",
-                "es": "Asegúrese de que el archivo favico faltante localmente no arroje excepciones (Sentry IOBROKER-SIMPLE-API-G)",
-                "pl": "Upewnij się, że brakujący lokalnie plik Favico nie powoduje wyjątków (Sentry IOBROKER-SIMPLE-API-G)",
-                "zh-cn": "确保本地丢失的favico文件不会引发异常（Sentry IOBROKER-SIMPLE-API-G）"
-            },
-            "2.4.7": {
-                "en": "check that targets are an array for \"query\" requests (Sentry IOBROKER-SIMPLE-API-F)",
-                "de": "Überprüfen Sie, ob Ziele ein Array für \"Abfrageanforderungen\" sind (Sentry IOBROKER-SIMPLE-API-F).",
-                "ru": "проверьте, что цели являются массивом для запросов \"query\" (Sentry IOBROKER-SIMPLE-API-F)",
-                "pt": "verifique se os alvos são uma matriz para solicitações de \"consulta\" (Sentry IOBROKER-SIMPLE-API-F)",
-                "nl": "controleer of doelen een array zijn voor \"query\" -verzoeken (Sentry IOBROKER-SIMPLE-API-F)",
-                "fr": "vérifier que les cibles sont un tableau pour les requêtes \"query\" (Sentry IOBROKER-SIMPLE-API-F)",
-                "it": "controlla che i target siano un array per le richieste di \"query\" (Sentry IOBROKER-SIMPLE-API-F)",
-                "es": "comprobar que los objetivos son una matriz para las solicitudes de \"consulta\" (Sentry IOBROKER-SIMPLE-API-F)",
-                "pl": "sprawdź, czy cele są tablicą dla żądań „zapytań” (Sentry IOBROKER-SIMPLE-API-F)",
-                "zh-cn": "检查目标是否为“查询”请求的数组（Sentry IOBROKER-SIMPLE-API-F）"
-            },
-            "2.4.6": {
-                "en": "Make sure adapter is showing correct error when webserver can not be initialized (Sentry IOBROKER-SIMPLE-API-7)",
-                "de": "Stellen Sie sicher, dass der Adapter den richtigen Fehler anzeigt, wenn der Webserver nicht initialisiert werden kann (Sentry IOBROKER-SIMPLE-API-7).",
-                "ru": "Убедитесь, что адаптер показывает правильную ошибку, когда веб-сервер не может быть инициализирован (Sentry IOBROKER-SIMPLE-API-7)",
-                "pt": "Verifique se o adaptador está mostrando o erro correto quando o servidor da web não pode ser inicializado (Sentry IOBROKER-SIMPLE-API-7)",
-                "nl": "Zorg ervoor dat de adapter de juiste fout toont wanneer de webserver niet kan worden geïnitialiseerd (Sentry IOBROKER-SIMPLE-API-7)",
-                "fr": "Assurez-vous que l'adaptateur affiche une erreur correcte lorsque le serveur Web ne peut pas être initialisé (Sentry IOBROKER-SIMPLE-API-7)",
-                "it": "Assicurarsi che l'adattatore mostri l'errore corretto quando il server web non può essere inizializzato (Sentry IOBROKER-SIMPLE-API-7)",
-                "es": "Asegúrese de que el adaptador muestre el error correcto cuando el servidor web no se puede inicializar (Sentry IOBROKER-SIMPLE-API-7)",
-                "pl": "Upewnij się, że adapter wyświetla prawidłowy błąd, gdy nie można zainicjować serwera WWW (Sentry IOBROKER-SIMPLE-API-7)",
-                "zh-cn": "当无法初始化Web服务器时，请确保适配器显示正确的错误（Sentry IOBROKER-SIMPLE-API-7）"
-            },
-            "2.4.5": {
-                "en": "webserver initialization optimized again to prevent errors with imvalid certificates",
-                "de": "Die Webserver-Initialisierung wurde erneut optimiert, um Fehler mit ungültigen Zertifikaten zu vermeiden",
-                "ru": "Инициализация веб-сервера снова оптимизирована для предотвращения ошибок с недействительными сертификатами",
-                "pt": "inicialização do servidor da web otimizada novamente para evitar erros com certificados inválidos",
-                "nl": "de initialisatie van de webserver is opnieuw geoptimaliseerd om fouten met ongeldige certificaten te voorkomen",
-                "fr": "initialisation du serveur Web optimisée à nouveau pour éviter les erreurs avec des certificats non valides",
-                "it": "inizializzazione del server web nuovamente ottimizzata per prevenire errori con certificati non validi",
-                "es": "inicialización del servidor web optimizada nuevamente para evitar errores con certificados no válidos",
-                "pl": "inicjalizacja serwera WWW została ponownie zoptymalizowana, aby zapobiec błędom z nieprawidłowymi certyfikatami",
-                "zh-cn": "再次优化了Web服务器的初始化，以防止证书无效导致的错误"
-            },
-            "2.4.4": {
-                "en": "cases fixed where permission errors crashed the adapter",
-                "de": "Fälle behoben, in denen Berechtigungsfehler den Adapter zum Absturz brachten",
-                "ru": "исправлены случаи, когда при сбое адаптера возникали ошибки",
-                "pt": "casos corrigidos em que os erros de permissão travavam o adaptador",
-                "nl": "gevallen opgelost waarbij toestemmingsfouten de adapter crashten",
-                "fr": "cas résolus où des erreurs d'autorisation faisaient planter l'adaptateur",
-                "it": "casi risolti in cui gli errori di autorizzazione causavano l'arresto anomalo dell'adattatore",
-                "es": "Se corrigieron los casos donde los errores de permiso bloquearon el adaptador",
-                "pl": "naprawiono przypadki, w których błędy uprawnień powodowały awarię adaptera",
-                "zh-cn": "解决了权限错误导致适配器崩溃的问题"
-            },
-            "2.4.3": {
-                "en": "Caught the web server errors",
-                "de": "Fehler beim Webserver",
-                "ru": "Поймали ошибки веб-сервера",
-                "pt": "Detectou os erros do servidor web",
-                "nl": "Betrapte de webserverfouten",
-                "fr": "Pris les erreurs du serveur Web",
-                "it": "Catturati gli errori del web server",
-                "es": "Atrapado los errores del servidor web",
-                "pl": "Wyłapał błędy serwera WWW",
-                "zh-cn": "捕获了Web服务器错误"
-            },
-            "2.4.0": {
-                "en": "Fixed potential crash and add Sentry error reporting for js-controller 3.0",
-                "de": "Möglicher Absturz behoben und Sentry-Fehlerberichterstattung für js-controller 3.0 hinzugefügt",
-                "ru": "Исправлено потенциальное падение и добавление отчетов об ошибках Sentry для js-controller 3.0",
-                "pt": "Corrigido um possível travamento e adicionar relatórios de erros do Sentry para o js-controller 3.0",
-                "nl": "Mogelijke crash opgelost en Sentry-foutrapportage voor js-controller 3.0 toegevoegd",
-                "fr": "Correction d'un crash potentiel et ajout d'un rapport d'erreurs Sentry pour js-controller 3.0",
-                "it": "Risolto il problema di arresto potenziale e aggiunta della segnalazione degli errori di Sentry per js-controller 3.0",
-                "es": "Se corrigió el bloqueo potencial y se agregó el informe de errores Sentry para js-controller 3.0",
-                "pl": "Naprawiono potencjalną awarię i dodano raportowanie błędów Sentry dla js-kontrolera 3.0",
-                "zh-cn": "修复了潜在的崩溃并为js-controller 3.0添加了Sentry错误报告"
-            },
-            "2.3.3": {
-                "en": "Added response code for unknown commands",
-                "de": "Antwortcode für unbekannte Befehle hinzugefügt",
-                "ru": "Добавлен код ответа для неизвестных команд",
-                "pt": "Adicionado código de resposta para comandos desconhecidos",
-                "nl": "Reactiecode toegevoegd voor onbekende opdrachten",
-                "fr": "Ajout du code de réponse pour les commandes inconnues",
-                "it": "Aggiunto codice di risposta per comandi sconosciuti",
-                "es": "Código de respuesta agregado para comandos desconocidos",
-                "pl": "Dodano kod odpowiedzi dla nieznanych poleceń",
-                "zh-cn": "添加了未知命令的响应代码"
-            },
-            "2.3.2": {
-                "en": "Admin 3 is now supported\nNPM packages were updated",
-                "de": "Admin 3 wird jetzt unterstützt\nNPM-Pakete wurden aktualisiert",
-                "ru": "Admin 3 теперь поддерживается\nПакеты NPM были обновлены",
-                "pt": "Admin 3 agora é suportado\nPacotes NPM foram atualizados",
-                "nl": "Admin 3 wordt nu ondersteund\nNPM-pakketten zijn bijgewerkt",
-                "fr": "Admin 3 est maintenant supporté\nLes packages NPM ont été mis à jour",
-                "it": "Admin 3 è ora supportato\nI pacchetti NPM sono stati aggiornati",
-                "es": "Admin 3 ahora es compatible\nSe actualizaron los paquetes de NPM",
-                "pl": "Administrator 3 jest teraz obsługiwany\nPakiety NPM zostały zaktualizowane",
-                "zh-cn": "现在支持管理员3\nNPM软件包已更新"
-            },
-            "2.2.0": {
-                "en": "New flags are now supported: ack and type\nReturn error codes as JSON if no pretty print defined",
-                "de": "Neue Flags werden jetzt unterstützt: ack und type\nGibt Fehlercodes als JSON zurück, wenn kein hübscher Ausdruck definiert ist",
-                "ru": "Теперь поддерживаются новые флаги: ack и type\nВернуть коды ошибок в формате JSON, если не определена симпатичная печать",
-                "pt": "Novos sinalizadores agora são suportados: ack e type\nRetornar códigos de erro como JSON se nenhuma impressão bonita estiver definida",
-                "nl": "Nieuwe vlaggen worden nu ondersteund: ack en type\nRetourneer foutcodes als JSON als er geen mooie afdruk is gedefinieerd",
-                "fr": "Les nouveaux drapeaux sont maintenant supportés: ack et type\nRenvoie les codes d'erreur au format JSON si aucune jolie impression n'est définie",
-                "it": "Ora sono supportati nuovi flag: ack e type\nRestituisce i codici di errore come JSON se non è stata definita una stampa carina",
-                "es": "Ahora se admiten nuevas banderas: ack y type\nDevuelve los códigos de error como JSON si no hay una impresión bonita definida",
-                "pl": "Obsługiwane są teraz nowe flagi: ack i type\nZwróć kody błędów jako JSON, jeśli nie zdefiniowano ładnego wydruku",
-                "zh-cn": "现在支持新标志：ack和type\n如果没有定义漂亮的打印，则将错误代码返回为JSON"
-            },
-            "2.1.2": {
-                "en": "fix compact mode",
-                "de": "Kompaktmodus korrigieren",
-                "ru": "исправить компактный режим",
-                "pt": "corrigir modo compacto",
-                "nl": "fix compacte modus",
-                "fr": "mode compact fixe",
-                "it": "correzione della modalità compatta",
-                "es": "arreglar el modo compacto",
-                "pl": "napraw tryb kompaktowy",
-                "zh-cn": "修复紧凑模式"
-            },
-            "2.1.1": {
-                "en": "getBulk response enhance and id added, documentation updated",
-                "de": "Die Antwort von getBulk wurde erweitert und die ID hinzugefügt. Die Dokumentation wurde aktualisiert",
-                "ru": "улучшен ответ getBulk и добавлен id, обновлена документация",
-                "pt": "Aumento da resposta do getBulk e id adicionados, documentação atualizada",
-                "nl": "GetBulk-reactie verbeteren en id toegevoegd, documentatie bijgewerkt",
-                "fr": "Réponse getBulk améliorée et identifiant ajouté, documentation mise à jour",
-                "it": "Miglioramento della risposta getBulk e ID aggiunto, documentazione aggiornata",
-                "es": "Respuesta de GetBulk mejorada e ID agregada, documentación actualizada",
-                "pl": "Dodano poprawkę odpowiedzi i getBulk, zaktualizowano dokumentację",
-                "zh-cn": "getBulk响应增强和id添加，文档更新"
-            },
-            "2.1.0": {
-                "en": "Added command set for the Grafana plugins JSON / SimpleJSON.",
-                "de": "Befehlssatz für die Grafana-Plugins JSON / SimpleJSON hinzugefügt.",
-                "ru": "Добавлен набор команд для плагинов Grafana JSON / SimpleJSON.",
-                "pt": "Adicionado conjunto de comandos para os plugins Grafana JSON / SimpleJSON.",
-                "nl": "Toegevoegde opdrachtset voor de Grafana-plug-ins JSON / SimpleJSON.",
-                "fr": "Ajout du jeu de commandes pour les plugins Grafana JSON / SimpleJSON.",
-                "it": "Aggiunto set di comandi per i plugin Grafana JSON / SimpleJSON.",
-                "es": "Agregado conjunto de comandos para los complementos de Grafana JSON / SimpleJSON.",
-                "pl": "Dodano zestaw poleceń dla wtyczek Grafana JSON / SimpleJSON.",
-                "zh-cn": "为Grafana插件JSON / SimpleJSON添加了命令集。"
-            },
-            "2.0.5": {
-                "en": "errors when used as web extension fixed",
-                "de": "Fehler bei Verwendung als Web Extension behoben",
-                "ru": "исправлены ошибки при использовании в качестве веб-расширения",
-                "pt": "erros quando usados como extensão web",
-                "nl": "fouten bij gebruik als vastgemaakte webextensie",
-                "fr": "les erreurs lorsqu’elles sont utilisées comme extension web sont corrigées",
-                "it": "errori quando usato come estensione web fissa",
-                "es": "errores cuando se utiliza como extensión web fija",
-                "pl": "naprawione błędy używane jako rozszerzenie WWW",
-                "zh-cn": "用作Web扩展时修复的错误"
-            },
-            "2.0.2": {
-                "en": "Fix decoding of #",
-                "de": "Decodierung von # korrigieren",
-                "ru": "Исправить декодирование #",
-                "pt": "Corrigir a decodificação de #",
-                "nl": "Fix decoding van #",
-                "fr": "Correction du décodage de #",
-                "it": "Correggere la decodificazione di #",
-                "es": "Fijar la decodificación de #",
-                "pl": "Napraw dekodowanie #",
-                "zh-cn": "修正＃的解码"
-            },
-            "2.0.0": {
-                "en": "BREAKING CHANGE: getBulk is returning data in a different structure",
-                "de": "BREAKING CHANGE: getBulk gibt Daten in einer anderen Struktur zurück",
-                "ru": "BREAKING CHANGE: getBulk возвращает данные в другой структуре",
-                "pt": "BREAKING CHANGE: o getBulk está retornando dados em uma estrutura diferente",
-                "nl": "BREAKING CHANGE: getBulk retourneert gegevens in een andere structuur",
-                "fr": "BREAKING CHANGE: getBulk renvoie des données dans une structure différente",
-                "it": "BREAKING CHANGE: getBulk restituisce i dati in una struttura diversa",
-                "es": "BREAKING CHANGE: getBulk está devolviendo datos en una estructura diferente",
-                "pl": "ZMIANA ZMIAN: getBulk zwraca dane w innej strukturze",
-                "zh-cn": "突破性变化：getBulk以不同的结构返回数据"
-            }
-        },
-        "title": "Simple RESTful API",
-        "titleLang": {
-            "en": "Simple RESTful API",
-            "de": "Einfache RESTful API",
-            "ru": "Простой RESTful API",
-            "pt": "API RESTful simples",
-            "nl": "Eenvoudige RESTful API",
-            "fr": "API RESTful simple",
-            "it": "API RESTful semplice",
-            "es": "API RESTful simple",
-            "pl": "Prosty interfejs API RESTful",
-            "zh-cn": "简单的RESTful API"
-        },
-        "desc": {
-            "en": "This adapter allows to read and write ioBroker objects and state with web RESTful API",
-            "de": "Dieser Adapter ermöglicht das Lesen und Schreiben von ioBroker-Objekten und den Status mit der Web-RESTful-API",
-            "ru": "Этот адаптер позволяет читать и записывать объекты и состояния ioBroker с помощью веб-RESTful API",
-            "pt": "Esse adaptador permite ler e gravar objetos ioBroker e declarar com a API RESTful da web",
-            "nl": "Deze adapter maakt het mogelijk om ioBroker-objecten te lezen en te schrijven en aan te geven met de web RESTful API",
-            "fr": "Cet adaptateur permet de lire et d'écrire des objets et des états ioBroker avec l'API Web RESTful",
-            "it": "Questo adattatore consente di leggere e scrivere oggetti e stato di ioBroker con l'API RESTful web",
-            "es": "Este adaptador permite leer y escribir objetos y estados ioBroker con API RESTful web",
-            "pl": "Ten adapter umożliwia odczyt i zapis obiektów ioBroker oraz ich stan za pomocą web RESTful API",
-            "zh-cn": "该适配器允许使用Web RESTful API读写ioBroker对象和状态"
-        },
-        "authors": [
-            "bluefox <dogafox@gmail.com>",
-            "Apollon77 <ingo@fischer-ka.de>",
-            "Marco.K <marco@kaminski-net.de>"
-        ],
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "mode": "daemon",
-        "loglevel": "info",
-        "icon": "simple-api.png",
-        "webExtension": "lib/simpleapi.js",
-        "materialize": true,
-        "readme": "https://github.com/ioBroker/ioBroker.simple-api/blob/master/README.md",
-        "keywords": [
-            "web",
-            "simpleAPI",
-            "RESTful",
-            "communication"
-        ],
-        "enabled": true,
-        "compact": true,
-        "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.simple-api/master/admin/simple-api.png",
-        "type": "communication",
-        "stopBeforeUpdate": true,
-        "localLink": "%protocol%://%ip%:%port%/get/system.adapter.simple-api.%instance%.uptime?prettyPrint",
-        "dependencies": [
-            {
-                "js-controller": ">=2.0.0"
-            }
-        ],
-        "plugins": {
-            "sentry": {
-                "dsn": "https://1ad1b116fa644ec29e6f5d724b39f999@sentry.iobroker.net/12"
-            }
-        },
-        "connectionType": "none",
-        "dataSource": "none",
-        "tier": 3
+  "common": {
+    "name": "simple-api",
+    "version": "2.6.2",
+    "news": {
+      "2.6.2": {
+        "en": "Support of new flags for `getPlainValue`: `json` and `noStringify`",
+        "de": "Unterstützung neuer Flags für `getPlainValue`: `json` und `noStringify`",
+        "ru": "Поддержка новых флагов для getPlainValue: json и noStringify",
+        "pt": "Suporte para novos sinalizadores para `getPlainValue`:` json` e `noStringify`",
+        "nl": "Ondersteuning van nieuwe vlaggen voor `getPlainValue`: `json` en `noStringify`",
+        "fr": "Prise en charge de nouveaux indicateurs pour `getPlainValue` : `json` et `noStringify`",
+        "it": "Supporto di nuovi flag per `getPlainValue`: `json` e `noStringify`",
+        "es": "Soporte de nuevas banderas para `getPlainValue`:` json` y `noStringify`",
+        "pl": "Obsługa nowych flag dla `getPlainValue`: `json` i `noStringify`",
+        "zh-cn": "支持 `getPlainValue` 的新标志：`json` 和 `noStringify`"
+      },
+      "2.6.1": {
+        "en": "Catch error in request parsing when malformed (Sentry IOBROKER-SIMPLE-API-16)",
+        "de": "Catch-Fehler beim Parsen von Anforderungen bei Fehlform (Sentry IOBROKER-SIMPLE-API-16)",
+        "ru": "Ошибка перехвата при синтаксическом разборе запроса при неправильном формате (Sentry IOBROKER-SIMPLE-API-16)",
+        "pt": "Erro de captura na análise da solicitação quando malformado (Sentry IOBROKER-SIMPLE-API-16)",
+        "nl": "Vang een fout op bij het parseren van verzoeken bij een onjuiste indeling (Sentry IOBROKER-SIMPLE-API-16)",
+        "fr": "Erreur de capture lors de l'analyse de la demande en cas de malformation (Sentry IOBROKER-SIMPLE-API-16)",
+        "it": "Errore di rilevamento durante l'analisi della richiesta quando non è corretto (Sentry IOBROKER-SIMPLE-API-16)",
+        "es": "Detectar el error en el análisis de la solicitud cuando tiene un formato incorrecto (Sentry IOBROKER-SIMPLE-API-16)",
+        "pl": "Błąd przechwytywania podczas analizowania żądania, gdy jest zniekształcony (Sentry IOBROKER-SIMPLE-API-16)",
+        "zh-cn": "格式错误的请求分析中捕获错误（Sentry IOBROKER-SIMPLE-API-16）"
+      },
+      "2.6.0": {
+        "en": "Also URL-Decode the path parts like state ids\nOptimize for js-controller 3.3",
+        "de": "Auch URL-Dekodieren Sie die Pfadteile wie Status-IDs\nOptimieren für js-controller 3.3",
+        "ru": "Также URL-декодирование частей пути, таких как идентификаторы состояний\nОптимизировать под js-controller 3.3",
+        "pt": "Além disso, decodifique por URL as partes do caminho, como ids de estado\nOtimize para js-controller 3.3",
+        "nl": "Ook URL-decodeer de paddelen zoals status-id's\nOptimaliseren voor js-controller 3.3",
+        "fr": "Décodez également par URL les parties du chemin telles que les identifiants d'état\nOptimiser pour js-controller 3.3",
+        "it": "Anche URL-Decodifica le parti del percorso come gli ID di stato\nOttimizza per js-controller 3.3",
+        "es": "También URL: decodifica las partes de la ruta como los identificadores de estado\nOptimizar para js-controller 3.3",
+        "pl": "Odkoduj również adresy URL części ścieżki, takie jak identyfikatory stanów\nOptymalizacja pod kątem kontrolera js 3.3",
+        "zh-cn": "还可以对路径部分（如状态ID）进行URL解码\n针对js-controller 3.3进行优化"
+      },
+      "2.5.3": {
+        "en": "Make sure that delayed answers are not crashing (Sentry IOBROKER-SIMPLE-API-Z)",
+        "de": "Stellen Sie sicher, dass verzögerte Antworten nicht abstürzen (Sentry IOBROKER-SIMPLE-API-Z)",
+        "ru": "Убедитесь, что отложенные ответы не вызывают сбоев (Sentry IOBROKER-SIMPLE-API-Z)",
+        "pt": "Certifique-se de que as respostas atrasadas não estejam travando (Sentry IOBROKER-SIMPLE-API-Z)",
+        "nl": "Zorg ervoor dat vertraagde antwoorden niet crashen (Sentry IOBROKER-SIMPLE-API-Z)",
+        "fr": "Assurez-vous que les réponses différées ne plantent pas (Sentry IOBROKER-SIMPLE-API-Z)",
+        "it": "Assicurati che le risposte ritardate non si blocchino (Sentry IOBROKER-SIMPLE-API-Z)",
+        "es": "Asegúrese de que las respuestas retrasadas no se bloqueen (Sentry IOBROKER-SIMPLE-API-Z)",
+        "pl": "Upewnij się, że opóźnione odpowiedzi nie ulegają awarii (Sentry IOBROKER-SIMPLE-API-Z)",
+        "zh-cn": "确保延迟的答案不会崩溃（Sentry IOBROKER-SIMPLE-API-Z）"
+      },
+      "2.5.2": {
+        "en": "Support of new Let's Encrypt (only with js-controller 3.2.x)",
+        "de": "Unterstützung des neuen Let's Encrypt (nur mit js-controller 3.2.x)",
+        "ru": "Поддержка нового Let's Encrypt (только с js-controller 3.2.x)",
+        "pt": "Suporte do novo Let's Encrypt (apenas com js-controller 3.2.x)",
+        "nl": "Ondersteuning van nieuwe Let's Encrypt (alleen met js-controller 3.2.x)",
+        "fr": "Prise en charge du nouveau Let's Encrypt (uniquement avec js-controller 3.2.x)",
+        "it": "Supporto del nuovo Let's Encrypt (solo con js-controller 3.2.x)",
+        "es": "Soporte del nuevo Let's Encrypt (solo con js-controller 3.2.x)",
+        "pl": "Obsługa nowego Let's Encrypt (tylko z js-controller 3.2.x)",
+        "zh-cn": "支持新的Let's Encrypt（仅适用于js-controller 3.2.x）"
+      },
+      "2.4.8": {
+        "en": "Make sure missing favico file locally is not throwing exceptions (Sentry IOBROKER-SIMPLE-API-G)",
+        "de": "Stellen Sie sicher, dass die lokal fehlende Favico-Datei keine Ausnahmen auslöst (Sentry IOBROKER-SIMPLE-API-G).",
+        "ru": "Убедитесь, что отсутствующий файл favico локально не вызывает исключений (Sentry IOBROKER-SIMPLE-API-G)",
+        "pt": "Certifique-se de que o arquivo favico ausente localmente não esteja gerando exceções (Sentry IOBROKER-SIMPLE-API-G)",
+        "nl": "Zorg ervoor dat het ontbrekende favico-bestand lokaal geen uitzonderingen genereert (Sentry IOBROKER-SIMPLE-API-G)",
+        "fr": "Assurez-vous que le fichier favico manquant localement ne génère pas d'exceptions (Sentry IOBROKER-SIMPLE-API-G)",
+        "it": "Assicurati che il file favico mancante localmente non generi eccezioni (Sentry IOBROKER-SIMPLE-API-G)",
+        "es": "Asegúrese de que el archivo favico faltante localmente no arroje excepciones (Sentry IOBROKER-SIMPLE-API-G)",
+        "pl": "Upewnij się, że brakujący lokalnie plik Favico nie powoduje wyjątków (Sentry IOBROKER-SIMPLE-API-G)",
+        "zh-cn": "确保本地丢失的favico文件不会引发异常（Sentry IOBROKER-SIMPLE-API-G）"
+      },
+      "2.4.7": {
+        "en": "check that targets are an array for \"query\" requests (Sentry IOBROKER-SIMPLE-API-F)",
+        "de": "Überprüfen Sie, ob Ziele ein Array für \"Abfrageanforderungen\" sind (Sentry IOBROKER-SIMPLE-API-F).",
+        "ru": "проверьте, что цели являются массивом для запросов \"query\" (Sentry IOBROKER-SIMPLE-API-F)",
+        "pt": "verifique se os alvos são uma matriz para solicitações de \"consulta\" (Sentry IOBROKER-SIMPLE-API-F)",
+        "nl": "controleer of doelen een array zijn voor \"query\" -verzoeken (Sentry IOBROKER-SIMPLE-API-F)",
+        "fr": "vérifier que les cibles sont un tableau pour les requêtes \"query\" (Sentry IOBROKER-SIMPLE-API-F)",
+        "it": "controlla che i target siano un array per le richieste di \"query\" (Sentry IOBROKER-SIMPLE-API-F)",
+        "es": "comprobar que los objetivos son una matriz para las solicitudes de \"consulta\" (Sentry IOBROKER-SIMPLE-API-F)",
+        "pl": "sprawdź, czy cele są tablicą dla żądań „zapytań” (Sentry IOBROKER-SIMPLE-API-F)",
+        "zh-cn": "检查目标是否为“查询”请求的数组（Sentry IOBROKER-SIMPLE-API-F）"
+      }
     },
-    "native": {
-        "port": 8087,
-        "auth": false,
-        "secure": false,
-        "bind": "0.0.0.0",
-        "certPublic": "",
-        "certPrivate": "",
-        "certChained": "",
-        "defaultUser": "admin",
-        "onlyAllowWhenUserIsOwner": false,
-        "webInstance": "",
-        "leEnabled": false,
-        "leUpdate": false,
-        "leCheckPort": 80,
-        "dataSource": "",
-        "allDatapoints": false
-    }
+    "title": "Simple RESTful API",
+    "titleLang": {
+      "en": "Simple RESTful API",
+      "de": "Einfache RESTful API",
+      "ru": "Простой RESTful API",
+      "pt": "API RESTful simples",
+      "nl": "Eenvoudige RESTful API",
+      "fr": "API RESTful simple",
+      "it": "API RESTful semplice",
+      "es": "API RESTful simple",
+      "pl": "Prosty interfejs API RESTful",
+      "zh-cn": "简单的RESTful API"
+    },
+    "desc": {
+      "en": "This adapter allows to read and write ioBroker objects and state with web RESTful API",
+      "de": "Dieser Adapter ermöglicht das Lesen und Schreiben von ioBroker-Objekten und den Status mit der Web-RESTful-API",
+      "ru": "Этот адаптер позволяет читать и записывать объекты и состояния ioBroker с помощью веб-RESTful API",
+      "pt": "Esse adaptador permite ler e gravar objetos ioBroker e declarar com a API RESTful da web",
+      "nl": "Deze adapter maakt het mogelijk om ioBroker-objecten te lezen en te schrijven en aan te geven met de web RESTful API",
+      "fr": "Cet adaptateur permet de lire et d'écrire des objets et des états ioBroker avec l'API Web RESTful",
+      "it": "Questo adattatore consente di leggere e scrivere oggetti e stato di ioBroker con l'API RESTful web",
+      "es": "Este adaptador permite leer y escribir objetos y estados ioBroker con API RESTful web",
+      "pl": "Ten adapter umożliwia odczyt i zapis obiektów ioBroker oraz ich stan za pomocą web RESTful API",
+      "zh-cn": "该适配器允许使用Web RESTful API读写ioBroker对象和状态"
+    },
+    "authors": [
+      "bluefox <dogafox@gmail.com>",
+      "Apollon77 <ingo@fischer-ka.de>",
+      "Marco.K <marco@kaminski-net.de>"
+    ],
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "mode": "daemon",
+    "loglevel": "info",
+    "icon": "simple-api.png",
+    "webExtension": "lib/simpleapi.js",
+    "materialize": true,
+    "readme": "https://github.com/ioBroker/ioBroker.simple-api/blob/master/README.md",
+    "keywords": [
+      "web",
+      "simpleAPI",
+      "RESTful",
+      "communication"
+    ],
+    "enabled": true,
+    "compact": true,
+    "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.simple-api/master/admin/simple-api.png",
+    "type": "communication",
+    "stopBeforeUpdate": true,
+    "localLink": "%protocol%://%ip%:%port%/get/system.adapter.simple-api.%instance%.uptime?prettyPrint",
+    "dependencies": [
+      {
+        "js-controller": ">=2.0.0"
+      }
+    ],
+    "plugins": {
+      "sentry": {
+        "dsn": "https://1ad1b116fa644ec29e6f5d724b39f999@sentry.iobroker.net/12"
+      }
+    },
+    "connectionType": "none",
+    "dataSource": "none",
+    "tier": 3
+  },
+  "native": {
+    "port": 8087,
+    "auth": false,
+    "secure": false,
+    "bind": "0.0.0.0",
+    "certPublic": "",
+    "certPrivate": "",
+    "certChained": "",
+    "defaultUser": "admin",
+    "onlyAllowWhenUserIsOwner": false,
+    "webInstance": "",
+    "leEnabled": false,
+    "leUpdate": false,
+    "leCheckPort": 80,
+    "dataSource": "",
+    "allDatapoints": false
+  }
 }
