@@ -1,0 +1,46 @@
+@import "variables.scss";
+
+nav {
+    width: 100%;
+    background-color: rgb(69, 212, 231);
+}
+.nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+
+    &--tools {
+        @include flex-center();
+
+        svg {
+            margin-right: 2rem;
+            cursor: pointer;
+        }
+
+        &__machineInfo {
+            display: flex;
+            margin-left: 0.5rem;
+            color: #777;
+            padding: 5px 15px;
+            background-color: lightgray;
+            @include flex-center();
+
+            p {
+                margin-left: 1rem;
+            }
+        }
+    }
+
+    &--packageInfo {
+        @include flex-center();
+
+        p {
+            margin-right: 1rem;
+            color: white;
+        }
+    }
+
+    img {
+        width: 2rem;
+    }
+}

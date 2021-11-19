@@ -1,0 +1,118 @@
+@import "variables.scss";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+}
+body {
+    width: 100%;
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #eee;
+}
+.container {
+    @include container();
+}
+.package {
+    display: flex;
+    flex-direction: column;
+
+    &-settings {
+        @include flex-center();
+        flex-direction: column;
+
+        &__header {
+            width: 100%;
+            background-color: #0d6efd;
+            color: white;
+            padding: 0.8rem;
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+
+        &--tabs {
+            width: 95%;
+            background-color: white;
+            padding: 0.5rem;
+
+            button.active {
+                border-bottom: 1px solid blue;
+            }
+        }
+    }
+
+    &-body {
+        display: flex;
+        flex-direction: column;
+
+        &--panel {
+            width: 95%;
+            margin: 1rem auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &__icon {
+                img {
+                    width: 3rem;
+                }
+            }
+            &__icon2 {
+                img {
+                    width: 15rem;
+                }
+            }
+
+            &__actions {
+                span {
+                    background-color: #0d6efd;
+                    border-radius: 50%;
+                    margin-left: 0.5rem;
+                    padding: 0.7rem;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        &--settings {
+            width: 95%;
+            margin: 1rem auto;
+
+            &__item {
+                display: flex;
+                svg {cursor: pointer;}
+
+                p {
+                    margin-top: 0.5rem;
+                    color: #888;
+                    font-size: 0.8rem;
+                }
+            }
+
+            &__item.extra {
+                justify-content: space-between;
+                align-items: center;
+            }
+            &__item.extra.last {
+                justify-content: start;
+
+                svg {
+                    transform: translateY(-100%);
+                }
+            }
+        }
+    }
+
+    &-actions {
+        display: flex;
+        justify-content: space-between;
+        background-color: #5598fc;
+        padding: 0.5rem 1rem;
+
+        button {
+            margin-left: 1rem;
+        }
+    }
+}
