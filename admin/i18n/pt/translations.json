@@ -4,7 +4,7 @@
     "Authentication:": "Autenticação",
     "Chained certificate:": "Certificado acorrentado",
     "Disable authentication": "Desativar autenticação",
-    "Extend WEB adapter:": "Estender adaptador WEB",
+    "Extend WEB adapter:": "Use como uma extensão do adaptador da web",
     "IP:": "IP",
     "Ignore warning": "Ignorar aviso",
     "Let's Encrypt settings": "Vamos criptografar configurações",
@@ -22,7 +22,7 @@
     "Use Lets Encrypt certificates:": "Use Vamos criptografar certificados",
     "Use this instance for automatic update:": "Use esta instância para atualização automática",
     "Warning!": "Atenção!",
-    "all": "tudo",
+    "all": "todos",
     "none": "Nenhum",
     "place here": "coloque os arquivos aqui",
     "simpleAPI adapter settings": ""
