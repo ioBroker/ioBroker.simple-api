@@ -58,7 +58,7 @@ describe('Test RESTful API SSL', function () {
         setup.adapterStarted = false;
 
         const brokerStarted   = false;
-        setup.setupController(() => {
+        setup.setupController(async () => {
             const config = await setup.getAdapterConfig();
             // enable adapter
             config.common.enabled = true;
