@@ -59,14 +59,14 @@ describe('Test RESTful API as Owner-User', function () {
         setup.adapterStarted = false;
 
         setup.setupController(() => {
-            const config = setup.getAdapterConfig();
+            const config = await setup.getAdapterConfig();
             // enable adapter
             config.common.enabled = true;
             config.common.loglevel = 'debug';
             config.native.port = PORT;
             config.native.defaultUser = 'myuser';
             config.native.onlyAllowWhenUserIsOwner = true;
-            setup.setAdapterConfig(config.common, config.native);
+            await setup.setAdapterConfig(config.common, config.native);
 
             setup.startController((_objects, _states) => {
                 objects = _objects;

@@ -59,7 +59,7 @@ describe('Test RESTful API SSL', function () {
 
         const brokerStarted   = false;
         setup.setupController(() => {
-            const config = setup.getAdapterConfig();
+            const config = await setup.getAdapterConfig();
             // enable adapter
             config.common.enabled = true;
             config.common.loglevel = 'debug';
@@ -69,7 +69,7 @@ describe('Test RESTful API SSL', function () {
             config.native.certPublic = 'defaultPublic';
             config.native.certPrivate = 'defaultPrivate';
 
-            setup.setAdapterConfig(config.common, config.native);
+            await setup.setAdapterConfig(config.common, config.native);
 
             setup.startController((_objects, _states) => {
                 objects = _objects;

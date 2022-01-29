@@ -56,14 +56,14 @@ describe('Test RESTful API as User(No rights)', function() {
         this.timeout(600000); // because of first install from npm
         setup.adapterStarted = false;
 
-        setup.setupController(function () {
-            const config = setup.getAdapterConfig();
+        setup.setupController(async function () {
+            const config = await setup.getAdapterConfig();
             // enable adapter
             config.common.enabled = true;
             config.common.loglevel = 'debug';
             config.native.port = 18183;
             config.native.defaultUser = 'norights';
-            setup.setAdapterConfig(config.common, config.native);
+            await setup.setAdapterConfig(config.common, config.native);
 
             setup.startController(function (_objects, _states) {
                 objects = _objects;
