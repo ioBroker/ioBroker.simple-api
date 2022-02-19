@@ -581,7 +581,7 @@ If no data source was specified or the noHistory parameter is passed, then only 
 -->
 ## Changelog
 
-### __WORK IN PROGRESSS__
+### __WORK IN PROGRESS__
 * (Apollon77) Optimize error message for multilanguage objects
 * (Apollon77) Do not overwrite state properties by object properties
 
