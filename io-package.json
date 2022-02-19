@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "simple-api",
-    "version": "2.6.2",
+    "version": "2.6.3",
     "news": {
+      "2.6.3": {
+        "en": "Optimize error message for multilanguage objects\nDo not overwrite state properties by object properties",
+        "de": "Fehlermeldung für mehrsprachige Objekte optimieren\nZustandseigenschaften nicht durch Objekteigenschaften überschreiben",
+        "ru": "Оптимизировать сообщение об ошибке для многоязычных объектов\nНе перезаписывайте свойства состояния свойствами объекта",
+        "pt": "Otimizar mensagem de erro para objetos multilíngue\nNão sobrescreva propriedades de estado por propriedades de objeto",
+        "nl": "Optimaliseer foutmelding voor meertalige objecten\nOverschrijf statuseigenschappen niet door objecteigenschappen",
+        "fr": "Optimiser le message d'erreur pour les objets multilingues\nNe pas écraser les propriétés d'état par les propriétés d'objet",
+        "it": "Ottimizza il messaggio di errore per gli oggetti multilingua\nNon sovrascrivere le proprietà dello stato con le proprietà dell'oggetto",
+        "es": "Optimizar mensaje de error para objetos multilenguaje\nNo sobrescribir propiedades de estado por propiedades de objeto",
+        "pl": "Zoptymalizuj komunikat o błędzie dla obiektów wielojęzycznych\nNie nadpisuj właściwości stanu przez właściwości obiektu",
+        "zh-cn": "优化多语言对象的错误消息\n不要用对象属性覆盖状态属性"
+      },
       "2.6.2": {
         "en": "Support of new flags for `getPlainValue`: `json` and `noStringify`",
         "de": "Unterstützung neuer Flags für `getPlainValue`: `json` und `noStringify`",
@@ -74,18 +86,6 @@
         "es": "Asegúrese de que el archivo favico faltante localmente no arroje excepciones (Sentry IOBROKER-SIMPLE-API-G)",
         "pl": "Upewnij się, że brakujący lokalnie plik Favico nie powoduje wyjątków (Sentry IOBROKER-SIMPLE-API-G)",
         "zh-cn": "确保本地丢失的favico文件不会引发异常（Sentry IOBROKER-SIMPLE-API-G）"
-      },
-      "2.4.7": {
-        "en": "check that targets are an array for \"query\" requests (Sentry IOBROKER-SIMPLE-API-F)",
-        "de": "Überprüfen Sie, ob Ziele ein Array für \"Abfrageanforderungen\" sind (Sentry IOBROKER-SIMPLE-API-F).",
-        "ru": "проверьте, что цели являются массивом для запросов \"query\" (Sentry IOBROKER-SIMPLE-API-F)",
-        "pt": "verifique se os alvos são uma matriz para solicitações de \"consulta\" (Sentry IOBROKER-SIMPLE-API-F)",
-        "nl": "controleer of doelen een array zijn voor \"query\" -verzoeken (Sentry IOBROKER-SIMPLE-API-F)",
-        "fr": "vérifier que les cibles sont un tableau pour les requêtes \"query\" (Sentry IOBROKER-SIMPLE-API-F)",
-        "it": "controlla che i target siano un array per le richieste di \"query\" (Sentry IOBROKER-SIMPLE-API-F)",
-        "es": "comprobar que los objetivos son una matriz para las solicitudes de \"consulta\" (Sentry IOBROKER-SIMPLE-API-F)",
-        "pl": "sprawdź, czy cele są tablicą dla żądań „zapytań” (Sentry IOBROKER-SIMPLE-API-F)",
-        "zh-cn": "检查目标是否为“查询”请求的数组（Sentry IOBROKER-SIMPLE-API-F）"
       }
     },
     "title": "Simple RESTful API",
