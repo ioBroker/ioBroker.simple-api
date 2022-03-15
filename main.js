@@ -16,6 +16,7 @@ function startAdapter(options) {
     Object.assign(options, {
         name: adapterName,
         stateChange: (id, state) => webServer && webServer.api && webServer.api.stateChange(id, state),
+        objectChange: (id, obj) => webServer && webServer.api && webServer.api.objectChange(id, obj),
         unload: callback => {
             try {
                 if (webServer && webServer.server) {
@@ -24,9 +25,9 @@ function startAdapter(options) {
                     webServer.server = null;
                 }
             } catch (e) {
-
+                // ignore
             }
-            callback();
+            callback && callback();
         },
         ready: main
     });
