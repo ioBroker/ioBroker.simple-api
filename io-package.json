@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "simple-api",
-    "version": "2.6.3",
+    "version": "2.6.4",
     "news": {
+      "2.6.4": {
+        "en": "Optimize performance, especially when using names instead of object ids",
+        "de": "Optimieren Sie die Leistung, insbesondere bei der Verwendung von Namen anstelle von Objekt-IDs",
+        "ru": "Оптимизация производительности, особенно при использовании имен вместо идентификаторов объектов.",
+        "pt": "Otimize o desempenho, especialmente ao usar nomes em vez de IDs de objetos",
+        "nl": "Optimaliseer de prestaties, vooral bij het gebruik van namen in plaats van object-ID's",
+        "fr": "Optimisez les performances, en particulier lorsque vous utilisez des noms au lieu d'ID d'objet",
+        "it": "Ottimizza le prestazioni, soprattutto quando si utilizzano nomi anziché ID oggetto",
+        "es": "Optimice el rendimiento, especialmente cuando use nombres en lugar de identificadores de objetos",
+        "pl": "Zoptymalizuj wydajność, zwłaszcza gdy używasz nazw zamiast identyfikatorów obiektów",
+        "zh-cn": "优化性能，尤其是在使用名称而不是对象 ID 时"
+      },
       "2.6.3": {
         "en": "Optimize error message for multilanguage objects\nDo not overwrite state properties by object properties",
         "de": "Fehlermeldung für mehrsprachige Objekte optimieren\nZustandseigenschaften nicht durch Objekteigenschaften überschreiben",
@@ -74,18 +86,6 @@
         "es": "Soporte del nuevo Let's Encrypt (solo con js-controller 3.2.x)",
         "pl": "Obsługa nowego Let's Encrypt (tylko z js-controller 3.2.x)",
         "zh-cn": "支持新的Let's Encrypt（仅适用于js-controller 3.2.x）"
-      },
-      "2.4.8": {
-        "en": "Make sure missing favico file locally is not throwing exceptions (Sentry IOBROKER-SIMPLE-API-G)",
-        "de": "Stellen Sie sicher, dass die lokal fehlende Favico-Datei keine Ausnahmen auslöst (Sentry IOBROKER-SIMPLE-API-G).",
-        "ru": "Убедитесь, что отсутствующий файл favico локально не вызывает исключений (Sentry IOBROKER-SIMPLE-API-G)",
-        "pt": "Certifique-se de que o arquivo favico ausente localmente não esteja gerando exceções (Sentry IOBROKER-SIMPLE-API-G)",
-        "nl": "Zorg ervoor dat het ontbrekende favico-bestand lokaal geen uitzonderingen genereert (Sentry IOBROKER-SIMPLE-API-G)",
-        "fr": "Assurez-vous que le fichier favico manquant localement ne génère pas d'exceptions (Sentry IOBROKER-SIMPLE-API-G)",
-        "it": "Assicurati che il file favico mancante localmente non generi eccezioni (Sentry IOBROKER-SIMPLE-API-G)",
-        "es": "Asegúrese de que el archivo favico faltante localmente no arroje excepciones (Sentry IOBROKER-SIMPLE-API-G)",
-        "pl": "Upewnij się, że brakujący lokalnie plik Favico nie powoduje wyjątków (Sentry IOBROKER-SIMPLE-API-G)",
-        "zh-cn": "确保本地丢失的favico文件不会引发异常（Sentry IOBROKER-SIMPLE-API-G）"
       }
     },
     "title": "Simple RESTful API",
