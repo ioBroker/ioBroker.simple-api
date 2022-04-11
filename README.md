@@ -163,7 +163,7 @@ If the option 'List all data points' has been activated or no data source has be
 This command is needed for the Grafana JSON / SimpleJSON Plugin.
 
 ### query
-If a data source (History, SQL) has been specified, the data from the specified data points are read out for the specified period, otherwise only the current value is read out.
+If a data source (History, SQL) has been specified in the instance configuration, the data from the specified data points are read out for the specified period, otherwise only the current value is read out.
 This command is needed for the Grafana JSON / SimpleJSON Plugin.
 
 ### help
