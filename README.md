@@ -154,6 +154,14 @@ Set many states with one request. This request supports POST method too, for POS
 Allows to set the value of a given State be set by the POST body content.
 
 ### objects
+Read objects of defined type from DB.
+
+Call e.g.:
+`http://ipaddress:8087/objects?pattern=enum.*&type=enum` - to read all enums
+
+or 
+
+`http://ipaddress:8087/objects?pattern=system.adapter.admin.0.*` - to read all states in branch `system.adapter.admin.0`
 
 ### states
 

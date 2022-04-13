@@ -1,5 +1,6 @@
-/* jshint -W097 */// jshint strict:false
-/*jslint node: true */
+/* jshint -W097 */
+/* jshint strict: false */
+/* jslint node: true */
 'use strict';
 
 const utils       = require('@iobroker/adapter-core'); // Get common adapter utils
@@ -168,9 +169,8 @@ async function initWebServer(settings) {
 
             if (server.server) {
                 // create web server
-                server.server.listen(port, (!settings.bind || settings.bind === '0.0.0.0') ? undefined : settings.bind || undefined, () => {
-                    serverListening = true;
-                });
+                server.server.listen(port, (!settings.bind || settings.bind === '0.0.0.0') ? undefined : settings.bind || undefined, () =>
+                    serverListening = true);
 
                 adapter.log.info(`http${settings.secure ? 's' : ''} server listening on port ${port}`);
             } else {
