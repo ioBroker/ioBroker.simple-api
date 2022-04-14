@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "simple-api",
-    "version": "2.6.4",
+    "version": "2.6.5",
     "news": {
+      "2.6.5": {
+        "en": "Added support aggregate and count for queries",
+        "de": "Unterstützungsaggregat und Anzahl für Abfragen hinzugefügt",
+        "ru": "Добавлена поддержка агрегата и подсчета запросов.",
+        "pt": "Adicionado suporte agregado e contagem para consultas",
+        "nl": "Toegevoegd ondersteuningsaggregaat en telling voor vragen",
+        "fr": "Ajout de l'agrégat de support et du nombre de requêtes",
+        "it": "Aggiunto supporto aggregato e conteggio per le query",
+        "es": "Agregado de soporte agregado y conteo para consultas",
+        "pl": "Dodano agregację wsparcia i liczbę zapytań",
+        "zh-cn": "添加了对查询的支持聚合和计数"
+      },
       "2.6.4": {
         "en": "Optimize performance, especially when using names instead of object ids",
         "de": "Optimieren Sie die Leistung, insbesondere bei der Verwendung von Namen anstelle von Objekt-IDs",
@@ -74,18 +86,6 @@
         "es": "Asegúrese de que las respuestas retrasadas no se bloqueen (Sentry IOBROKER-SIMPLE-API-Z)",
         "pl": "Upewnij się, że opóźnione odpowiedzi nie ulegają awarii (Sentry IOBROKER-SIMPLE-API-Z)",
         "zh-cn": "确保延迟的答案不会崩溃（Sentry IOBROKER-SIMPLE-API-Z）"
-      },
-      "2.5.2": {
-        "en": "Support of new Let's Encrypt (only with js-controller 3.2.x)",
-        "de": "Unterstützung des neuen Let's Encrypt (nur mit js-controller 3.2.x)",
-        "ru": "Поддержка нового Let's Encrypt (только с js-controller 3.2.x)",
-        "pt": "Suporte do novo Let's Encrypt (apenas com js-controller 3.2.x)",
-        "nl": "Ondersteuning van nieuwe Let's Encrypt (alleen met js-controller 3.2.x)",
-        "fr": "Prise en charge du nouveau Let's Encrypt (uniquement avec js-controller 3.2.x)",
-        "it": "Supporto del nuovo Let's Encrypt (solo con js-controller 3.2.x)",
-        "es": "Soporte del nuevo Let's Encrypt (solo con js-controller 3.2.x)",
-        "pl": "Obsługa nowego Let's Encrypt (tylko z js-controller 3.2.x)",
-        "zh-cn": "支持新的Let's Encrypt（仅适用于js-controller 3.2.x）"
       }
     },
     "title": "Simple RESTful API",
