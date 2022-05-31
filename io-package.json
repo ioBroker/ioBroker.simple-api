@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "simple-api",
-    "version": "2.6.5",
+    "version": "2.7.0",
     "news": {
+      "2.7.0": {
+        "en": "Allow use of ack flag for setBulk post requests\nReturn ack flag too on getBulk",
+        "de": "Verwendung des ack-Flags für SetBulk-Post-Anforderungen zulassen\nGeben Sie das Ack-Flag auch auf getBulk zurück",
+        "ru": "Разрешить использование флага подтверждения для почтовых запросов setBulk\nВернуть флаг подтверждения тоже на getBulk",
+        "pt": "Permitir o uso do sinalizador de confirmação para solicitações de postagem setBulk\nRetorne o sinalizador de confirmação também no getBulk",
+        "nl": "Sta gebruik van ack-vlag toe voor setBulk-postverzoeken\nRetourneer ook de ack-vlag op getBulk",
+        "fr": "Autoriser l'utilisation de l'indicateur ack pour les demandes de publication setBulk\nRenvoyez également le drapeau ack sur getBulk",
+        "it": "Consenti l'uso del flag di conferma per le richieste di post setBulk\nRestituisci anche la bandiera ack su getBulk",
+        "es": "Permitir el uso de la bandera ack para las solicitudes de publicación de setBulk\nDevuelve el indicador de reconocimiento también en getBulk",
+        "pl": "Zezwalaj na używanie flagi ack dla żądań setBulk post\nFlaga potwierdzenia zwrotu również na getBulk",
+        "zh-cn": "允许对 setBulk 发布请求使用 ack 标志\n在 getBulk 上也返回 ack 标志"
+      },
       "2.6.5": {
         "en": "Added support aggregate and count for queries",
         "de": "Unterstützungsaggregat und Anzahl für Abfragen hinzugefügt",
@@ -74,18 +86,6 @@
         "es": "También URL: decodifica las partes de la ruta como los identificadores de estado\nOptimizar para js-controller 3.3",
         "pl": "Odkoduj również adresy URL części ścieżki, takie jak identyfikatory stanów\nOptymalizacja pod kątem kontrolera js 3.3",
         "zh-cn": "还可以对路径部分（如状态ID）进行URL解码\n针对js-controller 3.3进行优化"
-      },
-      "2.5.3": {
-        "en": "Make sure that delayed answers are not crashing (Sentry IOBROKER-SIMPLE-API-Z)",
-        "de": "Stellen Sie sicher, dass verzögerte Antworten nicht abstürzen (Sentry IOBROKER-SIMPLE-API-Z)",
-        "ru": "Убедитесь, что отложенные ответы не вызывают сбоев (Sentry IOBROKER-SIMPLE-API-Z)",
-        "pt": "Certifique-se de que as respostas atrasadas não estejam travando (Sentry IOBROKER-SIMPLE-API-Z)",
-        "nl": "Zorg ervoor dat vertraagde antwoorden niet crashen (Sentry IOBROKER-SIMPLE-API-Z)",
-        "fr": "Assurez-vous que les réponses différées ne plantent pas (Sentry IOBROKER-SIMPLE-API-Z)",
-        "it": "Assicurati che le risposte ritardate non si blocchino (Sentry IOBROKER-SIMPLE-API-Z)",
-        "es": "Asegúrese de que las respuestas retrasadas no se bloqueen (Sentry IOBROKER-SIMPLE-API-Z)",
-        "pl": "Upewnij się, że opóźnione odpowiedzi nie ulegają awarii (Sentry IOBROKER-SIMPLE-API-Z)",
-        "zh-cn": "确保延迟的答案不会崩溃（Sentry IOBROKER-SIMPLE-API-Z）"
       }
     },
     "title": "Simple RESTful API",
