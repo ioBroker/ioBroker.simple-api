@@ -451,7 +451,7 @@ describe('Test RESTful API', function () {
         request({
             uri: 'http://127.0.0.1:18183/setBulk',
             method: 'POST',
-            body: `${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false&javascript.0.test-string=bla%26fasel%2efoo%3Dhummer+hey`
+            body: `${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false&javascript.0.test-string=bla%26fasel%2efoo%3Dhummer+hey&ack=true`
         }, (error, response, body) => {
             console.log(`setBulk/?${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false&javascript.0.test-string=bla%26fasel%2efoo%3Dhummer+hey => ${JSON.stringify(body)}`);
             expect(error).to.be.not.ok;
@@ -471,8 +471,11 @@ describe('Test RESTful API', function () {
                 expect(error).to.be.not.ok;
                 const obj = JSON.parse(body);
                 expect(obj[0].val).equal(50);
+                expect(obj[0].ack).equal(true);
                 expect(obj[1].val).equal(false);
+                expect(obj[1].ack).equal(true);
                 expect(obj[2].val).equal('bla&fasel.foo=hummer hey');
+                expect(obj[2].ack).equal(true);
                 expect(response.statusCode).to.equal(200);
                 done();
             });
