@@ -591,6 +591,7 @@ If no data source was specified or the noHistory parameter is passed, then only 
 
 ### __WORK IN PROGRESS__
 * (crycode-de) Allow use of ack flag for setBulk post requests
+* (Apollon77) Return ack flag too on getBulk
 
 ### 2.6.5 (2022-04-14)
 * Added support aggregate and count for queries
