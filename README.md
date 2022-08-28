@@ -23,7 +23,7 @@ Call in browser `http://ipaddress:8087/help` to get the help about API. The resu
   "get": "http://ipaddress:8087/get/stateID/?prettyPrint",
   "getBulk": "http://ipaddress:8087/getBulk/stateID1,stateID2/?prettyPrint",
   "set": "http://ipaddress:8087/set/stateID?value=1&prettyPrint",
-  "toggle": "http://ipaddress:8087/toggle/stateID&prettyPrint",
+  "toggle": "http://ipaddress:8087/toggle/stateID?prettyPrint",
   "setBulk": "http://ipaddress:8087/setBulk?stateID1=0.7&stateID2=0&prettyPrint",
   "objects": "http://ipaddress:8087/objects?pattern=system.adapter.admin.0*&prettyPrint",
   "objects": "http://ipaddress:8087/objects?pattern=system.adapter.admin.0*&type=adapter&prettyPrint",
