@@ -1,0 +1,180 @@
+{
+  "type": "tabs",
+  "i18n": true,
+  "items": {
+    "mainTab": {
+      "type": "panel",
+      "label": "Main settings",
+      "items": {
+        "webInstance": {
+          "type": "instance",
+          "label": "Extend WEB adapter",
+          "all": true,
+          "sm": 12,
+          "md": 6,
+          "lg": 3,
+          "adapter": "web"
+        },
+        "bind": {
+          "hidden": "!!data.webInstance",
+          "newLine": true,
+          "type": "ip",
+          "listenOnAllPorts": true,
+          "label": "IP",
+          "sm": 12,
+          "md": 8,
+          "lg": 5
+        },
+        "port": {
+          "hidden": "!!data.webInstance",
+          "type": "number",
+          "min": 1,
+          "max": 65565,
+          "label": "Port",
+          "sm": 12,
+          "md": 4,
+          "lg": 3
+        },
+        "secure": {
+          "hidden": "!!data.webInstance",
+          "newLine": true,
+          "type": "checkbox",
+          "label": "Secure(HTTPS)",
+          "sm": 12,
+          "md": 6,
+          "lg": 2
+        },
+        "certPublic": {
+          "type": "certificate",
+          "hidden": "!data.secure || !!data.webInstance",
+          "certType": "public",
+          "validator": "!data.secure || data.certPublic",
+          "label": "Public certificate",
+          "sm": 12,
+          "md": 6,
+          "lg": 2
+        },
+        "certPrivate": {
+          "hidden": "!data.secure || !!data.webInstance",
+          "type": "certificate",
+          "certType": "private",
+          "validator": "!data.secure || data.certPrivate",
+          "label": "Private certificate",
+          "sm": 12,
+          "md": 6,
+          "lg": 2
+        },
+        "certChained": {
+          "hidden": "!data.secure || !!data.webInstance",
+          "type": "certificate",
+          "certType": "chained",
+          "label": "Chained certificate",
+          "sm": 12,
+          "md": 6,
+          "lg": 2
+        },
+        "auth": {
+          "newLine": true,
+          "hidden": "!!data.webInstance",
+          "type": "checkbox",
+          "confirm": {
+            "condition": "!data.secure && data.auth",
+            "title": "Warning!",
+            "text": "Unsecure_Auth",
+            "ok": "Ignore warning",
+            "cancel": "Disable authentication",
+            "type": "warning",
+            "alsoDependsOn": [
+              "secure"
+            ]
+          },
+          "label": "Authentication",
+          "sm": 12,
+          "md": 6,
+          "lg": 2
+        },
+        "defaultUser": {
+          "hidden": "!!data.auth || !!data.webInstance",
+          "type": "user",
+          "label": "Run as",
+          "sm": 12,
+          "md": 6,
+          "lg": 2
+        },
+        "onlyAllowWhenUserIsOwner": {
+          "newLine": true,
+          "type": "checkbox",
+          "label": "Allow only when User is Owner",
+          "sm": 12
+        },
+        "dataSource": {
+          "newLine": true,
+          "type": "instance",
+          "label": "Select data source",
+          "sm": 12,
+          "md": 6,
+          "lg": 3,
+          "adapter": "_dataSources"
+        },
+        "allDatapoints": {
+          "type": "checkbox",
+          "hidden": "!data.dataSource",
+          "label": "List all datapoints",
+          "sm": 12,
+          "md": 6,
+          "lg": 3
+        }
+      }
+    },
+    "leTab": {
+      "type": "panel",
+      "label": "Let's Encrypt SSL",
+      "disabled": "!data.secure || !!data.webInstance",
+      "items": {
+        "_image": {
+          "type": "staticImage",
+          "tooltip": "Read about Let's Encrypt certificates",
+          "href": "https://github.com/ioBroker/ioBroker.admin/blob/master/README.md#lets-encrypt-certificates",
+          "src": "../../img/le.png",
+          "style": {
+            "width": 200,
+            "height": 59
+          }
+        },
+        "_link": {
+          "newLine": true,
+          "type": "staticLink",
+          "href": "https://github.com/ioBroker/ioBroker.admin/blob/master/README.md#lets-encrypt-certificates",
+          "text": "Read about Let's Encrypt certificates",
+          "style": {
+            "fontSize": 16,
+            "marginBottom": 20
+          }
+        },
+        "leEnabled": {
+          "newLine": true,
+          "type": "checkbox",
+          "label": "Use Lets Encrypt certificates"
+        },
+        "leUpdate": {
+          "newLine": true,
+          "type": "checkbox",
+          "hidden": "!data.leEnabled",
+          "label": "Use this instance for automatic update"
+        },
+        "lePort": {
+          "newLine": true,
+          "sm": 12,
+          "lg": 6,
+          "type": "number",
+          "hidden": "!data.leEnabled || !data.leUpdate",
+          "label": "Port to check the domain",
+          "style": {
+            "marginTop": 15,
+            "maxWidth": 300
+          }
+        }
+      }
+    }
+  }
+}

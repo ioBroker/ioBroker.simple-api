@@ -143,6 +143,9 @@
         "js-controller": ">=2.0.0"
       }
     ],
+    "adminUI": {
+      "config": "json"
+    },
     "plugins": {
       "sentry": {
         "dsn": "https://1ad1b116fa644ec29e6f5d724b39f999@sentry.iobroker.net/12"
