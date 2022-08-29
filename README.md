@@ -588,7 +588,7 @@ If no data source was specified or the noHistory parameter is passed, then only 
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
-### **WORK IN PROGRESS**
+### 2.7.1 (2022-08-29)
 * (bluefox) Check if the port is occupied only on defined interface
 * (bluefox) Added JSON config
 

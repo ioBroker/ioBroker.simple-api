@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "simple-api",
-    "version": "2.7.0",
+    "version": "2.7.1",
     "news": {
+      "2.7.1": {
+        "en": "Check if the port is occupied only on defined interface\nAdded JSON config",
+        "de": "Überprüfen Sie, ob der Port nur auf definierter Schnittstelle besetzt ist\nJSON config",
+        "ru": "Проверьте, занят ли порт только на определенном интерфейсе\nДобавлено JSON config",
+        "pt": "Verifique se a porta está ocupada apenas na interface definida\nAdicionado JSON config",
+        "nl": "Controleer of de haven alleen bezet is op definitieve interface\n_",
+        "fr": "Vérifiez si le port n'est occupé que sur l'interface définie\nAjouté JSON config",
+        "it": "Controllare se la porta è occupata solo su interfaccia definita\nAggiunto JSON config",
+        "es": "Compruebe si el puerto está ocupado sólo en la interfaz definida\nConfiguración JSON",
+        "pl": "Jeśli port jest zajęty tylko na określonym interfejsie\nStrona internetowa JSON",
+        "zh-cn": "如果港口只在界定的界线上被占有,则该港口将被扣押。\n增 编"
+      },
       "2.7.0": {
         "en": "Allow use of ack flag for setBulk post requests\nReturn ack flag too on getBulk",
         "de": "Verwendung des ack-Flags für SetBulk-Post-Anforderungen zulassen\nGeben Sie das Ack-Flag auch auf getBulk zurück",
@@ -74,18 +86,6 @@
         "es": "Detectar el error en el análisis de la solicitud cuando tiene un formato incorrecto (Sentry IOBROKER-SIMPLE-API-16)",
         "pl": "Błąd przechwytywania podczas analizowania żądania, gdy jest zniekształcony (Sentry IOBROKER-SIMPLE-API-16)",
         "zh-cn": "格式错误的请求分析中捕获错误（Sentry IOBROKER-SIMPLE-API-16）"
-      },
-      "2.6.0": {
-        "en": "Also URL-Decode the path parts like state ids\nOptimize for js-controller 3.3",
-        "de": "Auch URL-Dekodieren Sie die Pfadteile wie Status-IDs\nOptimieren für js-controller 3.3",
-        "ru": "Также URL-декодирование частей пути, таких как идентификаторы состояний\nОптимизировать под js-controller 3.3",
-        "pt": "Além disso, decodifique por URL as partes do caminho, como ids de estado\nOtimize para js-controller 3.3",
-        "nl": "Ook URL-decodeer de paddelen zoals status-id's\nOptimaliseren voor js-controller 3.3",
-        "fr": "Décodez également par URL les parties du chemin telles que les identifiants d'état\nOptimiser pour js-controller 3.3",
-        "it": "Anche URL-Decodifica le parti del percorso come gli ID di stato\nOttimizza per js-controller 3.3",
-        "es": "También URL: decodifica las partes de la ruta como los identificadores de estado\nOptimizar para js-controller 3.3",
-        "pl": "Odkoduj również adresy URL części ścieżki, takie jak identyfikatory stanów\nOptymalizacja pod kątem kontrolera js 3.3",
-        "zh-cn": "还可以对路径部分（如状态ID）进行URL解码\n针对js-controller 3.3进行优化"
       }
     },
     "title": "Simple RESTful API",
