@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "simple-api",
-    "version": "2.7.1",
+    "version": "2.7.2",
     "news": {
+      "2.7.2": {
+        "en": "Prepare for future js-controller versions",
+        "de": "Bereiten Sie sich auf zukünftige js-Controller-Versionen",
+        "ru": "Подготовьтесь к будущим версиям js-controller",
+        "pt": "Prepare-se para futuras versões js-controller",
+        "nl": "Bereid je voor op toekomstige Js-controller versie",
+        "fr": "Préparez-vous pour les versions futures de js-controller",
+        "it": "Prepararsi per le future versioni js-controller",
+        "es": "Prepararse para futuras versiones js-controller",
+        "pl": "Prepare for future js-controller version",
+        "zh-cn": "今后防污版本的编制"
+      },
       "2.7.1": {
         "en": "Check if the port is occupied only on defined interface\nAdded JSON config",
         "de": "Überprüfen Sie, ob der Port nur auf definierter Schnittstelle besetzt ist\nJSON config",
@@ -74,18 +86,6 @@
         "es": "Soporte de nuevas banderas para `getPlainValue`:` json` y `noStringify`",
         "pl": "Obsługa nowych flag dla `getPlainValue`: `json` i `noStringify`",
         "zh-cn": "支持 `getPlainValue` 的新标志：`json` 和 `noStringify`"
-      },
-      "2.6.1": {
-        "en": "Catch error in request parsing when malformed (Sentry IOBROKER-SIMPLE-API-16)",
-        "de": "Catch-Fehler beim Parsen von Anforderungen bei Fehlform (Sentry IOBROKER-SIMPLE-API-16)",
-        "ru": "Ошибка перехвата при синтаксическом разборе запроса при неправильном формате (Sentry IOBROKER-SIMPLE-API-16)",
-        "pt": "Erro de captura na análise da solicitação quando malformado (Sentry IOBROKER-SIMPLE-API-16)",
-        "nl": "Vang een fout op bij het parseren van verzoeken bij een onjuiste indeling (Sentry IOBROKER-SIMPLE-API-16)",
-        "fr": "Erreur de capture lors de l'analyse de la demande en cas de malformation (Sentry IOBROKER-SIMPLE-API-16)",
-        "it": "Errore di rilevamento durante l'analisi della richiesta quando non è corretto (Sentry IOBROKER-SIMPLE-API-16)",
-        "es": "Detectar el error en el análisis de la solicitud cuando tiene un formato incorrecto (Sentry IOBROKER-SIMPLE-API-16)",
-        "pl": "Błąd przechwytywania podczas analizowania żądania, gdy jest zniekształcony (Sentry IOBROKER-SIMPLE-API-16)",
-        "zh-cn": "格式错误的请求分析中捕获错误（Sentry IOBROKER-SIMPLE-API-16）"
       }
     },
     "title": "Simple RESTful API",

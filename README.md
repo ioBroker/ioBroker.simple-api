@@ -588,8 +588,7 @@ If no data source was specified or the noHistory parameter is passed, then only 
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
-
-### __WORK IN PROGRESS__
+### 2.7.2 (2022-10-08)
 * (Apollon77) Prepare for future js-controller versions
 
 ### 2.7.1 (2022-08-29)
