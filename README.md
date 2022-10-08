@@ -588,6 +588,10 @@ If no data source was specified or the noHistory parameter is passed, then only 
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
+
+### __WORK IN PROGRESS__
+* (Apollon77) Prepare for future js-controller versions
+
 ### 2.7.1 (2022-08-29)
 * (bluefox) Check if the port is occupied only on defined interface
 * (bluefox) Added JSON config
