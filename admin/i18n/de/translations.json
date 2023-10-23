@@ -15,7 +15,7 @@
     "Private certificate": "Privates Zertifikat",
     "Public certificate": "Öffentliches Zertifikat",
     "Run as": "Ausführen als Benutzer",
-    "Secure(HTTPS)": "Verschlüsselung (HTTPS)",
+    "Secure(HTTPS)": "Verschlüsselte Verbindung (HTTPS)",
     "Select data source": "Datenquelle auswählen",
     "Set certificates or load it first in the system settings (right top).": "Zertifikate wählen bzw. Zertifikate in den Systemeinstellungen (oben rechts) hinterlegen.",
     "Unsecure_Auth": "Das Passwort wird über eine unverschlüsselte Verbindung gesendet. Um Ihre Passwörter zu schützen, aktivieren Sie die sichere Verbindung (HTTPS)!",
