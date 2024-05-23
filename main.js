@@ -113,7 +113,7 @@ async function initWebServer(settings) {
 
         try {
             const webserver = new WebServer({
-                app: server.app,
+                app: requestProcessor,
                 adapter,
                 secure: adapter.config.secure
             });
