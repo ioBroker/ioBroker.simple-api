@@ -129,7 +129,7 @@
     "leTab": {
       "type": "panel",
       "label": "Let's Encrypt SSL",
-      "disabled": "!data.secure || !!data.webInstance",
+      "disabled": "!data.secure",
       "items": {
         "_image": {
           "type": "staticImage",
@@ -141,38 +141,9 @@
             "height": 59
           }
         },
-        "_link": {
-          "newLine": true,
-          "type": "staticLink",
-          "href": "https://github.com/ioBroker/ioBroker.admin/blob/master/README.md#lets-encrypt-certificates",
-          "text": "Read about Let's Encrypt certificates",
-          "style": {
-            "fontSize": 16,
-            "marginBottom": 20
-          }
-        },
-        "leEnabled": {
-          "newLine": true,
-          "type": "checkbox",
-          "label": "Use Lets Encrypt certificates"
-        },
-        "leUpdate": {
-          "newLine": true,
-          "type": "checkbox",
-          "hidden": "!data.leEnabled",
-          "label": "Use this instance for automatic update"
-        },
-        "lePort": {
-          "newLine": true,
-          "sm": 12,
-          "lg": 6,
-          "type": "number",
-          "hidden": "!data.leEnabled || !data.leUpdate",
-          "label": "Port to check the domain",
-          "style": {
-            "marginTop": 15,
-            "maxWidth": 300
-          }
+        "_staticText": {
+          "type": "staticText",
+          "text": "ra_Use iobroker.acme adapter for letsencrypt certificates"
         }
       }
     }

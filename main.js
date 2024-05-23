@@ -5,7 +5,7 @@
 
 const utils       = require('@iobroker/adapter-core'); // Get common adapter utils
 const SimpleAPI   = require('./lib/simpleapi.js');
-const LE          = utils.commonTools.letsEncrypt;
+const { WebServer } = require('@iobroker/webserver');
 const adapterName = require('./package.json').name.split('.').pop();
 
 let webServer = null;
@@ -112,11 +112,13 @@ async function initWebServer(settings) {
         }
 
         try {
-            if (typeof LE.createServerAsync === 'function') {
-                server.server = await LE.createServerAsync(requestProcessor, settings, adapter.config.certificates, adapter.config.leConfig, adapter.log, adapter);
-            } else {
-                server.server = LE.createServer(requestProcessor, settings, adapter.config.certificates, adapter.config.leConfig, adapter.log);
-            }
+            const webserver = new WebServer({
+                app: server.app,
+                adapter,
+                secure: adapter.config.secure
+            });
+
+            server.server = await webserver.init();
         } catch (err) {
             adapter.log.error(`Cannot create webserver: ${err}`);
             adapter.terminate ? adapter.terminate(utils.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION) : process.exit(utils.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);

@@ -118,7 +118,6 @@
       "Apollon77 <ingo@fischer-ka.de>",
       "Marco.K <marco@kaminski-net.de>"
     ],
-    "license": "MIT",
     "platform": "Javascript/Node.js",
     "mode": "daemon",
     "loglevel": "info",
@@ -153,7 +152,11 @@
     },
     "connectionType": "none",
     "dataSource": "none",
-    "tier": 3
+    "tier": 3,
+    "licenseInformation": {
+      "type": "free",
+      "license": "MIT"
+    }
   },
   "native": {
     "port": 8087,

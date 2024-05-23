@@ -26,7 +26,8 @@
     "url": "https://github.com/ioBroker/ioBroker.simple-api"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^2.6.7"
+    "@iobroker/adapter-core": "^3.1.4",
+    "@iobroker/webserver": "^1.0.3"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^3.6.0",
