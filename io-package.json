@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "simple-api",
-    "version": "2.7.2",
+    "version": "2.8.0",
     "news": {
+      "2.8.0": {
+        "en": "ported to `@iobroker/webserver`",
+        "de": "an `@iobroker/webserver `",
+        "ru": "в порту `@iobroker/webserver \"",
+        "pt": "portado para `@iobroker/webserver \"",
+        "nl": "geporteerd naar .@iobroker/webserver wat",
+        "fr": "porté à `@iobroker/webserver \"",
+        "it": "inviato a `@iobroker/webserver #",
+        "es": "portada a `@iobroker/webserver `",
+        "pl": "wysłany do '@ iobroker / webserver'",
+        "uk": "сайт: www.iobroker.com й",
+        "zh-cn": "移植到 xqio 经纪人/网络服务器 `"
+      },
       "2.7.2": {
         "en": "Prepare for future js-controller versions",
         "de": "Bereiten Sie sich auf zukünftige js-Controller-Versionen",
@@ -74,18 +87,6 @@
         "es": "Optimizar mensaje de error para objetos multilenguaje\nNo sobrescribir propiedades de estado por propiedades de objeto",
         "pl": "Zoptymalizuj komunikat o błędzie dla obiektów wielojęzycznych\nNie nadpisuj właściwości stanu przez właściwości obiektu",
         "zh-cn": "优化多语言对象的错误消息\n不要用对象属性覆盖状态属性"
-      },
-      "2.6.2": {
-        "en": "Support of new flags for `getPlainValue`: `json` and `noStringify`",
-        "de": "Unterstützung neuer Flags für `getPlainValue`: `json` und `noStringify`",
-        "ru": "Поддержка новых флагов для getPlainValue: json и noStringify",
-        "pt": "Suporte para novos sinalizadores para `getPlainValue`:` json` e `noStringify`",
-        "nl": "Ondersteuning van nieuwe vlaggen voor `getPlainValue`: `json` en `noStringify`",
-        "fr": "Prise en charge de nouveaux indicateurs pour `getPlainValue` : `json` et `noStringify`",
-        "it": "Supporto di nuovi flag per `getPlainValue`: `json` e `noStringify`",
-        "es": "Soporte de nuevas banderas para `getPlainValue`:` json` y `noStringify`",
-        "pl": "Obsługa nowych flag dla `getPlainValue`: `json` i `noStringify`",
-        "zh-cn": "支持 `getPlainValue` 的新标志：`json` 和 `noStringify`"
       }
     },
     "title": "Simple RESTful API",
