@@ -3,12 +3,12 @@
 /* jslint node: true */
 /* jshint expr: true*/
 
-const expect  = require('chai').expect;
-const setup   = require('./lib/setup');
+const expect = require('chai').expect;
+const setup = require('./lib/setup');
 const request = require('request');
 
 let objects = null;
-let states  = null;
+let states = null;
 
 const PORT = 18183;
 const TEST_STATE_ID = 'simple-api.0.testNumber';
@@ -34,23 +34,27 @@ function checkConnectionOfAdapter(cb, counter) {
 }
 
 function createTestState(cb) {
-    objects.setObject(TEST_STATE_ID, {
-        _id: TEST_STATE_ID,
-        type: 'state',
-        common: {
-            name: 'Test state',
-            type: 'number',
-            read: true,
-            write: false,
-            role: 'indicator.state',
-            unit: '%',
-            def: 0,
-            desc: 'test state'
+    objects.setObject(
+        TEST_STATE_ID,
+        {
+            _id: TEST_STATE_ID,
+            type: 'state',
+            common: {
+                name: 'Test state',
+                type: 'number',
+                read: true,
+                write: false,
+                role: 'indicator.state',
+                unit: '%',
+                def: 0,
+                desc: 'test state',
+            },
+            native: {},
         },
-        native: {}
-    }, () => {
-        states.setState(TEST_STATE_ID, {val: 0, ack: true}, cb && cb);
-    });
+        () => {
+            states.setState(TEST_STATE_ID, { val: 0, ack: true }, cb && cb);
+        },
+    );
 }
 
 describe('Test RESTful API as Owner-User', function () {
@@ -70,7 +74,7 @@ describe('Test RESTful API as Owner-User', function () {
 
             setup.startController((_objects, _states) => {
                 objects = _objects;
-                states  = _states;
+                states = _states;
                 // give some time to start server
                 setTimeout(() => createTestState(() => _done()), 2000);
             });
@@ -83,116 +87,129 @@ describe('Test RESTful API as Owner-User', function () {
 
             expect(res).not.to.be.equal('Cannot check connection');
 
-            objects.setObject('system.group.writer', {
-              "common": {
-                "name": "Writer",
-                "desc": "",
-                "members": [
-                  "system.user.myuser"
-                ],
-                "acl": {
-                  "object": {
-                    "list": true,
-                    "read": true,
-                    "write": false,
-                    "delete": false
-                  },
-                  "state": {
-                    "list": false,
-                    "read": true,
-                    "write": true,
-                    "create": false,
-                    "delete": false
-                  },
-                  "users": {
-                    "write": false,
-                    "create": false,
-                    "delete": false
-                  },
-                  "other": {
-                    "execute": false,
-                    "http": false,
-                    "sendto": false
-                  },
-                  "file": {
-                    "list": false,
-                    "read": false,
-                    "write": false,
-                    "create": false,
-                    "delete": false
-                  }
-                }
-              },
-              "native": {},
-              "acl": {
-                "object": 1638,
-                "owner": "system.user.admin",
-                "ownerGroup": "system.group.administrator"
-              },
-              "_id": "system.group.writer",
-              "type": "group"
-            }, err => {
-                expect(err).to.be.null;
-
-                objects.setObject('system.user.myuser', {
-                    "type": "user",
-                    "common": {
-                        "name": "myuser",
-                        "enabled": true,
-                        "groups": [],
-                        "password": "pbkdf2$10000$ab4104d8bb68390ee7e6c9397588e768de6c025f0c732c18806f3d1270c83f83fa86a7bf62583770e5f8d0b405fbb3ad32214ef3584f5f9332478f2506414443a910bf15863b36ebfcaa7cbb19253ae32cd3ca390dab87b29cd31e11be7fa4ea3a01dad625d9de44e412680e1a694227698788d71f1e089e5831dc1bbacfa794b45e1c995214bf71ee4160d98b4305fa4c3e36ee5f8da19b3708f68e7d2e8197375c0f763d90e31143eb04760cc2148c8f54937b9385c95db1742595634ed004fa567655dfe1d9b9fa698074a9fb70c05a252b2d9cf7ca1c9b009f2cd70d6972ccf0ee281d777d66a0346c6c6525436dd7fe3578b28dca2c7adbfde0ecd45148$31c3248ba4dc9600a024b4e0e7c3e585"
-                    },
-                    "_id": "system.user.myuser",
-                    "native": {},
-                    "acl": {
-                        "object": 1638
-                    }
-                }, err => {
-                    expect(err).to.be.null;
-                    objects.setObject('javascript.0.test', {
-                        common: {
-                            name: 'test',
-                            type: 'number',
-                            role: 'level',
-                            min: -100,
-                            max: 100,
-                            def: 1
-                        },
-                        native: {
-                        },
-                        type: 'state',
+            objects.setObject(
+                'system.group.writer',
+                {
+                    common: {
+                        name: 'Writer',
+                        desc: '',
+                        members: ['system.user.myuser'],
                         acl: {
-                            object: 1638,
-                            owner: "system.user.myuser",
-                            ownerGroup:"system.group.administrator",
-                            state: 1638
-                        }
-                    }, err => {
-                        expect(err).to.be.null;
-                        states.setState('javascript.0.test',1, err => {
-                            console.log('END javascript.0.test ' + err);
+                            object: {
+                                list: true,
+                                read: true,
+                                write: false,
+                                delete: false,
+                            },
+                            state: {
+                                list: false,
+                                read: true,
+                                write: true,
+                                create: false,
+                                delete: false,
+                            },
+                            users: {
+                                write: false,
+                                create: false,
+                                delete: false,
+                            },
+                            other: {
+                                execute: false,
+                                http: false,
+                                sendto: false,
+                            },
+                            file: {
+                                list: false,
+                                read: false,
+                                write: false,
+                                create: false,
+                                delete: false,
+                            },
+                        },
+                    },
+                    native: {},
+                    acl: {
+                        object: 1638,
+                        owner: 'system.user.admin',
+                        ownerGroup: 'system.group.administrator',
+                    },
+                    _id: 'system.group.writer',
+                    type: 'group',
+                },
+                err => {
+                    expect(err).to.be.null;
+
+                    objects.setObject(
+                        'system.user.myuser',
+                        {
+                            type: 'user',
+                            common: {
+                                name: 'myuser',
+                                enabled: true,
+                                groups: [],
+                                password:
+                                    'pbkdf2$10000$ab4104d8bb68390ee7e6c9397588e768de6c025f0c732c18806f3d1270c83f83fa86a7bf62583770e5f8d0b405fbb3ad32214ef3584f5f9332478f2506414443a910bf15863b36ebfcaa7cbb19253ae32cd3ca390dab87b29cd31e11be7fa4ea3a01dad625d9de44e412680e1a694227698788d71f1e089e5831dc1bbacfa794b45e1c995214bf71ee4160d98b4305fa4c3e36ee5f8da19b3708f68e7d2e8197375c0f763d90e31143eb04760cc2148c8f54937b9385c95db1742595634ed004fa567655dfe1d9b9fa698074a9fb70c05a252b2d9cf7ca1c9b009f2cd70d6972ccf0ee281d777d66a0346c6c6525436dd7fe3578b28dca2c7adbfde0ecd45148$31c3248ba4dc9600a024b4e0e7c3e585',
+                            },
+                            _id: 'system.user.myuser',
+                            native: {},
+                            acl: {
+                                object: 1638,
+                            },
+                        },
+                        err => {
                             expect(err).to.be.null;
-                            objects.setObject('javascript.0.test-number', {
-                                common: {
-                                    name: 'test',
-                                    type: 'number',
-                                    role: 'value',
-                                    def: 0
+                            objects.setObject(
+                                'javascript.0.test',
+                                {
+                                    common: {
+                                        name: 'test',
+                                        type: 'number',
+                                        role: 'level',
+                                        min: -100,
+                                        max: 100,
+                                        def: 1,
+                                    },
+                                    native: {},
+                                    type: 'state',
+                                    acl: {
+                                        object: 1638,
+                                        owner: 'system.user.myuser',
+                                        ownerGroup: 'system.group.administrator',
+                                        state: 1638,
+                                    },
                                 },
-                                native: {
-                                },
-                                type: 'state'
-                            }, err => {
-                                expect(err).to.be.null;
-                                states.setState('javascript.0.test-number', 0, err => {
+                                err => {
                                     expect(err).to.be.null;
-                                    done();
-                                });
-                            });
-                        });
-                    });
-                });
-            });
+                                    states.setState('javascript.0.test', 1, err => {
+                                        console.log('END javascript.0.test ' + err);
+                                        expect(err).to.be.null;
+                                        objects.setObject(
+                                            'javascript.0.test-number',
+                                            {
+                                                common: {
+                                                    name: 'test',
+                                                    type: 'number',
+                                                    role: 'value',
+                                                    def: 0,
+                                                },
+                                                native: {},
+                                                type: 'state',
+                                            },
+                                            err => {
+                                                expect(err).to.be.null;
+                                                states.setState('javascript.0.test-number', 0, err => {
+                                                    expect(err).to.be.null;
+                                                    done();
+                                                });
+                                            },
+                                        );
+                                    });
+                                },
+                            );
+                        },
+                    );
+                },
+            );
         });
     }).timeout(60000);
 
@@ -208,12 +225,15 @@ describe('Test RESTful API as Owner-User', function () {
     });
 
     it('Test RESTful API as Owner-User: getPlainValue - must return plain value', done => {
-        request('http://127.0.0.1:' + PORT + '/getPlainValue/system.adapter.simple-api.0.alive', (error, response, body) => {
-            console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
-            expect(body).to.be.equal('error: permissionError');
-            expect(response.statusCode).to.equal(401);
-            done();
-        });
+        request(
+            'http://127.0.0.1:' + PORT + '/getPlainValue/system.adapter.simple-api.0.alive',
+            (error, response, body) => {
+                console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
+                expect(body).to.be.equal('error: permissionError');
+                expect(response.statusCode).to.equal(401);
+                done();
+            },
+        );
     });
 
     it('Test RESTful API as Owner-User: getPlainValue 4 Test-Endpoint - must return plain value', done => {
@@ -246,23 +266,28 @@ describe('Test RESTful API as Owner-User', function () {
     });
 
     it('Test RESTful API as Owner-User: set - must set value', done => {
-        request('http://127.0.0.1:' + PORT + '/set/system.adapter.simple-api.0.alive?val=false', (error, response, body) => {
-            console.log('set/system.adapter.simple-api.0.alive?val=false => ' + body);
-            expect(body).to.be.equal('{"error":"permissionError"}');
-            expect(response.statusCode).to.equal(401);
-            done();
-        });
+        request(
+            'http://127.0.0.1:' + PORT + '/set/system.adapter.simple-api.0.alive?val=false',
+            (error, response, body) => {
+                console.log('set/system.adapter.simple-api.0.alive?val=false => ' + body);
+                expect(body).to.be.equal('{"error":"permissionError"}');
+                expect(response.statusCode).to.equal(401);
+                done();
+            },
+        );
     });
 
     it('Test RESTful API as Owner-User: set - must set val', done => {
-        request('http://127.0.0.1:' + PORT + '/set/system.adapter.simple-api.0.alive?val=true', (error, response, body) => {
-            console.log('set/system.adapter.simple-api.0.alive?val=true => ' + body);
-            expect(body).to.be.equal('{"error":"permissionError"}');
-            expect(response.statusCode).to.equal(401);
-            done();
-        });
+        request(
+            'http://127.0.0.1:' + PORT + '/set/system.adapter.simple-api.0.alive?val=true',
+            (error, response, body) => {
+                console.log('set/system.adapter.simple-api.0.alive?val=true => ' + body);
+                expect(body).to.be.equal('{"error":"permissionError"}');
+                expect(response.statusCode).to.equal(401);
+                done();
+            },
+        );
     });
-
 
     it('Test RESTful API as Owner-User: objects - must return objects', done => {
         request('http://127.0.0.1:' + PORT + '/objects?pattern=system.adapter.*', (error, response, body) => {
@@ -274,13 +299,16 @@ describe('Test RESTful API as Owner-User', function () {
     });
 
     it('Test RESTful API as Owner-User: objects - must return objects', done => {
-        request('http://127.0.0.1:' + PORT + '/objects?pattern=system.adapter.*&type=instance', (error, response, body) => {
-            //console.log('objects?pattern=system.adapter.* => ' + body);
-            //expect(body).to.be.equal('error: permissionError');
-            expect(!!body).to.be.true;
-            expect(response.statusCode).to.equal(200);
-            done();
-        });
+        request(
+            'http://127.0.0.1:' + PORT + '/objects?pattern=system.adapter.*&type=instance',
+            (error, response, body) => {
+                //console.log('objects?pattern=system.adapter.* => ' + body);
+                //expect(body).to.be.equal('error: permissionError');
+                expect(!!body).to.be.true;
+                expect(response.statusCode).to.equal(200);
+                done();
+            },
+        );
     });
 
     it('Test RESTful API as Owner-User: states - must return states', done => {
@@ -293,16 +321,19 @@ describe('Test RESTful API as Owner-User', function () {
     });
 
     it('Test RESTful API as Owner-User: setValueFromBody(POST) - must set one value', done => {
-        request({
-            uri: `http://127.0.0.1:${PORT}/setValueFromBody/${TEST_STATE_ID}`,
-            method: 'POST',
-            body: '55'
-        }, (error, response, body) => {
-            console.log(`setValueFromBody/?${TEST_STATE_ID} => ${JSON.stringify(body)}`);
-            expect(body).to.be.equal('{"error":"permissionError"}');
-            expect(response.statusCode).to.equal(401);
-            done();
-        });
+        request(
+            {
+                uri: `http://127.0.0.1:${PORT}/setValueFromBody/${TEST_STATE_ID}`,
+                method: 'POST',
+                body: '55',
+            },
+            (error, response, body) => {
+                console.log(`setValueFromBody/?${TEST_STATE_ID} => ${JSON.stringify(body)}`);
+                expect(body).to.be.equal('{"error":"permissionError"}');
+                expect(response.statusCode).to.equal(401);
+                done();
+            },
+        );
     });
 
     after('Test RESTful API as Owner-User: Stop js-controller', function (done) {

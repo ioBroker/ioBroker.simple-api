@@ -122,7 +122,7 @@
     "platform": "Javascript/Node.js",
     "mode": "daemon",
     "loglevel": "info",
-    "icon": "simple-api.png",
+    "icon": "simple-api.svg",
     "webExtension": "lib/simpleapi.js",
     "materialize": true,
     "readme": "https://github.com/ioBroker/ioBroker.simple-api/blob/master/README.md",
@@ -134,10 +134,9 @@
     ],
     "enabled": true,
     "compact": true,
-    "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.simple-api/master/admin/simple-api.png",
+    "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.simple-api/master/admin/simple-api.svg",
     "type": "communication",
     "stopBeforeUpdate": true,
-    "localLink": "%protocol%://%ip%:%port%/get/system.adapter.simple-api.%instance%.uptime?prettyPrint",
     "dependencies": [
       {
         "js-controller": ">=2.0.0"
