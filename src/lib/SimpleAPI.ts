@@ -1,7 +1,7 @@
 import type { Server as HttpServer } from 'node:http';
 import type { Server as HttpsServer } from 'node:https';
-import { Express, type Request, type Response } from 'express';
-import { CommandsPermissionsObject } from '@iobroker/types/build/types';
+import type { Express, Request, Response } from 'express';
+import type { CommandsPermissionsObject } from '@iobroker/types/build/types';
 import type { SimpleApiAdapterConfig } from '../types';
 
 // copied from here: https://github.com/component/escape-html/blob/master/index.js
@@ -87,12 +87,11 @@ type CommandName = keyof typeof commandsPermissions;
  *
  * From settings used only secure, auth and crossDomain
  *
- * @class
  * @param webSettings settings of the web server, like <pre><code>{secure: settings.secure, port: settings.port}</code></pre>
  * @param adapter web adapter object
  * @param instanceSettings instance object with common and native
  * @param app express application
- * @return object instance
+ * @returns object instance
  */
 export class SimpleAPI {
     private readonly adapter: ioBroker.Adapter;
@@ -153,7 +152,7 @@ export class SimpleAPI {
             this.adapter.log.info(`Install extension on /${this.namespace}/`);
 
             this.app.use(`/${this.namespace}/`, (req: Request, res: Response): void => {
-                this.restApi(req, res);
+                void this.restApi(req, res);
             });
 
             // let it be accessible under old address too
@@ -282,7 +281,7 @@ export class SimpleAPI {
             ack: boolean;
         },
     ): Promise<{ id?: string; val?: boolean | string | number; error?: string }[]> {
-        let response: { id?: string; val?: boolean | string | number; error?: string }[] = [];
+        const response: { id?: string; val?: boolean | string | number; error?: string }[] = [];
         const names = Object.keys(values);
 
         let user: `system.user.${string}`;
@@ -297,7 +296,7 @@ export class SimpleAPI {
             this.adapter.log.debug(`${i}: "${stateId}"`);
 
             try {
-                const { id, name } = await this.findState(stateId, user);
+                const { id } = await this.findState(stateId, user);
                 if (!id) {
                     response[i] = { error: `datapoint "${stateId}" not found` };
                 } else {
@@ -315,16 +314,12 @@ export class SimpleAPI {
                         }
                     }
 
-                    try {
-                        await this.adapter.setForeignState(id, value, !!query.ack, {
-                            user,
-                            limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
-                        });
-                        response[i] = { id, val: value };
-                        this.adapter.log.debug(`Add to Response: ${JSON.stringify(response[i])}`);
-                    } catch (err) {
-                        throw err;
-                    }
+                    await this.adapter.setForeignStateAsync(id, value, !!query.ack, {
+                        user,
+                        limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
+                    });
+                    response[i] = { id, val: value };
+                    this.adapter.log.debug(`Add to Response: ${JSON.stringify(response[i])}`);
                 }
             } catch (err) {
                 // State isn't found or no permission
@@ -393,7 +388,7 @@ export class SimpleAPI {
                 Object.values(oId).forEach(id => {
                     values[id] = body;
                 });
-                console.error('ERORROORRO: ', values)
+                console.error('ERORROORRO: ', values);
                 if (!oId.length || !oId[0]) {
                     this.doErrorResponse(res, 'json', 422, 'no object/datapoint given');
                     return;
@@ -509,10 +504,7 @@ export class SimpleAPI {
                             this.adapter.log.debug('Read last state');
 
                             try {
-                                const { state, id } = await this.getState(
-                                    bodyQuery.targets[b].target,
-                                    user,
-                                );
+                                const { state, id } = await this.getState(bodyQuery.targets[b].target, user);
                                 element.target = id;
                                 if (state) {
                                     element.datapoints = [[state.val, state.ts]];
@@ -710,7 +702,7 @@ export class SimpleAPI {
         }
 
         try {
-            await this.adapter.setForeignState(id, value, query.ack, {
+            await this.adapter.setForeignStateAsync(id, value, query.ack, {
                 user,
                 limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
             });
@@ -938,7 +930,7 @@ export class SimpleAPI {
                 for (let k = 0; k < oId.length; k++) {
                     this.adapter.log.debug(`work for ID ${oId[k]}`);
                     try {
-                        const { state, id } = await this.getState(oId[k], user as `system.user.${string}`);
+                        const { state, id } = await this.getState(oId[k], user);
                         if (!id) {
                             response[k] = { error: `datapoint "${oId[k]}" not found` };
                         } else {
@@ -973,7 +965,7 @@ export class SimpleAPI {
                 }[] = [];
                 for (let b = 0; b < oId.length; b++) {
                     try {
-                        const { id, state } = await this.getState(oId[b], user as `system.user.${string}`);
+                        const { id, state } = await this.getState(oId[b], user);
                         response[b] = { id, val: state?.val, ts: state?.ts, ack: state?.ack };
                     } catch (err) {
                         if (err.toString().includes(ERROR_PERMISSION)) {
@@ -1002,7 +994,7 @@ export class SimpleAPI {
                     return;
                 }
                 try {
-                    const { id } = await this.findState(oId[0], user as `system.user.${string}`);
+                    const { id } = await this.findState(oId[0], user);
                     if (!id) {
                         this.doErrorResponse(res, responseType, 404, `error: datapoint "${oId[0]}" not found`);
                         return;
@@ -1033,7 +1025,7 @@ export class SimpleAPI {
                         if (values.val && (values.val[0] === '[' || values.val[0] === '{')) {
                             try {
                                 values.val = JSON.parse(values.val);
-                            } catch (e) {
+                            } catch {
                                 // keep it as string
                             }
                         }
@@ -1080,17 +1072,17 @@ export class SimpleAPI {
                 }
 
                 try {
-                    const { id } = await this.findState(oId[0], user as `system.user.${string}`);
+                    const { id } = await this.findState(oId[0], user);
                     if (id) {
                         const wait = query.wait || 0;
 
                         // Read a type of object
                         const obj = await this.adapter.getForeignObjectAsync(id, {
-                            user: user as `system.user.${string}`,
+                            user,
                         });
                         if (obj) {
                             const state = await this.adapter.getForeignStateAsync(id, {
-                                user: user as `system.user.${string}`,
+                                user,
                             });
                             if (state) {
                                 let value = state.val;
@@ -1187,7 +1179,7 @@ export class SimpleAPI {
                 const names = Object.keys(values);
                 for (let n = 0; n < names.length; n++) {
                     try {
-                        const { id, name } = await this.findState(names[n], user as `system.user.${string}`);
+                        const { id } = await this.findState(names[n], user);
                         if (!id) {
                             response[n] = { error: `error: datapoint "${names[n]}" not found` };
                             continue;
@@ -1209,7 +1201,7 @@ export class SimpleAPI {
                         }
 
                         try {
-                            await this.adapter.setForeignState(id, value, query.ack, {
+                            await this.adapter.setForeignStateAsync(id, value, query.ack, {
                                 user,
                                 limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
                             });
@@ -1219,17 +1211,15 @@ export class SimpleAPI {
                             if (err.toString().includes(ERROR_PERMISSION)) {
                                 this.doErrorResponse(res, responseType, 403, err);
                                 return;
-                            } else {
-                                response[n] = { error: err.toString() };
                             }
+                            response[n] = { error: err.toString() };
                         }
                     } catch (err) {
                         if (err.toString().includes(ERROR_PERMISSION)) {
                             this.doErrorResponse(res, responseType, 403, err);
                             return;
-                        } else {
-                            response[n] = { error: err.toString() };
                         }
+                        response[n] = { error: err.toString() };
                     }
                 }
 
@@ -1352,7 +1342,7 @@ export class SimpleAPI {
                     } else {
                         this.adapter.log.debug('Read last state');
 
-                        const { state } = await this.getState(oId[b], user as `system.user.${string}`);
+                        const { state } = await this.getState(oId[b], user);
                         if (state) {
                             element.datapoints = [[state.val, state.ts]];
                         } else {
@@ -1371,31 +1361,34 @@ export class SimpleAPI {
                 this.doResponse(res, responseType, [], query.prettyPrint);
                 break;
 
-            case 'help':
             // is default behaviour too
+            case 'help':
             default:
-                const _obj: Record<string, string> = command === 'help' ? {} : { error: `command ${command} unknown` };
-                let request = `http${this.settings.secure ? 's' : ''}://${req.headers.host}`;
-                if (this.app) {
-                    request += `/${this.namespace}/`;
-                }
-                let auth = '';
-                if (this.settings.auth) {
-                    auth = 'user=UserName&pass=Password';
-                }
-                _obj.getPlainValue = `${request}/getPlainValue/stateID${auth ? `?${auth}` : ''}`;
-                _obj.get = `${request}/get/stateID/?prettyPrint${auth ? `&${auth}` : ''}`;
-                _obj.getBulk = `${request}/getBulk/stateID1,stateID2/?prettyPrint${auth ? `&${auth}` : ''}`;
-                _obj.set = `${request}/set/stateID?value=1&prettyPrint${auth ? `&${auth}` : ''}`;
-                _obj.toggle = `${request}/toggle/stateID&prettyPrint${auth ? `&${auth}` : ''}`;
-                _obj.setBulk = `${request}/setBulk?stateID1=0.7&stateID2=0&prettyPrint${auth ? `&${auth}` : ''}`;
-                _obj.setValueFromBody = `${request}/setValueFromBody?stateID1${auth ? `&${auth}` : ''}`;
-                _obj.objects = `${request}/objects?pattern=system.adapter.admin.0*&prettyPrint${auth ? `&${auth}` : ''}`;
-                _obj.states = `${request}/states?pattern=system.adapter.admin.0*&prettyPrint${auth ? `&${auth}` : ''}`;
-                _obj.search = `${request}/search?pattern=system.adapter.admin.0*&prettyPrint${auth ? `&${auth}` : ''}`;
-                _obj.query = `${request}/query/stateID1,stateID2/?dateFrom=2019-06-06T12:00:00.000Z&dateTo=2019-06-06T12:00:00.000Z&noHistory=false&aggregate=minmax&count=3000&prettyPrint${auth ? `&${auth}` : ''}`;
+                {
+                    const _obj: Record<string, string> =
+                        command === 'help' ? {} : { error: `command ${command} unknown` };
+                    let request = `http${this.settings.secure ? 's' : ''}://${req.headers.host}`;
+                    if (this.app) {
+                        request += `/${this.namespace}/`;
+                    }
+                    let auth = '';
+                    if (this.settings.auth) {
+                        auth = 'user=UserName&pass=Password';
+                    }
+                    _obj.getPlainValue = `${request}/getPlainValue/stateID${auth ? `?${auth}` : ''}`;
+                    _obj.get = `${request}/get/stateID/?prettyPrint${auth ? `&${auth}` : ''}`;
+                    _obj.getBulk = `${request}/getBulk/stateID1,stateID2/?prettyPrint${auth ? `&${auth}` : ''}`;
+                    _obj.set = `${request}/set/stateID?value=1&prettyPrint${auth ? `&${auth}` : ''}`;
+                    _obj.toggle = `${request}/toggle/stateID&prettyPrint${auth ? `&${auth}` : ''}`;
+                    _obj.setBulk = `${request}/setBulk?stateID1=0.7&stateID2=0&prettyPrint${auth ? `&${auth}` : ''}`;
+                    _obj.setValueFromBody = `${request}/setValueFromBody?stateID1${auth ? `&${auth}` : ''}`;
+                    _obj.objects = `${request}/objects?pattern=system.adapter.admin.0*&prettyPrint${auth ? `&${auth}` : ''}`;
+                    _obj.states = `${request}/states?pattern=system.adapter.admin.0*&prettyPrint${auth ? `&${auth}` : ''}`;
+                    _obj.search = `${request}/search?pattern=system.adapter.admin.0*&prettyPrint${auth ? `&${auth}` : ''}`;
+                    _obj.query = `${request}/query/stateID1,stateID2/?dateFrom=2019-06-06T12:00:00.000Z&dateTo=2019-06-06T12:00:00.000Z&noHistory=false&aggregate=minmax&count=3000&prettyPrint${auth ? `&${auth}` : ''}`;
 
-                this.doResponse(res, responseType, _obj, true);
+                    this.doResponse(res, responseType, _obj, true);
+                }
                 break;
         }
     }

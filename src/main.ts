@@ -5,7 +5,7 @@ import type { RequestListener } from 'node:http';
 import { Adapter, type AdapterOptions, EXIT_CODES } from '@iobroker/adapter-core';
 import { WebServer } from '@iobroker/webserver';
 import { SimpleAPI, type Server } from './lib/SimpleAPI';
-import { SimpleApiAdapterConfig } from './types';
+import type { SimpleApiAdapterConfig } from './types';
 
 interface WebStructure {
     server: null | (Server & { __server: WebStructure });
@@ -33,8 +33,6 @@ export class SimpleApiAdapter extends Adapter {
                 this.webServer?.api?.objectChange(id, obj);
             },
         });
-
-        this.config = this.config as SimpleApiAdapterConfig;
     }
 
     onUnload(callback: () => void): void {
@@ -53,8 +51,6 @@ export class SimpleApiAdapter extends Adapter {
     }
 
     async main(): Promise<void> {
-        this.config = this.config as SimpleApiAdapterConfig;
-
         if (this.config.webInstance) {
             console.log('Adapter runs as a part of web service');
             this.log.warn('Adapter runs as a part of web service');
@@ -66,7 +62,7 @@ export class SimpleApiAdapter extends Adapter {
         if (this.config.secure) {
             // Load certificates
             await new Promise<void>(resolve =>
-                this.getCertificates(undefined, undefined, undefined, (err, certificates, leConfig): void => {
+                this.getCertificates(undefined, undefined, undefined, (_err, certificates): void => {
                     this.certificates = certificates;
                     resolve();
                 }),
@@ -102,16 +98,16 @@ export class SimpleApiAdapter extends Adapter {
                 res.end();
             }
         } else {
-            this.webServer.api?.restApi(req, res);
+            void this.webServer.api?.restApi(req, res);
         }
     };
 
-    async initWebServer() {
+    async initWebServer(): Promise<void> {
         this.config.port = parseInt(this.config.port as string, 10);
 
         if (this.config.port) {
             if (this.config.secure && !this.certificates) {
-                return null;
+                return;
             }
 
             try {
