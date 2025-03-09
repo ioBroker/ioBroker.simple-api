@@ -446,7 +446,7 @@ export class SimpleAPI {
                     }
 
                     if (!oId.length || !oId[0]) {
-                        this.doErrorResponse(res, 'json', 422, 'no datapoints given');
+                        this.doErrorResponse(res, 'json', 422, 'no data points given');
                         break;
                     }
                     const list: { target: string; datapoints: [ioBroker.StateValue, number | null][] }[] = [];

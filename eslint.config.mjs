@@ -15,14 +15,12 @@ export default [
     },
     {
         ignores: [
-            'src-admin/**/*',
             'admin/**/*',
             'node_modules/**/*',
             'test/**/*',
             'build/**/*',
             'tasks.js',
             'tmp/**/*',
-            'www/**/*',
             'dist/**/*',
             '.**/*',
         ],

@@ -636,10 +636,10 @@ If no data source was specified or the noHistory parameter is passed, then only 
 * (Apollon77) check that targets are an array for "query" requests (Sentry IOBROKER-SIMPLE-API-F)
 
 ### 2.4.6 (2020-06-11)
-* (Apollon77) Make sure adapter is showing correct error when webserver can not be initialized (Sentry IOBROKER-SIMPLE-API-7)
+* (Apollon77) Make sure that the adapter is showing the correct error when webserver cannot be initialized (Sentry IOBROKER-SIMPLE-API-7)
 
 ### 2.4.5 (2020-05-04)
-* (Apollon77) webserver initialization optimized again to prevent errors with imvalid certificates
+* (Apollon77) webserver initialization optimized again to prevent errors with invalid certificates
 
 ### 2.4.4 (2020-05-02)
 * (Apollon77) Make sure Permission errors do not crash adapter (Sentry IOBROKER-SIMPLE-API-3)
