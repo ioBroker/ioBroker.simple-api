@@ -174,7 +174,9 @@ export class SimpleAPI {
             return false;
         }
 
-        const res = await this.adapter.checkPasswordAsync(query.user, query.pass);
+        const res = await new Promise<boolean>(resolve =>
+            this.adapter.checkPassword(query.user!, query.pass!, (success: boolean) => resolve(success)),
+        );
         if (res) {
             this.adapter.log.debug(`Logged in: ${query.user}`);
         } else {
@@ -224,29 +226,37 @@ export class SimpleAPI {
     ): void {
         const parts = (input || '').split('&');
         for (const part of parts) {
-            const [name, value] = part.split('=');
+            const pos = part.indexOf('=');
+            let name: string | undefined;
+            let value: string | undefined;
+            if (pos !== -1) {
+                name = part.substring(0, pos);
+                value = part.substring(pos + 1);
+            } else {
+                name = part;
+            }
             try {
                 if (name === 'user') {
-                    query.user = decodeURIComponent(value.trim());
+                    query.user = decodeURIComponent(value?.trim() || '');
                 } else if (name === 'pass') {
-                    query.pass = decodeURIComponent(value);
+                    query.pass = decodeURIComponent(value || '');
                 } else if (name === 'prettyPrint') {
-                    query.prettyPrint = !value ? true : decodeURIComponent(value.trim()) === 'true';
+                    query.prettyPrint = !value ? true : decodeURIComponent(value?.trim() || '') === 'true';
                 } else if (name === 'json') {
-                    query.json = !value ? true : decodeURIComponent(value.trim()) === 'true';
+                    query.json = !value ? true : decodeURIComponent(value?.trim() || '') === 'true';
                 } else if (name === 'noStringify') {
-                    query.noStringify = !value ? true : decodeURIComponent(value.trim()) === 'true';
+                    query.noStringify = !value ? true : decodeURIComponent(value?.trim() || '') === 'true';
                 } else if (name === 'wait') {
-                    query.wait = !value ? 2000 : parseInt(decodeURIComponent(value.trim()), 10) || 0;
+                    query.wait = !value ? 2000 : parseInt(decodeURIComponent(value?.trim() || ''), 10) || 0;
                 } else if (name === 'ack') {
-                    const val = decodeURIComponent(value.trim());
+                    const val = decodeURIComponent(value?.trim() || '');
                     query.ack = val === 'true' || val === '1';
                 } else {
                     values[name] =
-                        value === undefined ? null : decodeURIComponent(`${value.trim()}`.replace(/\+/g, '%20'));
+                        value === undefined ? null : decodeURIComponent(`${value?.trim() || ''}`.replace(/\+/g, '%20'));
                 }
             } catch {
-                values[name] = value;
+                values[name] = value === undefined ? null : value;
             }
         }
         if (query.ack === undefined) {
@@ -269,12 +279,19 @@ export class SimpleAPI {
         let response: { id?: string; val?: boolean | string | number; error?: string }[] = [];
         const names = Object.keys(values);
 
+        let user: `system.user.${string}`;
+        if (query.user && !query.user.startsWith('system.user.')) {
+            user = `system.user.${query.user}`;
+        } else {
+            user = query.user as `system.user.${string}`;
+        }
+
         for (let i = 0; i < names.length; i++) {
             const stateId = names[i];
             this.adapter.log.debug(`${i}: "${stateId}"`);
 
             try {
-                const { id, name } = await this.findState(stateId, query.user as `system.user.${string}`);
+                const { id, name } = await this.findState(stateId, user);
                 if (!id) {
                     response[i] = { error: `datapoint "${stateId}" not found` };
                 } else {
@@ -294,7 +311,7 @@ export class SimpleAPI {
 
                     try {
                         await this.adapter.setForeignState(id, value, !!query.ack, {
-                            user: query.user,
+                            user,
                             limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
                         });
                         response[i] = { id, val: value };
@@ -336,6 +353,13 @@ export class SimpleAPI {
         });
 
         await new Promise<void>(resolve => req.on('end', resolve));
+
+        let user: `system.user.${string}`;
+        if (query.user && !query.user.startsWith('system.user.')) {
+            user = `system.user.${query.user}`;
+        } else {
+            user = query.user as `system.user.${string}`;
+        }
 
         switch (command) {
             case 'setBulk': {
@@ -393,7 +417,7 @@ export class SimpleAPI {
                         const target = JSON.parse(body).target || '';
                         this.adapter.log.debug(`[SEARCH] target = ${target}`);
                         const list = await this.adapter.getForeignStatesAsync(values.pattern || `${target}*`, {
-                            user: query.user,
+                            user,
                             limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
                         });
                         oId = Object.keys(list);
@@ -481,7 +505,7 @@ export class SimpleAPI {
                             try {
                                 const { state, id } = await this.getState(
                                     bodyQuery.targets[b].target,
-                                    query.user as `system.user.${string}`,
+                                    user,
                                 );
                                 element.target = id;
                                 if (state) {
@@ -666,9 +690,16 @@ export class SimpleAPI {
             await this.adapter.subscribeForeignStatesAsync(id);
         }
 
+        let user: `system.user.${string}`;
+        if (query.user && !query.user.startsWith('system.user.')) {
+            user = `system.user.${query.user}`;
+        } else {
+            user = query.user as `system.user.${string}`;
+        }
+
         try {
             await this.adapter.setForeignState(id, value, query.ack, {
-                user: query.user as `system.user.${string}`,
+                user,
                 limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
             });
         } catch (err) {
@@ -768,8 +799,8 @@ export class SimpleAPI {
         const pos = url.indexOf('?');
 
         if (pos !== -1) {
-            url = url.substring(0, pos);
             SimpleAPI.parseQuery(url.substring(pos + 1), query, values);
+            url = url.substring(0, pos);
         }
 
         const [, _command, varsName] = url.split('/');
@@ -814,6 +845,8 @@ export class SimpleAPI {
         } else {
             user = query.user as `system.user.${string}`;
         }
+
+        query.user = user;
 
         if (!(await this.checkPermissions(user, command))) {
             this.doErrorResponse(res, responseType, 401, `No permission for "${query.user}" to call ${command}`);
@@ -892,7 +925,7 @@ export class SimpleAPI {
                 for (let k = 0; k < oId.length; k++) {
                     this.adapter.log.debug(`work for ID ${oId[k]}`);
                     try {
-                        const { state, id } = await this.getState(oId[k], query.user as `system.user.${string}`);
+                        const { state, id } = await this.getState(oId[k], user as `system.user.${string}`);
                         if (!id) {
                             response[k] = { error: `datapoint "${oId[k]}" not found` };
                         } else {
@@ -923,7 +956,7 @@ export class SimpleAPI {
                 }[] = [];
                 for (let b = 0; b < oId.length; b++) {
                     try {
-                        const { id, state } = await this.getState(oId[b], query.user as `system.user.${string}`);
+                        const { id, state } = await this.getState(oId[b], user as `system.user.${string}`);
                         response[b] = { id, val: state?.val, ts: state?.ts, ack: state?.ack };
                     } catch (err) {
                         if (err.toString().includes(ERROR_PERMISSION)) {
@@ -952,7 +985,7 @@ export class SimpleAPI {
                     return;
                 }
                 try {
-                    const { id } = await this.findState(oId[0], query.user as `system.user.${string}`);
+                    const { id } = await this.findState(oId[0], user as `system.user.${string}`);
                     if (!id) {
                         this.doErrorResponse(res, responseType, 404, `error: datapoint "${oId[0]}" not found`);
                         return;
@@ -1030,17 +1063,17 @@ export class SimpleAPI {
                 }
 
                 try {
-                    const { id } = await this.findState(oId[0], query.user as `system.user.${string}`);
+                    const { id } = await this.findState(oId[0], user as `system.user.${string}`);
                     if (id) {
                         const wait = query.wait || 0;
 
                         // Read a type of object
                         const obj = await this.adapter.getForeignObjectAsync(id, {
-                            user: query.user as `system.user.${string}`,
+                            user: user as `system.user.${string}`,
                         });
                         if (obj) {
                             const state = await this.adapter.getForeignStateAsync(id, {
-                                user: query.user as `system.user.${string}`,
+                                user: user as `system.user.${string}`,
                             });
                             if (state) {
                                 let value = state.val;
@@ -1137,7 +1170,7 @@ export class SimpleAPI {
                 const names = Object.keys(values);
                 for (let n = 0; n < names.length; n++) {
                     try {
-                        const { id, name } = await this.findState(names[n], query.user as `system.user.${string}`);
+                        const { id, name } = await this.findState(names[n], user as `system.user.${string}`);
                         if (!id) {
                             response[n] = { error: `error: datapoint "${names[n]}" not found` };
                             continue;
@@ -1160,7 +1193,7 @@ export class SimpleAPI {
 
                         try {
                             await this.adapter.setForeignState(id, value, query.ack, {
-                                user: query.user,
+                                user,
                                 limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
                             });
                             response[n] = { id: id, val: value, value };
@@ -1194,7 +1227,7 @@ export class SimpleAPI {
                         values.pattern || varsName || '*',
                         (values.type as ioBroker.ObjectType) || null,
                         {
-                            user: query.user,
+                            user,
                             limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
                         },
                     );
@@ -1213,7 +1246,7 @@ export class SimpleAPI {
             case 'states': {
                 try {
                     const list = await this.adapter.getForeignStatesAsync(values.pattern || varsName || '*', {
-                        user: query.user,
+                        user,
                         limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
                     });
                     this.doResponse(res, responseType, list, query.prettyPrint);
@@ -1236,7 +1269,7 @@ export class SimpleAPI {
                         this.adapter.log.debug(`[SEARCH] target = ${varsName}`);
 
                         const list = await this.adapter.getForeignStatesAsync(values.pattern || varsName || '*', {
-                            user: query.user,
+                            user,
                             limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
                         });
                         this.doResponse(res, responseType, Object.keys(list), query.prettyPrint);
@@ -1302,7 +1335,7 @@ export class SimpleAPI {
                     } else {
                         this.adapter.log.debug('Read last state');
 
-                        const { state } = await this.getState(oId[b], query.user as `system.user.${string}`);
+                        const { state } = await this.getState(oId[b], user as `system.user.${string}`);
                         if (state) {
                             element.datapoints = [[state.val, state.ts]];
                         } else {
