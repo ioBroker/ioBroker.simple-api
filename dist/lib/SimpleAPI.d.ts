@@ -1,6 +1,6 @@
 import type { Server as HttpServer } from 'node:http';
 import type { Server as HttpsServer } from 'node:https';
-import { Express, type Request, type Response } from 'express';
+import type { Express, Request, Response } from 'express';
 export type Server = HttpServer | HttpsServer;
 declare const commandsPermissions: {
     [operation: string]: {
@@ -14,12 +14,11 @@ type CommandName = keyof typeof commandsPermissions;
  *
  * From settings used only secure, auth and crossDomain
  *
- * @class
  * @param webSettings settings of the web server, like <pre><code>{secure: settings.secure, port: settings.port}</code></pre>
  * @param adapter web adapter object
  * @param instanceSettings instance object with common and native
  * @param app express application
- * @return object instance
+ * @returns object instance
  */
 export declare class SimpleAPI {
     private readonly adapter;

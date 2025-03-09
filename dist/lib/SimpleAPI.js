@@ -70,12 +70,11 @@ const commandsPermissions = {
  *
  * From settings used only secure, auth and crossDomain
  *
- * @class
  * @param webSettings settings of the web server, like <pre><code>{secure: settings.secure, port: settings.port}</code></pre>
  * @param adapter web adapter object
  * @param instanceSettings instance object with common and native
  * @param app express application
- * @return object instance
+ * @returns object instance
  */
 class SimpleAPI {
     adapter;
@@ -104,7 +103,7 @@ class SimpleAPI {
         if (this.app) {
             this.adapter.log.info(`Install extension on /${this.namespace}/`);
             this.app.use(`/${this.namespace}/`, (req, res) => {
-                this.restApi(req, res);
+                void this.restApi(req, res);
             });
             // let it be accessible under old address too
             for (const c in commandsPermissions) {
@@ -210,7 +209,7 @@ class SimpleAPI {
         }
     }
     async setStates(values, query) {
-        let response = [];
+        const response = [];
         const names = Object.keys(values);
         let user;
         if (query.user && !query.user.startsWith('system.user.')) {
@@ -223,7 +222,7 @@ class SimpleAPI {
             const stateId = names[i];
             this.adapter.log.debug(`${i}: "${stateId}"`);
             try {
-                const { id, name } = await this.findState(stateId, user);
+                const { id } = await this.findState(stateId, user);
                 if (!id) {
                     response[i] = { error: `datapoint "${stateId}" not found` };
                 }
@@ -244,17 +243,12 @@ class SimpleAPI {
                             value = values[stateId];
                         }
                     }
-                    try {
-                        await this.adapter.setForeignState(id, value, !!query.ack, {
-                            user,
-                            limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
-                        });
-                        response[i] = { id, val: value };
-                        this.adapter.log.debug(`Add to Response: ${JSON.stringify(response[i])}`);
-                    }
-                    catch (err) {
-                        throw err;
-                    }
+                    await this.adapter.setForeignStateAsync(id, value, !!query.ack, {
+                        user,
+                        limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
+                    });
+                    response[i] = { id, val: value };
+                    this.adapter.log.debug(`Add to Response: ${JSON.stringify(response[i])}`);
                 }
             }
             catch (err) {
@@ -582,7 +576,7 @@ class SimpleAPI {
             user = query.user;
         }
         try {
-            await this.adapter.setForeignState(id, value, query.ack, {
+            await this.adapter.setForeignStateAsync(id, value, query.ack, {
                 user,
                 limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
             });
@@ -868,7 +862,7 @@ class SimpleAPI {
                             try {
                                 values.val = JSON.parse(values.val);
                             }
-                            catch (e) {
+                            catch {
                                 // keep it as string
                             }
                         }
@@ -924,11 +918,11 @@ class SimpleAPI {
                         const wait = query.wait || 0;
                         // Read a type of object
                         const obj = await this.adapter.getForeignObjectAsync(id, {
-                            user: user,
+                            user,
                         });
                         if (obj) {
                             const state = await this.adapter.getForeignStateAsync(id, {
-                                user: user,
+                                user,
                             });
                             if (state) {
                                 let value = state.val;
@@ -1018,7 +1012,7 @@ class SimpleAPI {
                 const names = Object.keys(values);
                 for (let n = 0; n < names.length; n++) {
                     try {
-                        const { id, name } = await this.findState(names[n], user);
+                        const { id } = await this.findState(names[n], user);
                         if (!id) {
                             response[n] = { error: `error: datapoint "${names[n]}" not found` };
                             continue;
@@ -1038,7 +1032,7 @@ class SimpleAPI {
                             }
                         }
                         try {
-                            await this.adapter.setForeignState(id, value, query.ack, {
+                            await this.adapter.setForeignStateAsync(id, value, query.ack, {
                                 user,
                                 limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
                             });
@@ -1050,9 +1044,7 @@ class SimpleAPI {
                                 this.doErrorResponse(res, responseType, 403, err);
                                 return;
                             }
-                            else {
-                                response[n] = { error: err.toString() };
-                            }
+                            response[n] = { error: err.toString() };
                         }
                     }
                     catch (err) {
@@ -1060,9 +1052,7 @@ class SimpleAPI {
                             this.doErrorResponse(res, responseType, 403, err);
                             return;
                         }
-                        else {
-                            response[n] = { error: err.toString() };
-                        }
+                        response[n] = { error: err.toString() };
                     }
                 }
                 this.doResponse(res, responseType, response, query.prettyPrint);
@@ -1189,30 +1179,32 @@ class SimpleAPI {
                 this.adapter.log.debug('[ANNOTATIONS]');
                 this.doResponse(res, responseType, [], query.prettyPrint);
                 break;
-            case 'help':
             // is default behaviour too
+            case 'help':
             default:
-                const _obj = command === 'help' ? {} : { error: `command ${command} unknown` };
-                let request = `http${this.settings.secure ? 's' : ''}://${req.headers.host}`;
-                if (this.app) {
-                    request += `/${this.namespace}/`;
+                {
+                    const _obj = command === 'help' ? {} : { error: `command ${command} unknown` };
+                    let request = `http${this.settings.secure ? 's' : ''}://${req.headers.host}`;
+                    if (this.app) {
+                        request += `/${this.namespace}/`;
+                    }
+                    let auth = '';
+                    if (this.settings.auth) {
+                        auth = 'user=UserName&pass=Password';
+                    }
+                    _obj.getPlainValue = `${request}/getPlainValue/stateID${auth ? `?${auth}` : ''}`;
+                    _obj.get = `${request}/get/stateID/?prettyPrint${auth ? `&${auth}` : ''}`;
+                    _obj.getBulk = `${request}/getBulk/stateID1,stateID2/?prettyPrint${auth ? `&${auth}` : ''}`;
+                    _obj.set = `${request}/set/stateID?value=1&prettyPrint${auth ? `&${auth}` : ''}`;
+                    _obj.toggle = `${request}/toggle/stateID&prettyPrint${auth ? `&${auth}` : ''}`;
+                    _obj.setBulk = `${request}/setBulk?stateID1=0.7&stateID2=0&prettyPrint${auth ? `&${auth}` : ''}`;
+                    _obj.setValueFromBody = `${request}/setValueFromBody?stateID1${auth ? `&${auth}` : ''}`;
+                    _obj.objects = `${request}/objects?pattern=system.adapter.admin.0*&prettyPrint${auth ? `&${auth}` : ''}`;
+                    _obj.states = `${request}/states?pattern=system.adapter.admin.0*&prettyPrint${auth ? `&${auth}` : ''}`;
+                    _obj.search = `${request}/search?pattern=system.adapter.admin.0*&prettyPrint${auth ? `&${auth}` : ''}`;
+                    _obj.query = `${request}/query/stateID1,stateID2/?dateFrom=2019-06-06T12:00:00.000Z&dateTo=2019-06-06T12:00:00.000Z&noHistory=false&aggregate=minmax&count=3000&prettyPrint${auth ? `&${auth}` : ''}`;
+                    this.doResponse(res, responseType, _obj, true);
                 }
-                let auth = '';
-                if (this.settings.auth) {
-                    auth = 'user=UserName&pass=Password';
-                }
-                _obj.getPlainValue = `${request}/getPlainValue/stateID${auth ? `?${auth}` : ''}`;
-                _obj.get = `${request}/get/stateID/?prettyPrint${auth ? `&${auth}` : ''}`;
-                _obj.getBulk = `${request}/getBulk/stateID1,stateID2/?prettyPrint${auth ? `&${auth}` : ''}`;
-                _obj.set = `${request}/set/stateID?value=1&prettyPrint${auth ? `&${auth}` : ''}`;
-                _obj.toggle = `${request}/toggle/stateID&prettyPrint${auth ? `&${auth}` : ''}`;
-                _obj.setBulk = `${request}/setBulk?stateID1=0.7&stateID2=0&prettyPrint${auth ? `&${auth}` : ''}`;
-                _obj.setValueFromBody = `${request}/setValueFromBody?stateID1${auth ? `&${auth}` : ''}`;
-                _obj.objects = `${request}/objects?pattern=system.adapter.admin.0*&prettyPrint${auth ? `&${auth}` : ''}`;
-                _obj.states = `${request}/states?pattern=system.adapter.admin.0*&prettyPrint${auth ? `&${auth}` : ''}`;
-                _obj.search = `${request}/search?pattern=system.adapter.admin.0*&prettyPrint${auth ? `&${auth}` : ''}`;
-                _obj.query = `${request}/query/stateID1,stateID2/?dateFrom=2019-06-06T12:00:00.000Z&dateTo=2019-06-06T12:00:00.000Z&noHistory=false&aggregate=minmax&count=3000&prettyPrint${auth ? `&${auth}` : ''}`;
-                this.doResponse(res, responseType, _obj, true);
                 break;
         }
     }

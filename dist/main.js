@@ -24,7 +24,6 @@ class SimpleApiAdapter extends adapter_core_1.Adapter {
                 this.webServer?.api?.objectChange(id, obj);
             },
         });
-        this.config = this.config;
     }
     onUnload(callback) {
         try {
@@ -42,7 +41,6 @@ class SimpleApiAdapter extends adapter_core_1.Adapter {
         }
     }
     async main() {
-        this.config = this.config;
         if (this.config.webInstance) {
             console.log('Adapter runs as a part of web service');
             this.log.warn('Adapter runs as a part of web service');
@@ -50,7 +48,7 @@ class SimpleApiAdapter extends adapter_core_1.Adapter {
         }
         if (this.config.secure) {
             // Load certificates
-            await new Promise(resolve => this.getCertificates(undefined, undefined, undefined, (err, certificates, leConfig) => {
+            await new Promise(resolve => this.getCertificates(undefined, undefined, undefined, (_err, certificates) => {
                 this.certificates = certificates;
                 resolve();
             }));
@@ -84,14 +82,14 @@ class SimpleApiAdapter extends adapter_core_1.Adapter {
             }
         }
         else {
-            this.webServer.api?.restApi(req, res);
+            void this.webServer.api?.restApi(req, res);
         }
     };
     async initWebServer() {
         this.config.port = parseInt(this.config.port, 10);
         if (this.config.port) {
             if (this.config.secure && !this.certificates) {
-                return null;
+                return;
             }
             try {
                 const webserver = new webserver_1.WebServer({

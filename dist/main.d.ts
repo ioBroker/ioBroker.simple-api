@@ -1,6 +1,6 @@
 import { type Request, type Response } from 'express';
 import { Adapter, type AdapterOptions } from '@iobroker/adapter-core';
-import { SimpleApiAdapterConfig } from './types';
+import type { SimpleApiAdapterConfig } from './types';
 export declare class SimpleApiAdapter extends Adapter {
     config: SimpleApiAdapterConfig;
     private webServer;
@@ -9,5 +9,5 @@ export declare class SimpleApiAdapter extends Adapter {
     onUnload(callback: () => void): void;
     main(): Promise<void>;
     requestProcessor: (req: Request, res: Response) => void;
-    initWebServer(): Promise<null | undefined>;
+    initWebServer(): Promise<void>;
 }
