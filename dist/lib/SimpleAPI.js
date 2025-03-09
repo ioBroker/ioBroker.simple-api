@@ -42,7 +42,6 @@ function escapeHtml(string) {
     return lastIndex !== index ? html + str.substring(lastIndex, index) : html;
 }
 const ERROR_PERMISSION = 'permissionError';
-const ERROR_UNKNOWN_COMMAND = 'unknownCommand';
 // static information
 const commandsPermissions = {
     getPlainValue: { type: 'state', operation: 'read' },
