@@ -50,14 +50,14 @@ function createTestState(cb) {
             native: {},
         },
         () => {
-            states.setState(TEST_STATE_ID, { val: 0, ack: true }, cb && cb);
+            states.setState(TEST_STATE_ID, { val: 0, ack: true }, cb);
         },
     );
 }
 
 describe('Test RESTful API as User(No rights)', function () {
     before('Test RESTful API as User:(No rights) Start js-controller', function (_done) {
-        this.timeout(600000); // because of first install from npm
+        this.timeout(600000); // because of the first installation from npm
         setup.adapterStarted = false;
 
         setup.setupController(async function () {

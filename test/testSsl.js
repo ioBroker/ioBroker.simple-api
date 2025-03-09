@@ -51,14 +51,14 @@ function createTestState(cb) {
             native: {},
         },
         () => {
-            states.setState(TEST_STATE_ID, { val: 0, ack: true }, cb && cb);
+            states.setState(TEST_STATE_ID, { val: 0, ack: true }, cb);
         },
     );
 }
 
 describe('Test RESTful API SSL', function () {
     before('Test RESTful API SSL: Start js-controller', function (_done) {
-        this.timeout(600000); // because of first install from npm
+        this.timeout(600000); // because of the first installation from npm
         setup.adapterStarted = false;
 
         const brokerStarted = false;
@@ -231,7 +231,6 @@ describe('Test RESTful API SSL', function () {
                 expect(obj[0].id).to.equal(TEST_STATE_ID);
                 expect(response.statusCode).to.equal(200);
 
-                body = '';
                 request(
                     `https://127.0.0.1:18183/getBulk/${TEST_STATE_ID}?user=admin&pass=iobroker`,
                     (error, response, body) => {
