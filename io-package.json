@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "simple-api",
-    "version": "2.8.0",
+    "version": "3.0.0",
     "news": {
+      "3.0.0": {
+        "en": "Updated packages\nMigrated to TypeScript\nIf State/Object not found, the response will be 404 (and not 500)\nIf a user has no permission, the response will be 403 (and not 401)",
+        "de": "Aktualisierte Pakete\nZu TypeScript migriert\nWenn Staat/Ziel nicht gefunden wird, wird die Antwort 404 (und nicht 500)\nWenn ein Benutzer keine Erlaubnis hat, wird die Antwort 403 (und nicht 401)",
+        "ru": "Обновленные пакеты\nИммиграция в TypeScript\nЕсли состояние/объект не найден, ответ будет 404 (а не 500)\nЕсли у пользователя нет разрешения, ответ будет 403 (а не 401)",
+        "pt": "Pacotes atualizados\nMigrado para TypeScript\nSe o Estado/Objeto não for encontrado, a resposta será 404 (e não 500)\nSe um usuário não tiver permissão, a resposta será 403 (e não 401)",
+        "nl": "Bijgewerkte pakketten\nNaar typeScript migreren\nAls staat/object niet wordt gevonden, zal het antwoord 404 (en niet 500) zijn\nAls een gebruiker geen toestemming heeft, zal het antwoord 403 zijn (en niet 401)",
+        "fr": "Paquets mis à jour\nMigré vers TypeScript\nSi l'État/l'objet n'est pas trouvé, la réponse sera 404 (et non 500)\nSi un utilisateur n'a pas la permission, la réponse sera 403 (et non 401)",
+        "it": "Pacchetti aggiornati\nMigrato a TypeScript\nSe State/Obiettivo non trovato, la risposta sarà 404 (e non 500)\nSe un utente non ha il permesso, la risposta sarà 403 (e non 401)",
+        "es": "Paquetes actualizados\nMigrado a TipoScript\nSi el Estado/Objeto no se encuentra, la respuesta será 404 (y no 500)\nSi un usuario no tiene permiso, la respuesta será 403 (y no 401)",
+        "pl": "Aktualizacja pakietów\nMigrated to TypeScript\nJeżeli stan / obiekt nie zostanie znaleziony, odpowiedź wyniesie 404 (a nie 500)\nJeśli użytkownik nie ma pozwolenia, odpowiedź będzie 403 (a nie 401)",
+        "uk": "Оновлені пакети\nMigrated до TypeScript\nЯкщо не знайдено державного/об’єкта, відповідь буде 404 (і не 500)\nЯкщо користувач не має дозволу, відповідь буде 403 (і не 401)",
+        "zh-cn": "更新软件包\n移动到类型脚本\n如果国家/目标未找到,答复将是404(而不是500)\n如果用户未获许可,则回复为403(而不是401)"
+      },
       "2.8.0": {
         "en": "ported to `@iobroker/webserver`",
         "de": "an `@iobroker/webserver `",
@@ -75,18 +88,6 @@
         "es": "Optimice el rendimiento, especialmente cuando use nombres en lugar de identificadores de objetos",
         "pl": "Zoptymalizuj wydajność, zwłaszcza gdy używasz nazw zamiast identyfikatorów obiektów",
         "zh-cn": "优化性能，尤其是在使用名称而不是对象 ID 时"
-      },
-      "2.6.3": {
-        "en": "Optimize error message for multilanguage objects\nDo not overwrite state properties by object properties",
-        "de": "Fehlermeldung für mehrsprachige Objekte optimieren\nZustandseigenschaften nicht durch Objekteigenschaften überschreiben",
-        "ru": "Оптимизировать сообщение об ошибке для многоязычных объектов\nНе перезаписывайте свойства состояния свойствами объекта",
-        "pt": "Otimizar mensagem de erro para objetos multilíngue\nNão sobrescreva propriedades de estado por propriedades de objeto",
-        "nl": "Optimaliseer foutmelding voor meertalige objecten\nOverschrijf statuseigenschappen niet door objecteigenschappen",
-        "fr": "Optimiser le message d'erreur pour les objets multilingues\nNe pas écraser les propriétés d'état par les propriétés d'objet",
-        "it": "Ottimizza il messaggio di errore per gli oggetti multilingua\nNon sovrascrivere le proprietà dello stato con le proprietà dell'oggetto",
-        "es": "Optimizar mensaje de error para objetos multilenguaje\nNo sobrescribir propiedades de estado por propiedades de objeto",
-        "pl": "Zoptymalizuj komunikat o błędzie dla obiektów wielojęzycznych\nNie nadpisuj właściwości stanu przez właściwości obiektu",
-        "zh-cn": "优化多语言对象的错误消息\n不要用对象属性覆盖状态属性"
       }
     },
     "title": "Simple RESTful API",
