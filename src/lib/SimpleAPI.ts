@@ -868,7 +868,7 @@ export class SimpleAPI {
                 const response: string[] = [];
                 for (let i = 0; i < oId.length; i++) {
                     try {
-                        const { state, id } = await this.getState(oId[i], user);
+                        const { state } = await this.getState(oId[i], user);
                         if (state) {
                             let val = state.val;
                             if (query.json) {
