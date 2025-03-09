@@ -1,12 +1,12 @@
 import type { Server as HttpServer } from 'node:http';
 import type { Server as HttpsServer } from 'node:https';
-import type { SimpleApiAdapterConfig } from '../types';
 import { Express, type Request, type Response } from 'express';
 import { CommandsPermissionsObject } from '@iobroker/types/build/types';
+import type { SimpleApiAdapterConfig } from '../types';
 
 // copied from here: https://github.com/component/escape-html/blob/master/index.js
 const matchHtmlRegExp = /["'&<>]/;
-function escapeHtml(string: string): string {
+function escapeHtml(string: string, noQuote?: boolean): string {
     const str = `${string}`;
     const match = matchHtmlRegExp.exec(str);
 
@@ -22,7 +22,11 @@ function escapeHtml(string: string): string {
     for (index = match.index; index < str.length; index++) {
         switch (str.charCodeAt(index)) {
             case 34: // "
-                escape = '&quot;';
+                if (!noQuote) {
+                    escape = '&quot;';
+                } else {
+                    escape = '"';
+                }
                 break;
             case 38: // &
                 escape = '&amp;';
@@ -52,7 +56,6 @@ function escapeHtml(string: string): string {
 }
 
 const ERROR_PERMISSION = 'permissionError';
-const ERROR_UNKNOWN_COMMAND = 'unknownCommand';
 
 export type Server = HttpServer | HttpsServer;
 
@@ -372,7 +375,7 @@ export class SimpleAPI {
                 } catch (err) {
                     // State not found
                     if (err.toString().includes(ERROR_PERMISSION)) {
-                        this.doErrorResponse(res, 'json', 401, err.toString());
+                        this.doErrorResponse(res, 'json', 403, err.toString());
                     } else if (err.toString().includes('found')) {
                         this.doErrorResponse(res, 'json', 404, err.toString());
                     } else {
@@ -424,7 +427,7 @@ export class SimpleAPI {
                         this.doResponse(res, 'json', oId, query.prettyPrint);
                     } catch (err) {
                         if (err.includes(ERROR_PERMISSION)) {
-                            this.doErrorResponse(res, 'json', 401, err);
+                            this.doErrorResponse(res, 'json', 403, err);
                         } else {
                             this.doErrorResponse(res, 'json', 500, err);
                         }
@@ -520,7 +523,7 @@ export class SimpleAPI {
                                     list.push({ target: bodyQuery.targets[b].target, datapoints: [] });
                                 } else {
                                     if (err.toString().includes(ERROR_PERMISSION)) {
-                                        this.doErrorResponse(res, 'json', 401, err);
+                                        this.doErrorResponse(res, 'json', 403, err);
                                     } else {
                                         this.doErrorResponse(res, 'json', 500, err);
                                     }
@@ -607,8 +610,12 @@ export class SimpleAPI {
         if (pretty && typeof content === 'object') {
             type = 'plain';
             response = JSON.stringify(content, null, 2);
-        } else {
+        } else if (type === 'json') {
             response = JSON.stringify(content);
+        } else if (typeof content === 'object') {
+            response = JSON.stringify(content);
+        } else {
+            response = content.toString();
         }
 
         res.setHeader('Access-Control-Allow-Origin', '*');
@@ -621,12 +628,14 @@ export class SimpleAPI {
 
     doErrorResponse(res: Response, type: 'json' | 'plain', status: 401 | 403 | 404 | 422 | 500, error?: string): void {
         let response: string;
-        response = escapeHtml(error || 'unknown');
-        if (!response.startsWith('error: ')) {
-            response = `error: ${response}`;
-        }
+        response = escapeHtml(error || 'unknown', true);
+
         if (type === 'json') {
-            response = JSON.stringify({ error: response });
+            response = JSON.stringify({ error: response.replace('Error: ', '') });
+        } else if (!response.startsWith('error: ') && !response.startsWith('Error: ')) {
+            response = `error: ${response}`;
+        } else {
+            response = response.replace('Error: ', 'error: ').trim();
         }
 
         res.setHeader('Access-Control-Allow-Origin', '*');
@@ -849,7 +858,7 @@ export class SimpleAPI {
         query.user = user;
 
         if (!(await this.checkPermissions(user, command))) {
-            this.doErrorResponse(res, responseType, 401, `No permission for "${query.user}" to call ${command}`);
+            this.doErrorResponse(res, responseType, 403, ERROR_PERMISSION);
             return;
         }
 
@@ -911,6 +920,7 @@ export class SimpleAPI {
                         }
                     }
                 }
+
                 this.doResponse(res, responseType, response.join('\n'), query.prettyPrint);
                 break;
             }
@@ -929,7 +939,7 @@ export class SimpleAPI {
                         if (!id) {
                             response[k] = { error: `datapoint "${oId[k]}" not found` };
                         } else {
-                            const obj = this.adapter.getForeignObjectAsync(id);
+                            const obj = await this.adapter.getForeignObjectAsync(id);
                             response[k] = { ...obj, ...state };
                         }
                     } catch (err) {
@@ -940,12 +950,16 @@ export class SimpleAPI {
                         response[k] = { error: `datapoint "${oId[k]}" not found` };
                     }
                 }
+                if (response.length === 1 && response[0].error) {
+                    this.doErrorResponse(res, responseType, 404, response[0].error);
+                    return;
+                }
                 this.doResponse(res, responseType, response.length === 1 ? response[0] : response, query.prettyPrint);
                 break;
             }
             case 'getBulk': {
                 if (!oId.length || !oId[0]) {
-                    this.doErrorResponse(res, responseType, 422, 'no datapoints given');
+                    this.doErrorResponse(res, responseType, 422, 'no data points given');
                     break;
                 }
                 const response: {
@@ -1252,9 +1266,9 @@ export class SimpleAPI {
                     this.doResponse(res, responseType, list, query.prettyPrint);
                 } catch (err) {
                     if (err.toString().includes(ERROR_PERMISSION)) {
-                        this.doResponse(res, responseType, 403, err.toString());
+                        this.doErrorResponse(res, responseType, 403, err.toString());
                     } else {
-                        this.doResponse(res, responseType, 500, err.toString());
+                        this.doErrorResponse(res, responseType, 500, err.toString());
                     }
                 }
                 break;
@@ -1276,9 +1290,9 @@ export class SimpleAPI {
                     }
                 } catch (err) {
                     if (err.toString().includes(ERROR_PERMISSION)) {
-                        this.doResponse(res, responseType, 403, err.toString());
+                        this.doErrorResponse(res, responseType, 403, err.toString());
                     } else {
-                        this.doResponse(res, responseType, 500, err.toString());
+                        this.doErrorResponse(res, responseType, 500, err.toString());
                     }
                 }
                 break;

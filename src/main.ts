@@ -1,10 +1,10 @@
 import { type Request, type Response } from 'express';
 import { createReadStream, existsSync, type Stats, statSync } from 'node:fs';
-import type { RequestListener } from 'http';
+import type { RequestListener } from 'node:http';
 
 import { Adapter, type AdapterOptions, EXIT_CODES } from '@iobroker/adapter-core';
-import { SimpleAPI, type Server } from './lib/SimpleAPI';
 import { WebServer } from '@iobroker/webserver';
+import { SimpleAPI, type Server } from './lib/SimpleAPI';
 import { SimpleApiAdapterConfig } from './types';
 
 interface WebStructure {

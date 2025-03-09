@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SimpleAPI = void 0;
 // copied from here: https://github.com/component/escape-html/blob/master/index.js
 const matchHtmlRegExp = /["'&<>]/;
-function escapeHtml(string) {
+function escapeHtml(string, noQuote) {
     const str = `${string}`;
     const match = matchHtmlRegExp.exec(str);
     if (!match) {
@@ -16,7 +16,12 @@ function escapeHtml(string) {
     for (index = match.index; index < str.length; index++) {
         switch (str.charCodeAt(index)) {
             case 34: // "
-                escape = '&quot;';
+                if (!noQuote) {
+                    escape = '&quot;';
+                }
+                else {
+                    escape = '"';
+                }
                 break;
             case 38: // &
                 escape = '&amp;';
@@ -42,7 +47,6 @@ function escapeHtml(string) {
     return lastIndex !== index ? html + str.substring(lastIndex, index) : html;
 }
 const ERROR_PERMISSION = 'permissionError';
-const ERROR_UNKNOWN_COMMAND = 'unknownCommand';
 // static information
 const commandsPermissions = {
     getPlainValue: { type: 'state', operation: 'read' },
@@ -285,7 +289,7 @@ class SimpleAPI {
                 catch (err) {
                     // State not found
                     if (err.toString().includes(ERROR_PERMISSION)) {
-                        this.doErrorResponse(res, 'json', 401, err.toString());
+                        this.doErrorResponse(res, 'json', 403, err.toString());
                     }
                     else if (err.toString().includes('found')) {
                         this.doErrorResponse(res, 'json', 404, err.toString());
@@ -341,7 +345,7 @@ class SimpleAPI {
                     }
                     catch (err) {
                         if (err.includes(ERROR_PERMISSION)) {
-                            this.doErrorResponse(res, 'json', 401, err);
+                            this.doErrorResponse(res, 'json', 403, err);
                         }
                         else {
                             this.doErrorResponse(res, 'json', 500, err);
@@ -415,7 +419,7 @@ class SimpleAPI {
                                 }
                                 else {
                                     if (err.toString().includes(ERROR_PERMISSION)) {
-                                        this.doErrorResponse(res, 'json', 401, err);
+                                        this.doErrorResponse(res, 'json', 403, err);
                                     }
                                     else {
                                         this.doErrorResponse(res, 'json', 500, err);
@@ -494,8 +498,14 @@ class SimpleAPI {
             type = 'plain';
             response = JSON.stringify(content, null, 2);
         }
-        else {
+        else if (type === 'json') {
             response = JSON.stringify(content);
+        }
+        else if (typeof content === 'object') {
+            response = JSON.stringify(content);
+        }
+        else {
+            response = content.toString();
         }
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -505,12 +515,15 @@ class SimpleAPI {
     }
     doErrorResponse(res, type, status, error) {
         let response;
-        response = escapeHtml(error || 'unknown');
-        if (!response.startsWith('error: ')) {
+        response = escapeHtml(error || 'unknown', true);
+        if (type === 'json') {
+            response = JSON.stringify({ error: response.replace('Error: ', '') });
+        }
+        else if (!response.startsWith('error: ') && !response.startsWith('Error: ')) {
             response = `error: ${response}`;
         }
-        if (type === 'json') {
-            response = JSON.stringify({ error: response });
+        else {
+            response = response.replace('Error: ', 'error: ').trim();
         }
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -690,7 +703,7 @@ class SimpleAPI {
         }
         query.user = user;
         if (!(await this.checkPermissions(user, command))) {
-            this.doErrorResponse(res, responseType, 401, `No permission for "${query.user}" to call ${command}`);
+            this.doErrorResponse(res, responseType, 403, ERROR_PERMISSION);
             return;
         }
         if (req.method === 'POST') {
@@ -706,7 +719,7 @@ class SimpleAPI {
                 const response = [];
                 for (let i = 0; i < oId.length; i++) {
                     try {
-                        const { state, id } = await this.getState(oId[i], user);
+                        const { state } = await this.getState(oId[i], user);
                         if (state) {
                             let val = state.val;
                             if (query.json) {
@@ -772,7 +785,7 @@ class SimpleAPI {
                             response[k] = { error: `datapoint "${oId[k]}" not found` };
                         }
                         else {
-                            const obj = this.adapter.getForeignObjectAsync(id);
+                            const obj = await this.adapter.getForeignObjectAsync(id);
                             response[k] = { ...obj, ...state };
                         }
                     }
@@ -784,12 +797,16 @@ class SimpleAPI {
                         response[k] = { error: `datapoint "${oId[k]}" not found` };
                     }
                 }
+                if (response.length === 1 && response[0].error) {
+                    this.doErrorResponse(res, responseType, 404, response[0].error);
+                    return;
+                }
                 this.doResponse(res, responseType, response.length === 1 ? response[0] : response, query.prettyPrint);
                 break;
             }
             case 'getBulk': {
                 if (!oId.length || !oId[0]) {
-                    this.doErrorResponse(res, responseType, 422, 'no datapoints given');
+                    this.doErrorResponse(res, responseType, 422, 'no data points given');
                     break;
                 }
                 const response = [];
@@ -1077,10 +1094,10 @@ class SimpleAPI {
                 }
                 catch (err) {
                     if (err.toString().includes(ERROR_PERMISSION)) {
-                        this.doResponse(res, responseType, 403, err.toString());
+                        this.doErrorResponse(res, responseType, 403, err.toString());
                     }
                     else {
-                        this.doResponse(res, responseType, 500, err.toString());
+                        this.doErrorResponse(res, responseType, 500, err.toString());
                     }
                 }
                 break;
@@ -1102,10 +1119,10 @@ class SimpleAPI {
                 }
                 catch (err) {
                     if (err.toString().includes(ERROR_PERMISSION)) {
-                        this.doResponse(res, responseType, 403, err.toString());
+                        this.doErrorResponse(res, responseType, 403, err.toString());
                     }
                     else {
-                        this.doResponse(res, responseType, 500, err.toString());
+                        this.doErrorResponse(res, responseType, 500, err.toString());
                     }
                 }
                 break;

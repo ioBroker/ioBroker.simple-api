@@ -2,7 +2,7 @@
 /*jslint node: true */
 /*jshint expr: true*/
 const expect = require('chai').expect;
-const setup = require(`${__dirname}/lib/setup`);
+const setup = require('@iobroker/legacy-testing');
 const request = require('request');
 
 let objects = null;
@@ -60,7 +60,7 @@ describe('Test RESTful API as User(No rights)', function () {
         this.timeout(600000); // because of the first installation from npm
         setup.adapterStarted = false;
 
-        setup.setupController(async function () {
+        setup.setupController(async ()=> {
             const config = await setup.getAdapterConfig();
             // enable adapter
             config.common.enabled = true;
@@ -69,7 +69,7 @@ describe('Test RESTful API as User(No rights)', function () {
             config.native.defaultUser = 'norights';
             await setup.setAdapterConfig(config.common, config.native);
 
-            setup.startController(function (_objects, _states) {
+            setup.startController((_objects, _states) => {
                 objects = _objects;
                 states = _states;
                 // give some time to start server
@@ -80,8 +80,10 @@ describe('Test RESTful API as User(No rights)', function () {
 
     it('Test adapter: Check if adapter started and create upload datapoint', done => {
         this.timeout(60000);
-        checkConnectionOfAdapter(function (res) {
-            if (res) console.log(res);
+        checkConnectionOfAdapter(res => {
+            if (res) {
+                console.log(res);
+            }
             expect(res).not.to.be.equal('Cannot check connection');
             objects.setObject(
                 'system.group.norights',
@@ -191,40 +193,40 @@ describe('Test RESTful API as User(No rights)', function () {
 
     it('Test RESTful API as User:(No rights) get - must return value', done => {
         request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', (error, response, body) => {
-            console.log('get/system.adapter.simple-api.0.alive => ' + body);
+            console.log(`get/system.adapter.simple-api.0.alive => ${body}`);
             expect(body).to.be.equal('{"error":"permissionError"}');
-            expect(response.statusCode).to.equal(401);
+            expect(response.statusCode).to.equal(403);
             done();
         });
     });
 
     it('Test RESTful API as User:(No rights) getPlainValue - must return plain value', done => {
         request('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', (error, response, body) => {
-            console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
+            console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${body}`);
             expect(body).to.be.equal('error: permissionError');
-            expect(response.statusCode).to.equal(401);
+            expect(response.statusCode).to.equal(403);
             done();
         });
     });
 
     it('Test RESTful API as User:(No rights) getPlainValue 4 Test-Endpoint - must return plain value', done => {
         request('http://127.0.0.1:18183/getPlainValue/javascript.0.test', (error, response, body) => {
-            console.log('getPlainValue/javascript.0.test => ' + body);
+            console.log(`getPlainValue/javascript.0.test => ${body}`);
             expect(body).to.be.equal('error: permissionError');
-            expect(response.statusCode).to.equal(401);
+            expect(response.statusCode).to.equal(403);
             done();
         });
     });
 
     it('Test RESTful API as User:(No rights) set 4 Test-Endpoint  - must set value', done => {
         request('http://127.0.0.1:18183/set/javascript.0.test?val=2', (error, response, body) => {
-            console.log('set/javascript.0.test?val=false => ' + body);
+            console.log(`set/javascript.0.test?val=false => ${body}`);
             expect(body).to.be.equal('{"error":"permissionError"}');
-            expect(response.statusCode).to.equal(401);
+            expect(response.statusCode).to.equal(403);
             request('http://127.0.0.1:18183/getPlainValue/javascript.0.test', (error, response, body) => {
-                console.log('getPlainValue/javascript.0.test => ' + body);
+                console.log(`getPlainValue/javascript.0.test => ${body}`);
                 expect(body).to.be.equal('error: permissionError');
-                expect(response.statusCode).to.equal(401);
+                expect(response.statusCode).to.equal(403);
                 done();
             });
         });
@@ -232,15 +234,15 @@ describe('Test RESTful API as User(No rights)', function () {
 
     it('Test RESTful API as User:(No rights) set - must set value', done => {
         request('http://127.0.0.1:18183/set/system.adapter.simple-api.0.alive?val=false', (error, response, body) => {
-            console.log('set/system.adapter.simple-api.0.alive?val=false => ' + body);
+            console.log(`set/system.adapter.simple-api.0.alive?val=false => ${body}`);
             expect(body).to.be.equal('{"error":"permissionError"}');
-            expect(response.statusCode).to.equal(401);
+            expect(response.statusCode).to.equal(403);
             request(
                 'http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive',
                 (error, response, body) => {
-                    console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
+                    console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${body}`);
                     expect(body).to.be.equal('error: permissionError');
-                    expect(response.statusCode).to.equal(401);
+                    expect(response.statusCode).to.equal(403);
                     done();
                 },
             );
@@ -249,15 +251,15 @@ describe('Test RESTful API as User(No rights)', function () {
 
     it('Test RESTful API as User:(No rights) set - must set val', done => {
         request('http://127.0.0.1:18183/set/system.adapter.simple-api.0.alive?val=true', (error, response, body) => {
-            console.log('set/system.adapter.simple-api.0.alive?val=true => ' + body);
+            console.log(`set/system.adapter.simple-api.0.alive?val=true => ${body}`);
             expect(body).to.be.equal('{"error":"permissionError"}');
-            expect(response.statusCode).to.equal(401);
+            expect(response.statusCode).to.equal(403);
             request(
                 'http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive',
                 (error, response, body) => {
-                    console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
+                    console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${body}`);
                     expect(body).to.be.equal('error: permissionError');
-                    expect(response.statusCode).to.equal(401);
+                    expect(response.statusCode).to.equal(403);
                     done();
                 },
             );
@@ -266,27 +268,27 @@ describe('Test RESTful API as User(No rights)', function () {
 
     it('Test RESTful API as User:(No rights) objects - must return objects', done => {
         request('http://127.0.0.1:18183/objects?pattern=system.adapter.*', (error, response, body) => {
-            console.log('objects?pattern=system.adapter.* => ' + body);
+            console.log(`objects?pattern=system.adapter.* => ${body}`);
             expect(body).to.be.equal('{"error":"permissionError"}');
-            expect(response.statusCode).to.equal(401);
+            expect(response.statusCode).to.equal(403);
             done();
         });
     });
 
     it('Test RESTful API as User:(No rights) objects - must return objects', done => {
         request('http://127.0.0.1:18183/objects?pattern=system.adapter.*&type=instance', (error, response, body) => {
-            console.log('objects?pattern=system.adapter.* => ' + body);
+            console.log(`objects?pattern=system.adapter.* => ${body}`);
             expect(body).to.be.equal('{"error":"permissionError"}');
-            expect(response.statusCode).to.equal(401);
+            expect(response.statusCode).to.equal(403);
             done();
         });
     });
 
     it('Test RESTful API as User:(No rights) states - must return states', done => {
         request('http://127.0.0.1:18183/states?pattern=system.adapter.*', (error, response, body) => {
-            console.log('states?pattern=system.adapter.* => ' + body);
+            console.log(`states?pattern=system.adapter.* => ${body}`);
             expect(body).to.be.equal('{"error":"permissionError"}');
-            expect(response.statusCode).to.equal(401);
+            expect(response.statusCode).to.equal(403);
             done();
         });
     });
@@ -303,7 +305,7 @@ describe('Test RESTful API as User(No rights)', function () {
                     `setBulk/?${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false&javascript.0.test=4 => ${JSON.stringify(body)}`,
                 );
                 expect(body).to.be.equal('{"error":"permissionError"}');
-                expect(response.statusCode).to.equal(401);
+                expect(response.statusCode).to.equal(403);
 
                 request(
                     `http://127.0.0.1:18183/getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive,javascript.0.test`,
@@ -312,7 +314,7 @@ describe('Test RESTful API as User(No rights)', function () {
                             `getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive,javascript.0.test => ${body}`,
                         );
                         expect(body).to.be.equal('{"error":"permissionError"}');
-                        expect(response.statusCode).to.equal(401);
+                        expect(response.statusCode).to.equal(403);
                         done();
                     },
                 );
@@ -329,17 +331,17 @@ describe('Test RESTful API as User(No rights)', function () {
             },
             (error, response, body) => {
                 console.log(
-                    `setBulk/?${TEST_STATE_ID}=51&system.adapter.simple-api.0.alive=false => ` + JSON.stringify(body),
+                    `setBulk/?${TEST_STATE_ID}=51&system.adapter.simple-api.0.alive=false => ${JSON.stringify(body)}`,
                 );
                 expect(body).to.be.equal('{"error":"permissionError"}');
-                expect(response.statusCode).to.equal(401);
+                expect(response.statusCode).to.equal(403);
 
                 request(
                     `http://127.0.0.1:18183/getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive`,
                     (error, response, body) => {
-                        console.log(`getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive => ` + body);
+                        console.log(`getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive => ${body}`);
                         expect(body).to.be.equal('{"error":"permissionError"}');
-                        expect(response.statusCode).to.equal(401);
+                        expect(response.statusCode).to.equal(403);
                         done();
                     },
                 );
@@ -355,14 +357,14 @@ describe('Test RESTful API as User(No rights)', function () {
                 body: '55',
             },
             (error, response, body) => {
-                console.log(`setValueFromBody/?${TEST_STATE_ID} => ` + JSON.stringify(body));
+                console.log(`setValueFromBody/?${TEST_STATE_ID} => ${JSON.stringify(body)}`);
                 expect(body).to.be.equal('{"error":"permissionError"}');
-                expect(response.statusCode).to.equal(401);
+                expect(response.statusCode).to.equal(403);
 
                 request(`http://127.0.0.1:18183/getBulk/${TEST_STATE_ID}`, (error, response, body) => {
-                    console.log(`getBulk/${TEST_STATE_ID} => ` + body);
+                    console.log(`getBulk/${TEST_STATE_ID} => ${body}`);
                     expect(body).to.be.equal('{"error":"permissionError"}');
-                    expect(response.statusCode).to.equal(401);
+                    expect(response.statusCode).to.equal(403);
                     done();
                 });
             },

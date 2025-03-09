@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SimpleApiAdapter = void 0;
 const node_fs_1 = require("node:fs");
 const adapter_core_1 = require("@iobroker/adapter-core");
-const SimpleAPI_1 = require("./lib/SimpleAPI");
 const webserver_1 = require("@iobroker/webserver");
+const SimpleAPI_1 = require("./lib/SimpleAPI");
 class SimpleApiAdapter extends adapter_core_1.Adapter {
     webServer = {
         server: null,

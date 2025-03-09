@@ -3,7 +3,7 @@
 /* jslint node: true */
 /* jshint expr: true*/
 const expect = require('chai').expect;
-const setup = require('./lib/setup');
+const setup = require('@iobroker/legacy-testing');
 const request = require('request');
 
 let objects = null;
@@ -56,7 +56,7 @@ function createTestState(cb) {
 
 describe('Test RESTful API', function () {
     before('Test RESTful API: Start js-controller', function (_done) {
-        this.timeout(600000); // because of first install from npm
+        this.timeout(600000); // because of the first installation from npm
         setup.adapterStarted = false;
 
         setup.setupController(async () => {
@@ -168,7 +168,7 @@ describe('Test RESTful API', function () {
             console.log(`get/system.adapter.simple-api.0.alive%23test => ${body}`);
             expect(error).to.be.not.ok;
             expect(body).to.be.equal('{"error":"datapoint \\"system.adapter.simple-api.0.alive#test\\" not found"}');
-            expect(response.statusCode).to.equal(500);
+            expect(response.statusCode).to.equal(404);
             done();
         });
     });
@@ -178,7 +178,7 @@ describe('Test RESTful API', function () {
             console.log(`get/system.adapter.simple-api.0.alive#%23test => ${body}`);
             expect(error).to.be.not.ok;
             expect(body).to.be.equal('{"error":"datapoint \\"system.adapter.simple-api.0.#alive#test\\" not found"}');
-            expect(response.statusCode).to.equal(500);
+            expect(response.statusCode).to.equal(404);
             done();
         });
     });
@@ -195,7 +195,7 @@ describe('Test RESTful API', function () {
 
     it('Test RESTful API: set - must set value', done => {
         request('http://127.0.0.1:18183/set/system.adapter.simple-api.0.alive?val=false', (error, response, body) => {
-            console.log('set/system.adapter.simple-api.0.alive?val=false => ' + body);
+            console.log(`set/system.adapter.simple-api.0.alive?val=false => ${body}`);
             expect(error).to.be.not.ok;
             const obj = JSON.parse(body);
             expect(obj).to.be.ok;
@@ -205,12 +205,12 @@ describe('Test RESTful API', function () {
             request(
                 'http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive',
                 (error, response, body) => {
-                    console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
+                    console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${body}`);
                     expect(error).to.be.not.ok;
                     expect(body).equal('false');
                     expect(response.statusCode).to.equal(200);
                     request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', (error, response, body) => {
-                        console.log('get/system.adapter.simple-api.0.alive => ' + body);
+                        console.log(`get/system.adapter.simple-api.0.alive => ${body}`);
                         expect(error).to.be.not.ok;
                         expect(JSON.parse(body).val).equal(false);
                         expect(response.statusCode).to.equal(200);
@@ -223,7 +223,7 @@ describe('Test RESTful API', function () {
 
     it('Test RESTful API: set - must set easy string value', done => {
         request('http://127.0.0.1:18183/set/javascript.0.test-string?val=bla', (error, response, body) => {
-            console.log('set/javascript.0.test-string?val=bla => ' + body);
+            console.log(`set/javascript.0.test-string?val=bla => ${body}`);
             expect(error).to.be.not.ok;
             const obj = JSON.parse(body);
             expect(obj).to.be.ok;
@@ -231,12 +231,12 @@ describe('Test RESTful API', function () {
             expect(obj.id).to.equal('javascript.0.test-string');
             expect(response.statusCode).to.equal(200);
             request('http://127.0.0.1:18183/getPlainValue/javascript.0.test-string', (error, response, body) => {
-                console.log('getPlainValue/javascript.0.test-string => ' + body);
+                console.log(`getPlainValue/javascript.0.test-string => ${body}`);
                 expect(error).to.be.not.ok;
                 expect(body).equal('"bla"');
                 expect(response.statusCode).to.equal(200);
                 request('http://127.0.0.1:18183/get/javascript.0.test-string', (error, response, body) => {
-                    console.log('get/javascript.0.test-string => ' + body);
+                    console.log(`get/javascript.0.test-string => ${body}`);
                     expect(error).to.be.not.ok;
                     expect(JSON.parse(body).val).equal('bla');
                     expect(response.statusCode).to.equal(200);
@@ -250,7 +250,7 @@ describe('Test RESTful API', function () {
         request(
             'http://127.0.0.1:18183/set/javascript.0.test-string?val=bla%26fasel%2efoo%3Dhummer+hey',
             (error, response, body) => {
-                console.log('set/javascript.0.test-string?val=bla%20fasel%2efoo => ' + body);
+                console.log(`set/javascript.0.test-string?val=bla%20fasel%2efoo => ${body}`);
                 expect(error).to.be.not.ok;
                 const obj = JSON.parse(body);
                 expect(obj).to.be.ok;
@@ -258,12 +258,12 @@ describe('Test RESTful API', function () {
                 expect(obj.id).to.equal('javascript.0.test-string');
                 expect(response.statusCode).to.equal(200);
                 request('http://127.0.0.1:18183/getPlainValue/javascript.0.test-string', (error, response, body) => {
-                    console.log('getPlainValue/javascript.0.test-string => ' + body);
+                    console.log(`getPlainValue/javascript.0.test-string => ${body}`);
                     expect(error).to.be.not.ok;
                     expect(body).equal('"bla&fasel.foo=hummer hey"');
                     expect(response.statusCode).to.equal(200);
                     request('http://127.0.0.1:18183/get/javascript.0.test-string', (error, response, body) => {
-                        console.log('get/javascript.0.test-string => ' + body);
+                        console.log(`get/javascript.0.test-string => ${body}`);
                         expect(error).to.be.not.ok;
                         expect(JSON.parse(body).val).equal('bla&fasel.foo=hummer hey');
                         expect(response.statusCode).to.equal(200);
@@ -276,7 +276,7 @@ describe('Test RESTful API', function () {
 
     it('Test RESTful API: set - must set val', done => {
         request('http://127.0.0.1:18183/set/system.adapter.simple-api.0.alive?val=true', (error, response, body) => {
-            console.log('set/system.adapter.simple-api.0.alive?val=true => ' + body);
+            console.log(`set/system.adapter.simple-api.0.alive?val=true => ${body}`);
             expect(error).to.be.not.ok;
             const obj = JSON.parse(body);
             expect(obj).to.be.ok;
@@ -287,7 +287,7 @@ describe('Test RESTful API', function () {
             request(
                 'http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive',
                 (error, response, body) => {
-                    console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
+                    console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${body}`);
                     expect(error).to.be.not.ok;
                     expect(body).equal('true');
                     expect(response.statusCode).to.equal(200);
@@ -301,7 +301,7 @@ describe('Test RESTful API', function () {
         request(
             'http://127.0.0.1:18183/set/system.adapter.simple-api.0.alive?val=true&ack=true',
             (error, response, body) => {
-                console.log('set/system.adapter.simple-api.0.alive?val=true => ' + body);
+                console.log(`set/system.adapter.simple-api.0.alive?val=true => ${body}`);
                 expect(error).to.be.not.ok;
                 const obj = JSON.parse(body);
                 expect(obj).to.be.ok;
@@ -310,7 +310,7 @@ describe('Test RESTful API', function () {
                 expect(obj.id).to.equal('system.adapter.simple-api.0.alive');
                 expect(response.statusCode).to.equal(200);
                 request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', (error, response, body) => {
-                    console.log('get/system.adapter.simple-api.0.alive => ' + body);
+                    console.log(`get/system.adapter.simple-api.0.alive => ${body}`);
                     try {
                         body = JSON.parse(body);
                     } catch (e) {
@@ -329,7 +329,7 @@ describe('Test RESTful API', function () {
 
     it('Test RESTful API: toggle - must toggle boolean value to false', done => {
         request('http://127.0.0.1:18183/toggle/system.adapter.simple-api.0.alive', (error, response, body) => {
-            console.log('toggle/system.adapter.simple-api.0.alive => ' + body);
+            console.log(`toggle/system.adapter.simple-api.0.alive => ${body}`);
             expect(error).to.be.not.ok;
             const obj = JSON.parse(body);
             expect(obj).to.be.ok;
@@ -341,7 +341,7 @@ describe('Test RESTful API', function () {
             request(
                 'http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive',
                 (error, response, body) => {
-                    console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
+                    console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${body}`);
                     expect(error).to.be.not.ok;
                     expect(body).equal('false');
                     expect(response.statusCode).to.equal(200);
@@ -353,7 +353,7 @@ describe('Test RESTful API', function () {
 
     it('Test RESTful API: toggle - must toggle boolean value to true', done => {
         request('http://127.0.0.1:18183/toggle/system.adapter.simple-api.0.alive', (error, response, body) => {
-            console.log('toggle/system.adapter.simple-api.0.alive => ' + body);
+            console.log(`toggle/system.adapter.simple-api.0.alive => ${body}`);
             expect(error).to.be.not.ok;
             const obj = JSON.parse(body);
             expect(obj).to.be.ok;
@@ -364,7 +364,7 @@ describe('Test RESTful API', function () {
             request(
                 'http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive',
                 (error, response, body) => {
-                    console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
+                    console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${body}`);
                     expect(error).to.be.not.ok;
                     expect(body).equal('true');
                     expect(response.statusCode).to.equal(200);
@@ -450,7 +450,7 @@ describe('Test RESTful API', function () {
 
     it('Test RESTful API: objects - must return objects', done => {
         request('http://127.0.0.1:18183/objects?pattern=system.adapter.*', (error, response, body) => {
-            console.log('objects?pattern=system.adapter.* => ' + body);
+            console.log(`objects?pattern=system.adapter.* => ${body}`);
             expect(error).to.be.not.ok;
             const obj = JSON.parse(body);
             expect(obj['system.adapter.simple-api.0.alive']._id).to.be.ok;
@@ -461,7 +461,7 @@ describe('Test RESTful API', function () {
 
     it('Test RESTful API: objects - must return objects', done => {
         request('http://127.0.0.1:18183/objects?pattern=system.adapter.*&type=instance', (error, response, body) => {
-            console.log('objects?pattern=system.adapter.* => ' + body);
+            console.log(`objects?pattern=system.adapter.* => ${body}`);
             expect(error).to.be.not.ok;
             const obj = JSON.parse(body);
             expect(obj['system.adapter.simple-api.0']._id).to.be.ok;
@@ -472,7 +472,7 @@ describe('Test RESTful API', function () {
 
     it('Test RESTful API: states - must return states', done => {
         request('http://127.0.0.1:18183/states?pattern=system.adapter.*', (error, response, body) => {
-            console.log('states?pattern=system.adapter.* => ' + body);
+            console.log(`states?pattern=system.adapter.* => ${body}`);
             expect(error).to.be.not.ok;
             const states = JSON.parse(body);
             expect(states['system.adapter.simple-api.0.uptime'].val).to.be.least(0);
@@ -595,7 +595,7 @@ describe('Test RESTful API', function () {
     after('Test RESTful API: Stop js-controller', function (done) {
         this.timeout(9000);
         setup.stopController(normalTerminated => {
-            console.log('Adapter normal terminated: ' + normalTerminated);
+            console.log(`Adapter normal terminated: ${normalTerminated}`);
             setTimeout(done, 3000);
         });
     });

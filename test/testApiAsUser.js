@@ -4,7 +4,7 @@
 /* jshint expr: true*/
 
 const expect = require('chai').expect;
-const setup = require('./lib/setup');
+const setup = require('@iobroker/legacy-testing');
 const request = require('request');
 
 let objects = null;
@@ -211,7 +211,7 @@ describe('Test RESTful API as User', function () {
 
     it('Test RESTful API as User: get - must return value', done => {
         request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', (error, response, body) => {
-            console.log('get/system.adapter.simple-api.0.alive => ' + body);
+            console.log(`get/system.adapter.simple-api.0.alive => ${body}`);
             expect(error).to.be.not.ok;
             const obj = JSON.parse(body);
             //{
@@ -251,7 +251,7 @@ describe('Test RESTful API as User', function () {
 
     it('Test RESTful API as User: getPlainValue - must return plain value', done => {
         request('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', (error, response, body) => {
-            console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
+            console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${body}`);
             expect(error).to.be.not.ok;
             expect(body).equal('true');
             expect(response.statusCode).to.equal(200);
@@ -261,7 +261,7 @@ describe('Test RESTful API as User', function () {
 
     it('Test RESTful API as User: getPlainValue 4 Test-Endpoint - must return plain value', done => {
         request('http://127.0.0.1:18183/getPlainValue/javascript.0.test', (error, response, body) => {
-            console.log('getPlainValue/javascript.0.test => ' + body);
+            console.log(`getPlainValue/javascript.0.test => ${body}`);
             expect(error).to.be.not.ok;
             expect(body).equal('1');
             expect(response.statusCode).to.equal(200);
@@ -271,7 +271,7 @@ describe('Test RESTful API as User', function () {
 
     it('Test RESTful API as User: set 4 Test-Endpoint  - must set value', done => {
         request('http://127.0.0.1:18183/set/javascript.0.test?val=2', (error, response, body) => {
-            console.log('set/javascript.0.test?val=false => ' + body);
+            console.log(`set/javascript.0.test?val=false => ${body}`);
             expect(error).to.be.not.ok;
             const obj = JSON.parse(body);
             expect(obj).to.be.ok;
@@ -279,7 +279,7 @@ describe('Test RESTful API as User', function () {
             expect(obj.id).to.equal('javascript.0.test');
             expect(response.statusCode).to.equal(200);
             request('http://127.0.0.1:18183/getPlainValue/javascript.0.test', (error, response, body) => {
-                console.log('getPlainValue/javascript.0.test => ' + body);
+                console.log(`getPlainValue/javascript.0.test => ${body}`);
                 expect(error).to.be.not.ok;
                 expect(body).equal('2');
                 expect(response.statusCode).to.equal(200);
@@ -572,7 +572,7 @@ describe('Test RESTful API as User', function () {
                 body: '55',
             },
             (error, response, body) => {
-                console.log(`setValueFromBody/?${TEST_STATE_ID} => ` + JSON.stringify(body));
+                console.log(`setValueFromBody/?${TEST_STATE_ID} => ${JSON.stringify(body)}`);
                 expect(error).to.be.not.ok;
 
                 const obj = JSON.parse(body);
@@ -582,7 +582,7 @@ describe('Test RESTful API as User', function () {
                 expect(response.statusCode).to.equal(200);
 
                 request(`http://127.0.0.1:18183/getBulk/${TEST_STATE_ID}`, (error, response, body) => {
-                    console.log(`getBulk/${TEST_STATE_ID} => ` + body);
+                    console.log(`getBulk/${TEST_STATE_ID} => ${body}`);
                     expect(error).to.be.not.ok;
                     const obj = JSON.parse(body);
                     expect(obj[0].val).equal(55);
@@ -596,7 +596,7 @@ describe('Test RESTful API as User', function () {
     after('Test RESTful API as User: Stop js-controller', function (done) {
         this.timeout(9000);
         setup.stopController(normalTerminated => {
-            console.log('Adapter normal terminated: ' + normalTerminated);
+            console.log(`Adapter normal terminated: ${normalTerminated}`);
             setTimeout(done, 3000);
         });
     });

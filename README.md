@@ -106,7 +106,7 @@ Result:
 ```
 
 ### getBulk
-Get many states with one request, returned as array of objects in order of list in request and id/val/ts as sub-object
+Get many states with one request, returned as an array of objects in order of a list in request and id/val/ts as a sub-object
 
 ### set
 Call e.g.: `http://ipaddress:8087/set/javascript.0.test?value=1`
@@ -345,7 +345,7 @@ In the first case the answer will be returned immediately and `ack` is false. In
 You can send this request as POST too.
 
 ### objects
-Get the list of all objects for pattern. If no pattern specified all objects as JSON array will be returned.
+Get the list of all objects for pattern. If no pattern is specified, all objects as JSON array will be returned.
 
 `http://ip:8087/objects?prettyPrint` =>
 
@@ -588,6 +588,8 @@ If no data source was specified or the noHistory parameter is passed, then only 
 ### **WORK IN PROGRESS**
 * (bluefox) Updated packages
 * (bluefox) Migrated to TypeScript
+* (bluefox) If State/Object not found, the response will be 404 (and not 500)
+* (bluefox) If a user has no permission, the response will be 403 (and not 401)
 
 ### 2.8.0 (2024-05-23)
 * (foxriver76) ported to `@iobroker/webserver`
@@ -601,10 +603,10 @@ If no data source was specified or the noHistory parameter is passed, then only 
 
 ### 2.7.0 (2022-05-31)
 * (crycode-de) Allow use of ack flag for setBulk post requests
-* (Apollon77) Return ack flag too on getBulk
+* (Apollon77) Return an ack flag too on getBulk
 
 ### 2.6.5 (2022-04-14)
-* Added support aggregate and count for queries
+* Added support for aggregate and count for queries
 
 ### 2.6.4 (2022-03-17)
 * (Apollon77) Optimize performance, especially when using names instead of object ids

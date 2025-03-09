@@ -4,7 +4,7 @@
 /* jshint expr: true*/
 
 const expect = require('chai').expect;
-const setup = require('./lib/setup');
+const setup = require('@iobroker/legacy-testing');
 const request = require('request');
 
 let objects = null;
@@ -117,7 +117,7 @@ describe('Test RESTful API SSL', function () {
         request(
             'https://127.0.0.1:18183/get/system.adapter.simple-api.0.alive?user=admin&pass=iobroker',
             (error, response, body) => {
-                console.log('get/system.adapter.simple-api.0.alive => ' + body);
+                console.log(`get/system.adapter.simple-api.0.alive => ${body}`);
                 expect(error).to.be.not.ok;
                 const obj = JSON.parse(body);
                 //{
@@ -160,7 +160,7 @@ describe('Test RESTful API SSL', function () {
         request(
             'https://127.0.0.1:18183/get/system.adapter.simple-api.0.alive?user=admin&pass=io',
             (error, response, body) => {
-                console.log('get/system.adapter.simple-api.0.alive => ' + body);
+                console.log(`get/system.adapter.simple-api.0.alive => ${body}`);
                 expect(error).to.be.not.ok;
                 expect(response.statusCode).to.be.equal(401);
                 done();
@@ -170,7 +170,7 @@ describe('Test RESTful API SSL', function () {
 
     it('Test RESTful API SSL: get with wrong credentials', done => {
         request('https://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', (error, response, body) => {
-            console.log('get/system.adapter.simple-api.0.alive => ' + body);
+            console.log(`get/system.adapter.simple-api.0.alive => ${body}`);
             expect(error).to.be.not.ok;
             expect(response.statusCode).to.be.equal(401);
             done();
@@ -186,7 +186,7 @@ describe('Test RESTful API SSL', function () {
             },
             (error, response, body) => {
                 console.log(
-                    `setBulk/?${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false => ` + JSON.stringify(body),
+                    `setBulk/?${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false => ${JSON.stringify(body)}`,
                 );
                 expect(error).to.be.not.ok;
 
@@ -201,7 +201,7 @@ describe('Test RESTful API SSL', function () {
                 request(
                     `https://127.0.0.1:18183/getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive?user=admin&pass=iobroker`,
                     (error, response, body) => {
-                        console.log(`getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive => ` + body);
+                        console.log(`getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive => ${body}`);
                         expect(error).to.be.not.ok;
                         const obj = JSON.parse(body);
                         expect(obj[0].val).equal(50);
@@ -222,7 +222,7 @@ describe('Test RESTful API SSL', function () {
                 body: '55',
             },
             (error, response, body) => {
-                console.log(`setValueFromBody/?${TEST_STATE_ID} => ` + JSON.stringify(body));
+                console.log(`setValueFromBody/?${TEST_STATE_ID} => ${JSON.stringify(body)}`);
                 expect(error).to.be.not.ok;
 
                 const obj = JSON.parse(body);
