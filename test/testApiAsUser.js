@@ -3,12 +3,12 @@
 /* jslint node: true */
 /* jshint expr: true*/
 
-const expect  = require('chai').expect;
-const setup   = require('./lib/setup');
+const expect = require('chai').expect;
+const setup = require('@iobroker/legacy-testing');
 const request = require('request');
 
 let objects = null;
-let states  = null;
+let states = null;
 
 process.env.NO_PROXY = '127.0.0.1';
 const TEST_STATE_ID = 'simple-api.0.testNumber';
@@ -34,28 +34,32 @@ function checkConnectionOfAdapter(cb, counter) {
 }
 
 function createTestState(cb) {
-    objects.setObject(TEST_STATE_ID, {
-        _id: TEST_STATE_ID,
-        type: 'state',
-        common: {
-            name: 'Test state',
-            type: 'number',
-            read: true,
-            write: false,
-            role: 'indicator.state',
-            unit: '%',
-            def: 0,
-            desc: 'test state'
+    objects.setObject(
+        TEST_STATE_ID,
+        {
+            _id: TEST_STATE_ID,
+            type: 'state',
+            common: {
+                name: 'Test state',
+                type: 'number',
+                read: true,
+                write: false,
+                role: 'indicator.state',
+                unit: '%',
+                def: 0,
+                desc: 'test state',
+            },
+            native: {},
         },
-        native: {}
-    }, () => {
-        states.setState(TEST_STATE_ID, {val: 0, ack: true}, cb && cb);
-    });
+        () => {
+            states.setState(TEST_STATE_ID, { val: 0, ack: true }, cb);
+        },
+    );
 }
 
 describe('Test RESTful API as User', function () {
     before('Test RESTful API as User: Start js-controller', function (_done) {
-        this.timeout(600000); // because of first install from npm
+        this.timeout(600000); // because of the first installation from npm
         setup.adapterStarted = false;
 
         setup.setupController(async () => {
@@ -69,7 +73,7 @@ describe('Test RESTful API as User', function () {
 
             setup.startController(function (_objects, _states) {
                 objects = _objects;
-                states  = _states;
+                states = _states;
                 // give some time to start server
                 setTimeout(() => createTestState(() => _done()), 2000);
             });
@@ -80,121 +84,134 @@ describe('Test RESTful API as User', function () {
         checkConnectionOfAdapter(function (res) {
             if (res) console.log(res);
             expect(res).not.to.be.equal('Cannot check connection');
-            objects.setObject('system.group.writer', {
-              "common": {
-                "name": "Writer",
-                "desc": "",
-                "members": [
-                  "system.user.myuser"
-                ],
-                "acl": {
-                  "object": {
-                    "list": true,
-                    "read": true,
-                    "write": false,
-                    "delete": false
-                  },
-                  "state": {
-                    "list": true,
-                    "read": true,
-                    "write": true,
-                    "create": false,
-                    "delete": false
-                  },
-                  "users": {
-                    "write": false,
-                    "create": false,
-                    "delete": false
-                  },
-                  "other": {
-                    "execute": false,
-                    "http": false,
-                    "sendto": false
-                  },
-                  "file": {
-                    "list": false,
-                    "read": false,
-                    "write": false,
-                    "create": false,
-                    "delete": false
-                  }
-                }
-              },
-              "native": {},
-              "acl": {
-                "object": 1638,
-                "owner": "system.user.admin",
-                "ownerGroup": "system.group.administrator"
-              },
-              "_id": "system.group.writer",
-              "type": "group"
-            }, function (err) {
-                expect(err).to.be.null;
-
-                objects.setObject('system.user.myuser', {
-                    "type": "user",
-                    "common": {
-                        "name": "myuser",
-                        "enabled": true,
-                        "groups": [],
-                        "password": "pbkdf2$10000$ab4104d8bb68390ee7e6c9397588e768de6c025f0c732c18806f3d1270c83f83fa86a7bf62583770e5f8d0b405fbb3ad32214ef3584f5f9332478f2506414443a910bf15863b36ebfcaa7cbb19253ae32cd3ca390dab87b29cd31e11be7fa4ea3a01dad625d9de44e412680e1a694227698788d71f1e089e5831dc1bbacfa794b45e1c995214bf71ee4160d98b4305fa4c3e36ee5f8da19b3708f68e7d2e8197375c0f763d90e31143eb04760cc2148c8f54937b9385c95db1742595634ed004fa567655dfe1d9b9fa698074a9fb70c05a252b2d9cf7ca1c9b009f2cd70d6972ccf0ee281d777d66a0346c6c6525436dd7fe3578b28dca2c7adbfde0ecd45148$31c3248ba4dc9600a024b4e0e7c3e585"
-                    },
-                    "_id": "system.user.myuser",
-                    "native": {},
-                    "acl": {
-                        "object": 1638
-                    }
-                }, function (err) {
-                    expect(err).to.be.null;
-                    objects.setObject('javascript.0.test', {
-                        common: {
-                            name: 'test',
-                            type: 'number',
-                            role: 'level',
-                            min: -100,
-                            max: 100,
-                            def: 1
-                        },
-                        native: {
-                        },
-                        type: 'state',
+            objects.setObject(
+                'system.group.writer',
+                {
+                    common: {
+                        name: 'Writer',
+                        desc: '',
+                        members: ['system.user.myuser'],
                         acl: {
-                            object: 1638,
-                            owner: "system.user.myuser",
-                            ownerGroup:"system.group.administrator",
-                            state: 1638
-                        }
-                    }, function (err) {
-                        expect(err).to.be.null;
-                        states.setState('javascript.0.test',1, function(err) {
+                            object: {
+                                list: true,
+                                read: true,
+                                write: false,
+                                delete: false,
+                            },
+                            state: {
+                                list: true,
+                                read: true,
+                                write: true,
+                                create: false,
+                                delete: false,
+                            },
+                            users: {
+                                write: false,
+                                create: false,
+                                delete: false,
+                            },
+                            other: {
+                                execute: false,
+                                http: false,
+                                sendto: false,
+                            },
+                            file: {
+                                list: false,
+                                read: false,
+                                write: false,
+                                create: false,
+                                delete: false,
+                            },
+                        },
+                    },
+                    native: {},
+                    acl: {
+                        object: 1638,
+                        owner: 'system.user.admin',
+                        ownerGroup: 'system.group.administrator',
+                    },
+                    _id: 'system.group.writer',
+                    type: 'group',
+                },
+                function (err) {
+                    expect(err).to.be.null;
+
+                    objects.setObject(
+                        'system.user.myuser',
+                        {
+                            type: 'user',
+                            common: {
+                                name: 'myuser',
+                                enabled: true,
+                                groups: [],
+                                password:
+                                    'pbkdf2$10000$ab4104d8bb68390ee7e6c9397588e768de6c025f0c732c18806f3d1270c83f83fa86a7bf62583770e5f8d0b405fbb3ad32214ef3584f5f9332478f2506414443a910bf15863b36ebfcaa7cbb19253ae32cd3ca390dab87b29cd31e11be7fa4ea3a01dad625d9de44e412680e1a694227698788d71f1e089e5831dc1bbacfa794b45e1c995214bf71ee4160d98b4305fa4c3e36ee5f8da19b3708f68e7d2e8197375c0f763d90e31143eb04760cc2148c8f54937b9385c95db1742595634ed004fa567655dfe1d9b9fa698074a9fb70c05a252b2d9cf7ca1c9b009f2cd70d6972ccf0ee281d777d66a0346c6c6525436dd7fe3578b28dca2c7adbfde0ecd45148$31c3248ba4dc9600a024b4e0e7c3e585',
+                            },
+                            _id: 'system.user.myuser',
+                            native: {},
+                            acl: {
+                                object: 1638,
+                            },
+                        },
+                        function (err) {
                             expect(err).to.be.null;
-                            objects.setObject('javascript.0.test-number', {
-                                common: {
-                                    name: 'test',
-                                    type: 'number',
-                                    role: 'value',
-                                    def: 0
+                            objects.setObject(
+                                'javascript.0.test',
+                                {
+                                    common: {
+                                        name: 'test',
+                                        type: 'number',
+                                        role: 'level',
+                                        min: -100,
+                                        max: 100,
+                                        def: 1,
+                                    },
+                                    native: {},
+                                    type: 'state',
+                                    acl: {
+                                        object: 1638,
+                                        owner: 'system.user.myuser',
+                                        ownerGroup: 'system.group.administrator',
+                                        state: 1638,
+                                    },
                                 },
-                                native: {
-                                },
-                                type: 'state'
-                            }, err => {
-                                expect(err).to.be.null;
-                                states.setState('javascript.0.test-number', 0, err => {
+                                function (err) {
                                     expect(err).to.be.null;
-                                    done();
-                                });
-                            });
-                        });
-                    });
-                });
-            });
+                                    states.setState('javascript.0.test', 1, function (err) {
+                                        expect(err).to.be.null;
+                                        objects.setObject(
+                                            'javascript.0.test-number',
+                                            {
+                                                common: {
+                                                    name: 'test',
+                                                    type: 'number',
+                                                    role: 'value',
+                                                    def: 0,
+                                                },
+                                                native: {},
+                                                type: 'state',
+                                            },
+                                            err => {
+                                                expect(err).to.be.null;
+                                                states.setState('javascript.0.test-number', 0, err => {
+                                                    expect(err).to.be.null;
+                                                    done();
+                                                });
+                                            },
+                                        );
+                                    });
+                                },
+                            );
+                        },
+                    );
+                },
+            );
         });
-    }).timeout(60000);;
+    }).timeout(60000);
 
     it('Test RESTful API as User: get - must return value', done => {
         request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', (error, response, body) => {
-            console.log('get/system.adapter.simple-api.0.alive => ' + body);
+            console.log(`get/system.adapter.simple-api.0.alive => ${body}`);
             expect(error).to.be.not.ok;
             const obj = JSON.parse(body);
             //{
@@ -221,12 +238,12 @@ describe('Test RESTful API as User', function () {
             expect(obj.ack).to.be.true;
             expect(obj.ts).to.be.ok;
             //expect(obj.from).to.equal("system.adapter.simple-api.0");
-            expect(obj.type).to.equal("state");
-            expect(obj._id).to.equal("system.adapter.simple-api.0.alive");
+            expect(obj.type).to.equal('state');
+            expect(obj._id).to.equal('system.adapter.simple-api.0.alive');
             expect(obj.common).to.be.ok;
             expect(obj.native).to.be.ok;
-            expect(obj.common.name).to.equal("simple-api.0 alive");
-            expect(obj.common.role).to.equal("indicator.state");
+            expect(obj.common.name).to.equal('simple-api.0 alive');
+            expect(obj.common.role).to.equal('indicator.state');
             expect(response.statusCode).to.equal(200);
             done();
         });
@@ -234,7 +251,7 @@ describe('Test RESTful API as User', function () {
 
     it('Test RESTful API as User: getPlainValue - must return plain value', done => {
         request('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', (error, response, body) => {
-            console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
+            console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${body}`);
             expect(error).to.be.not.ok;
             expect(body).equal('true');
             expect(response.statusCode).to.equal(200);
@@ -244,7 +261,7 @@ describe('Test RESTful API as User', function () {
 
     it('Test RESTful API as User: getPlainValue 4 Test-Endpoint - must return plain value', done => {
         request('http://127.0.0.1:18183/getPlainValue/javascript.0.test', (error, response, body) => {
-            console.log('getPlainValue/javascript.0.test => ' + body);
+            console.log(`getPlainValue/javascript.0.test => ${body}`);
             expect(error).to.be.not.ok;
             expect(body).equal('1');
             expect(response.statusCode).to.equal(200);
@@ -254,7 +271,7 @@ describe('Test RESTful API as User', function () {
 
     it('Test RESTful API as User: set 4 Test-Endpoint  - must set value', done => {
         request('http://127.0.0.1:18183/set/javascript.0.test?val=2', (error, response, body) => {
-            console.log('set/javascript.0.test?val=false => ' + body);
+            console.log(`set/javascript.0.test?val=false => ${body}`);
             expect(error).to.be.not.ok;
             const obj = JSON.parse(body);
             expect(obj).to.be.ok;
@@ -262,7 +279,7 @@ describe('Test RESTful API as User', function () {
             expect(obj.id).to.equal('javascript.0.test');
             expect(response.statusCode).to.equal(200);
             request('http://127.0.0.1:18183/getPlainValue/javascript.0.test', (error, response, body) => {
-                console.log('getPlainValue/javascript.0.test => ' + body);
+                console.log(`getPlainValue/javascript.0.test => ${body}`);
                 expect(error).to.be.not.ok;
                 expect(body).equal('2');
                 expect(response.statusCode).to.equal(200);
@@ -280,13 +297,16 @@ describe('Test RESTful API as User', function () {
             expect(obj.val).to.be.false;
             expect(obj.id).to.equal('system.adapter.simple-api.0.alive');
             expect(response.statusCode).to.equal(200);
-            request('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', (error, response, body) => {
-                console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
-                expect(error).to.be.not.ok;
-                expect(body).equal('false');
-                expect(response.statusCode).to.equal(200);
-                done();
-            });
+            request(
+                'http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive',
+                (error, response, body) => {
+                    console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
+                    expect(error).to.be.not.ok;
+                    expect(body).equal('false');
+                    expect(response.statusCode).to.equal(200);
+                    done();
+                },
+            );
         });
     });
 
@@ -299,13 +319,16 @@ describe('Test RESTful API as User', function () {
             expect(obj.val).to.be.true;
             expect(obj.id).to.equal('system.adapter.simple-api.0.alive');
             expect(response.statusCode).to.equal(200);
-            request('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', (error, response, body) => {
-                console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
-                expect(error).to.be.not.ok;
-                expect(body).equal('true');
-                expect(response.statusCode).to.equal(200);
-                done();
-            });
+            request(
+                'http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive',
+                (error, response, body) => {
+                    console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
+                    expect(error).to.be.not.ok;
+                    expect(body).equal('true');
+                    expect(response.statusCode).to.equal(200);
+                    done();
+                },
+            );
         });
     });
 
@@ -319,13 +342,16 @@ describe('Test RESTful API as User', function () {
             expect(obj.id).to.equal('system.adapter.simple-api.0.alive');
             expect(response.statusCode).to.equal(200);
 
-            request('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', (error, response, body) => {
-                console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
-                expect(error).to.be.not.ok;
-                expect(body).equal('false');
-                expect(response.statusCode).to.equal(200);
-                done();
-            });
+            request(
+                'http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive',
+                (error, response, body) => {
+                    console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
+                    expect(error).to.be.not.ok;
+                    expect(body).equal('false');
+                    expect(response.statusCode).to.equal(200);
+                    done();
+                },
+            );
         });
     });
 
@@ -339,13 +365,16 @@ describe('Test RESTful API as User', function () {
             expect(obj.id).to.equal('system.adapter.simple-api.0.alive');
             expect(response.statusCode).to.equal(200);
 
-            request('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', (error, response, body) => {
-                console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
-                expect(error).to.be.not.ok;
-                expect(body).equal('true');
-                expect(response.statusCode).to.equal(200);
-                done();
-            });
+            request(
+                'http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive',
+                (error, response, body) => {
+                    console.log('getPlainValue/system.adapter.simple-api.0.alive => ' + body);
+                    expect(error).to.be.not.ok;
+                    expect(body).equal('true');
+                    expect(response.statusCode).to.equal(200);
+                    done();
+                },
+            );
         });
     });
 
@@ -389,31 +418,42 @@ describe('Test RESTful API as User', function () {
     });
 
     it('Test RESTful API as User: setBulk - must set values', done => {
-        request(`http://127.0.0.1:18183/setBulk/?${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false&javascript.0.test=3`, (error, response, body) => {
-            console.log(`setBulk/?${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false&javascript.0.test=3 => ` + body);
-            expect(error).to.be.not.ok;
-
-            const obj = JSON.parse(body);
-            expect(obj).to.be.ok;
-            expect(obj[0].val).to.be.equal(50);
-            expect(obj[0].id).to.equal(TEST_STATE_ID);
-            expect(obj[1].val).to.be.equal(false);
-            expect(obj[1].id).to.equal('system.adapter.simple-api.0.alive');
-            expect(obj[2].val).to.be.equal(3);
-            expect(obj[2].id).to.equal('javascript.0.test');
-            expect(response.statusCode).to.equal(200);
-
-            request(`http://127.0.0.1:18183/getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive,javascript.0.test`, (error, response, body) => {
-                console.log(`getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive&javascript.0.test => ` + body);
+        request(
+            `http://127.0.0.1:18183/setBulk/?${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false&javascript.0.test=3`,
+            (error, response, body) => {
+                console.log(
+                    `setBulk/?${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false&javascript.0.test=3 => ` +
+                        body,
+                );
                 expect(error).to.be.not.ok;
+
                 const obj = JSON.parse(body);
-                expect(obj[0].val).equal(50);
-                expect(obj[1].val).equal(false);
-                expect(obj[2].val).equal(3);
+                expect(obj).to.be.ok;
+                expect(obj[0].val).to.be.equal(50);
+                expect(obj[0].id).to.equal(TEST_STATE_ID);
+                expect(obj[1].val).to.be.equal(false);
+                expect(obj[1].id).to.equal('system.adapter.simple-api.0.alive');
+                expect(obj[2].val).to.be.equal(3);
+                expect(obj[2].id).to.equal('javascript.0.test');
                 expect(response.statusCode).to.equal(200);
-                done();
-            });
-        });
+
+                request(
+                    `http://127.0.0.1:18183/getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive,javascript.0.test`,
+                    (error, response, body) => {
+                        console.log(
+                            `getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive&javascript.0.test => ` + body,
+                        );
+                        expect(error).to.be.not.ok;
+                        const obj = JSON.parse(body);
+                        expect(obj[0].val).equal(50);
+                        expect(obj[1].val).equal(false);
+                        expect(obj[2].val).equal(3);
+                        expect(response.statusCode).to.equal(200);
+                        done();
+                    },
+                );
+            },
+        );
     });
 
     it('Test RESTful API as User: objects - must return objects', done => {
@@ -444,97 +484,119 @@ describe('Test RESTful API as User', function () {
     });
 
     it('Test RESTful API as User: setBulk(POST) - must set values', done => {
-        request({
-            uri: 'http://127.0.0.1:18183/setBulk',
-            method: 'POST',
-            body: `${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false&javascript.0.test=4`
-        }, function(error, response, body) {
-            console.log(`setBulk/?${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false&javascript.0.test=4 => ` + JSON.stringify(body));
-            expect(error).to.be.not.ok;
-
-            const obj = JSON.parse(body);
-            expect(obj).to.be.ok;
-            expect(obj[0].val).to.be.equal(50);
-            expect(obj[0].id).to.equal(TEST_STATE_ID);
-            expect(obj[1].val).to.be.equal(false);
-            expect(obj[1].id).to.equal('system.adapter.simple-api.0.alive');
-            expect(obj[2].val).to.be.equal(4);
-            expect(obj[2].id).to.equal('javascript.0.test');
-            expect(response.statusCode).to.equal(200);
-
-            request(`http://127.0.0.1:18183/getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive,javascript.0.test`, (error, response, body) => {
-                console.log(`getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive,javascript.0.test => ` + body);
+        request(
+            {
+                uri: 'http://127.0.0.1:18183/setBulk',
+                method: 'POST',
+                body: `${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false&javascript.0.test=4`,
+            },
+            function (error, response, body) {
+                console.log(
+                    `setBulk/?${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false&javascript.0.test=4 => ` +
+                        JSON.stringify(body),
+                );
                 expect(error).to.be.not.ok;
+
                 const obj = JSON.parse(body);
-                expect(obj[0].val).equal(50);
-                expect(obj[1].val).equal(false);
-                expect(obj[2].val).equal(4);
+                expect(obj).to.be.ok;
+                expect(obj[0].val).to.be.equal(50);
+                expect(obj[0].id).to.equal(TEST_STATE_ID);
+                expect(obj[1].val).to.be.equal(false);
+                expect(obj[1].id).to.equal('system.adapter.simple-api.0.alive');
+                expect(obj[2].val).to.be.equal(4);
+                expect(obj[2].id).to.equal('javascript.0.test');
                 expect(response.statusCode).to.equal(200);
-                done();
-            });
-        });
+
+                request(
+                    `http://127.0.0.1:18183/getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive,javascript.0.test`,
+                    (error, response, body) => {
+                        console.log(
+                            `getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive,javascript.0.test => ` + body,
+                        );
+                        expect(error).to.be.not.ok;
+                        const obj = JSON.parse(body);
+                        expect(obj[0].val).equal(50);
+                        expect(obj[1].val).equal(false);
+                        expect(obj[2].val).equal(4);
+                        expect(response.statusCode).to.equal(200);
+                        done();
+                    },
+                );
+            },
+        );
     });
 
     it('Test RESTful API as User: setBulk(POST-GET-Mix) - must set values', done => {
-        request({
-            uri: `http://127.0.0.1:18183/setBulk?${TEST_STATE_ID}=51&system.adapter.simple-api.0.alive=false`,
-            method: 'POST',
-            body: ''
-        }, function(error, response, body) {
-            console.log(`setBulk/?${TEST_STATE_ID}=51&system.adapter.simple-api.0.alive=false => ` + JSON.stringify(body));
-            expect(error).to.be.not.ok;
-            expect(response.statusCode).to.equal(200);
-
-            const obj = JSON.parse(body);
-            expect(obj).to.be.ok;
-            expect(obj[0].val).to.be.equal(51);
-            expect(obj[0].id).to.equal(TEST_STATE_ID);
-            expect(obj[1].val).to.be.equal(false);
-            expect(obj[1].id).to.equal('system.adapter.simple-api.0.alive');
-            expect(response.statusCode).to.equal(200);
-
-            request(`http://127.0.0.1:18183/getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive`, (error, response, body) => {
-                console.log(`getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive => ` + body);
+        request(
+            {
+                uri: `http://127.0.0.1:18183/setBulk?${TEST_STATE_ID}=51&system.adapter.simple-api.0.alive=false`,
+                method: 'POST',
+                body: '',
+            },
+            function (error, response, body) {
+                console.log(
+                    `setBulk/?${TEST_STATE_ID}=51&system.adapter.simple-api.0.alive=false => ` + JSON.stringify(body),
+                );
                 expect(error).to.be.not.ok;
-                const obj = JSON.parse(body);
-                expect(obj[0].val).equal(51);
-                expect(obj[1].val).equal(false);
                 expect(response.statusCode).to.equal(200);
-                done();
-            });
-        });
+
+                const obj = JSON.parse(body);
+                expect(obj).to.be.ok;
+                expect(obj[0].val).to.be.equal(51);
+                expect(obj[0].id).to.equal(TEST_STATE_ID);
+                expect(obj[1].val).to.be.equal(false);
+                expect(obj[1].id).to.equal('system.adapter.simple-api.0.alive');
+                expect(response.statusCode).to.equal(200);
+
+                request(
+                    `http://127.0.0.1:18183/getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive`,
+                    (error, response, body) => {
+                        console.log(`getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive => ` + body);
+                        expect(error).to.be.not.ok;
+                        const obj = JSON.parse(body);
+                        expect(obj[0].val).equal(51);
+                        expect(obj[1].val).equal(false);
+                        expect(response.statusCode).to.equal(200);
+                        done();
+                    },
+                );
+            },
+        );
     });
 
     it('Test RESTful API as User: setValueFromBody(POST) - must set one value', done => {
-        request({
-            uri: `http://127.0.0.1:18183/setValueFromBody/${TEST_STATE_ID}`,
-            method: 'POST',
-            body: '55'
-        }, (error, response, body) => {
-            console.log(`setValueFromBody/?${TEST_STATE_ID} => ` + JSON.stringify(body));
-            expect(error).to.be.not.ok;
-
-            const obj = JSON.parse(body);
-            expect(obj).to.be.ok;
-            expect(obj[0].val).to.be.equal(55);
-            expect(obj[0].id).to.equal(TEST_STATE_ID);
-            expect(response.statusCode).to.equal(200);
-
-            request(`http://127.0.0.1:18183/getBulk/${TEST_STATE_ID}`, (error, response, body) => {
-                console.log(`getBulk/${TEST_STATE_ID} => ` + body);
+        request(
+            {
+                uri: `http://127.0.0.1:18183/setValueFromBody/${TEST_STATE_ID}`,
+                method: 'POST',
+                body: '55',
+            },
+            (error, response, body) => {
+                console.log(`setValueFromBody/?${TEST_STATE_ID} => ${JSON.stringify(body)}`);
                 expect(error).to.be.not.ok;
+
                 const obj = JSON.parse(body);
-                expect(obj[0].val).equal(55);
+                expect(obj).to.be.ok;
+                expect(obj[0].val).to.be.equal(55);
+                expect(obj[0].id).to.equal(TEST_STATE_ID);
                 expect(response.statusCode).to.equal(200);
-                done();
-            });
-        });
+
+                request(`http://127.0.0.1:18183/getBulk/${TEST_STATE_ID}`, (error, response, body) => {
+                    console.log(`getBulk/${TEST_STATE_ID} => ${body}`);
+                    expect(error).to.be.not.ok;
+                    const obj = JSON.parse(body);
+                    expect(obj[0].val).equal(55);
+                    expect(response.statusCode).to.equal(200);
+                    done();
+                });
+            },
+        );
     });
 
     after('Test RESTful API as User: Stop js-controller', function (done) {
         this.timeout(9000);
         setup.stopController(normalTerminated => {
-            console.log('Adapter normal terminated: ' + normalTerminated);
+            console.log(`Adapter normal terminated: ${normalTerminated}`);
             setTimeout(done, 3000);
         });
     });
