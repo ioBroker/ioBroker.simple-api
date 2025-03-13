@@ -222,12 +222,12 @@ describe('Test RESTful API', function () {
     });
 
     it('Test RESTful API: set - must set easy string value', done => {
-        request('http://127.0.0.1:18183/set/javascript.0.test-string?val=bla', (error, response, body) => {
-            console.log(`set/javascript.0.test-string?val=bla => ${body}`);
+        request('http://127.0.0.1:18183/set/javascript.0.test-string?val=bla,bla-0', (error, response, body) => {
+            console.log(`set/javascript.0.test-string?val=bla,bla-0 => ${body}`);
             expect(error).to.be.not.ok;
             const obj = JSON.parse(body);
             expect(obj).to.be.ok;
-            expect(obj.val).equal('bla');
+            expect(obj.val).equal('bla,bla-0');
             expect(obj.id).to.equal('javascript.0.test-string');
             expect(response.statusCode).to.equal(200);
             request('http://127.0.0.1:18183/getPlainValue/javascript.0.test-string', (error, response, body) => {
