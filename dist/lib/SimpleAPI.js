@@ -872,8 +872,9 @@ class SimpleAPI {
                         else if (value === 'false') {
                             value = false;
                         }
-                        else if (!isNaN(parseFloat(value))) {
-                            value = parseFloat(value);
+                        else if (value &&
+                            parseFloat(value.replace(',', '.')).toString() === value.replace(',', '.')) {
+                            value = parseFloat(value.replace(',', '.'));
                         }
                     }
                     else {
@@ -882,7 +883,12 @@ class SimpleAPI {
                             value = value === 'true' || value === '1';
                         }
                         else if (type === 'number') {
-                            value = parseFloat(value);
+                            if (value) {
+                                value = parseFloat(value.replace(',', '.'));
+                            }
+                            else {
+                                value = null;
+                            }
                         }
                         else if (type === 'json' || type === 'array' || type === 'object') {
                             try {
@@ -1025,8 +1031,8 @@ class SimpleAPI {
                         else if (value === 'false') {
                             value = false;
                         }
-                        else {
-                            const f = parseFloat(value);
+                        else if (value) {
+                            const f = parseFloat(value.replace(',', '.'));
                             if (!isNaN(f) && value === f.toString()) {
                                 value = f;
                             }

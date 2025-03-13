@@ -3,19 +3,6 @@
     "name": "simple-api",
     "version": "3.0.1",
     "news": {
-      "3.0.1": {
-        "en": "Corrected the indication of running mode in admin",
-        "de": "Korrektur der Anzeige des Betriebsmodus in admin",
-        "ru": "Исправлено указание режима работы в админ",
-        "pt": "Corrigido a indicação do modo de execução no admin",
-        "nl": "De indicatie van de lopende modus in admin gecorrigeerd",
-        "fr": "Correction de l'indication du mode d'exécution en admin",
-        "it": "Corretto l'indicazione della modalità di esecuzione in admin",
-        "es": "Corregido la indicación del modo de funcionamiento en admin",
-        "pl": "Poprawiono wskazanie trybu pracy w admin",
-        "uk": "Виправлено показання режиму роботи в адміні",
-        "zh-cn": "纠正管理器中运行模式的提示"
-      },
       "3.0.0": {
         "en": "Updated packages\nMigrated to TypeScript\nIf State/Object not found, the response will be 404 (and not 500)\nIf a user has no permission, the response will be 403 (and not 401)",
         "de": "Aktualisierte Pakete\nZu TypeScript migriert\nWenn Staat/Ziel nicht gefunden wird, wird die Antwort 404 (und nicht 500)\nWenn ein Benutzer keine Erlaubnis hat, wird die Antwort 403 (und nicht 401)",

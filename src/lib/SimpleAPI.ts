@@ -1034,15 +1034,22 @@ export class SimpleAPI {
                             value = true;
                         } else if (value === 'false') {
                             value = false;
-                        } else if (!isNaN(parseFloat(value as string))) {
-                            value = parseFloat(value as string);
+                        } else if (
+                            value &&
+                            parseFloat(value.replace(',', '.')).toString() === value.replace(',', '.')
+                        ) {
+                            value = parseFloat(value.replace(',', '.'));
                         }
                     } else {
                         // type is known
                         if (type === 'boolean') {
                             value = value === 'true' || value === '1';
                         } else if (type === 'number') {
-                            value = parseFloat(value as string);
+                            if (value) {
+                                value = parseFloat(value.replace(',', '.'));
+                            } else {
+                                value = null;
+                            }
                         } else if (type === 'json' || type === 'array' || type === 'object') {
                             try {
                                 value = JSON.parse(value as string);
@@ -1193,8 +1200,8 @@ export class SimpleAPI {
                             value = true;
                         } else if (value === 'false') {
                             value = false;
-                        } else {
-                            const f = parseFloat(value as string);
+                        } else if (value) {
+                            const f = parseFloat(value.replace(',', '.'));
                             if (!isNaN(f) && value === f.toString()) {
                                 value = f;
                             }
