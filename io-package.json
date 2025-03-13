@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "simple-api",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "news": {
+      "3.0.1": {
+        "en": "Corrected the indication of running mode in admin",
+        "de": "Korrektur der Anzeige des Betriebsmodus in admin",
+        "ru": "Исправлено указание режима работы в админ",
+        "pt": "Corrigido a indicação do modo de execução no admin",
+        "nl": "De indicatie van de lopende modus in admin gecorrigeerd",
+        "fr": "Correction de l'indication du mode d'exécution en admin",
+        "it": "Corretto l'indicazione della modalità di esecuzione in admin",
+        "es": "Corregido la indicación del modo de funcionamiento en admin",
+        "pl": "Poprawiono wskazanie trybu pracy w admin",
+        "uk": "Виправлено показання режиму роботи в адміні",
+        "zh-cn": "纠正管理器中运行模式的提示"
+      },
       "3.0.0": {
         "en": "Updated packages\nMigrated to TypeScript\nIf State/Object not found, the response will be 404 (and not 500)\nIf a user has no permission, the response will be 403 (and not 401)",
         "de": "Aktualisierte Pakete\nZu TypeScript migriert\nWenn Staat/Ziel nicht gefunden wird, wird die Antwort 404 (und nicht 500)\nWenn ein Benutzer keine Erlaubnis hat, wird die Antwort 403 (und nicht 401)",
@@ -76,18 +89,6 @@
         "es": "Agregado de soporte agregado y conteo para consultas",
         "pl": "Dodano agregację wsparcia i liczbę zapytań",
         "zh-cn": "添加了对查询的支持聚合和计数"
-      },
-      "2.6.4": {
-        "en": "Optimize performance, especially when using names instead of object ids",
-        "de": "Optimieren Sie die Leistung, insbesondere bei der Verwendung von Namen anstelle von Objekt-IDs",
-        "ru": "Оптимизация производительности, особенно при использовании имен вместо идентификаторов объектов.",
-        "pt": "Otimize o desempenho, especialmente ao usar nomes em vez de IDs de objetos",
-        "nl": "Optimaliseer de prestaties, vooral bij het gebruik van namen in plaats van object-ID's",
-        "fr": "Optimisez les performances, en particulier lorsque vous utilisez des noms au lieu d'ID d'objet",
-        "it": "Ottimizza le prestazioni, soprattutto quando si utilizzano nomi anziché ID oggetto",
-        "es": "Optimice el rendimiento, especialmente cuando use nombres en lugar de identificadores de objetos",
-        "pl": "Zoptymalizuj wydajność, zwłaszcza gdy używasz nazw zamiast identyfikatorów obiektów",
-        "zh-cn": "优化性能，尤其是在使用名称而不是对象 ID 时"
       }
     },
     "title": "Simple RESTful API",

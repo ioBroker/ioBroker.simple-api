@@ -44,8 +44,10 @@ class SimpleApiAdapter extends adapter_core_1.Adapter {
         if (this.config.webInstance) {
             console.log('Adapter runs as a part of web service');
             this.log.warn('Adapter runs as a part of web service');
+            await this.setState('info.extension', true, true);
             return this.setForeignState(`system.adapter.${this.namespace}.alive`, false, true, () => setTimeout(() => (this.terminate ? this.terminate() : process.exit()), 1000));
         }
+        await this.setState('info.extension', false, true);
         if (this.config.secure) {
             // Load certificates
             await new Promise(resolve => this.getCertificates(undefined, undefined, undefined, (_err, certificates) => {
