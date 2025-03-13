@@ -233,12 +233,12 @@ describe('Test RESTful API', function () {
             request('http://127.0.0.1:18183/getPlainValue/javascript.0.test-string', (error, response, body) => {
                 console.log(`getPlainValue/javascript.0.test-string => ${body}`);
                 expect(error).to.be.not.ok;
-                expect(body).equal('"bla"');
+                expect(body).equal('"bla,bla-0"');
                 expect(response.statusCode).to.equal(200);
                 request('http://127.0.0.1:18183/get/javascript.0.test-string', (error, response, body) => {
                     console.log(`get/javascript.0.test-string => ${body}`);
                     expect(error).to.be.not.ok;
-                    expect(JSON.parse(body).val).equal('bla');
+                    expect(JSON.parse(body).val).equal('bla,bla-0');
                     expect(response.statusCode).to.equal(200);
                     done();
                 });
