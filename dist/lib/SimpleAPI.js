@@ -149,7 +149,8 @@ class SimpleAPI {
     objectChange(id, _obj) {
         // Clear from cache, will be reinitialized on next usage
         if (this.cachedIds.has(id)) {
-            const name = this.cachedIds.get(id)?.name;
+            const cachedItem = this.cachedIds.get(id);
+            const name = cachedItem?.name;
             if (name) {
                 this.cachedIds.delete(id);
                 this.cachedNames.delete(name);
@@ -452,12 +453,12 @@ class SimpleAPI {
     async findState(idOrName, user) {
         // By ID
         let r = this.cachedIds.get(idOrName);
-        if (r) {
+        if (r && r.time > Date.now()) {
             return r;
         }
         // By name
         r = this.cachedNames.get(idOrName);
-        if (r) {
+        if (r && r.time > Date.now()) {
             return r;
         }
         const result = 
@@ -471,10 +472,11 @@ class SimpleAPI {
             else {
                 name = result.name || '';
             }
-            this.cachedIds.set(result.id, { id: result.id, name });
+            // Cache is valid only 10 minutes
+            this.cachedIds.set(result.id, { id: result.id, name, time: Date.now() + 600_000 });
             if (idOrName !== result.id) {
                 // search was for a name, so also cache the name
-                this.cachedNames.set(name, { id: result.id, name });
+                this.cachedNames.set(name, { id: result.id, name, time: Date.now() + 600_000 });
             }
             return { id: result.id, name };
         }

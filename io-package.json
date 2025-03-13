@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "simple-api",
-    "version": "3.0.4",
+    "version": "3.0.5",
     "news": {
+      "3.0.5": {
+        "en": "Corrected the indication of running mode in admin\nCorrected the writing of numeric values\nClear cache after 10 minutes",
+        "de": "Korrektur der Anzeige des Betriebsmodus in admin\nKorrektur des Schreibens von numerischen Werten\nCache nach 10 Minuten",
+        "ru": "Исправлено указание режима работы в админ\nИсправлено написание числовых значений\nЧистый кэш через 10 минут",
+        "pt": "Corrigido a indicação do modo de execução no admin\nCorrigido a escrita de valores numéricos\nLimpar o cache após 10 minutos",
+        "nl": "De indicatie van de lopende modus in admin gecorrigeerd\nGecorrigeerd schrijven van numerieke waarden\nCache wissen na 10 minuten",
+        "fr": "Correction de l'indication du mode d'exécution en admin\nCorrection de l'écriture des valeurs numériques\nEffacer le cache après 10 minutes",
+        "it": "Corretto l'indicazione della modalità di esecuzione in admin\nCorretto la scrittura dei valori numerici\nCancella la cache dopo 10 minuti",
+        "es": "Corregido la indicación del modo de funcionamiento en admin\nCorregido la escritura de valores numéricos\nCaché transparente después de 10 minutos",
+        "pl": "Poprawiono wskazanie trybu pracy w admin\nKorekta zapisu wartości liczbowych\nWyczyść pamięć podręczną po 10 minutach",
+        "uk": "Виправлено показання режиму роботи в адміні\nВиправлено написання нумеричних значень\nОчистити кеш через 10 хвилин",
+        "zh-cn": "纠正管理器中运行模式的提示\n更正数值的写入\n10分钟后清除缓存"
+      },
       "3.0.0": {
         "en": "Updated packages\nMigrated to TypeScript\nIf State/Object not found, the response will be 404 (and not 500)\nIf a user has no permission, the response will be 403 (and not 401)",
         "de": "Aktualisierte Pakete\nZu TypeScript migriert\nWenn Staat/Ziel nicht gefunden wird, wird die Antwort 404 (und nicht 500)\nWenn ein Benutzer keine Erlaubnis hat, wird die Antwort 403 (und nicht 401)",
