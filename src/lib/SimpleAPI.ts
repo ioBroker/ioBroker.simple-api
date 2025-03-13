@@ -105,8 +105,8 @@ export class SimpleAPI {
     private readonly config: SimpleApiAdapterConfig;
     private readonly namespace: string;
     private readonly app?: Express;
-    private readonly cachedNames: Map<string, { id: string; name: string }> = new Map();
-    private readonly cachedIds: Map<string, { id: string; name: string }> = new Map();
+    private readonly cachedNames: Map<string, { id: string; name: string; time: number }> = new Map();
+    private readonly cachedIds: Map<string, { id: string; name: string; time: number }> = new Map();
 
     private readonly restApiDelayed: {
         id: string;
@@ -205,7 +205,8 @@ export class SimpleAPI {
     objectChange(id: string, _obj: ioBroker.Object | null | undefined): void {
         // Clear from cache, will be reinitialized on next usage
         if (this.cachedIds.has(id)) {
-            const name = this.cachedIds.get(id)?.name;
+            const cachedItem = this.cachedIds.get(id);
+            const name = cachedItem?.name;
             if (name) {
                 this.cachedIds.delete(id);
                 this.cachedNames.delete(name);
@@ -555,12 +556,12 @@ export class SimpleAPI {
     async findState(idOrName: string, user: `system.user.${string}`): Promise<{ id: string; name: string }> {
         // By ID
         let r = this.cachedIds.get(idOrName);
-        if (r) {
+        if (r && r.time > Date.now()) {
             return r;
         }
         // By name
         r = this.cachedNames.get(idOrName);
-        if (r) {
+        if (r && r.time > Date.now()) {
             return r;
         }
 
@@ -574,10 +575,11 @@ export class SimpleAPI {
             } else {
                 name = (result.name as string) || '';
             }
-            this.cachedIds.set(result.id, { id: result.id, name });
+            // Cache is valid only 10 minutes
+            this.cachedIds.set(result.id, { id: result.id, name, time: Date.now() + 600_000 });
             if (idOrName !== result.id) {
                 // search was for a name, so also cache the name
-                this.cachedNames.set(name, { id: result.id, name });
+                this.cachedNames.set(name, { id: result.id, name, time: Date.now() + 600_000 });
             }
             return { id: result.id, name };
         }
