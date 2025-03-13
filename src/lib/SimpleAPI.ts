@@ -999,7 +999,7 @@ export class SimpleAPI {
                         this.doErrorResponse(res, responseType, 404, `error: datapoint "${oId[0]}" not found`);
                         return;
                     }
-                    const type = values.type;
+                    let type = values.type;
                     let value: ioBroker.StateValue;
 
                     if (values.val === undefined) {
@@ -1010,6 +1010,24 @@ export class SimpleAPI {
 
                     // Ack=true cannot be awaited
                     const wait = !query.ack ? query.wait || 0 : 0;
+
+                    if (
+                        !type ||
+                        (type !== 'boolean' &&
+                            type !== 'number' &&
+                            type !== 'string' &&
+                            type !== 'json' &&
+                            type !== 'object' &&
+                            type !== 'array')
+                    ) {
+                        // try to read type from an object
+                        const obj = await this.adapter.getForeignObjectAsync(id, { user });
+                        if (!obj) {
+                            this.doErrorResponse(res, responseType, 404, `error: datapoint "${oId[0]}" not found`);
+                            return;
+                        }
+                        type = obj.common?.type;
+                    }
 
                     // If type is not defined or not known
                     if (
