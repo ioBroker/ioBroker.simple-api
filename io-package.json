@@ -175,5 +175,41 @@
     "leCheckPort": 80,
     "dataSource": "",
     "allDatapoints": false
-  }
+  },
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": {
+          "en": "Information",
+          "de": "Information",
+          "ru": "Информация",
+          "pt": "Em formação",
+          "nl": "Informatie",
+          "fr": "Information",
+          "it": "Informazione",
+          "es": "Información",
+          "pl": "Informacja",
+          "uk": "Інформація",
+          "zh-cn": "信息"
+        }
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.extension",
+      "type": "state",
+      "common": {
+        "role": "indicator",
+        "name": "If instance is in only extension mode",
+        "type": "boolean",
+        "read": true,
+        "expert": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    }
+  ]
 }

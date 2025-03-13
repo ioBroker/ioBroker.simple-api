@@ -585,6 +585,9 @@ If no data source was specified or the noHistory parameter is passed, then only 
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
+### **WORK IN PROGRESS**
+* (bluefox) Corrected the indication of running mode in admin
+
 ### 3.0.0 (2025-03-09)
 * (bluefox) Updated packages
 * (bluefox) Migrated to TypeScript
