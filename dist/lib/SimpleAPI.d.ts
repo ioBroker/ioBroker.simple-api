@@ -52,6 +52,7 @@ export declare class SimpleAPI {
         auth?: boolean;
         language?: ioBroker.Languages;
     }, adapter: ioBroker.Adapter, instanceSettings: ioBroker.InstanceObject, app?: Express);
+    static convertRelativeTime(relativeTime: string | undefined): number | null;
     isAuthenticated(req: Request & {
         user?: string;
     }, query: SimpleApiQuery): Promise<boolean>;

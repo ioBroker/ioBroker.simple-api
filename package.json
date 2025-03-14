@@ -31,6 +31,8 @@
   "dependencies": {
     "@iobroker/adapter-core": "^3.2.3",
     "@iobroker/webserver": "^1.2.0",
+    "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.7",
     "express": "^4.21.2"
   },
   "devDependencies": {
@@ -42,6 +44,8 @@
     "@iobroker/legacy-testing": "^2.0.2",
     "@iobroker/testing": "^5.0.3",
     "@iobroker/types": "^7.0.6",
+    "@types/body-parser": "^1.19.5",
+    "@types/cookie-parser": "^1.4.8",
     "@types/express": "^4.17.21",
     "@types/node": "^22.13.10",
     "chai": "^4.5.0",

@@ -118,6 +118,96 @@ class SimpleAPI {
         // Subscribe on object changes to manage cache
         this.adapter.subscribeForeignObjects('*');
     }
+    static convertRelativeTime(relativeTime) {
+        if (!relativeTime) {
+            return null;
+        }
+        const now = new Date();
+        const date = new Date(now);
+        switch (relativeTime) {
+            case 'today':
+                date.setHours(0, 0, 0, 0);
+                break;
+            case 'yesterday':
+                date.setDate(now.getDate() - 1);
+                date.setHours(0, 0, 0, 0);
+                break;
+            case 'week':
+            case 'thisWeek':
+            case 'this week':
+                date.setDate(now.getDate() - now.getDay());
+                date.setHours(0, 0, 0, 0);
+                break;
+            case 'hour':
+            case 'thisHour':
+            case 'this hour':
+                date.setHours(date.getHours(), 0, 0, 0);
+                break;
+            case 'lastHour':
+            case 'last hour':
+                date.setHours(date.getHours() - 1, 0, 0, 0);
+                break;
+            case 'lastWeek':
+            case 'last week':
+                date.setDate(now.getDate() - now.getDay() - 7);
+                date.setHours(0, 0, 0, 0);
+                break;
+            case 'month':
+            case 'thisMonth':
+            case 'this month':
+                date.setDate(1);
+                date.setHours(0, 0, 0, 0);
+                break;
+            case 'lastMonth':
+            case 'last month':
+                date.setMonth(now.getMonth() - 1);
+                date.setDate(1);
+                date.setHours(0, 0, 0, 0);
+                break;
+            case 'year':
+            case 'thisYear':
+            case 'this year':
+                date.setMonth(0, 1);
+                date.setHours(0, 0, 0, 0);
+                break;
+            case 'lastYear':
+            case 'last year':
+                date.setFullYear(now.getFullYear() - 1, 0, 1);
+                date.setHours(0, 0, 0, 0);
+                break;
+            default: {
+                const match = relativeTime.match(/^(-?\d+)([dMhms])$/);
+                if (match) {
+                    const value = parseInt(match[1], 10);
+                    const unit = match[2];
+                    switch (unit) {
+                        case 'd':
+                            date.setDate(now.getDate() + value);
+                            break;
+                        case 'M':
+                            date.setMonth(now.getMonth() + value);
+                            break;
+                        case 'h':
+                            date.setHours(now.getHours() + value);
+                            break;
+                        case 'm':
+                            date.setMinutes(now.getMinutes() + value);
+                            break;
+                        case 's':
+                            date.setSeconds(now.getSeconds() + value);
+                            break;
+                        case 'y':
+                            date.setFullYear(now.getFullYear() + value);
+                            break;
+                    }
+                }
+                else {
+                    return null;
+                }
+            }
+        }
+        return date.getTime();
+    }
     async isAuthenticated(req, query) {
         // Authenticated via OAuth2
         if (req.user) {
@@ -385,8 +475,9 @@ class SimpleAPI {
                     this.adapter.log.debug(`[QUERY] targets = ${JSON.stringify(bodyQuery.targets)}`);
                     this.adapter.log.debug(`[QUERY] range = ${JSON.stringify(bodyQuery.range)}`);
                     if (bodyQuery.range) {
-                        dateFrom = Date.parse(bodyQuery.range.from);
-                        dateTo = Date.parse(bodyQuery.range.to);
+                        dateFrom =
+                            SimpleAPI.convertRelativeTime(bodyQuery.range.from) || Date.parse(bodyQuery.range.from);
+                        dateTo = SimpleAPI.convertRelativeTime(bodyQuery.range.to) || Date.parse(bodyQuery.range.to);
                     }
                     const options = {
                         start: dateFrom,
@@ -1204,10 +1295,10 @@ class SimpleAPI {
                 let dateFrom = Date.now();
                 let dateTo = Date.now();
                 if (values.dateFrom) {
-                    dateFrom = Date.parse(values.dateFrom);
+                    dateFrom = SimpleAPI.convertRelativeTime(values.dateFrom) || Date.parse(values.dateFrom);
                 }
                 if (values.dateTo) {
-                    dateTo = Date.parse(values.dateTo);
+                    dateTo = SimpleAPI.convertRelativeTime(values.dateTo) || Date.parse(values.dateTo);
                 }
                 const options = {
                     start: dateFrom,
