@@ -605,6 +605,7 @@ This adapter supports the following types of authentication:
 ### **WORK IN PROGRESS**
 * (bluefox) Added support for 'Access-Control-Allow-Origin'
 * (bluefox) Removed letsencrypt information
+* (bluefox) Added basic and OAuth2 authentication
 
 ### 3.0.5 (2025-03-13)
 * (bluefox) Corrected the indication of running mode in admin

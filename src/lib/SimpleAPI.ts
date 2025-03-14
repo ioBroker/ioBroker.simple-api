@@ -1306,7 +1306,19 @@ export class SimpleAPI {
                             limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
                         },
                     );
-                    this.doResponse(res, responseType, list, query.prettyPrint);
+                    if (values.pattern?.includes('*') && !values.pattern.match(/\*$/)) {
+                        // pattern to regex
+                        const reg = new RegExp(values.pattern.replace(/\./g, '\\.').replace(/\*/g, '.*'));
+                        const filteredList: Record<string, ioBroker.AnyObject> = {};
+                        Object.keys(list).forEach(id => {
+                            if (reg.test(id)) {
+                                filteredList[id] = list[id];
+                            }
+                        });
+                        this.doResponse(res, responseType, filteredList, query.prettyPrint);
+                    } else {
+                        this.doResponse(res, responseType, list, query.prettyPrint);
+                    }
                 } catch (err) {
                     if (err.toString().includes(ERROR_PERMISSION)) {
                         this.doResponse(res, responseType, 403, err.toString());
