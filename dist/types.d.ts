@@ -1,6 +1,7 @@
 export interface SimpleApiAdapterConfig {
     port: number | string;
     auth: boolean;
+    ttl: number | string;
     secure: boolean;
     bind: string;
     certPublic: string;
@@ -14,6 +15,7 @@ export interface SimpleApiAdapterConfig {
     leCheckPort: number | string;
     dataSource: string;
     allDatapoints: boolean;
+    accessControlAllowOrigin: string;
 }
 
 declare class ExtAPI {

@@ -8,6 +8,21 @@ declare const commandsPermissions: {
         operation: 'read' | 'write' | 'list' | '';
     };
 };
+type SimpleApiQuery = {
+    user?: string;
+    pass?: string;
+    prettyPrint?: boolean;
+    json?: boolean;
+    noStringify?: boolean;
+    wait?: number;
+    timeRFC3339?: boolean;
+    type?: ioBroker.CommonType | 'json';
+    ack: boolean;
+};
+type IoBrokerStateWithIsoTime = (Omit<ioBroker.State, 'ts' | 'lc'> & {
+    ts?: string | number;
+    lc?: string | number;
+}) | null;
 type CommandName = keyof typeof commandsPermissions;
 /**
  * SimpleAPI class
@@ -36,59 +51,30 @@ export declare class SimpleAPI {
         auth?: boolean;
         language?: ioBroker.Languages;
     }, adapter: ioBroker.Adapter, instanceSettings: ioBroker.InstanceObject, app?: Express);
-    isAuthenticated(query: {
+    isAuthenticated(req: Request & {
         user?: string;
-        pass?: string;
-    }): Promise<boolean>;
+    }, query: SimpleApiQuery): Promise<boolean>;
     stateChange(id: string, state: ioBroker.State | null | undefined): void;
     objectChange(id: string, _obj: ioBroker.Object | null | undefined): void;
-    static parseQuery(input: string | undefined, query: {
-        user?: string;
-        pass?: string;
-        prettyPrint?: boolean;
-        json?: boolean;
-        noStringify?: boolean;
-        wait?: number;
-        ack: boolean;
-    }, values: Record<string, string | null>): void;
-    setStates(values: Record<string, string | null>, query: {
-        user?: string;
-        pass?: string;
-        prettyPrint?: boolean;
-        json?: boolean;
-        noStringify?: boolean;
-        wait?: number;
-        ack: boolean;
-    }): Promise<{
+    static parseQuery(input: string | undefined, query: SimpleApiQuery, values: Record<string, string | null>): void;
+    setStates(values: Record<string, string | null>, query: SimpleApiQuery): Promise<{
         id?: string;
         val?: boolean | string | number;
         error?: string;
     }[]>;
-    restApiPost(req: Request, res: Response, command: CommandName, oId: string[], values: Record<string, string | null>, query: {
-        user?: string;
-        pass?: string;
-        prettyPrint?: boolean;
-        json?: boolean;
-        noStringify?: boolean;
-        wait?: number;
-        ack: boolean;
-    }): Promise<void>;
+    restApiPost(req: Request, res: Response, command: CommandName, oId: string[], values: Record<string, string | null>, query: SimpleApiQuery): Promise<void>;
     findState(idOrName: string, user: `system.user.${string}`): Promise<{
         id: string;
         name: string;
     }>;
-    getState(idOrName: string, user: `system.user.${string}`): Promise<{
-        state: ioBroker.State | null | undefined;
+    getState(idOrName: string, user: `system.user.${string}`, query: SimpleApiQuery): Promise<{
+        state: IoBrokerStateWithIsoTime;
         id: string;
     }>;
-    doResponse(res: Response, type: 'json' | 'plain', content?: any, pretty?: boolean): void;
-    doErrorResponse(res: Response, type: 'json' | 'plain', status: 401 | 403 | 404 | 422 | 500, error?: string): void;
+    doResponse(res: Response, responseType: 'json' | 'plain', content?: any, pretty?: boolean): void;
+    doErrorResponse(res: Response, responseType: 'json' | 'plain', status: 401 | 403 | 404 | 422 | 500, error?: string): void;
     checkPermissions(user: `system.user.${string}`, command: CommandName): Promise<boolean>;
-    setValue(id: string, value: ioBroker.StateValue, res: Response, wait: number, query: {
-        ack: boolean;
-        user?: string;
-        prettyPrint?: boolean;
-    }, responseType: 'json' | 'plain'): Promise<void>;
+    setValue(id: string, value: ioBroker.StateValue, res: Response, wait: number, query: SimpleApiQuery, responseType: 'json' | 'plain'): Promise<void>;
     restApi(req: Request, res: Response, overwriteUrl?: string): Promise<void>;
 }
 export {};

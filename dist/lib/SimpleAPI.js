@@ -118,7 +118,21 @@ class SimpleAPI {
         // Subscribe on object changes to manage cache
         this.adapter.subscribeForeignObjects('*');
     }
-    async isAuthenticated(query) {
+    async isAuthenticated(req, query) {
+        // Authenticated via OAuth2
+        if (req.user) {
+            query.user = req.user;
+            return true;
+        }
+        // Authenticated via Basic Auth
+        if (req.headers.authorization?.startsWith('Basic ')) {
+            const auth = Buffer.from(req.headers.authorization.split(' ')[1], 'base64').toString('utf8');
+            const pos = auth.indexOf(':');
+            if (pos !== -1) {
+                query.user = auth.substring(0, pos);
+                query.pass = auth.substring(pos + 1);
+            }
+        }
         if (!query.user || !query.pass) {
             this.adapter.log.warn('No password or username!');
             return false;
@@ -195,6 +209,13 @@ class SimpleAPI {
                 else if (name === 'ack') {
                     const val = decodeURIComponent(value?.trim() || '');
                     query.ack = val === 'true' || val === '1';
+                }
+                else if (name === 'timeRFC3339') {
+                    const val = decodeURIComponent(value?.trim() || '');
+                    query.timeRFC3339 = val === 'true' || val === '1';
+                }
+                else if (name === 'type') {
+                    query.type = decodeURIComponent(value?.trim() || '');
                 }
                 else {
                     values[name] =
@@ -402,10 +423,10 @@ class SimpleAPI {
                         else {
                             this.adapter.log.debug('Read last state');
                             try {
-                                const { state, id } = await this.getState(bodyQuery.targets[b].target, user);
+                                const { state, id } = await this.getState(bodyQuery.targets[b].target, user, query);
                                 element.target = id;
                                 if (state) {
-                                    element.datapoints = [[state.val, state.ts]];
+                                    element.datapoints = [[state.val, state.ts || null]];
                                 }
                                 else {
                                     element.datapoints = [[null, null]];
@@ -482,23 +503,30 @@ class SimpleAPI {
         }
         throw new Error(`datapoint "${idOrName}" not found`);
     }
-    async getState(idOrName, user) {
+    async getState(idOrName, user, query) {
         const result = await this.findState(idOrName, user);
+        const state = (await this.adapter.getForeignStateAsync(result.id, {
+            user,
+            limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
+        })) || null;
+        if (query.timeRFC3339 && state?.ts) {
+            state.ts = new Date(state.ts).toISOString();
+            if (state.lc) {
+                state.lc = new Date(state.lc).toISOString();
+            }
+        }
         return {
-            state: await this.adapter.getForeignStateAsync(result.id, {
-                user,
-                limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
-            }),
+            state,
             id: result.id,
         };
     }
-    doResponse(res, type, content, pretty) {
+    doResponse(res, responseType, content, pretty) {
         let response;
         if (pretty && typeof content === 'object') {
-            type = 'plain';
+            responseType = 'plain';
             response = JSON.stringify(content, null, 2);
         }
-        else if (type === 'json') {
+        else if (responseType === 'json') {
             response = JSON.stringify(content);
         }
         else if (typeof content === 'object') {
@@ -509,14 +537,14 @@ class SimpleAPI {
         }
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-        res.setHeader('Content-Type', type === 'json' ? 'application/json; charset=utf-8' : 'text/html; charset=utf-8');
+        res.setHeader('Content-Type', responseType === 'json' ? 'application/json; charset=utf-8' : 'text/html; charset=utf-8');
         res.statusCode = 200;
         res.end(response, 'utf8');
     }
-    doErrorResponse(res, type, status, error) {
+    doErrorResponse(res, responseType, status, error) {
         let response;
         response = escapeHtml(error || 'unknown', true);
-        if (type === 'json') {
+        if (responseType === 'json') {
             response = JSON.stringify({ error: response.replace('Error: ', '') });
         }
         else if (!response.startsWith('error: ') && !response.startsWith('Error: ')) {
@@ -527,7 +555,7 @@ class SimpleAPI {
         }
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-        res.setHeader('Content-Type', type === 'json' ? 'application/json; charset=utf-8' : 'text/html; charset=utf-8');
+        res.setHeader('Content-Type', responseType === 'json' ? 'application/json; charset=utf-8' : 'text/html; charset=utf-8');
         res.statusCode = status;
         res.end(response, 'utf8');
     }
@@ -654,6 +682,17 @@ class SimpleAPI {
         const values = {};
         const query = { ack: false };
         let oId = [];
+        if (this.config.accessControlAllowOrigin) {
+            res.setHeader('Access-Control-Allow-Origin', this.config.accessControlAllowOrigin);
+            res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+            res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+            res.setHeader('Access-Control-Max-Age', '3600');
+        }
+        if (req.method === 'OPTIONS') {
+            res.statusCode = 204;
+            res.end();
+            return;
+        }
         try {
             url = decodeURI(url);
         }
@@ -685,8 +724,7 @@ class SimpleAPI {
         let user;
         // If authentication check is required
         if (this.settings.auth) {
-            query.user ||= req.user;
-            const isAuth = !!req.user || (await this.isAuthenticated(query));
+            const isAuth = await this.isAuthenticated(req, query);
             if (!isAuth) {
                 this.doErrorResponse(res, responseType, 401, `authentication failed. Please write "http${this.settings.secure ? 's' : ''}://${req.headers.host}?user=UserName&pass=Password"`);
                 return;
@@ -719,7 +757,7 @@ class SimpleAPI {
                 const response = [];
                 for (let i = 0; i < oId.length; i++) {
                     try {
-                        const { state } = await this.getState(oId[i], user);
+                        const { state } = await this.getState(oId[i], user, query);
                         if (state) {
                             let val = state.val;
                             if (query.json) {
@@ -780,7 +818,7 @@ class SimpleAPI {
                 for (let k = 0; k < oId.length; k++) {
                     this.adapter.log.debug(`work for ID ${oId[k]}`);
                     try {
-                        const { state, id } = await this.getState(oId[k], user);
+                        const { state, id } = await this.getState(oId[k], user, query);
                         if (!id) {
                             response[k] = { error: `datapoint "${oId[k]}" not found` };
                         }
@@ -812,7 +850,7 @@ class SimpleAPI {
                 const response = [];
                 for (let b = 0; b < oId.length; b++) {
                     try {
-                        const { id, state } = await this.getState(oId[b], user);
+                        const { id, state } = await this.getState(oId[b], user, query);
                         response[b] = { id, val: state?.val, ts: state?.ts, ack: state?.ack };
                     }
                     catch (err) {
@@ -841,7 +879,7 @@ class SimpleAPI {
                         this.doErrorResponse(res, responseType, 404, `error: datapoint "${oId[0]}" not found`);
                         return;
                     }
-                    let type = values.type;
+                    let type = query.type;
                     let value;
                     if (values.val === undefined) {
                         value = values.value;
@@ -1084,7 +1122,7 @@ class SimpleAPI {
             case 'getObjects':
             case 'objects': {
                 try {
-                    const list = await this.adapter.getForeignObjectsAsync(values.pattern || varsName || '*', values.type || null, {
+                    const list = await this.adapter.getForeignObjectsAsync(values.pattern || varsName || '*', query.type || null, {
                         user,
                         limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
                     });
@@ -1185,9 +1223,9 @@ class SimpleAPI {
                     }
                     else {
                         this.adapter.log.debug('Read last state');
-                        const { state } = await this.getState(oId[b], user);
+                        const { state } = await this.getState(oId[b], user, query);
                         if (state) {
-                            element.datapoints = [[state.val, state.ts]];
+                            element.datapoints = [[state.val, state.ts || null]];
                         }
                         else {
                             element.datapoints = [[null, null]];

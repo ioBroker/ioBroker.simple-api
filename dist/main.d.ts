@@ -1,4 +1,4 @@
-import { type Request, type Response } from 'express';
+import { NextFunction, type Request, type Response } from 'express';
 import { Adapter, type AdapterOptions } from '@iobroker/adapter-core';
 import type { SimpleApiAdapterConfig } from './types';
 export declare class SimpleApiAdapter extends Adapter {
@@ -8,6 +8,6 @@ export declare class SimpleApiAdapter extends Adapter {
     constructor(options?: Partial<AdapterOptions>);
     onUnload(callback: () => void): void;
     main(): Promise<void>;
-    requestProcessor: (req: Request, res: Response) => void;
+    serveStatic: (req: Request, res: Response, next: NextFunction) => void;
     initWebServer(): Promise<void>;
 }

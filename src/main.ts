@@ -1,20 +1,23 @@
-import { type Request, type Response } from 'express';
+import express, { type Express, NextFunction, type Request, type Response } from 'express';
 import { createReadStream, existsSync, type Stats, statSync } from 'node:fs';
-import type { RequestListener } from 'node:http';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
 
 import { Adapter, type AdapterOptions, EXIT_CODES } from '@iobroker/adapter-core';
-import { WebServer } from '@iobroker/webserver';
+import { createOAuth2Server, WebServer } from '@iobroker/webserver';
 import { SimpleAPI, type Server } from './lib/SimpleAPI';
 import type { SimpleApiAdapterConfig } from './types';
 
 interface WebStructure {
     server: null | (Server & { __server: WebStructure });
     api: SimpleAPI | null;
+    app: Express | null;
 }
 
 export class SimpleApiAdapter extends Adapter {
     declare public config: SimpleApiAdapterConfig;
     private webServer: WebStructure = {
+        app: null,
         server: null,
         api: null,
     };
@@ -75,7 +78,7 @@ export class SimpleApiAdapter extends Adapter {
         await this.initWebServer();
     }
 
-    requestProcessor = (req: Request, res: Response): void => {
+    serveStatic = (req: Request, res: Response, next: NextFunction): void => {
         if ((req.url || '').includes('favicon.ico')) {
             let stat: Stats | undefined;
             try {
@@ -101,12 +104,15 @@ export class SimpleApiAdapter extends Adapter {
                 res.end();
             }
         } else {
-            void this.webServer.api?.restApi(req, res);
+            next();
         }
     };
 
     async initWebServer(): Promise<void> {
         this.config.port = parseInt(this.config.port as string, 10);
+
+        this.webServer.app = express();
+        this.webServer.app.use(this.serveStatic);
 
         if (this.config.port) {
             if (this.config.secure && !this.certificates) {
@@ -115,12 +121,25 @@ export class SimpleApiAdapter extends Adapter {
 
             try {
                 const webserver = new WebServer({
-                    app: this.requestProcessor as RequestListener,
+                    app: this.webServer.app,
                     adapter: this,
                     secure: this.config.secure,
                 });
 
                 this.webServer.server = (await webserver.init()) as Server & { __server: WebStructure };
+
+                if (this.config.auth) {
+                    // Install OAuth2 handler
+                    this.webServer.app.use(cookieParser());
+                    this.webServer.app.use(bodyParser.urlencoded({ extended: true }));
+                    this.webServer.app.use(bodyParser.json());
+
+                    createOAuth2Server(this, {
+                        app: this.webServer.app,
+                        secure: this.config.secure,
+                        accessLifetime: parseInt(this.config.ttl as string, 10) || 3600,
+                    });
+                }
             } catch (err) {
                 this.log.error(`Cannot create webserver: ${err}`);
                 this.terminate
@@ -135,6 +154,9 @@ export class SimpleApiAdapter extends Adapter {
                     : process.exit(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
                 return;
             }
+
+            this.webServer.app.use((req, res) => this.webServer.api?.restApi(req, res));
+
             this.webServer.server.__server = this.webServer;
         } else {
             this.log.error('port missing');
@@ -191,6 +213,8 @@ export class SimpleApiAdapter extends Adapter {
                                 : this.config.bind || undefined,
                             () => (serverListening = true),
                         );
+
+                        createOAuth2Server;
 
                         this.log.info(`http${this.config.secure ? 's' : ''} server listening on port ${port}`);
                     } else {

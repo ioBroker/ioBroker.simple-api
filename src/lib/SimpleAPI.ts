@@ -186,7 +186,23 @@ export class SimpleAPI {
         this.adapter.subscribeForeignObjects('*');
     }
 
-    async isAuthenticated(query: SimpleApiQuery): Promise<boolean> {
+    async isAuthenticated(req: Request & { user?: string }, query: SimpleApiQuery): Promise<boolean> {
+        // Authenticated via OAuth2
+        if (req.user) {
+            query.user = req.user;
+            return true;
+        }
+
+        // Authenticated via Basic Auth
+        if ((req.headers.authorization as string)?.startsWith('Basic ')) {
+            const auth = Buffer.from((req.headers.authorization as string).split(' ')[1], 'base64').toString('utf8');
+            const pos = auth.indexOf(':');
+            if (pos !== -1) {
+                query.user = auth.substring(0, pos);
+                query.pass = auth.substring(pos + 1);
+            }
+        }
+
         if (!query.user || !query.pass) {
             this.adapter.log.warn('No password or username!');
             return false;
@@ -857,8 +873,7 @@ export class SimpleAPI {
 
         // If authentication check is required
         if (this.settings.auth) {
-            query.user ||= (req as any).user as string;
-            const isAuth: boolean = !!(req as any).user || (await this.isAuthenticated(query));
+            const isAuth: boolean = await this.isAuthenticated(req, query);
             if (!isAuth) {
                 this.doErrorResponse(
                     res,

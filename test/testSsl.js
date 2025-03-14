@@ -156,6 +156,55 @@ describe('Test RESTful API SSL', function () {
         );
     });
 
+    it('Test RESTful API SSL: get - must return value with basic authentication', done => {
+        request(
+            {
+                url: 'https://127.0.0.1:18183/get/system.adapter.simple-api.0.alive',
+                auth: {
+                    user: 'admin',
+                    pass: 'iobroker',
+                },
+            },
+            (error, response, body) => {
+                console.log(`get/system.adapter.simple-api.0.alive => ${body}`);
+                expect(error).to.be.not.ok;
+                const obj = JSON.parse(body);
+                //{
+                //    "val" : true,
+                //    "ack" : true,
+                //    "ts" : 1455009717,
+                //    "q" : 0,
+                //    "from" : "system.adapter.simple-api.0",
+                //    "lc" : 1455009717,
+                //    "expire" : 30000,
+                //    "_id" : "system.adapter.simple-api.0.alive",
+                //    "type" : "state",
+                //    "common" : {
+                //      "name" : "simple-api.0.alive",
+                //        "type" : "boolean",
+                //        "role" : "indicator.state"
+                //       },
+                //    "native" : {}
+                //
+                //}
+
+                expect(obj).to.be.ok;
+                expect(obj.val).to.be.true;
+                expect(obj.ack).to.be.true;
+                expect(obj.ts).to.be.ok;
+                //expect(obj.from).to.equal("system.adapter.simple-api.0");
+                expect(obj.type).to.equal('state');
+                expect(obj._id).to.equal('system.adapter.simple-api.0.alive');
+                expect(obj.common).to.be.ok;
+                expect(obj.native).to.be.ok;
+                expect(obj.common.name).to.equal('simple-api.0 alive');
+                expect(obj.common.role).to.equal('indicator.state');
+                expect(response.statusCode).to.equal(200);
+                done();
+            },
+        );
+    });
+
     it('Test RESTful API SSL: get with no credentials', done => {
         request(
             'https://127.0.0.1:18183/get/system.adapter.simple-api.0.alive?user=admin&pass=io',

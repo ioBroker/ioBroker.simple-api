@@ -1,12 +1,19 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SimpleApiAdapter = void 0;
+const express_1 = __importDefault(require("express"));
 const node_fs_1 = require("node:fs");
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const body_parser_1 = __importDefault(require("body-parser"));
 const adapter_core_1 = require("@iobroker/adapter-core");
 const webserver_1 = require("@iobroker/webserver");
 const SimpleAPI_1 = require("./lib/SimpleAPI");
 class SimpleApiAdapter extends adapter_core_1.Adapter {
     webServer = {
+        app: null,
         server: null,
         api: null,
     };
@@ -57,7 +64,7 @@ class SimpleApiAdapter extends adapter_core_1.Adapter {
         }
         await this.initWebServer();
     }
-    requestProcessor = (req, res) => {
+    serveStatic = (req, res, next) => {
         if ((req.url || '').includes('favicon.ico')) {
             let stat;
             try {
@@ -84,22 +91,35 @@ class SimpleApiAdapter extends adapter_core_1.Adapter {
             }
         }
         else {
-            void this.webServer.api?.restApi(req, res);
+            next();
         }
     };
     async initWebServer() {
         this.config.port = parseInt(this.config.port, 10);
+        this.webServer.app = (0, express_1.default)();
+        this.webServer.app.use(this.serveStatic);
         if (this.config.port) {
             if (this.config.secure && !this.certificates) {
                 return;
             }
             try {
                 const webserver = new webserver_1.WebServer({
-                    app: this.requestProcessor,
+                    app: this.webServer.app,
                     adapter: this,
                     secure: this.config.secure,
                 });
                 this.webServer.server = (await webserver.init());
+                if (this.config.auth) {
+                    // Install OAuth2 handler
+                    this.webServer.app.use((0, cookie_parser_1.default)());
+                    this.webServer.app.use(body_parser_1.default.urlencoded({ extended: true }));
+                    this.webServer.app.use(body_parser_1.default.json());
+                    (0, webserver_1.createOAuth2Server)(this, {
+                        app: this.webServer.app,
+                        secure: this.config.secure,
+                        accessLifetime: parseInt(this.config.ttl, 10) || 3600,
+                    });
+                }
             }
             catch (err) {
                 this.log.error(`Cannot create webserver: ${err}`);
@@ -115,6 +135,7 @@ class SimpleApiAdapter extends adapter_core_1.Adapter {
                     : process.exit(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
                 return;
             }
+            this.webServer.app.use((req, res) => this.webServer.api?.restApi(req, res));
             this.webServer.server.__server = this.webServer;
         }
         else {
@@ -162,6 +183,7 @@ class SimpleApiAdapter extends adapter_core_1.Adapter {
                     this.webServer.server.listen(port, !this.config.bind || this.config.bind === '0.0.0.0'
                         ? undefined
                         : this.config.bind || undefined, () => (serverListening = true));
+                    webserver_1.createOAuth2Server;
                     this.log.info(`http${this.config.secure ? 's' : ''} server listening on port ${port}`);
                 }
                 else {

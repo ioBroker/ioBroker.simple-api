@@ -591,6 +591,12 @@ You can use some options to modify the answer:
 - `json` - to force the parsing of the value in the `getPlainValue` command
 - `timeRFC3339` - to get the time of timestamps (`ts` and `lc`) in RFC3339 format, like `2019-06-08T01:00:00.000Z`
 
+## Authentication
+This adapter supports the following types of authentication:
+- Query parameter `user` and `pass`
+- Basic authentication
+- Oauth2 Bearer token in the header. Read more in the web adapter about how to get tokens.
+
 <!--
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
