@@ -17,6 +17,7 @@ type SimpleApiQuery = {
     wait?: number;
     timeRFC3339?: boolean;
     type?: ioBroker.CommonType | 'json';
+    callback?: string;
     ack: boolean;
 };
 type IoBrokerStateWithIsoTime = (Omit<ioBroker.State, 'ts' | 'lc'> & {
@@ -71,7 +72,7 @@ export declare class SimpleAPI {
         state: IoBrokerStateWithIsoTime;
         id: string;
     }>;
-    doResponse(res: Response, responseType: 'json' | 'plain', content?: any, pretty?: boolean): void;
+    doResponse(res: Response, responseType: 'json' | 'plain', content?: any, query?: SimpleApiQuery): void;
     doErrorResponse(res: Response, responseType: 'json' | 'plain', status: 401 | 403 | 404 | 422 | 500, error?: string): void;
     checkPermissions(user: `system.user.${string}`, command: CommandName): Promise<boolean>;
     setValue(id: string, value: ioBroker.StateValue, res: Response, wait: number, query: SimpleApiQuery, responseType: 'json' | 'plain'): Promise<void>;

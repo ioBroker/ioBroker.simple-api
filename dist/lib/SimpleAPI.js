@@ -217,6 +217,9 @@ class SimpleAPI {
                 else if (name === 'type') {
                     query.type = decodeURIComponent(value?.trim() || '');
                 }
+                else if (name === 'callback') {
+                    query.callback = decodeURIComponent(value?.trim() || '');
+                }
                 else {
                     values[name] =
                         value === undefined ? null : decodeURIComponent(`${value?.trim() || ''}`.replace(/\+/g, '%20'));
@@ -303,7 +306,7 @@ class SimpleAPI {
                 this.adapter.log.debug(`POST-${command}: values = ${JSON.stringify(values)}`);
                 try {
                     const response = await this.setStates(values, query);
-                    this.doResponse(res, 'json', response, query.prettyPrint);
+                    this.doResponse(res, 'json', response, query);
                 }
                 catch (err) {
                     // State not found
@@ -331,7 +334,7 @@ class SimpleAPI {
                 }
                 try {
                     const response = await this.setStates(values, query);
-                    this.doResponse(res, 'json', response, query.prettyPrint);
+                    this.doResponse(res, 'json', response, query);
                 }
                 catch (err) {
                     // State not found
@@ -350,7 +353,7 @@ class SimpleAPI {
             case 'search':
                 if (this.config.dataSource && this.config.allDatapoints) {
                     const result = await this.adapter.sendToAsync(this.config.dataSource, 'getEnabledDPs');
-                    this.doResponse(res, 'json', Object.keys(result), query.prettyPrint);
+                    this.doResponse(res, 'json', Object.keys(result), query);
                 }
                 else {
                     try {
@@ -361,7 +364,7 @@ class SimpleAPI {
                             limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
                         });
                         oId = Object.keys(list);
-                        this.doResponse(res, 'json', oId, query.prettyPrint);
+                        this.doResponse(res, 'json', oId, query);
                     }
                     catch (err) {
                         if (err.includes(ERROR_PERMISSION)) {
@@ -449,7 +452,7 @@ class SimpleAPI {
                             }
                         }
                     }
-                    this.doResponse(res, 'json', list, query.prettyPrint);
+                    this.doResponse(res, 'json', list, query);
                 }
                 catch (err) {
                     if (err.includes(ERROR_PERMISSION)) {
@@ -464,7 +467,7 @@ class SimpleAPI {
             case 'annotations':
                 // iobroker does not support annotations
                 this.adapter.log.debug('[ANNOTATIONS]');
-                this.doResponse(res, 'json', [], query.prettyPrint);
+                this.doResponse(res, 'json', [], query);
                 break;
             default:
                 this.doErrorResponse(res, 'json', 422, `command "${command}" unknown`);
@@ -520,24 +523,28 @@ class SimpleAPI {
             id: result.id,
         };
     }
-    doResponse(res, responseType, content, pretty) {
+    doResponse(res, responseType, content, query) {
         let response;
-        if (pretty && typeof content === 'object') {
-            responseType = 'plain';
+        if (query?.callback) {
+            response = `${query.callback}(${JSON.stringify(content, null, 2)});`;
+            res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+        }
+        else if (query?.prettyPrint && typeof content === 'object') {
             response = JSON.stringify(content, null, 2);
+            res.setHeader('Content-Type', 'text/html; charset=utf-8');
         }
         else if (responseType === 'json') {
             response = JSON.stringify(content);
+            res.setHeader('Content-Type', 'application/json; charset=utf-8');
         }
         else if (typeof content === 'object') {
             response = JSON.stringify(content);
+            res.setHeader('Content-Type', 'text/html; charset=utf-8');
         }
         else {
             response = content.toString();
+            res.setHeader('Content-Type', 'text/html; charset=utf-8');
         }
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-        res.setHeader('Content-Type', responseType === 'json' ? 'application/json; charset=utf-8' : 'text/html; charset=utf-8');
         res.statusCode = 200;
         res.end(response, 'utf8');
     }
@@ -553,8 +560,6 @@ class SimpleAPI {
         else {
             response = response.replace('Error: ', 'error: ').trim();
         }
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
         res.setHeader('Content-Type', responseType === 'json' ? 'application/json; charset=utf-8' : 'text/html; charset=utf-8');
         res.statusCode = status;
         res.end(response, 'utf8');
@@ -624,7 +629,7 @@ class SimpleAPI {
             return;
         }
         if (!wait) {
-            this.doResponse(res, responseType, { id, value, val: value }, query.prettyPrint);
+            this.doResponse(res, responseType, { id, value, val: value }, query);
         }
         else {
             // Wait for ack=true
@@ -648,7 +653,7 @@ class SimpleAPI {
                             this.restApiDelayed[i].timer = undefined;
                         }
                         this.restApiDelayed.splice(i, 1);
-                        this.doResponse(res, responseType, { id, value, val: value }, query.prettyPrint);
+                        this.doResponse(res, responseType, { id, value, val: value }, query);
                         // Unsubscribe if no other request is waiting
                         if (!this.restApiDelayed.find(it => it.id === id)) {
                             this.adapter.unsubscribeForeignStates(id);
@@ -806,7 +811,7 @@ class SimpleAPI {
                         }
                     }
                 }
-                this.doResponse(res, responseType, response.join('\n'), query.prettyPrint);
+                this.doResponse(res, responseType, response.join('\n'), query);
                 break;
             }
             case 'get': {
@@ -839,7 +844,7 @@ class SimpleAPI {
                     this.doErrorResponse(res, responseType, 404, response[0].error);
                     return;
                 }
-                this.doResponse(res, responseType, response.length === 1 ? response[0] : response, query.prettyPrint);
+                this.doResponse(res, responseType, response.length === 1 ? response[0] : response, query);
                 break;
             }
             case 'getBulk': {
@@ -861,7 +866,7 @@ class SimpleAPI {
                         response[b] = { id: oId[b], val: undefined, ts: undefined, ack: undefined };
                     }
                 }
-                this.doResponse(res, responseType, response, query.prettyPrint);
+                this.doResponse(res, responseType, response, query);
                 break;
             }
             case 'set': {
@@ -1116,7 +1121,7 @@ class SimpleAPI {
                         response[n] = { error: err.toString() };
                     }
                 }
-                this.doResponse(res, responseType, response, query.prettyPrint);
+                this.doResponse(res, responseType, response, query);
                 break;
             }
             case 'getObjects':
@@ -1126,7 +1131,20 @@ class SimpleAPI {
                         user,
                         limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
                     });
-                    this.doResponse(res, responseType, list, query.prettyPrint);
+                    if (values.pattern?.includes('*') && !values.pattern.match(/\*$/)) {
+                        // pattern to regex
+                        const reg = new RegExp(values.pattern.replace(/\./g, '\\.').replace(/\*/g, '.*'));
+                        const filteredList = {};
+                        Object.keys(list).forEach(id => {
+                            if (reg.test(id)) {
+                                filteredList[id] = list[id];
+                            }
+                        });
+                        this.doResponse(res, responseType, filteredList, query);
+                    }
+                    else {
+                        this.doResponse(res, responseType, list, query);
+                    }
                 }
                 catch (err) {
                     if (err.toString().includes(ERROR_PERMISSION)) {
@@ -1145,7 +1163,7 @@ class SimpleAPI {
                         user,
                         limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
                     });
-                    this.doResponse(res, responseType, list, query.prettyPrint);
+                    this.doResponse(res, responseType, list, query);
                 }
                 catch (err) {
                     if (err.toString().includes(ERROR_PERMISSION)) {
@@ -1161,7 +1179,7 @@ class SimpleAPI {
                 try {
                     if (this.config.dataSource && this.config.allDatapoints !== true) {
                         const result = await this.adapter.sendToAsync(this.config.dataSource, 'getEnabledDPs');
-                        this.doResponse(res, responseType, Object.keys(result || {}), query.prettyPrint);
+                        this.doResponse(res, responseType, Object.keys(result || {}), query);
                     }
                     else {
                         this.adapter.log.debug(`[SEARCH] target = ${varsName}`);
@@ -1169,7 +1187,7 @@ class SimpleAPI {
                             user,
                             limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
                         });
-                        this.doResponse(res, responseType, Object.keys(list), query.prettyPrint);
+                        this.doResponse(res, responseType, Object.keys(list), query);
                     }
                 }
                 catch (err) {
@@ -1232,13 +1250,13 @@ class SimpleAPI {
                         }
                     }
                 }
-                this.doResponse(res, responseType, response, query.prettyPrint);
+                this.doResponse(res, responseType, response, query);
                 break;
             }
             case 'annotations':
                 // ioBroker does not support annotations
                 this.adapter.log.debug('[ANNOTATIONS]');
-                this.doResponse(res, responseType, [], query.prettyPrint);
+                this.doResponse(res, responseType, [], query);
                 break;
             // is default behaviour too
             case 'help':
@@ -1264,7 +1282,7 @@ class SimpleAPI {
                     _obj.states = `${request}/states?pattern=system.adapter.admin.0*&prettyPrint${auth ? `&${auth}` : ''}`;
                     _obj.search = `${request}/search?pattern=system.adapter.admin.0*&prettyPrint${auth ? `&${auth}` : ''}`;
                     _obj.query = `${request}/query/stateID1,stateID2/?dateFrom=2019-06-06T12:00:00.000Z&dateTo=2019-06-06T12:00:00.000Z&noHistory=false&aggregate=minmax&count=3000&prettyPrint${auth ? `&${auth}` : ''}`;
-                    this.doResponse(res, responseType, _obj, true);
+                    this.doResponse(res, responseType, _obj, query);
                 }
                 break;
         }

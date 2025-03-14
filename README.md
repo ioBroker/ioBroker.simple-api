@@ -590,6 +590,7 @@ You can use some options to modify the answer:
 - `prettyPrint` - to get the output in human-readable form
 - `json` - to force the parsing of the value in the `getPlainValue` command
 - `timeRFC3339` - to get the time of timestamps (`ts` and `lc`) in RFC3339 format, like `2019-06-08T01:00:00.000Z`
+- `callback` - response with JSONP format. In `callback=<CALLBACK>` the `CALLBACK` is the name of the callback function
 
 ## Authentication
 This adapter supports the following types of authentication:
@@ -606,6 +607,7 @@ This adapter supports the following types of authentication:
 * (bluefox) Added support for 'Access-Control-Allow-Origin'
 * (bluefox) Removed letsencrypt information
 * (bluefox) Added basic and OAuth2 authentication
+* (bluefox) Implemented JSONP response
 
 ### 3.0.5 (2025-03-13)
 * (bluefox) Corrected the indication of running mode in admin
