@@ -511,7 +511,7 @@ If the option 'List all data points' has been activated or no data source has be
 ```
 
 ### query
-If a data source (History, SQL) has been specified, the data from the specified data points are read out for the specified period.
+If a data source (History, SQL) is specified, data from the specified data points will be retrieved for the given period.
 
 `http://ip:8087/query/system.host.iobroker-dev.load,system.host.iobroker-dev.memHeapUsed/?prettyPrint&dateFrom=2019-06-08T01:00:00.000Z&dateTo=2019-06-08T01:00:10.000Z` =>
 
@@ -580,6 +580,27 @@ If no data source was specified or the noHistory parameter is passed, then only 
     }
   ]
 ```
+
+You can use relative time in the query. For example, `dateFrom=-1h` or `dateTo=today`.
+
+The following relative patterns are supported:
+- `hour` or `thisHour` or `this hour` - start of the current hour
+- `last hour` or `lastHour` - start of the previous hour
+- `today` - start of the current day
+- `yesterday` - start of the previous day
+- `week` or `thisWeek` or `this week` - start of the current week
+- `lastWeek` or `last week` - start of the previous week
+- `month` or `thisMonth` or `this month` - start of the current month
+- `lastMonth` or `last month` - start of the previous month
+- `year` or `thisYear` or `this year` - start of the current year
+- `lastYear` or `last year` - start of the previous year
+- `-Nd` - N days ago
+- `-NM` - N months ago
+- `-Ny` - N years ago
+- `-Nh` - N hours ago
+- `-Nm` - N minutes ago
+- `-Ns` - N seconds ago
+
 ## CORS
 With option "Allow origin (CORS)" you can set the `Access-Control-Allow-Origin` header to allow requests from other domains.
 
@@ -608,6 +629,7 @@ This adapter supports the following types of authentication:
 * (bluefox) Removed letsencrypt information
 * (bluefox) Added basic and OAuth2 authentication
 * (bluefox) Implemented JSONP response
+* (bluefox) Implemented relative times for query
 
 ### 3.0.5 (2025-03-13)
 * (bluefox) Corrected the indication of running mode in admin
