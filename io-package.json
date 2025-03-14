@@ -175,7 +175,8 @@
     "leUpdate": false,
     "leCheckPort": 80,
     "dataSource": "",
-    "allDatapoints": false
+    "allDatapoints": false,
+    "accessControlAllowOrigin": "*"
   },
   "instanceObjects": [
     {

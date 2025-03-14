@@ -14,6 +14,7 @@ export interface SimpleApiAdapterConfig {
     leCheckPort: number | string;
     dataSource: string;
     allDatapoints: boolean;
+    accessControlAllowOrigin: string;
 }
 
 declare class ExtAPI {

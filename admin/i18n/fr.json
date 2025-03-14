@@ -1,7 +1,8 @@
 {
     "Allow only when User is Owner": "Autoriser uniquement lorsque l'utilisateur est propriétaire",
-    "Authentication was deactivated": "L'authentification a été désactivée",
+    "Allow origin (CORS)": "Autoriser l'origine (CORS)",
     "Authentication": "Authentification",
+    "Authentication was deactivated": "L'authentification a été désactivée",
     "Chained certificate": "Certificat chaîné",
     "Disable authentication": "Désactiver l'authentification",
     "Extend WEB adapter": "Étendre l'adaptateur WEB",
@@ -10,8 +11,8 @@
     "Let's Encrypt settings": "Cryptons les paramètres",
     "List all datapoints": "Lister tous les points de données",
     "Listen on all IPs": "Écoutez sur toutes les adresses IP",
-    "Port to check the domain": "Port pour vérifier le domaine",
     "Port": "Port",
+    "Port to check the domain": "Port pour vérifier le domaine",
     "Private certificate": "Certificat privé",
     "Public certificate": "Certificat public",
     "Run as": "Courir comme",
@@ -23,6 +24,7 @@
     "Use this instance for automatic update": "Utilisez cette instance pour la mise à jour automatique",
     "Warning!": "Attention!",
     "all": "tout",
+    "enable_authentication_with_cors": "Vous pouvez définir ici l'en-tête « Access-Control-Allow-Origin ». Il est conseillé d'activer l'authentification si vous prévoyez d'y accéder depuis l'extérieur.",
     "none": "aucun",
     "place here": "Placez les fichiers ici"
 }

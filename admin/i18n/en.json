@@ -1,7 +1,8 @@
 {
     "Allow only when User is Owner": "Allow only when User is Owner",
-    "Authentication was deactivated": "Authentication was deactivated",
+    "Allow origin (CORS)": "Allow origin (CORS)",
     "Authentication": "Authentication",
+    "Authentication was deactivated": "Authentication was deactivated",
     "Chained certificate": "Chained certificate",
     "Disable authentication": "Disable authentication",
     "Extend WEB adapter": "Use as web adapter extension",
@@ -10,8 +11,8 @@
     "Let's Encrypt settings": "Let's Encrypt settings",
     "List all datapoints": "List all states",
     "Listen on all IPs": "Listen on all IPs",
-    "Port to check the domain": "Port to check the domain",
     "Port": "Port",
+    "Port to check the domain": "Port to check the domain",
     "Private certificate": "Private certificate",
     "Public certificate": "Public certificate",
     "Run as": "Execute as user",
@@ -23,6 +24,7 @@
     "Use this instance for automatic update": "Use this instance for automatic update",
     "Warning!": "Warning!",
     "all": "all",
+    "enable_authentication_with_cors": "You can define here the \"Access-Control-Allow-Origin\" header. It is suggested to enable authentication if you plan to access it from outside.",
     "none": "none",
     "place here": "Drop the files here"
 }

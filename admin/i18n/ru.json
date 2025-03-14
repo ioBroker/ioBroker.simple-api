@@ -1,7 +1,8 @@
 {
   "Allow only when User is Owner": "Разрешить только когда пользователь является владельцем",
-  "Authentication was deactivated": "Аутентификация была отключена",
+  "Allow origin (CORS)": "Разрешить origin (CORS)",
   "Authentication": "Аутентификация",
+  "Authentication was deactivated": "Аутентификация была отключена",
   "Chained certificate": "'Chained' сертификат",
   "Disable authentication": "Отключить аутентификацию",
   "Extend WEB adapter": "Использовать, как расширение web-драйвера",
@@ -10,8 +11,8 @@
   "Let's Encrypt settings": "Настройки Let's Encrypt",
   "List all datapoints": "Разрешить получение списка всех состояний",
   "Listen on all IPs": "Ожидать соединения на всех IP адресах",
-  "Port to check the domain": "Порт для проверки доменного имени",
   "Port": "Порт",
+  "Port to check the domain": "Порт для проверки доменного имени",
   "Private certificate": "'Private' сертификат",
   "Public certificate": "'Public' сертификат",
   "Run as": "Запустить от пользователя",
@@ -23,6 +24,7 @@
   "Use this instance for automatic update": "Использовать этот экземпляр для обновления сертификатов",
   "Warning!": "Внимание!",
   "all": "все",
+  "enable_authentication_with_cors": "Здесь можно определить заголовок \"Access-Control-Allow-Origin\". Рекомендуется включить аутентификацию, если вы планируете получить к нему доступ извне.",
   "none": "никакой",
   "place here": "Перетащите файлы сюда"
 }

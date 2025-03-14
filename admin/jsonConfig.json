@@ -121,6 +121,14 @@
                     "sm": 12,
                     "md": 6,
                     "lg": 3
+                },
+                "accessControlAllowOrigin": {
+                    "type": "text",
+                    "label": "Allow origin (CORS)",
+                    "help": "enable_authentication_with_cors",
+                    "sm": 12,
+                    "md": 6,
+                    "lg": 3
                 }
             }
         },

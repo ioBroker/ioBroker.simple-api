@@ -1,7 +1,8 @@
 {
   "Allow only when User is Owner": "仅当用户为所有者时才允许",
-  "Authentication was deactivated": "身份认证机制已停用",
+  "Allow origin (CORS)": "允许来源 (CORS)",
   "Authentication": "认证机制",
+  "Authentication was deactivated": "身份认证机制已停用",
   "Chained certificate": "链式证书",
   "Disable authentication": "禁用身份认证机制",
   "Extend WEB adapter": "扩展WEB适配器",
@@ -10,8 +11,8 @@
   "Let's Encrypt settings": "设置Let's Encrypt",
   "List all datapoints": "列出所有数据点",
   "Listen on all IPs": "监听所有IP",
-  "Port to check the domain": "自动更新证书使用的端口",
   "Port": "端口",
+  "Port to check the domain": "自动更新证书使用的端口",
   "Private certificate": "私人证书",
   "Public certificate": "公共证书",
   "Run as": "运行为",
@@ -23,6 +24,7 @@
   "Use this instance for automatic update": "自动更新Let's Encrypt证书",
   "Warning!": "警告！",
   "all": "所有",
+  "enable_authentication_with_cors": "您可以在此处定义“Access-Control-Allow-Origin”标头。如果您计划从外部访问，建议启用身份验证。",
   "none": "无",
   "place here": "将文件拖拽到这里"
 }

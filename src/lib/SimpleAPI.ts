@@ -796,6 +796,19 @@ export class SimpleAPI {
         } = { ack: false };
         let oId: string[] = [];
 
+        if (this.config.accessControlAllowOrigin) {
+            res.setHeader('Access-Control-Allow-Origin', this.config.accessControlAllowOrigin);
+            res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+            res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+            res.setHeader('Access-Control-Max-Age', '3600');
+        }
+
+        if (req.method === 'OPTIONS') {
+            res.statusCode = 204;
+            res.end();
+            return;
+        }
+
         try {
             url = decodeURI(url);
         } catch (e) {

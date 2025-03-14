@@ -1,7 +1,8 @@
 {
     "Allow only when User is Owner": "Nur erlauben wenn Benutzer auch Besitzer ist",
-    "Authentication was deactivated": "Die Authentifizierung wurde deaktiviert",
+    "Allow origin (CORS)": "Origin zulassen (CORS)",
     "Authentication": "Authentifizierung",
+    "Authentication was deactivated": "Die Authentifizierung wurde deaktiviert",
     "Chained certificate": "Verkettetes Zertifikat",
     "Disable authentication": "Authentifizierung deaktivieren",
     "Extend WEB adapter": "Als Web-Adapter-Erweiterung nutzen",
@@ -10,8 +11,8 @@
     "Let's Encrypt settings": "Let's Encrypt Einstellungen",
     "List all datapoints": "Alle Datenpunkte auflisten",
     "Listen on all IPs": "Zugriff von allen IPs zulassen",
-    "Port to check the domain": "Port um die Erreichbarkeit der Domain zu prüfen",
     "Port": "Port",
+    "Port to check the domain": "Port um die Erreichbarkeit der Domain zu prüfen",
     "Private certificate": "Privates Zertifikat",
     "Public certificate": "Öffentliches Zertifikat",
     "Run as": "Ausführen als Benutzer",
@@ -23,6 +24,7 @@
     "Use this instance for automatic update": "Diese Instanz für automatische Zertifikat-Updates benutzen",
     "Warning!": "Warnung!",
     "all": "alle",
+    "enable_authentication_with_cors": "Hier können Sie den Header \"Access-Control-Allow-Origin\" definieren. Es wird empfohlen, die Authentifizierung zu aktivieren, wenn Sie von außen darauf zugreifen möchten.",
     "none": "keins",
     "place here": "Dateien hier ablegen"
 }

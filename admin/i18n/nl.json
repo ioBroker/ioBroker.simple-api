@@ -1,7 +1,8 @@
 {
   "Allow only when User is Owner": "Alleen toestaan als gebruiker eigenaar is",
-  "Authentication was deactivated": "Verificatie was gedeactiveerd",
+  "Allow origin (CORS)": "Oorsprong toestaan (CORS)",
   "Authentication": "authenticatie",
+  "Authentication was deactivated": "Verificatie was gedeactiveerd",
   "Chained certificate": "Geketend certificaat",
   "Disable authentication": "Schakel verificatie uit",
   "Extend WEB adapter": "WEB-adapter uitbreiden",
@@ -10,8 +11,8 @@
   "Let's Encrypt settings": "Laten we de instellingen versleutelen",
   "List all datapoints": "Lijst alle gegevenspunten",
   "Listen on all IPs": "Luister op alle IP's",
-  "Port to check the domain": "Poort om het domein te controleren",
   "Port": "Haven",
+  "Port to check the domain": "Poort om het domein te controleren",
   "Private certificate": "Privé certificaat",
   "Public certificate": "Openbaar certificaat",
   "Run as": "Rennen als",
@@ -23,6 +24,7 @@
   "Use this instance for automatic update": "Gebruik deze instantie voor automatische update",
   "Warning!": "Waarschuwing!",
   "all": "allemaal",
+  "enable_authentication_with_cors": "U kunt hier de header \"Access-Control-Allow-Origin\" definiëren. Het wordt aangeraden om authenticatie in te schakelen als u van plan bent om er van buitenaf toegang toe te krijgen.",
   "none": "geen",
   "place here": "plaats de bestanden hier"
 }
