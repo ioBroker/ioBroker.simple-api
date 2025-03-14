@@ -10,6 +10,7 @@
                     "type": "instance",
                     "label": "Extend WEB adapter",
                     "all": true,
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 3,
@@ -21,6 +22,7 @@
                     "type": "ip",
                     "listenOnAllPorts": true,
                     "label": "IP",
+                    "xs": 12,
                     "sm": 12,
                     "md": 8,
                     "lg": 5
@@ -31,6 +33,7 @@
                     "min": 1,
                     "max": 65565,
                     "label": "Port",
+                    "xs": 12,
                     "sm": 12,
                     "md": 4,
                     "lg": 3
@@ -40,6 +43,7 @@
                     "newLine": true,
                     "type": "checkbox",
                     "label": "Secure(HTTPS)",
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 2
@@ -50,6 +54,7 @@
                     "certType": "public",
                     "validator": "!data.secure || data.certPublic",
                     "label": "Public certificate",
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 2
@@ -60,6 +65,7 @@
                     "certType": "private",
                     "validator": "!data.secure || data.certPrivate",
                     "label": "Private certificate",
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 2
@@ -69,6 +75,7 @@
                     "type": "certificate",
                     "certType": "chained",
                     "label": "Chained certificate",
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 2
@@ -87,6 +94,7 @@
                         "alsoDependsOn": ["secure"]
                     },
                     "label": "Authentication",
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 2
@@ -95,6 +103,7 @@
                     "hidden": "!!data.auth || !!data.webInstance",
                     "type": "user",
                     "label": "Run as",
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 2
@@ -103,12 +112,14 @@
                     "newLine": true,
                     "type": "checkbox",
                     "label": "Allow only when User is Owner",
+                    "xs": 12,
                     "sm": 12
                 },
                 "dataSource": {
                     "newLine": true,
                     "type": "instance",
                     "label": "Select data source",
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 3,
@@ -118,6 +129,7 @@
                     "type": "checkbox",
                     "hidden": "!data.dataSource",
                     "label": "List all datapoints",
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 3
@@ -126,30 +138,10 @@
                     "type": "text",
                     "label": "Allow origin (CORS)",
                     "help": "enable_authentication_with_cors",
+                    "xs": 12,
                     "sm": 12,
                     "md": 6,
                     "lg": 3
-                }
-            }
-        },
-        "leTab": {
-            "type": "panel",
-            "label": "Let's Encrypt SSL",
-            "disabled": "!data.secure",
-            "items": {
-                "_image": {
-                    "type": "staticImage",
-                    "tooltip": "Read about Let's Encrypt certificates",
-                    "href": "https://github.com/ioBroker/ioBroker.admin/blob/master/README.md#lets-encrypt-certificates",
-                    "src": "../../img/le.png",
-                    "style": {
-                        "width": 200,
-                        "height": 59
-                    }
-                },
-                "_staticText": {
-                    "type": "staticText",
-                    "text": "ra_Use iobroker.acme adapter for letsencrypt certificates"
                 }
             }
         }

@@ -580,6 +580,11 @@ If no data source was specified or the noHistory parameter is passed, then only 
     }
   ]
 ```
+## CORS
+With option "Allow origin (CORS)" you can set the `Access-Control-Allow-Origin` header to allow requests from other domains.
+
+If you leave it blank, the header will not be set.
+
 <!--
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
@@ -587,6 +592,7 @@ If no data source was specified or the noHistory parameter is passed, then only 
 ## Changelog
 ### **WORK IN PROGRESS**
 * (bluefox) Added support for 'Access-Control-Allow-Origin'
+* (bluefox) Removed letsencrypt information
 
 ### 3.0.5 (2025-03-13)
 * (bluefox) Corrected the indication of running mode in admin
