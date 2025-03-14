@@ -585,6 +585,12 @@ With option "Allow origin (CORS)" you can set the `Access-Control-Allow-Origin` 
 
 If you leave it blank, the header will not be set.
 
+## Modifiers
+You can use some options to modify the answer:
+- `prettyPrint` - to get the output in human-readable form
+- `json` - to force the parsing of the value in the `getPlainValue` command
+- `timeRFC3339` - to get the time of timestamps (`ts` and `lc`) in RFC3339 format, like `2019-06-08T01:00:00.000Z`
+
 <!--
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**

@@ -80,6 +80,22 @@ const commandsPermissions: {
     help: { type: '', operation: '' },
 };
 
+type SimpleApiQuery = {
+    user?: string;
+    pass?: string;
+    prettyPrint?: boolean;
+    json?: boolean;
+    noStringify?: boolean;
+    wait?: number;
+    timeRFC3339?: boolean;
+    type?: ioBroker.CommonType | 'json';
+    ack: boolean;
+};
+
+type IoBrokerStateWithIsoTime =
+    | (Omit<ioBroker.State, 'ts' | 'lc'> & { ts?: string | number; lc?: string | number })
+    | null;
+
 type CommandName = keyof typeof commandsPermissions;
 
 /**
@@ -170,7 +186,7 @@ export class SimpleAPI {
         this.adapter.subscribeForeignObjects('*');
     }
 
-    async isAuthenticated(query: { user?: string; pass?: string }): Promise<boolean> {
+    async isAuthenticated(query: SimpleApiQuery): Promise<boolean> {
         if (!query.user || !query.pass) {
             this.adapter.log.warn('No password or username!');
             return false;
@@ -214,19 +230,7 @@ export class SimpleAPI {
         }
     }
 
-    static parseQuery(
-        input: string | undefined,
-        query: {
-            user?: string;
-            pass?: string;
-            prettyPrint?: boolean;
-            json?: boolean;
-            noStringify?: boolean;
-            wait?: number;
-            ack: boolean;
-        },
-        values: Record<string, string | null>,
-    ): void {
+    static parseQuery(input: string | undefined, query: SimpleApiQuery, values: Record<string, string | null>): void {
         const parts = (input || '').split('&');
         for (const part of parts) {
             const pos = part.indexOf('=');
@@ -257,6 +261,11 @@ export class SimpleAPI {
                 } else if (name === 'ack') {
                     const val = decodeURIComponent(value?.trim() || '');
                     query.ack = val === 'true' || val === '1';
+                } else if (name === 'timeRFC3339') {
+                    const val = decodeURIComponent(value?.trim() || '');
+                    query.timeRFC3339 = val === 'true' || val === '1';
+                } else if (name === 'type') {
+                    query.type = decodeURIComponent(value?.trim() || '') as ioBroker.CommonType;
                 } else {
                     values[name] =
                         value === undefined ? null : decodeURIComponent(`${value?.trim() || ''}`.replace(/\+/g, '%20'));
@@ -272,15 +281,7 @@ export class SimpleAPI {
 
     async setStates(
         values: Record<string, string | null>,
-        query: {
-            user?: string;
-            pass?: string;
-            prettyPrint?: boolean;
-            json?: boolean;
-            noStringify?: boolean;
-            wait?: number;
-            ack: boolean;
-        },
+        query: SimpleApiQuery,
     ): Promise<{ id?: string; val?: boolean | string | number; error?: string }[]> {
         const response: { id?: string; val?: boolean | string | number; error?: string }[] = [];
         const names = Object.keys(values);
@@ -339,15 +340,7 @@ export class SimpleAPI {
         command: CommandName,
         oId: string[],
         values: Record<string, string | null>,
-        query: {
-            user?: string;
-            pass?: string;
-            prettyPrint?: boolean;
-            json?: boolean;
-            noStringify?: boolean;
-            wait?: number;
-            ack: boolean;
-        },
+        query: SimpleApiQuery,
     ): Promise<void> {
         let body = '';
         req.on('data', (data: Buffer): void => {
@@ -475,9 +468,12 @@ export class SimpleAPI {
                         this.doErrorResponse(res, 'json', 422, 'no data points given');
                         break;
                     }
-                    const list: { target: string; datapoints: [ioBroker.StateValue, number | null][] }[] = [];
+                    const list: { target: string; datapoints: [ioBroker.StateValue, number | string | null][] }[] = [];
                     for (let b = 0; b < bodyQuery.targets.length; b++) {
-                        const element: { target: string; datapoints: [ioBroker.StateValue, number | null][] } = {
+                        const element: {
+                            target: string;
+                            datapoints: [ioBroker.StateValue, number | string | null][];
+                        } = {
                             target: bodyQuery.targets[b].target,
                             datapoints: [],
                         };
@@ -505,10 +501,10 @@ export class SimpleAPI {
                             this.adapter.log.debug('Read last state');
 
                             try {
-                                const { state, id } = await this.getState(bodyQuery.targets[b].target, user);
+                                const { state, id } = await this.getState(bodyQuery.targets[b].target, user, query);
                                 element.target = id;
                                 if (state) {
-                                    element.datapoints = [[state.val, state.ts]];
+                                    element.datapoints = [[state.val, state.ts || null]];
                                 } else {
                                     element.datapoints = [[null, null]];
                                 }
@@ -590,24 +586,38 @@ export class SimpleAPI {
     async getState(
         idOrName: string,
         user: `system.user.${string}`,
-    ): Promise<{ state: ioBroker.State | null | undefined; id: string }> {
+        query: SimpleApiQuery,
+    ): Promise<{
+        state: IoBrokerStateWithIsoTime;
+        id: string;
+    }> {
         const result: { id: string; name: string } = await this.findState(idOrName, user);
 
-        return {
-            state: await this.adapter.getForeignStateAsync(result.id, {
+        const state: IoBrokerStateWithIsoTime =
+            (await this.adapter.getForeignStateAsync(result.id, {
                 user,
                 limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
-            }),
+            })) || null;
+
+        if (query.timeRFC3339 && state?.ts) {
+            state.ts = new Date(state.ts).toISOString();
+            if (state.lc) {
+                state.lc = new Date(state.lc).toISOString();
+            }
+        }
+
+        return {
+            state,
             id: result.id,
         };
     }
 
-    doResponse(res: Response, type: 'json' | 'plain', content?: any, pretty?: boolean): void {
+    doResponse(res: Response, responseType: 'json' | 'plain', content?: any, pretty?: boolean): void {
         let response: string;
         if (pretty && typeof content === 'object') {
-            type = 'plain';
+            responseType = 'plain';
             response = JSON.stringify(content, null, 2);
-        } else if (type === 'json') {
+        } else if (responseType === 'json') {
             response = JSON.stringify(content);
         } else if (typeof content === 'object') {
             response = JSON.stringify(content);
@@ -618,16 +628,24 @@ export class SimpleAPI {
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
-        res.setHeader('Content-Type', type === 'json' ? 'application/json; charset=utf-8' : 'text/html; charset=utf-8');
+        res.setHeader(
+            'Content-Type',
+            responseType === 'json' ? 'application/json; charset=utf-8' : 'text/html; charset=utf-8',
+        );
         res.statusCode = 200;
         res.end(response, 'utf8');
     }
 
-    doErrorResponse(res: Response, type: 'json' | 'plain', status: 401 | 403 | 404 | 422 | 500, error?: string): void {
+    doErrorResponse(
+        res: Response,
+        responseType: 'json' | 'plain',
+        status: 401 | 403 | 404 | 422 | 500,
+        error?: string,
+    ): void {
         let response: string;
         response = escapeHtml(error || 'unknown', true);
 
-        if (type === 'json') {
+        if (responseType === 'json') {
             response = JSON.stringify({ error: response.replace('Error: ', '') });
         } else if (!response.startsWith('error: ') && !response.startsWith('Error: ')) {
             response = `error: ${response}`;
@@ -637,7 +655,10 @@ export class SimpleAPI {
 
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-        res.setHeader('Content-Type', type === 'json' ? 'application/json; charset=utf-8' : 'text/html; charset=utf-8');
+        res.setHeader(
+            'Content-Type',
+            responseType === 'json' ? 'application/json; charset=utf-8' : 'text/html; charset=utf-8',
+        );
         res.statusCode = status;
         res.end(response, 'utf8');
     }
@@ -689,7 +710,7 @@ export class SimpleAPI {
         value: ioBroker.StateValue,
         res: Response,
         wait: number,
-        query: { ack: boolean; user?: string; prettyPrint?: boolean },
+        query: SimpleApiQuery,
         responseType: 'json' | 'plain',
     ): Promise<void> {
         if (wait) {
@@ -785,15 +806,7 @@ export class SimpleAPI {
     async restApi(req: Request, res: Response, overwriteUrl?: string): Promise<void> {
         let url: string = overwriteUrl || req.url || '';
         const values: Record<string, string | null> = {};
-        const query: {
-            user?: string;
-            pass?: string;
-            prettyPrint?: boolean;
-            json?: boolean;
-            noStringify?: boolean;
-            wait?: number;
-            ack: boolean;
-        } = { ack: false };
+        const query: SimpleApiQuery = { ack: false };
         let oId: string[] = [];
 
         if (this.config.accessControlAllowOrigin) {
@@ -887,7 +900,7 @@ export class SimpleAPI {
                 const response: string[] = [];
                 for (let i = 0; i < oId.length; i++) {
                     try {
-                        const { state } = await this.getState(oId[i], user);
+                        const { state } = await this.getState(oId[i], user, query);
                         if (state) {
                             let val = state.val;
                             if (query.json) {
@@ -945,7 +958,7 @@ export class SimpleAPI {
                 for (let k = 0; k < oId.length; k++) {
                     this.adapter.log.debug(`work for ID ${oId[k]}`);
                     try {
-                        const { state, id } = await this.getState(oId[k], user);
+                        const { state, id } = await this.getState(oId[k], user, query);
                         if (!id) {
                             response[k] = { error: `datapoint "${oId[k]}" not found` };
                         } else {
@@ -975,12 +988,12 @@ export class SimpleAPI {
                 const response: {
                     id: string;
                     val: ioBroker.StateValue | undefined;
-                    ts: number | undefined;
+                    ts: number | undefined | string;
                     ack: boolean | undefined;
                 }[] = [];
                 for (let b = 0; b < oId.length; b++) {
                     try {
-                        const { id, state } = await this.getState(oId[b], user);
+                        const { id, state } = await this.getState(oId[b], user, query);
                         response[b] = { id, val: state?.val, ts: state?.ts, ack: state?.ack };
                     } catch (err) {
                         if (err.toString().includes(ERROR_PERMISSION)) {
@@ -1014,7 +1027,7 @@ export class SimpleAPI {
                         this.doErrorResponse(res, responseType, 404, `error: datapoint "${oId[0]}" not found`);
                         return;
                     }
-                    let type = values.type;
+                    let type = query.type;
                     let value: ioBroker.StateValue;
 
                     if (values.val === undefined) {
@@ -1272,7 +1285,7 @@ export class SimpleAPI {
                 try {
                     const list = await this.adapter.getForeignObjectsAsync(
                         values.pattern || varsName || '*',
-                        (values.type as ioBroker.ObjectType) || null,
+                        (query.type as ioBroker.ObjectType) || null,
                         {
                             user,
                             limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
@@ -1360,10 +1373,10 @@ export class SimpleAPI {
                     this.doErrorResponse(res, responseType, 422, 'no datapoints given');
                     return;
                 }
-                const response: { target: string; datapoints: [ioBroker.StateValue, number | null][] }[] = [];
+                const response: { target: string; datapoints: [ioBroker.StateValue, number | null | string][] }[] = [];
 
                 for (let b = 0; b < oId.length; b++) {
-                    const element: { target: string; datapoints: [ioBroker.StateValue, number | null][] } = {
+                    const element: { target: string; datapoints: [ioBroker.StateValue, number | null | string][] } = {
                         target: oId[b],
                         datapoints: [],
                     };
@@ -1382,9 +1395,9 @@ export class SimpleAPI {
                     } else {
                         this.adapter.log.debug('Read last state');
 
-                        const { state } = await this.getState(oId[b], user);
+                        const { state } = await this.getState(oId[b], user, query);
                         if (state) {
-                            element.datapoints = [[state.val, state.ts]];
+                            element.datapoints = [[state.val, state.ts || null]];
                         } else {
                             element.datapoints = [[null, null]];
                         }
