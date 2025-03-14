@@ -5,7 +5,7 @@
 
 const expect = require('chai').expect;
 const setup = require('@iobroker/legacy-testing');
-const request = require('request');
+const axios = require('axios');
 
 let objects = null;
 let states = null;
@@ -17,7 +17,7 @@ process.env.NO_PROXY = '127.0.0.1';
 
 function checkConnectionOfAdapter(cb, counter) {
     counter = counter || 0;
-    console.log('Try check #' + counter);
+    console.log(`Try check #${counter}`);
     if (counter > 30) {
         if (cb) cb('Cannot check connection');
         return;
@@ -215,125 +215,182 @@ describe('Test RESTful API as Owner-User', function () {
 
     it('Test RESTful API as Owner-User: get - must return value', done => {
         console.log('START get/system.adapter.simple-api.0.alive');
-        request(`http://127.0.0.1:${PORT}/get/system.adapter.simple-api.0.alive`, (error, response, body) => {
-            console.log(`get/system.adapter.simple-api.0.alive => ${body}`);
-            expect(error).to.be.not.ok;
-            expect(body).to.be.equal('{"error":"permissionError"}');
-            expect(response.statusCode).to.equal(403);
-            done();
-        });
+        axios
+            .get(`http://127.0.0.1:${PORT}/get/system.adapter.simple-api.0.alive`, { validateStatus: false, responseType: 'text' })
+            .then(response => {
+                console.log(`get/system.adapter.simple-api.0.alive => ${response.data}`);
+                expect(response.data).to.be.equal('{"error":"permissionError"}');
+                expect(response.status).to.equal(403);
+                done();
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     it('Test RESTful API as Owner-User: getPlainValue - must return plain value', done => {
-        request(
-            `http://127.0.0.1:${PORT}/getPlainValue/system.adapter.simple-api.0.alive`,
-            (error, response, body) => {
-                console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${body}`);
-                expect(body).to.be.equal('error: permissionError');
-                expect(response.statusCode).to.equal(403);
+        axios
+            .get(`http://127.0.0.1:${PORT}/getPlainValue/system.adapter.simple-api.0.alive`, {
+                validateStatus: false,
+                responseType: 'text',
+            })
+            .then(response => {
+                console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${response.data}`);
+                expect(response.data).to.be.equal('error: permissionError');
+                expect(response.status).to.equal(403);
                 done();
-            },
-        );
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     it('Test RESTful API as Owner-User: getPlainValue 4 Test-Endpoint - must return plain value', done => {
-        request(`http://127.0.0.1:${PORT}/getPlainValue/javascript.0.test`, (error, response, body) => {
-            console.log(`getPlainValue/javascript.0.test => ${body}`);
-            expect(error).to.be.not.ok;
-            expect(body).equal('1');
-            expect(response.statusCode).to.equal(200);
-            done();
-        });
+        axios
+            .get(`http://127.0.0.1:${PORT}/getPlainValue/javascript.0.test`, {
+                responseType: 'text',
+            })
+            .then(response => {
+                console.log(`getPlainValue/javascript.0.test => ${response.data}`);
+                expect(response.data).equal('1');
+                expect(response.status).to.equal(200);
+                done();
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     it('Test RESTful API as Owner-User: set 4 Test-Endpoint  - must set value', done => {
-        request(`http://127.0.0.1:${PORT}/set/javascript.0.test?val=2`, (error, response, body) => {
-            console.log(`set/javascript.0.test?val=false => ${body}`);
-            expect(error).to.be.not.ok;
-            const obj = JSON.parse(body);
-            expect(obj).to.be.ok;
-            expect(obj.val).to.be.equal(2);
-            expect(obj.id).to.equal('javascript.0.test');
-            expect(response.statusCode).to.equal(200);
-            request(`http://127.0.0.1:${PORT}/getPlainValue/javascript.0.test`, (error, response, body) => {
-                console.log(`getPlainValue/javascript.0.test => ${body}`);
-                expect(error).to.be.not.ok;
-                expect(body).equal('2');
-                expect(response.statusCode).to.equal(200);
+        axios
+            .get(`http://127.0.0.1:${PORT}/set/javascript.0.test?val=2`)
+            .then(response => {
+                console.log(`set/javascript.0.test?val=false => ${response.data}`);
+                const obj = response.data;
+                expect(obj).to.be.ok;
+                expect(obj.val).to.be.equal(2);
+                expect(obj.id).to.equal('javascript.0.test');
+                expect(response.status).to.equal(200);
+                return axios.get(`http://127.0.0.1:${PORT}/getPlainValue/javascript.0.test`, {
+                    responseType: 'text',
+                });
+            })
+            .then(response => {
+                console.log(`getPlainValue/javascript.0.test => ${response.data}`);
+                expect(response.data).equal('2');
+                expect(response.status).to.equal(200);
                 done();
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
             });
-        });
     });
 
     it('Test RESTful API as Owner-User: set - must set value', done => {
-        request(
-            `http://127.0.0.1:${PORT}/set/system.adapter.simple-api.0.alive?val=false`,
-            (error, response, body) => {
-                console.log(`set/system.adapter.simple-api.0.alive?val=false => ${body}`);
-                expect(body).to.be.equal('{"error":"permissionError"}');
-                expect(response.statusCode).to.equal(403);
+        axios
+            .get(`http://127.0.0.1:${PORT}/set/system.adapter.simple-api.0.alive?val=false`, {
+                validateStatus: false,
+                responseType: 'text',
+            })
+            .then(response => {
+                console.log(`set/system.adapter.simple-api.0.alive?val=false => ${response.data}`);
+                expect(response.data).to.be.equal('{"error":"permissionError"}');
+                expect(response.status).to.equal(403);
                 done();
-            },
-        );
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     it('Test RESTful API as Owner-User: set - must set val', done => {
-        request(
-            `http://127.0.0.1:${PORT}/set/system.adapter.simple-api.0.alive?val=true`,
-            (error, response, body) => {
-                console.log(`set/system.adapter.simple-api.0.alive?val=true => ${body}`);
-                expect(body).to.be.equal('{"error":"permissionError"}');
-                expect(response.statusCode).to.equal(403);
+        axios
+            .get(`http://127.0.0.1:${PORT}/set/system.adapter.simple-api.0.alive?val=true`, {
+                validateStatus: false,
+                responseType: 'text',
+            })
+            .then(response => {
+                console.log(`set/system.adapter.simple-api.0.alive?val=true => ${response.data}`);
+                expect(response.data).to.be.equal('{"error":"permissionError"}');
+                expect(response.status).to.equal(403);
                 done();
-            },
-        );
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     it('Test RESTful API as Owner-User: objects - must return objects', done => {
-        request(`http://127.0.0.1:${PORT}/objects?pattern=system.adapter.*`, (error, response, body) => {
-            //console.log('objects?pattern=system.adapter.* => ' + body);
-            expect(!!body).to.be.true;
-            expect(response.statusCode).to.equal(200);
-            done();
-        });
+        axios
+            .get(`http://127.0.0.1:${PORT}/objects?pattern=system.adapter.*`)
+            .then(response => {
+                //console.log('objects?pattern=system.adapter.* => ' + response.data);
+                expect(!!response.data).to.be.true;
+                expect(response.status).to.equal(200);
+                done();
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     it('Test RESTful API as Owner-User: objects - must return objects', done => {
-        request(
-            `http://127.0.0.1:${PORT}/objects?pattern=system.adapter.*&type=instance`,
-            (error, response, body) => {
-                //console.log('objects?pattern=system.adapter.* => ' + body);
-                //expect(body).to.be.equal('error: permissionError');
-                expect(!!body).to.be.true;
-                expect(response.statusCode).to.equal(200);
+        axios
+            .get(`http://127.0.0.1:${PORT}/objects?pattern=system.adapter.*&type=instance`)
+            .then(response => {
+                //console.log('objects?pattern=system.adapter.* => ' + response.data);
+                //expect(response.data).to.be.equal('error: permissionError');
+                expect(!!response.data).to.be.true;
+                expect(response.status).to.equal(200);
                 done();
-            },
-        );
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     it('Test RESTful API as Owner-User: states - must return states', done => {
-        request(`http://127.0.0.1:${PORT}/states?pattern=system.adapter.*`, (error, response, body) => {
-            console.log(`states?pattern=system.adapter.* => ${body}`);
-            expect(body).to.be.equal('{"error":"permissionError"}');
-            expect(response.statusCode).to.equal(403);
-            done();
-        });
+        axios
+            .get(`http://127.0.0.1:${PORT}/states?pattern=system.adapter.*`, {
+                validateStatus: false,
+                responseType: 'text',
+            })
+            .then(response => {
+                console.log(`states?pattern=system.adapter.* => ${response.data}`);
+                expect(response.data).to.be.equal('{"error":"permissionError"}');
+                expect(response.status).to.equal(403);
+                done();
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     it('Test RESTful API as Owner-User: setValueFromBody(POST) - must set one value', done => {
-        request(
-            {
-                uri: `http://127.0.0.1:${PORT}/setValueFromBody/${TEST_STATE_ID}`,
-                method: 'POST',
-                body: '55',
-            },
-            (error, response, body) => {
-                console.log(`setValueFromBody/?${TEST_STATE_ID} => ${JSON.stringify(body)}`);
-                expect(body).to.be.equal('{"error":"permissionError"}');
-                expect(response.statusCode).to.equal(403);
+        axios
+            .post(`http://127.0.0.1:${PORT}/setValueFromBody/${TEST_STATE_ID}`, '55', {
+                validateStatus: false,
+                responseType: 'text',
+            })
+            .then(response => {
+                console.log(`setValueFromBody/?${TEST_STATE_ID} => ${JSON.stringify(response.data)}`);
+                expect(response.data).to.be.equal('{"error":"permissionError"}');
+                expect(response.status).to.equal(403);
                 done();
-            },
-        );
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     after('Test RESTful API as Owner-User: Stop js-controller', function (done) {

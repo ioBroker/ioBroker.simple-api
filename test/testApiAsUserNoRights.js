@@ -3,7 +3,7 @@
 /*jshint expr: true*/
 const expect = require('chai').expect;
 const setup = require('@iobroker/legacy-testing');
-const request = require('request');
+const axios = require('axios');
 
 let objects = null;
 let states = null;
@@ -60,7 +60,7 @@ describe('Test RESTful API as User(No rights)', function () {
         this.timeout(600000); // because of the first installation from npm
         setup.adapterStarted = false;
 
-        setup.setupController(async ()=> {
+        setup.setupController(async () => {
             const config = await setup.getAdapterConfig();
             // enable adapter
             config.common.enabled = true;
@@ -192,183 +192,277 @@ describe('Test RESTful API as User(No rights)', function () {
     });
 
     it('Test RESTful API as User:(No rights) get - must return value', done => {
-        request('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', (error, response, body) => {
-            console.log(`get/system.adapter.simple-api.0.alive => ${body}`);
-            expect(body).to.be.equal('{"error":"permissionError"}');
-            expect(response.statusCode).to.equal(403);
-            done();
-        });
+        axios
+            .get('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', {
+                validateStatus: false,
+                responseType: 'text',
+            })
+            .then(response => {
+                console.log(`get/system.adapter.simple-api.0.alive => ${response.data}`);
+                expect(response.data).to.be.equal('{"error":"permissionError"}');
+                expect(response.status).to.equal(403);
+                done();
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     it('Test RESTful API as User:(No rights) getPlainValue - must return plain value', done => {
-        request('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', (error, response, body) => {
-            console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${body}`);
-            expect(body).to.be.equal('error: permissionError');
-            expect(response.statusCode).to.equal(403);
-            done();
-        });
+        axios
+            .get('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', {
+                validateStatus: false,
+                responseType: 'text',
+            })
+            .then(response => {
+                console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${response.data}`);
+                expect(response.data).to.be.equal('error: permissionError');
+                expect(response.status).to.equal(403);
+                done();
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     it('Test RESTful API as User:(No rights) getPlainValue 4 Test-Endpoint - must return plain value', done => {
-        request('http://127.0.0.1:18183/getPlainValue/javascript.0.test', (error, response, body) => {
-            console.log(`getPlainValue/javascript.0.test => ${body}`);
-            expect(body).to.be.equal('error: permissionError');
-            expect(response.statusCode).to.equal(403);
-            done();
-        });
+        axios
+            .get('http://127.0.0.1:18183/getPlainValue/javascript.0.test', {
+                validateStatus: false,
+                responseType: 'text',
+            })
+            .then(response => {
+                console.log(`getPlainValue/javascript.0.test => ${response.data}`);
+                expect(response.data).to.be.equal('error: permissionError');
+                expect(response.status).to.equal(403);
+                done();
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     it('Test RESTful API as User:(No rights) set 4 Test-Endpoint  - must set value', done => {
-        request('http://127.0.0.1:18183/set/javascript.0.test?val=2', (error, response, body) => {
-            console.log(`set/javascript.0.test?val=false => ${body}`);
-            expect(body).to.be.equal('{"error":"permissionError"}');
-            expect(response.statusCode).to.equal(403);
-            request('http://127.0.0.1:18183/getPlainValue/javascript.0.test', (error, response, body) => {
-                console.log(`getPlainValue/javascript.0.test => ${body}`);
-                expect(body).to.be.equal('error: permissionError');
-                expect(response.statusCode).to.equal(403);
+        axios
+            .get('http://127.0.0.1:18183/set/javascript.0.test?val=2', { validateStatus: false, responseType: 'text' })
+            .then(response => {
+                console.log(`set/javascript.0.test?val=false => ${response.data}`);
+                expect(response.data).to.be.equal('{"error":"permissionError"}');
+                expect(response.status).to.equal(403);
+                return axios.get('http://127.0.0.1:18183/getPlainValue/javascript.0.test', {
+                    validateStatus: false,
+                    responseType: 'text',
+                });
+            })
+            .then(response => {
+                console.log(`getPlainValue/javascript.0.test => ${response.data}`);
+                expect(response.data).to.be.equal('error: permissionError');
+                expect(response.status).to.equal(403);
                 done();
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
             });
-        });
     });
 
     it('Test RESTful API as User:(No rights) set - must set value', done => {
-        request('http://127.0.0.1:18183/set/system.adapter.simple-api.0.alive?val=false', (error, response, body) => {
-            console.log(`set/system.adapter.simple-api.0.alive?val=false => ${body}`);
-            expect(body).to.be.equal('{"error":"permissionError"}');
-            expect(response.statusCode).to.equal(403);
-            request(
-                'http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive',
-                (error, response, body) => {
-                    console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${body}`);
-                    expect(body).to.be.equal('error: permissionError');
-                    expect(response.statusCode).to.equal(403);
-                    done();
-                },
-            );
-        });
+        axios
+            .get('http://127.0.0.1:18183/set/system.adapter.simple-api.0.alive?val=false', {
+                validateStatus: false,
+                responseType: 'text',
+            })
+            .then(response => {
+                console.log(`set/system.adapter.simple-api.0.alive?val=false => ${response.data}`);
+                expect(response.data).to.be.equal('{"error":"permissionError"}');
+                expect(response.status).to.equal(403);
+                return axios.get('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', {
+                    validateStatus: false,
+                    responseType: 'text',
+                });
+            })
+            .then(response => {
+                console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${response.data}`);
+                expect(response.data).to.be.equal('error: permissionError');
+                expect(response.status).to.equal(403);
+                done();
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     it('Test RESTful API as User:(No rights) set - must set val', done => {
-        request('http://127.0.0.1:18183/set/system.adapter.simple-api.0.alive?val=true', (error, response, body) => {
-            console.log(`set/system.adapter.simple-api.0.alive?val=true => ${body}`);
-            expect(body).to.be.equal('{"error":"permissionError"}');
-            expect(response.statusCode).to.equal(403);
-            request(
-                'http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive',
-                (error, response, body) => {
-                    console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${body}`);
-                    expect(body).to.be.equal('error: permissionError');
-                    expect(response.statusCode).to.equal(403);
-                    done();
-                },
-            );
-        });
+        axios
+            .get('http://127.0.0.1:18183/set/system.adapter.simple-api.0.alive?val=true', {
+                validateStatus: false,
+                responseType: 'text',
+            })
+            .then(response => {
+                console.log(`set/system.adapter.simple-api.0.alive?val=true => ${response.data}`);
+                expect(response.data).to.be.equal('{"error":"permissionError"}');
+                expect(response.status).to.equal(403);
+                return axios.get('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', {
+                    validateStatus: false,
+                    responseType: 'text',
+                });
+            })
+            .then(response => {
+                console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${response.data}`);
+                expect(response.data).to.be.equal('error: permissionError');
+                expect(response.status).to.equal(403);
+                done();
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     it('Test RESTful API as User:(No rights) objects - must return objects', done => {
-        request('http://127.0.0.1:18183/objects?pattern=system.adapter.*', (error, response, body) => {
-            console.log(`objects?pattern=system.adapter.* => ${body}`);
-            expect(body).to.be.equal('{"error":"permissionError"}');
-            expect(response.statusCode).to.equal(403);
-            done();
-        });
+        axios
+            .get('http://127.0.0.1:18183/objects?pattern=system.adapter.*', {
+                validateStatus: false,
+                responseType: 'text',
+            })
+            .then(response => {
+                console.log(`objects?pattern=system.adapter.* => ${response.data}`);
+                expect(response.data).to.be.equal('{"error":"permissionError"}');
+                expect(response.status).to.equal(403);
+                done();
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     it('Test RESTful API as User:(No rights) objects - must return objects', done => {
-        request('http://127.0.0.1:18183/objects?pattern=system.adapter.*&type=instance', (error, response, body) => {
-            console.log(`objects?pattern=system.adapter.* => ${body}`);
-            expect(body).to.be.equal('{"error":"permissionError"}');
-            expect(response.statusCode).to.equal(403);
-            done();
-        });
+        axios
+            .get('http://127.0.0.1:18183/objects?pattern=system.adapter.*&type=instance', {
+                validateStatus: false,
+                responseType: 'text',
+            })
+            .then(response => {
+                console.log(`objects?pattern=system.adapter.* => ${response.data}`);
+                expect(response.data).to.be.equal('{"error":"permissionError"}');
+                expect(response.status).to.equal(403);
+                done();
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     it('Test RESTful API as User:(No rights) states - must return states', done => {
-        request('http://127.0.0.1:18183/states?pattern=system.adapter.*', (error, response, body) => {
-            console.log(`states?pattern=system.adapter.* => ${body}`);
-            expect(body).to.be.equal('{"error":"permissionError"}');
-            expect(response.statusCode).to.equal(403);
-            done();
-        });
+        axios
+            .get('http://127.0.0.1:18183/states?pattern=system.adapter.*', {
+                validateStatus: false,
+                responseType: 'text',
+            })
+            .then(response => {
+                console.log(`states?pattern=system.adapter.* => ${response.data}`);
+                expect(response.data).to.be.equal('{"error":"permissionError"}');
+                expect(response.status).to.equal(403);
+                done();
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     it('Test RESTful API as User:(No rights) setBulk(POST) - must set values', done => {
-        request(
-            {
-                uri: 'http://127.0.0.1:18183/setBulk',
-                method: 'POST',
-                body: `${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false&javascript.0.test=4`,
-            },
-            (error, response, body) => {
+        axios
+            .post(
+                'http://127.0.0.1:18183/setBulk',
+                `${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false&javascript.0.test=4`,
+                { validateStatus: false, responseType: 'text' },
+            )
+            .then(response => {
                 console.log(
-                    `setBulk/?${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false&javascript.0.test=4 => ${JSON.stringify(body)}`,
+                    `setBulk/?${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false&javascript.0.test=4 => ${JSON.stringify(response.data)}`,
                 );
-                expect(body).to.be.equal('{"error":"permissionError"}');
-                expect(response.statusCode).to.equal(403);
-
-                request(
+                expect(response.data).to.be.equal('{"error":"permissionError"}');
+                expect(response.status).to.equal(403);
+                return axios.get(
                     `http://127.0.0.1:18183/getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive,javascript.0.test`,
-                    (error, response, body) => {
-                        console.log(
-                            `getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive,javascript.0.test => ${body}`,
-                        );
-                        expect(body).to.be.equal('{"error":"permissionError"}');
-                        expect(response.statusCode).to.equal(403);
-                        done();
-                    },
+                    { validateStatus: false, responseType: 'text' },
                 );
-            },
-        );
+            })
+            .then(response => {
+                console.log(
+                    `getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive,javascript.0.test => ${response.data}`,
+                );
+                expect(response.data).to.be.equal('{"error":"permissionError"}');
+                expect(response.status).to.equal(403);
+                done();
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     it('Test RESTful API as User:(No rights) setBulk(POST-GET-Mix) - must set values', done => {
-        request(
-            {
-                uri: `http://127.0.0.1:18183/setBulk?${TEST_STATE_ID}=51&system.adapter.simple-api.0.alive=false`,
-                method: 'POST',
-                body: '',
-            },
-            (error, response, body) => {
+        axios
+            .post(`http://127.0.0.1:18183/setBulk?${TEST_STATE_ID}=51&system.adapter.simple-api.0.alive=false`, '', {
+                validateStatus: false,
+                responseType: 'text',
+            })
+            .then(response => {
                 console.log(
-                    `setBulk/?${TEST_STATE_ID}=51&system.adapter.simple-api.0.alive=false => ${JSON.stringify(body)}`,
+                    `setBulk/?${TEST_STATE_ID}=51&system.adapter.simple-api.0.alive=false => ${JSON.stringify(response.data)}`,
                 );
-                expect(body).to.be.equal('{"error":"permissionError"}');
-                expect(response.statusCode).to.equal(403);
-
-                request(
-                    `http://127.0.0.1:18183/getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive`,
-                    (error, response, body) => {
-                        console.log(`getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive => ${body}`);
-                        expect(body).to.be.equal('{"error":"permissionError"}');
-                        expect(response.statusCode).to.equal(403);
-                        done();
-                    },
-                );
-            },
-        );
+                expect(response.data).to.be.equal('{"error":"permissionError"}');
+                expect(response.status).to.equal(403);
+                return axios.get(`http://127.0.0.1:18183/getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive`, {
+                    validateStatus: false,
+                    responseType: 'text',
+                });
+            })
+            .then(response => {
+                console.log(`getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive => ${response.data}`);
+                expect(response.data).to.be.equal('{"error":"permissionError"}');
+                expect(response.status).to.equal(403);
+                done();
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     it('Test RESTful API as User:(No rights) setValueFromBody(POST) - must set one value', done => {
-        request(
-            {
-                uri: `http://127.0.0.1:18183/setValueFromBody/${TEST_STATE_ID}`,
-                method: 'POST',
-                body: '55',
-            },
-            (error, response, body) => {
-                console.log(`setValueFromBody/?${TEST_STATE_ID} => ${JSON.stringify(body)}`);
-                expect(body).to.be.equal('{"error":"permissionError"}');
-                expect(response.statusCode).to.equal(403);
-
-                request(`http://127.0.0.1:18183/getBulk/${TEST_STATE_ID}`, (error, response, body) => {
-                    console.log(`getBulk/${TEST_STATE_ID} => ${body}`);
-                    expect(body).to.be.equal('{"error":"permissionError"}');
-                    expect(response.statusCode).to.equal(403);
-                    done();
+        axios
+            .post(`http://127.0.0.1:18183/setValueFromBody/${TEST_STATE_ID}`, '55', {
+                validateStatus: false,
+                responseType: 'text',
+            })
+            .then(response => {
+                console.log(`setValueFromBody/?${TEST_STATE_ID} => ${JSON.stringify(response.data)}`);
+                expect(response.data).to.be.equal('{"error":"permissionError"}');
+                expect(response.status).to.equal(403);
+                return axios.get(`http://127.0.0.1:18183/getBulk/${TEST_STATE_ID}`, {
+                    validateStatus: false,
+                    responseType: 'text',
                 });
-            },
-        );
+            })
+            .then(response => {
+                console.log(`getBulk/${TEST_STATE_ID} => ${response.data}`);
+                expect(response.data).to.be.equal('{"error":"permissionError"}');
+                expect(response.status).to.equal(403);
+                done();
+            })
+            .catch(error => {
+                console.error(error);
+                done(error);
+            });
     });
 
     after('Test RESTful API as User:(No rights) Stop js-controller', function (done) {
