@@ -91,7 +91,6 @@
         "zh-cn": "添加了对查询的支持聚合和计数"
       }
     },
-    "title": "Simple RESTful API",
     "titleLang": {
       "en": "Simple RESTful API",
       "de": "Einfache RESTful API",
@@ -102,6 +101,7 @@
       "it": "API RESTful semplice",
       "es": "API RESTful simple",
       "pl": "Prosty interfejs API RESTful",
+      "uk": "Простий RESTful API",
       "zh-cn": "简单的RESTful API"
     },
     "desc": {
@@ -114,6 +114,7 @@
       "it": "Questo adattatore consente di leggere e scrivere oggetti e stato di ioBroker con l'API RESTful web",
       "es": "Este adaptador permite leer y escribir objetos y estados ioBroker con API RESTful web",
       "pl": "Ten adapter umożliwia odczyt i zapis obiektów ioBroker oraz ich stan za pomocą web RESTful API",
+      "uk": "Цей адаптер дозволяє читати та записувати об'єкти та стан ioBroker за допомогою веб-RESTful API",
       "zh-cn": "该适配器允许使用Web RESTful API读写ioBroker对象和状态"
     },
     "authors": [
@@ -126,7 +127,6 @@
     "loglevel": "info",
     "icon": "simple-api.svg",
     "webExtension": "dist/lib/SimpleAPI.js",
-    "materialize": true,
     "readme": "https://github.com/ioBroker/ioBroker.simple-api/blob/master/README.md",
     "keywords": [
       "web",
@@ -141,7 +141,12 @@
     "stopBeforeUpdate": true,
     "dependencies": [
       {
-        "js-controller": ">=2.0.0"
+        "js-controller": ">=6.0.17"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=6.17.14"
       }
     ],
     "adminUI": {

@@ -59,7 +59,7 @@ export class SimpleApiAdapter extends Adapter {
             this.log.warn('Adapter runs as a part of web service');
             await this.setState('info.extension', true, true);
             return this.setForeignState(`system.adapter.${this.namespace}.alive`, false, true, () =>
-                setTimeout(() => (this.terminate ? this.terminate() : process.exit()), 1000),
+                this.setTimeout(() => (this.terminate ? this.terminate() : process.exit()), 1000),
             );
         }
 

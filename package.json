@@ -6,6 +6,9 @@
     "name": "bluefox",
     "email": "dogafox@gmail.com"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "contributors": [
     {
       "name": "Apollon77",
