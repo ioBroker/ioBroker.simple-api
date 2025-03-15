@@ -455,11 +455,19 @@ export class SimpleAPI {
         query: SimpleApiQuery,
     ): Promise<void> {
         let body = '';
-        req.on('data', (data: Buffer): void => {
-            body += data.toString();
-        });
-
-        await new Promise<void>(resolve => req.on('end', resolve));
+        if (
+            this.settings.auth &&
+            (req.headers.contentType === 'application/json' ||
+                req.headers.contentType === 'application/x-www-form-urlencoded')
+        ) {
+            // body is already parsed by express
+            body = JSON.stringify(req.body);
+        } else {
+            req.on('data', (data: Buffer): void => {
+                body += data.toString();
+            });
+            await new Promise<void>(resolve => req.on('end', resolve));
+        }
 
         let user: `system.user.${string}`;
         if (query.user && !query.user.startsWith('system.user.')) {
