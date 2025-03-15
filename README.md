@@ -628,7 +628,7 @@ This adapter supports the following types of authentication:
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
-### **WORK IN PROGRESS**
+### 3.0.6 (2025-03-15)
 * (bluefox) Added support for 'Access-Control-Allow-Origin'
 * (bluefox) Removed letsencrypt information
 * (bluefox) Added basic and OAuth2 authentication

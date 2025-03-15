@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "simple-api",
-    "version": "3.0.5",
+    "version": "3.0.6",
     "news": {
+      "3.0.6": {
+        "en": "Added support for 'Access-Control-Allow-Origin'\nRemoved letsencrypt information\nAdded basic and OAuth2 authentication\nImplemented JSONP response\nImplemented relative times for query",
+        "de": "Unterstützung für 'Access-Control-Allow-Origin '\nEntfernte letsencrypt Informationen\nHinzugefügt grundlegende und OAuth2 Authentifizierung\nUmsetzung der JSONP-Antwort\nErgänzte Relativzeiten für Abfrage",
+        "ru": "Добавлена поддержка «Access-Control-Allow-Origin» \"\nУдалённая информация Letsencrypt\nДобавлена базовая и OAuth2 аутентификация\nРеакция JSONP\nРеализовано относительное время для запроса",
+        "pt": "Adicionado suporte para 'Access-Control-Allow-Origin '\nRemover informação letsencrypt\nAdicionada autenticação básica e OAuth2\nResposta JSONP implementada\nTempos relativos implementados para consulta",
+        "nl": "Toegevoegde ondersteuning voor 'Access-Control-Allow-Origin '\nVerwijderde letsencrypt-informatie\nBasis- en OAuth2-authenticatie toegevoegd\nGeïmplementeerd JSONP-antwoord\nGeïmplementeerde relatieve tijden voor query",
+        "fr": "Ajout du support pour 'Access-Control-Autorisation-Origine '\nSupprimé les informations letsencrypt\nAjout de l'authentification basique et OAuth2\nMise en œuvre de la réponse du JSONP\nTemps relatifs mis en œuvre pour la requête",
+        "it": "Aggiunto il supporto per 'Access-Control-Allow-Origin '\nRimuovete le informazioni letsencrypt\nAggiunta l'autenticazione di base e OAuth2\nRisposta JSONP implementata\nTempo relativo implementato per query",
+        "es": "Apoyo añadido para 'Access-Control-Allow-Origin '\nQuitar información de letsencriptada\nAutenticación básica y OAuth2\nRespuesta aplicada a JSONP\nTiempos relativos aplicados para la consulta",
+        "pl": "Dodano wsparcie dla 'Akcesoria - Control- Allow- Pochodzenie'\nUsunięto informacje o szyfrowaniu listów\nDodano podstawowe i uwierzytelnianie OAuth2\nWdrożona odpowiedź JSONP\nWdrożony względny czas zapytania",
+        "uk": "Додано підтримку \"Access-Control-Allow-Origin\" Р\nВилучена інформація\nДодано базову та автентифікацію OAuth2\nРеалізовано відповідь JSONP\nРеалізовано відносні часи для запиту",
+        "zh-cn": "添加对“ 访问控制- Allow- Origin” 的支持  '\n删除后允许加密信息\n添加基本认证和 OAuth2 认证\n已执行的JSONP反应\n已执行查询的相对时间"
+      },
       "3.0.5": {
         "en": "Corrected the indication of running mode in admin\nCorrected the writing of numeric values\nClear cache after 10 minutes",
         "de": "Korrektur der Anzeige des Betriebsmodus in admin\nKorrektur des Schreibens von numerischen Werten\nCache nach 10 Minuten",
@@ -77,18 +90,6 @@
         "es": "Permitir el uso de la bandera ack para las solicitudes de publicación de setBulk\nDevuelve el indicador de reconocimiento también en getBulk",
         "pl": "Zezwalaj na używanie flagi ack dla żądań setBulk post\nFlaga potwierdzenia zwrotu również na getBulk",
         "zh-cn": "允许对 setBulk 发布请求使用 ack 标志\n在 getBulk 上也返回 ack 标志"
-      },
-      "2.6.5": {
-        "en": "Added support aggregate and count for queries",
-        "de": "Unterstützungsaggregat und Anzahl für Abfragen hinzugefügt",
-        "ru": "Добавлена поддержка агрегата и подсчета запросов.",
-        "pt": "Adicionado suporte agregado e contagem para consultas",
-        "nl": "Toegevoegd ondersteuningsaggregaat en telling voor vragen",
-        "fr": "Ajout de l'agrégat de support et du nombre de requêtes",
-        "it": "Aggiunto supporto aggregato e conteggio per le query",
-        "es": "Agregado de soporte agregado y conteo para consultas",
-        "pl": "Dodano agregację wsparcia i liczbę zapytań",
-        "zh-cn": "添加了对查询的支持聚合和计数"
       }
     },
     "titleLang": {
