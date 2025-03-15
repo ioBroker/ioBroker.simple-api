@@ -1,16 +1,13 @@
-/* jshint -W097 */
-/* jshint strict: false */
-/* jslint node: true */
-/* jshint expr: true*/
-
 const expect = require('chai').expect;
 const setup = require('@iobroker/legacy-testing');
 const axios = require('axios');
+const { Agent } = require('node:https');
 
 let objects = null;
 let states = null;
+const httpsAgent = new Agent({ rejectUnauthorized: false });
 
-process.env.NO_PROXY = '127.0.0.1';
+process.env.NO_PROXY = 'localhost';
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const TEST_STATE_ID = 'simple-api.0.testNumber';
 
@@ -51,7 +48,26 @@ function createTestState(cb) {
             native: {},
         },
         () => {
-            states.setState(TEST_STATE_ID, { val: 0, ack: true }, cb);
+            states.setState(TEST_STATE_ID, { val: 0, ack: true }, () => {
+                objects.setObject(
+                    'javascript.0.test-boolean',
+                    {
+                        common: {
+                            name: 'test',
+                            type: 'boolean',
+                            role: 'value',
+                            def: 0,
+                        },
+                        native: {},
+                        type: 'state',
+                    },
+                    err => {
+                        states.setState('javascript.0.test-boolean', { val: false, ack: false }, err => {
+                            cb();
+                        });
+                    },
+                );
+            });
         },
     );
 }
@@ -92,11 +108,11 @@ describe('Test RESTful API SSL', function () {
             expect(res).not.to.be.equal('Cannot check connection');
 
             objects.setObject(
-                'javascript.0.test-number',
+                'javascript.0.test-boolean',
                 {
                     common: {
-                        name: 'test',
-                        type: 'number',
+                        name: 'boolean',
+                        type: 'boolean',
                         role: 'value',
                         def: 0,
                     },
@@ -105,7 +121,7 @@ describe('Test RESTful API SSL', function () {
                 },
                 err => {
                     expect(err).to.be.null;
-                    states.setState('javascript.0.test-number', 0, err => {
+                    states.setState('javascript.0.test-boolean', true, err => {
                         expect(err).to.be.null;
                         done();
                     });
@@ -116,9 +132,11 @@ describe('Test RESTful API SSL', function () {
 
     it('Test RESTful API SSL: get - must return value', done => {
         axios
-            .get('https://127.0.0.1:18183/get/system.adapter.simple-api.0.alive?user=admin&pass=iobroker')
+            .get('https://localhost:18183/get/system.adapter.simple-api.0.alive?user=admin&pass=iobroker', {
+                httpsAgent,
+            })
             .then(response => {
-                console.log(`get/system.adapter.simple-api.0.alive => ${response.data}`);
+                console.log(`get/system.adapter.simple-api.0.alive => ${JSON.stringify(response.data)}`);
                 const obj = response.data;
                 expect(obj).to.be.ok;
                 expect(obj.val).to.be.true;
@@ -141,14 +159,15 @@ describe('Test RESTful API SSL', function () {
 
     it('Test RESTful API SSL: get - must return value with basic authentication', done => {
         axios
-            .get('https://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', {
+            .get('https://localhost:18183/get/system.adapter.simple-api.0.alive', {
                 auth: {
                     username: 'admin',
                     password: 'iobroker',
                 },
+                httpsAgent,
             })
             .then(response => {
-                console.log(`get/system.adapter.simple-api.0.alive => ${response.data}`);
+                console.log(`get/system.adapter.simple-api.0.alive => ${JSON.stringify(response.data)}`);
                 const obj = response.data;
                 expect(obj).to.be.ok;
                 expect(obj.val).to.be.true;
@@ -171,11 +190,12 @@ describe('Test RESTful API SSL', function () {
 
     it('Test RESTful API SSL: get with no credentials', done => {
         axios
-            .get('https://127.0.0.1:18183/get/system.adapter.simple-api.0.alive?user=admin&pass=io', {
+            .get('https://localhost:18183/get/system.adapter.simple-api.0.alive?user=admin&pass=io', {
                 validateStatus: false,
+                httpsAgent,
             })
             .then(response => {
-                console.log(`get/system.adapter.simple-api.0.alive => ${response.data}`);
+                console.log(`get/system.adapter.simple-api.0.alive => ${JSON.stringify(response.data)}`);
                 expect(response.status).to.be.equal(401);
                 done();
             })
@@ -187,9 +207,9 @@ describe('Test RESTful API SSL', function () {
 
     it('Test RESTful API SSL: get with wrong credentials', done => {
         axios
-            .get('https://127.0.0.1:18183/get/system.adapter.simple-api.0.alive', { validateStatus: false })
+            .get('https://localhost:18183/get/system.adapter.simple-api.0.alive', { validateStatus: false, httpsAgent })
             .then(response => {
-                console.log(`get/system.adapter.simple-api.0.alive => ${response.data}`);
+                console.log(`get/system.adapter.simple-api.0.alive => ${JSON.stringify(response.data)}`);
                 expect(response.status).to.be.equal(401);
                 done();
             })
@@ -203,59 +223,66 @@ describe('Test RESTful API SSL', function () {
         axios
             .post(
                 'https://127.0.0.1:18183/setBulk?user=admin&pass=iobroker',
-                `${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false`,
-                { validateStatus: false, responseType: 'text' },
+                `${TEST_STATE_ID}=50&javascript.0.test-boolean=true`,
+                { validateStatus: false, responseType: 'text', httpsAgent, headers: { 'Content-Type': 'text/plain' } },
             )
             .then(response => {
-                console.log(
-                    `setBulk/?${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false => ${JSON.stringify(response.data)}`,
-                );
-                const obj = response.data;
+                console.log(`setBulk/?${TEST_STATE_ID}=50&javascript.0.test-boolean=true => ${response.data}`);
+                const obj = JSON.parse(response.data);
                 expect(obj).to.be.ok;
                 expect(obj[0].val).to.be.equal(50);
                 expect(obj[0].id).to.equal(TEST_STATE_ID);
-                expect(obj[1].val).to.be.equal(false);
-                expect(obj[1].id).to.equal('system.adapter.simple-api.0.alive');
+                expect(obj[1].val).to.be.equal(true);
+                expect(obj[1].id).to.equal('javascript.0.test-boolean');
                 expect(response.status).to.equal(200);
 
                 return axios.get(
-                    `https://127.0.0.1:18183/getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive?user=admin&pass=iobroker`,
+                    `https://localhost:18183/getBulk/${TEST_STATE_ID},javascript.0.test-boolean?user=admin&pass=iobroker`,
+                    {
+                        validateStatus: false,
+                        responseType: 'text',
+                        httpsAgent,
+                    },
                 );
             })
             .then(response => {
-                console.log(`getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive => ${response.data}`);
-                const obj = response.data;
+                console.log(`getBulk/${TEST_STATE_ID},javascript.0.test-boolean => ${response.data}`);
+                const obj = JSON.parse(response.data);
                 expect(obj[0].val).equal(50);
-                expect(obj[1].val).equal(false);
+                expect(obj[1].val).equal(true);
                 expect(response.status).to.equal(200);
                 done();
             })
             .catch(error => {
-                console.error(error);
-                done(error);
+                console.log(`CAnnot get response: ${error}`);
             });
     });
 
     it('Test RESTful API SSL: setValueFromBody(POST) - must set values', done => {
         axios
-
-            .post(`https://127.0.0.1:18183/setValueFromBody/${TEST_STATE_ID}?user=admin&pass=iobroker&`, '55', {
+            .post(`https://localhost:18183/setValueFromBody/${TEST_STATE_ID}?user=admin&pass=iobroker`, '55', {
                 validateStatus: false,
                 responseType: 'text',
+                httpsAgent,
+                headers: { 'Content-Type': 'text/plain' },
             })
             .then(response => {
-                console.log(`setValueFromBody/?${TEST_STATE_ID} => ${JSON.stringify(response.data)}`);
-                const obj = response.data;
+                console.log(`setValueFromBody/?${TEST_STATE_ID} => ${response.data}`);
+                const obj = JSON.parse(response.data);
                 expect(obj).to.be.ok;
                 expect(obj[0].val).to.be.equal(55);
                 expect(obj[0].id).to.equal(TEST_STATE_ID);
                 expect(response.status).to.equal(200);
 
-                return axios.get(`https://127.0.0.1:18183/getBulk/${TEST_STATE_ID}?user=admin&pass=iobroker`);
+                return axios.get(`https://localhost:18183/getBulk/${TEST_STATE_ID}?user=admin&pass=iobroker`, {
+                    validateStatus: false,
+                    responseType: 'text',
+                    httpsAgent,
+                });
             })
             .then(response => {
                 console.log(`getBulk/${TEST_STATE_ID} => ${response.data}`);
-                const obj = response.data;
+                const obj = JSON.parse(response.data);
                 expect(obj[0].val).equal(55);
                 expect(response.status).to.equal(200);
                 done();

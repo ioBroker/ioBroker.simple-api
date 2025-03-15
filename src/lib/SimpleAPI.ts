@@ -502,7 +502,6 @@ export class SimpleAPI {
                 Object.values(oId).forEach(id => {
                     values[id] = body;
                 });
-                console.error('ERORROORRO: ', values);
                 if (!oId.length || !oId[0]) {
                     this.doErrorResponse(res, 'json', 422, 'no object/datapoint given');
                     return;

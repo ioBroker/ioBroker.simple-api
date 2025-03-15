@@ -140,12 +140,16 @@ Toggles value:
 ### setBulk
 Set many states with one request. This request supports POST method too, for POST data should be in body and not URL.
 
+Please use content type `text/plain` for that.
+
 ### setValueFromBody
 This command allows setting the value of a given state to be set by the POST body content.
 
 Call e.g.:
 `http://ipaddress:8087/setValueFromBody/0_userdata.0.example_state`
 with body `hello` where `0_userdata.0.example_state` is the ID of the state.
+
+Please use content type `text/plain` for that.
 
 ### objects
 Read objects of a defined type from DB.
@@ -342,7 +346,7 @@ In the first case the answer will be returned immediately and `ack` is false. In
     }
   ]
 ```
-You can send this request as POST too.
+You can send this request as POST too. Please use content type `text/plain` and put the data in the body.
 
 ### objects
 Get the list of all objects for pattern. If no pattern is specified, all objects as JSON array will be returned.

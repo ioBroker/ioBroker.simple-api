@@ -378,10 +378,18 @@ class SimpleAPI {
     }
     async restApiPost(req, res, command, oId, values, query) {
         let body = '';
-        req.on('data', (data) => {
-            body += data.toString();
-        });
-        await new Promise(resolve => req.on('end', resolve));
+        if (this.settings.auth &&
+            (req.headers.contentType === 'application/json' ||
+                req.headers.contentType === 'application/x-www-form-urlencoded')) {
+            // body is already parsed by express
+            body = JSON.stringify(req.body);
+        }
+        else {
+            req.on('data', (data) => {
+                body += data.toString();
+            });
+            await new Promise(resolve => req.on('end', resolve));
+        }
         let user;
         if (query.user && !query.user.startsWith('system.user.')) {
             user = `system.user.${query.user}`;
@@ -417,7 +425,6 @@ class SimpleAPI {
                 Object.values(oId).forEach(id => {
                     values[id] = body;
                 });
-                console.error('ERORROORRO: ', values);
                 if (!oId.length || !oId[0]) {
                     this.doErrorResponse(res, 'json', 422, 'no object/datapoint given');
                     return;

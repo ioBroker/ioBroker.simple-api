@@ -57,7 +57,7 @@ function createTestState(cb) {
     );
 }
 
-describe.only('Test RESTful API as User', function () {
+describe('Test RESTful API as User', function () {
     before('Test RESTful API as User: Start js-controller', function (_done) {
         this.timeout(600000); // because of the first installation from npm
         setup.adapterStarted = false;
