@@ -1,4 +1,4 @@
-import express, { type Express, NextFunction, type Request, type Response } from 'express';
+import express, { type Express, type NextFunction, type Request, type Response } from 'express';
 import { createReadStream, existsSync, type Stats, statSync } from 'node:fs';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';

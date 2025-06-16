@@ -567,6 +567,7 @@ export class SimpleAPI {
                     }
 
                     const options: ioBroker.GetHistoryOptions = {
+                        instance: this.config.dataSource,
                         start: dateFrom,
                         end: dateTo,
                         aggregate: (values.aggregate as ioBroker.GetHistoryOptions['aggregate']) || 'onchange',
@@ -604,16 +605,14 @@ export class SimpleAPI {
                         ) {
                             this.adapter.log.debug(`Read data from: ${this.config.dataSource}`);
 
-                            const result = await this.adapter.getHistoryAsync(
-                                this.config.dataSource,
-                                bodyQuery.targets[b].target,
-                                options,
-                            );
+                            const result = await this.adapter.getHistoryAsync(bodyQuery.targets[b].target, options);
 
                             this.adapter.log.debug(`[QUERY] sendTo result = ${JSON.stringify(result)}`);
 
-                            for (let i = 0; i < result.result.length; i++) {
-                                element.datapoints.push([result.result[i].val, result.result[i].ts]);
+                            if (result.result) {
+                                for (let i = 0; i < result.result.length; i++) {
+                                    element.datapoints.push([result.result[i].val, result.result[i].ts]);
+                                }
                             }
 
                             list.push(element);
@@ -681,9 +680,8 @@ export class SimpleAPI {
             return r;
         }
 
-        const result: { id: string | undefined; name: ioBroker.StringOrTranslated | undefined } =
-            // @ts-expect-error fixed in js-controller
-            await this.adapter.findForeignObjectAsync(idOrName, null, { user, lang: this.settings.language });
+        const result: { id?: string | undefined; name: ioBroker.StringOrTranslated | undefined } =
+            await this.adapter.findForeignObjectAsync(idOrName, null, { user, language: this.settings.language });
         if (result.id) {
             let name: string;
             if (result.name && typeof result.name === 'object') {
@@ -1485,6 +1483,7 @@ export class SimpleAPI {
                 }
 
                 const options: ioBroker.GetHistoryOptions = {
+                    instance: this.config.dataSource,
                     start: dateFrom,
                     end: dateTo,
                     aggregate: (values.aggregate as ioBroker.GetHistoryOptions['aggregate']) || 'onchange',
@@ -1512,11 +1511,13 @@ export class SimpleAPI {
                     if (this.config.dataSource && !(values.noHistory && values.noHistory === 'true')) {
                         this.adapter.log.debug(`Read data from: ${this.config.dataSource}`);
 
-                        const result = await this.adapter.getHistoryAsync(this.config.dataSource, oId[b], options);
+                        const result = await this.adapter.getHistoryAsync(oId[b], options);
                         this.adapter.log.debug(`[QUERY] sendTo result = ${JSON.stringify(result)}`);
 
-                        for (let i = 0; i < result.result.length; i++) {
-                            element.datapoints.push([result.result[i].val, result.result[i].ts]);
+                        if (result.result) {
+                            for (let i = 0; i < result.result.length; i++) {
+                                element.datapoints.push([result.result[i].val, result.result[i].ts]);
+                            }
                         }
 
                         response[b] = element;
