@@ -1,250 +1,266 @@
 {
-    "common": {
-        "name": "simple-api",
-        "version": "3.0.6",
-        "news": {
-            "3.0.6": {
-                "en": "Added support for 'Access-Control-Allow-Origin'\nRemoved letsencrypt information\nAdded basic and OAuth2 authentication\nImplemented JSONP response\nImplemented relative times for query",
-                "de": "Unterstützung für 'Access-Control-Allow-Origin '\nEntfernte letsencrypt Informationen\nHinzugefügt grundlegende und OAuth2 Authentifizierung\nUmsetzung der JSONP-Antwort\nErgänzte Relativzeiten für Abfrage",
-                "ru": "Добавлена поддержка «Access-Control-Allow-Origin» \"\nУдалённая информация Letsencrypt\nДобавлена базовая и OAuth2 аутентификация\nРеакция JSONP\nРеализовано относительное время для запроса",
-                "pt": "Adicionado suporte para 'Access-Control-Allow-Origin '\nRemover informação letsencrypt\nAdicionada autenticação básica e OAuth2\nResposta JSONP implementada\nTempos relativos implementados para consulta",
-                "nl": "Toegevoegde ondersteuning voor 'Access-Control-Allow-Origin '\nVerwijderde letsencrypt-informatie\nBasis- en OAuth2-authenticatie toegevoegd\nGeïmplementeerd JSONP-antwoord\nGeïmplementeerde relatieve tijden voor query",
-                "fr": "Ajout du support pour 'Access-Control-Autorisation-Origine '\nSupprimé les informations letsencrypt\nAjout de l'authentification basique et OAuth2\nMise en œuvre de la réponse du JSONP\nTemps relatifs mis en œuvre pour la requête",
-                "it": "Aggiunto il supporto per 'Access-Control-Allow-Origin '\nRimuovete le informazioni letsencrypt\nAggiunta l'autenticazione di base e OAuth2\nRisposta JSONP implementata\nTempo relativo implementato per query",
-                "es": "Apoyo añadido para 'Access-Control-Allow-Origin '\nQuitar información de letsencriptada\nAutenticación básica y OAuth2\nRespuesta aplicada a JSONP\nTiempos relativos aplicados para la consulta",
-                "pl": "Dodano wsparcie dla 'Akcesoria - Control- Allow- Pochodzenie'\nUsunięto informacje o szyfrowaniu listów\nDodano podstawowe i uwierzytelnianie OAuth2\nWdrożona odpowiedź JSONP\nWdrożony względny czas zapytania",
-                "uk": "Додано підтримку \"Access-Control-Allow-Origin\" Р\nВилучена інформація\nДодано базову та автентифікацію OAuth2\nРеалізовано відповідь JSONP\nРеалізовано відносні часи для запиту",
-                "zh-cn": "添加对“ 访问控制- Allow- Origin” 的支持  '\n删除后允许加密信息\n添加基本认证和 OAuth2 认证\n已执行的JSONP反应\n已执行查询的相对时间"
-            },
-            "3.0.5": {
-                "en": "Corrected the indication of running mode in admin\nCorrected the writing of numeric values\nClear cache after 10 minutes",
-                "de": "Korrektur der Anzeige des Betriebsmodus in admin\nKorrektur des Schreibens von numerischen Werten\nCache nach 10 Minuten",
-                "ru": "Исправлено указание режима работы в админ\nИсправлено написание числовых значений\nЧистый кэш через 10 минут",
-                "pt": "Corrigido a indicação do modo de execução no admin\nCorrigido a escrita de valores numéricos\nLimpar o cache após 10 minutos",
-                "nl": "De indicatie van de lopende modus in admin gecorrigeerd\nGecorrigeerd schrijven van numerieke waarden\nCache wissen na 10 minuten",
-                "fr": "Correction de l'indication du mode d'exécution en admin\nCorrection de l'écriture des valeurs numériques\nEffacer le cache après 10 minutes",
-                "it": "Corretto l'indicazione della modalità di esecuzione in admin\nCorretto la scrittura dei valori numerici\nCancella la cache dopo 10 minuti",
-                "es": "Corregido la indicación del modo de funcionamiento en admin\nCorregido la escritura de valores numéricos\nCaché transparente después de 10 minutos",
-                "pl": "Poprawiono wskazanie trybu pracy w admin\nKorekta zapisu wartości liczbowych\nWyczyść pamięć podręczną po 10 minutach",
-                "uk": "Виправлено показання режиму роботи в адміні\nВиправлено написання нумеричних значень\nОчистити кеш через 10 хвилин",
-                "zh-cn": "纠正管理器中运行模式的提示\n更正数值的写入\n10分钟后清除缓存"
-            },
-            "3.0.0": {
-                "en": "Updated packages\nMigrated to TypeScript\nIf State/Object not found, the response will be 404 (and not 500)\nIf a user has no permission, the response will be 403 (and not 401)",
-                "de": "Aktualisierte Pakete\nZu TypeScript migriert\nWenn Staat/Ziel nicht gefunden wird, wird die Antwort 404 (und nicht 500)\nWenn ein Benutzer keine Erlaubnis hat, wird die Antwort 403 (und nicht 401)",
-                "ru": "Обновленные пакеты\nИммиграция в TypeScript\nЕсли состояние/объект не найден, ответ будет 404 (а не 500)\nЕсли у пользователя нет разрешения, ответ будет 403 (а не 401)",
-                "pt": "Pacotes atualizados\nMigrado para TypeScript\nSe o Estado/Objeto não for encontrado, a resposta será 404 (e não 500)\nSe um usuário não tiver permissão, a resposta será 403 (e não 401)",
-                "nl": "Bijgewerkte pakketten\nNaar typeScript migreren\nAls staat/object niet wordt gevonden, zal het antwoord 404 (en niet 500) zijn\nAls een gebruiker geen toestemming heeft, zal het antwoord 403 zijn (en niet 401)",
-                "fr": "Paquets mis à jour\nMigré vers TypeScript\nSi l'État/l'objet n'est pas trouvé, la réponse sera 404 (et non 500)\nSi un utilisateur n'a pas la permission, la réponse sera 403 (et non 401)",
-                "it": "Pacchetti aggiornati\nMigrato a TypeScript\nSe State/Obiettivo non trovato, la risposta sarà 404 (e non 500)\nSe un utente non ha il permesso, la risposta sarà 403 (e non 401)",
-                "es": "Paquetes actualizados\nMigrado a TipoScript\nSi el Estado/Objeto no se encuentra, la respuesta será 404 (y no 500)\nSi un usuario no tiene permiso, la respuesta será 403 (y no 401)",
-                "pl": "Aktualizacja pakietów\nMigrated to TypeScript\nJeżeli stan / obiekt nie zostanie znaleziony, odpowiedź wyniesie 404 (a nie 500)\nJeśli użytkownik nie ma pozwolenia, odpowiedź będzie 403 (a nie 401)",
-                "uk": "Оновлені пакети\nMigrated до TypeScript\nЯкщо не знайдено державного/об’єкта, відповідь буде 404 (і не 500)\nЯкщо користувач не має дозволу, відповідь буде 403 (і не 401)",
-                "zh-cn": "更新软件包\n移动到类型脚本\n如果国家/目标未找到,答复将是404(而不是500)\n如果用户未获许可,则回复为403(而不是401)"
-            },
-            "2.8.0": {
-                "en": "ported to `@iobroker/webserver`",
-                "de": "an `@iobroker/webserver `",
-                "ru": "в порту `@iobroker/webserver \"",
-                "pt": "portado para `@iobroker/webserver \"",
-                "nl": "geporteerd naar .@iobroker/webserver wat",
-                "fr": "porté à `@iobroker/webserver \"",
-                "it": "inviato a `@iobroker/webserver #",
-                "es": "portada a `@iobroker/webserver `",
-                "pl": "wysłany do '@ iobroker / webserver'",
-                "uk": "сайт: www.iobroker.com й",
-                "zh-cn": "移植到 xqio 经纪人/网络服务器 `"
-            },
-            "2.7.2": {
-                "en": "Prepare for future js-controller versions",
-                "de": "Bereiten Sie sich auf zukünftige js-Controller-Versionen",
-                "ru": "Подготовьтесь к будущим версиям js-controller",
-                "pt": "Prepare-se para futuras versões js-controller",
-                "nl": "Bereid je voor op toekomstige Js-controller versie",
-                "fr": "Préparez-vous pour les versions futures de js-controller",
-                "it": "Prepararsi per le future versioni js-controller",
-                "es": "Prepararse para futuras versiones js-controller",
-                "pl": "Prepare for future js-controller version",
-                "zh-cn": "今后防污版本的编制"
-            },
-            "2.7.1": {
-                "en": "Check if the port is occupied only on defined interface\nAdded JSON config",
-                "de": "Überprüfen Sie, ob der Port nur auf definierter Schnittstelle besetzt ist\nJSON config",
-                "ru": "Проверьте, занят ли порт только на определенном интерфейсе\nДобавлено JSON config",
-                "pt": "Verifique se a porta está ocupada apenas na interface definida\nAdicionado JSON config",
-                "nl": "Controleer of de haven alleen bezet is op definitieve interface\n_",
-                "fr": "Vérifiez si le port n'est occupé que sur l'interface définie\nAjouté JSON config",
-                "it": "Controllare se la porta è occupata solo su interfaccia definita\nAggiunto JSON config",
-                "es": "Compruebe si el puerto está ocupado sólo en la interfaz definida\nConfiguración JSON",
-                "pl": "Jeśli port jest zajęty tylko na określonym interfejsie\nStrona internetowa JSON",
-                "zh-cn": "如果港口只在界定的界线上被占有,则该港口将被扣押。\n增 编"
-            },
-            "2.7.0": {
-                "en": "Allow use of ack flag for setBulk post requests\nReturn ack flag too on getBulk",
-                "de": "Verwendung des ack-Flags für SetBulk-Post-Anforderungen zulassen\nGeben Sie das Ack-Flag auch auf getBulk zurück",
-                "ru": "Разрешить использование флага подтверждения для почтовых запросов setBulk\nВернуть флаг подтверждения тоже на getBulk",
-                "pt": "Permitir o uso do sinalizador de confirmação para solicitações de postagem setBulk\nRetorne o sinalizador de confirmação também no getBulk",
-                "nl": "Sta gebruik van ack-vlag toe voor setBulk-postverzoeken\nRetourneer ook de ack-vlag op getBulk",
-                "fr": "Autoriser l'utilisation de l'indicateur ack pour les demandes de publication setBulk\nRenvoyez également le drapeau ack sur getBulk",
-                "it": "Consenti l'uso del flag di conferma per le richieste di post setBulk\nRestituisci anche la bandiera ack su getBulk",
-                "es": "Permitir el uso de la bandera ack para las solicitudes de publicación de setBulk\nDevuelve el indicador de reconocimiento también en getBulk",
-                "pl": "Zezwalaj na używanie flagi ack dla żądań setBulk post\nFlaga potwierdzenia zwrotu również na getBulk",
-                "zh-cn": "允许对 setBulk 发布请求使用 ack 标志\n在 getBulk 上也返回 ack 标志"
-            }
+  "common": {
+    "name": "simple-api",
+    "version": "3.0.7",
+    "news": {
+      "3.0.7": {
+        "en": "corrected reading of history data",
+        "de": "korrigiertes lesen von geschichte-daten",
+        "ru": "исправленное чтение исторических данных",
+        "pt": "leitura corrigida dos dados do histórico",
+        "nl": "gecorrigeerd lezen van historische gegevens",
+        "fr": "lecture corrigée des données d'historique",
+        "it": "lettura corretta dei dati storici",
+        "es": "lectura corregida de datos de historia",
+        "pl": "poprawiony odczyt danych historycznych",
+        "uk": "виправлено читання історичних даних",
+        "zh-cn": "历史数据的校正读取"
+      },
+      "3.0.6": {
+        "en": "Added support for 'Access-Control-Allow-Origin'\nRemoved letsencrypt information\nAdded basic and OAuth2 authentication\nImplemented JSONP response\nImplemented relative times for query",
+        "de": "Unterstützung für 'Access-Control-Allow-Origin '\nEntfernte letsencrypt Informationen\nHinzugefügt grundlegende und OAuth2 Authentifizierung\nUmsetzung der JSONP-Antwort\nErgänzte Relativzeiten für Abfrage",
+        "ru": "Добавлена поддержка «Access-Control-Allow-Origin» \"\nУдалённая информация Letsencrypt\nДобавлена базовая и OAuth2 аутентификация\nРеакция JSONP\nРеализовано относительное время для запроса",
+        "pt": "Adicionado suporte para 'Access-Control-Allow-Origin '\nRemover informação letsencrypt\nAdicionada autenticação básica e OAuth2\nResposta JSONP implementada\nTempos relativos implementados para consulta",
+        "nl": "Toegevoegde ondersteuning voor 'Access-Control-Allow-Origin '\nVerwijderde letsencrypt-informatie\nBasis- en OAuth2-authenticatie toegevoegd\nGeïmplementeerd JSONP-antwoord\nGeïmplementeerde relatieve tijden voor query",
+        "fr": "Ajout du support pour 'Access-Control-Autorisation-Origine '\nSupprimé les informations letsencrypt\nAjout de l'authentification basique et OAuth2\nMise en œuvre de la réponse du JSONP\nTemps relatifs mis en œuvre pour la requête",
+        "it": "Aggiunto il supporto per 'Access-Control-Allow-Origin '\nRimuovete le informazioni letsencrypt\nAggiunta l'autenticazione di base e OAuth2\nRisposta JSONP implementata\nTempo relativo implementato per query",
+        "es": "Apoyo añadido para 'Access-Control-Allow-Origin '\nQuitar información de letsencriptada\nAutenticación básica y OAuth2\nRespuesta aplicada a JSONP\nTiempos relativos aplicados para la consulta",
+        "pl": "Dodano wsparcie dla 'Akcesoria - Control- Allow- Pochodzenie'\nUsunięto informacje o szyfrowaniu listów\nDodano podstawowe i uwierzytelnianie OAuth2\nWdrożona odpowiedź JSONP\nWdrożony względny czas zapytania",
+        "uk": "Додано підтримку \"Access-Control-Allow-Origin\" Р\nВилучена інформація\nДодано базову та автентифікацію OAuth2\nРеалізовано відповідь JSONP\nРеалізовано відносні часи для запиту",
+        "zh-cn": "添加对“ 访问控制- Allow- Origin” 的支持  '\n删除后允许加密信息\n添加基本认证和 OAuth2 认证\n已执行的JSONP反应\n已执行查询的相对时间"
+      },
+      "3.0.5": {
+        "en": "Corrected the indication of running mode in admin\nCorrected the writing of numeric values\nClear cache after 10 minutes",
+        "de": "Korrektur der Anzeige des Betriebsmodus in admin\nKorrektur des Schreibens von numerischen Werten\nCache nach 10 Minuten",
+        "ru": "Исправлено указание режима работы в админ\nИсправлено написание числовых значений\nЧистый кэш через 10 минут",
+        "pt": "Corrigido a indicação do modo de execução no admin\nCorrigido a escrita de valores numéricos\nLimpar o cache após 10 minutos",
+        "nl": "De indicatie van de lopende modus in admin gecorrigeerd\nGecorrigeerd schrijven van numerieke waarden\nCache wissen na 10 minuten",
+        "fr": "Correction de l'indication du mode d'exécution en admin\nCorrection de l'écriture des valeurs numériques\nEffacer le cache après 10 minutes",
+        "it": "Corretto l'indicazione della modalità di esecuzione in admin\nCorretto la scrittura dei valori numerici\nCancella la cache dopo 10 minuti",
+        "es": "Corregido la indicación del modo de funcionamiento en admin\nCorregido la escritura de valores numéricos\nCaché transparente después de 10 minutos",
+        "pl": "Poprawiono wskazanie trybu pracy w admin\nKorekta zapisu wartości liczbowych\nWyczyść pamięć podręczną po 10 minutach",
+        "uk": "Виправлено показання режиму роботи в адміні\nВиправлено написання нумеричних значень\nОчистити кеш через 10 хвилин",
+        "zh-cn": "纠正管理器中运行模式的提示\n更正数值的写入\n10分钟后清除缓存"
+      },
+      "3.0.0": {
+        "en": "Updated packages\nMigrated to TypeScript\nIf State/Object not found, the response will be 404 (and not 500)\nIf a user has no permission, the response will be 403 (and not 401)",
+        "de": "Aktualisierte Pakete\nZu TypeScript migriert\nWenn Staat/Ziel nicht gefunden wird, wird die Antwort 404 (und nicht 500)\nWenn ein Benutzer keine Erlaubnis hat, wird die Antwort 403 (und nicht 401)",
+        "ru": "Обновленные пакеты\nИммиграция в TypeScript\nЕсли состояние/объект не найден, ответ будет 404 (а не 500)\nЕсли у пользователя нет разрешения, ответ будет 403 (а не 401)",
+        "pt": "Pacotes atualizados\nMigrado para TypeScript\nSe o Estado/Objeto não for encontrado, a resposta será 404 (e não 500)\nSe um usuário não tiver permissão, a resposta será 403 (e não 401)",
+        "nl": "Bijgewerkte pakketten\nNaar typeScript migreren\nAls staat/object niet wordt gevonden, zal het antwoord 404 (en niet 500) zijn\nAls een gebruiker geen toestemming heeft, zal het antwoord 403 zijn (en niet 401)",
+        "fr": "Paquets mis à jour\nMigré vers TypeScript\nSi l'État/l'objet n'est pas trouvé, la réponse sera 404 (et non 500)\nSi un utilisateur n'a pas la permission, la réponse sera 403 (et non 401)",
+        "it": "Pacchetti aggiornati\nMigrato a TypeScript\nSe State/Obiettivo non trovato, la risposta sarà 404 (e non 500)\nSe un utente non ha il permesso, la risposta sarà 403 (e non 401)",
+        "es": "Paquetes actualizados\nMigrado a TipoScript\nSi el Estado/Objeto no se encuentra, la respuesta será 404 (y no 500)\nSi un usuario no tiene permiso, la respuesta será 403 (y no 401)",
+        "pl": "Aktualizacja pakietów\nMigrated to TypeScript\nJeżeli stan / obiekt nie zostanie znaleziony, odpowiedź wyniesie 404 (a nie 500)\nJeśli użytkownik nie ma pozwolenia, odpowiedź będzie 403 (a nie 401)",
+        "uk": "Оновлені пакети\nMigrated до TypeScript\nЯкщо не знайдено державного/об’єкта, відповідь буде 404 (і не 500)\nЯкщо користувач не має дозволу, відповідь буде 403 (і не 401)",
+        "zh-cn": "更新软件包\n移动到类型脚本\n如果国家/目标未找到,答复将是404(而不是500)\n如果用户未获许可,则回复为403(而不是401)"
+      },
+      "2.8.0": {
+        "en": "ported to `@iobroker/webserver`",
+        "de": "an `@iobroker/webserver `",
+        "ru": "в порту `@iobroker/webserver \"",
+        "pt": "portado para `@iobroker/webserver \"",
+        "nl": "geporteerd naar .@iobroker/webserver wat",
+        "fr": "porté à `@iobroker/webserver \"",
+        "it": "inviato a `@iobroker/webserver #",
+        "es": "portada a `@iobroker/webserver `",
+        "pl": "wysłany do '@ iobroker / webserver'",
+        "uk": "сайт: www.iobroker.com й",
+        "zh-cn": "移植到 xqio 经纪人/网络服务器 `"
+      },
+      "2.7.2": {
+        "en": "Prepare for future js-controller versions",
+        "de": "Bereiten Sie sich auf zukünftige js-Controller-Versionen",
+        "ru": "Подготовьтесь к будущим версиям js-controller",
+        "pt": "Prepare-se para futuras versões js-controller",
+        "nl": "Bereid je voor op toekomstige Js-controller versie",
+        "fr": "Préparez-vous pour les versions futures de js-controller",
+        "it": "Prepararsi per le future versioni js-controller",
+        "es": "Prepararse para futuras versiones js-controller",
+        "pl": "Prepare for future js-controller version",
+        "zh-cn": "今后防污版本的编制"
+      },
+      "2.7.1": {
+        "en": "Check if the port is occupied only on defined interface\nAdded JSON config",
+        "de": "Überprüfen Sie, ob der Port nur auf definierter Schnittstelle besetzt ist\nJSON config",
+        "ru": "Проверьте, занят ли порт только на определенном интерфейсе\nДобавлено JSON config",
+        "pt": "Verifique se a porta está ocupada apenas na interface definida\nAdicionado JSON config",
+        "nl": "Controleer of de haven alleen bezet is op definitieve interface\n_",
+        "fr": "Vérifiez si le port n'est occupé que sur l'interface définie\nAjouté JSON config",
+        "it": "Controllare se la porta è occupata solo su interfaccia definita\nAggiunto JSON config",
+        "es": "Compruebe si el puerto está ocupado sólo en la interfaz definida\nConfiguración JSON",
+        "pl": "Jeśli port jest zajęty tylko na określonym interfejsie\nStrona internetowa JSON",
+        "zh-cn": "如果港口只在界定的界线上被占有,则该港口将被扣押。\n增 编"
+      }
+    },
+    "titleLang": {
+      "en": "Simple RESTful API",
+      "de": "Einfache RESTful API",
+      "ru": "Простой RESTful API",
+      "pt": "API RESTful simples",
+      "nl": "Eenvoudige RESTful API",
+      "fr": "API RESTful simple",
+      "it": "API RESTful semplice",
+      "es": "API RESTful simple",
+      "pl": "Prosty interfejs API RESTful",
+      "uk": "Простий RESTful API",
+      "zh-cn": "简单的RESTful API"
+    },
+    "desc": {
+      "en": "This adapter allows to read and write ioBroker objects and state with web RESTful API",
+      "de": "Dieser Adapter ermöglicht das Lesen und Schreiben von ioBroker-Objekten und den Status mit der Web-RESTful-API",
+      "ru": "Этот адаптер позволяет читать и записывать объекты и состояния ioBroker с помощью веб-RESTful API",
+      "pt": "Esse adaptador permite ler e gravar objetos ioBroker e declarar com a API RESTful da web",
+      "nl": "Deze adapter maakt het mogelijk om ioBroker-objecten te lezen en te schrijven en aan te geven met de web RESTful API",
+      "fr": "Cet adaptateur permet de lire et d'écrire des objets et des états ioBroker avec l'API Web RESTful",
+      "it": "Questo adattatore consente di leggere e scrivere oggetti e stato di ioBroker con l'API RESTful web",
+      "es": "Este adaptador permite leer y escribir objetos y estados ioBroker con API RESTful web",
+      "pl": "Ten adapter umożliwia odczyt i zapis obiektów ioBroker oraz ich stan za pomocą web RESTful API",
+      "uk": "Цей адаптер дозволяє читати та записувати об'єкти та стан ioBroker за допомогою веб-RESTful API",
+      "zh-cn": "该适配器允许使用Web RESTful API读写ioBroker对象和状态"
+    },
+    "authors": [
+      "bluefox <dogafox@gmail.com>",
+      "Apollon77 <ingo@fischer-ka.de>",
+      "Marco.K <marco@kaminski-net.de>"
+    ],
+    "platform": "Javascript/Node.js",
+    "mode": "daemon",
+    "loglevel": "info",
+    "icon": "simple-api.svg",
+    "webExtension": "dist/lib/SimpleAPI.js",
+    "readme": "https://github.com/ioBroker/ioBroker.simple-api/blob/master/README.md",
+    "keywords": [
+      "web",
+      "simpleAPI",
+      "RESTful",
+      "communication"
+    ],
+    "enabled": true,
+    "compact": true,
+    "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.simple-api/master/admin/simple-api.svg",
+    "type": "communication",
+    "stopBeforeUpdate": true,
+    "dependencies": [
+      {
+        "js-controller": ">=6.0.17"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=6.17.14"
+      }
+    ],
+    "adminUI": {
+      "config": "json"
+    },
+    "plugins": {
+      "sentry": {
+        "dsn": "https://1ad1b116fa644ec29e6f5d724b39f999@sentry.iobroker.net/12"
+      }
+    },
+    "connectionType": "none",
+    "dataSource": "none",
+    "tier": 3,
+    "licenseInformation": {
+      "type": "free",
+      "license": "MIT"
+    },
+    "messages": [
+      {
+        "condition": {
+          "operand": "and",
+          "rules": [
+            "oldVersion<3.0.0",
+            "newVersion>=3.0.0"
+          ]
         },
-        "titleLang": {
-            "en": "Simple RESTful API",
-            "de": "Einfache RESTful API",
-            "ru": "Простой RESTful API",
-            "pt": "API RESTful simples",
-            "nl": "Eenvoudige RESTful API",
-            "fr": "API RESTful simple",
-            "it": "API RESTful semplice",
-            "es": "API RESTful simple",
-            "pl": "Prosty interfejs API RESTful",
-            "uk": "Простий RESTful API",
-            "zh-cn": "简单的RESTful API"
+        "title": {
+          "en": "Important information about working as web extension",
+          "de": "Wichtige Informationen zur Arbeit als Weberweiterung",
+          "ru": "Важная информация о работе в качестве веб-расширения",
+          "pt": "Informações importantes sobre o trabalho como extensão da web",
+          "nl": "Belangrijke informatie over het werken als webextensie",
+          "fr": "Informations importantes sur le travail en tant qu'extension Web",
+          "it": "Informazioni importanti sul lavoro come estensione web",
+          "es": "Información importante sobre el trabajo como extensión web",
+          "pl": "Ważne informacje o pracy jako rozszerzenie sieciowe",
+          "zh-cn": "关于作为Web扩展工作的相关重要信息",
+          "uk": "Важлива інформація про роботу як веб-розширення"
         },
-        "desc": {
-            "en": "This adapter allows to read and write ioBroker objects and state with web RESTful API",
-            "de": "Dieser Adapter ermöglicht das Lesen und Schreiben von ioBroker-Objekten und den Status mit der Web-RESTful-API",
-            "ru": "Этот адаптер позволяет читать и записывать объекты и состояния ioBroker с помощью веб-RESTful API",
-            "pt": "Esse adaptador permite ler e gravar objetos ioBroker e declarar com a API RESTful da web",
-            "nl": "Deze adapter maakt het mogelijk om ioBroker-objecten te lezen en te schrijven en aan te geven met de web RESTful API",
-            "fr": "Cet adaptateur permet de lire et d'écrire des objets et des états ioBroker avec l'API Web RESTful",
-            "it": "Questo adattatore consente di leggere e scrivere oggetti e stato di ioBroker con l'API RESTful web",
-            "es": "Este adaptador permite leer y escribir objetos y estados ioBroker con API RESTful web",
-            "pl": "Ten adapter umożliwia odczyt i zapis obiektów ioBroker oraz ich stan za pomocą web RESTful API",
-            "uk": "Цей адаптер дозволяє читати та записувати об'єкти та стан ioBroker за допомогою веб-RESTful API",
-            "zh-cn": "该适配器允许使用Web RESTful API读写ioBroker对象和状态"
+        "text": {
+          "en": "When the adapter is configured to work as a web extension, no own local port is opened anymore",
+          "de": "Wenn der Adapter so konfiguriert ist, dass er als Weberweiterung arbeitet, wird kein eigener lokaler Port mehr geöffnet",
+          "ru": "Когда адаптер настроен на работу в качестве веб-расширения, больше не открывается собственный локальный порт",
+          "pt": "Quando o adaptador é configurado para funcionar como uma extensão da web, nenhuma porta local própria é mais aberta",
+          "nl": "Wanneer de adapter is geconfigureerd om als webextensie te werken, wordt er geen eigen lokale poort meer geopend",
+          "fr": "Lorsque l'adaptateur est configuré pour fonctionner comme une extension Web, aucun port local propre n'est plus ouvert",
+          "it": "Quando l'adattatore è configurato per funzionare come estensione web, non viene più aperta alcuna porta locale propria",
+          "es": "Cuando el adaptador está configurado para funcionar como una extensión web, ya no se abre ningún puerto local propio",
+          "pl": "Kiedy adapter jest skonfigurowany do pracy jako rozszerzenie sieciowe, nie jest już otwierany żaden własny lokalny port",
+          "zh-cn": "当适配器配置为作为Web扩展工作时,不再打开自己的本地端口",
+          "uk": "Коли адаптер налаштований на роботу як веб-розширення, більше не відкривається власний локальний порт"
         },
-        "authors": ["bluefox <dogafox@gmail.com>", "Apollon77 <ingo@fischer-ka.de>", "Marco.K <marco@kaminski-net.de>"],
-        "platform": "Javascript/Node.js",
-        "mode": "daemon",
-        "loglevel": "info",
-        "icon": "simple-api.svg",
-        "webExtension": "dist/lib/SimpleAPI.js",
-        "readme": "https://github.com/ioBroker/ioBroker.simple-api/blob/master/README.md",
-        "keywords": ["web", "simpleAPI", "RESTful", "communication"],
-        "enabled": true,
-        "compact": true,
-        "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.simple-api/master/admin/simple-api.svg",
-        "type": "communication",
-        "stopBeforeUpdate": true,
-        "dependencies": [
-            {
-                "js-controller": ">=6.0.17"
-            }
-        ],
-        "globalDependencies": [
-            {
-                "admin": ">=6.17.14"
-            }
-        ],
-        "adminUI": {
-            "config": "json"
-        },
-        "plugins": {
-            "sentry": {
-                "dsn": "https://1ad1b116fa644ec29e6f5d724b39f999@sentry.iobroker.net/12"
-            }
-        },
-        "connectionType": "none",
-        "dataSource": "none",
-        "tier": 3,
-        "licenseInformation": {
-            "type": "free",
-            "license": "MIT"
-        },
-        "messages": [
-            {
-                "condition": {
-                    "operand": "and",
-                    "rules": ["oldVersion<3.0.0", "newVersion>=3.0.0"]
-                },
-                "title": {
-                    "en": "Important information about working as web extension",
-                    "de": "Wichtige Informationen zur Arbeit als Weberweiterung",
-                    "ru": "Важная информация о работе в качестве веб-расширения",
-                    "pt": "Informações importantes sobre o trabalho como extensão da web",
-                    "nl": "Belangrijke informatie over het werken als webextensie",
-                    "fr": "Informations importantes sur le travail en tant qu'extension Web",
-                    "it": "Informazioni importanti sul lavoro come estensione web",
-                    "es": "Información importante sobre el trabajo como extensión web",
-                    "pl": "Ważne informacje o pracy jako rozszerzenie sieciowe",
-                    "zh-cn": "关于作为Web扩展工作的相关重要信息",
-                    "uk": "Важлива інформація про роботу як веб-розширення"
-                },
-                "text": {
-                    "en": "When the adapter is configured to work as a web extension, no own local port is opened anymore",
-                    "de": "Wenn der Adapter so konfiguriert ist, dass er als Weberweiterung arbeitet, wird kein eigener lokaler Port mehr geöffnet",
-                    "ru": "Когда адаптер настроен на работу в качестве веб-расширения, больше не открывается собственный локальный порт",
-                    "pt": "Quando o adaptador é configurado para funcionar como uma extensão da web, nenhuma porta local própria é mais aberta",
-                    "nl": "Wanneer de adapter is geconfigureerd om als webextensie te werken, wordt er geen eigen lokale poort meer geopend",
-                    "fr": "Lorsque l'adaptateur est configuré pour fonctionner comme une extension Web, aucun port local propre n'est plus ouvert",
-                    "it": "Quando l'adattatore è configurato per funzionare come estensione web, non viene più aperta alcuna porta locale propria",
-                    "es": "Cuando el adaptador está configurado para funcionar como una extensión web, ya no se abre ningún puerto local propio",
-                    "pl": "Kiedy adapter jest skonfigurowany do pracy jako rozszerzenie sieciowe, nie jest już otwierany żaden własny lokalny port",
-                    "zh-cn": "当适配器配置为作为Web扩展工作时,不再打开自己的本地端口",
-                    "uk": "Коли адаптер налаштований на роботу як веб-розширення, більше не відкривається власний локальний порт"
-                },
-                "level": "warn",
-                "buttons": ["ok", "cancel"]
-            }
+        "level": "warn",
+        "buttons": [
+          "ok",
+          "cancel"
         ]
-    },
-    "native": {
-        "port": 8087,
-        "auth": false,
-        "secure": false,
-        "bind": "0.0.0.0",
-        "certPublic": "",
-        "certPrivate": "",
-        "certChained": "",
-        "defaultUser": "admin",
-        "onlyAllowWhenUserIsOwner": false,
-        "webInstance": "",
-        "leEnabled": false,
-        "leUpdate": false,
-        "leCheckPort": 80,
-        "dataSource": "",
-        "allDatapoints": false,
-        "accessControlAllowOrigin": "*"
-    },
-    "instanceObjects": [
-        {
-            "_id": "info",
-            "type": "channel",
-            "common": {
-                "name": {
-                    "en": "Information",
-                    "de": "Information",
-                    "ru": "Информация",
-                    "pt": "Em formação",
-                    "nl": "Informatie",
-                    "fr": "Information",
-                    "it": "Informazione",
-                    "es": "Información",
-                    "pl": "Informacja",
-                    "uk": "Інформація",
-                    "zh-cn": "信息"
-                }
-            },
-            "native": {}
-        },
-        {
-            "_id": "info.extension",
-            "type": "state",
-            "common": {
-                "role": "indicator",
-                "name": "If instance is in only extension mode",
-                "type": "boolean",
-                "read": true,
-                "expert": true,
-                "write": false,
-                "def": false
-            },
-            "native": {}
-        }
+      }
     ]
+  },
+  "native": {
+    "port": 8087,
+    "auth": false,
+    "secure": false,
+    "bind": "0.0.0.0",
+    "certPublic": "",
+    "certPrivate": "",
+    "certChained": "",
+    "defaultUser": "admin",
+    "onlyAllowWhenUserIsOwner": false,
+    "webInstance": "",
+    "leEnabled": false,
+    "leUpdate": false,
+    "leCheckPort": 80,
+    "dataSource": "",
+    "allDatapoints": false,
+    "accessControlAllowOrigin": "*"
+  },
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": {
+          "en": "Information",
+          "de": "Information",
+          "ru": "Информация",
+          "pt": "Em formação",
+          "nl": "Informatie",
+          "fr": "Information",
+          "it": "Informazione",
+          "es": "Información",
+          "pl": "Informacja",
+          "uk": "Інформація",
+          "zh-cn": "信息"
+        }
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.extension",
+      "type": "state",
+      "common": {
+        "role": "indicator",
+        "name": "If instance is in only extension mode",
+        "type": "boolean",
+        "read": true,
+        "expert": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    }
+  ]
 }
