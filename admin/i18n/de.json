@@ -18,7 +18,7 @@
     "Run as": "Als Benutzer ausführen",
     "Secure(HTTPS)": "Sicher (HTTPS)",
     "Select data source": "Datenquelle auswählen",
-    "Set certificates or load it first in the system settings (right top).": "Zertifikate festlegen bzw. erst in den Systemeinstellungen (rechts oben) laden.",
+    "Set certificates or load it first in the system settings (right top).": "Setze Zertifikate oder lade sie zuerst unter System/Einstellungen (oben rechts).",
     "Unsecure_Auth": "Das Passwort wird unverschlüsselt über eine unsichere Verbindung übermittelt. Um Ihre Passwörter zu schützen, aktivieren Sie die sichere Verbindung (HTTPS)!",
     "Use Lets Encrypt certificates": "Verwenden Sie Let’s Encrypt-Zertifikate",
     "Use this instance for automatic update": "Diese Instanz für automatische Updates verwenden",
