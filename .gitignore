@@ -6,3 +6,6 @@ admin/i18n/*/flat.txt
 iob_npm.done
 package-lock.json
 *.tgz
+
+#ignore .commitinfo created by ioBroker release script
+.commitinfo
