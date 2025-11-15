@@ -45,7 +45,7 @@
     "@iobroker/testing": "^5.0.4",
     "@iobroker/types": "^7.0.7",
     "@types/body-parser": "^1.19.6",
-    "@types/cookie-parser": "^1.4.9",
+    "@types/cookie-parser": "^1.4.10",
     "@types/express": "^4.17.23",
     "@types/node": "^24.1.0",
     "axios": "^1.11.0",
