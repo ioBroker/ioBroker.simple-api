@@ -29,7 +29,7 @@
     "url": "https://github.com/ioBroker/ioBroker.simple-api"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^3.2.3",
+    "@iobroker/adapter-core": "^3.3.2",
     "@iobroker/webserver": "^1.2.8",
     "body-parser": "^2.2.0",
     "cookie-parser": "^1.4.7",
