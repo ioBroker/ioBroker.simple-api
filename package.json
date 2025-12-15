@@ -33,7 +33,7 @@
     "@iobroker/webserver": "^1.2.8",
     "body-parser": "^2.2.1",
     "cookie-parser": "^1.4.7",
-    "express": "^4.21.2"
+    "express": "^5.2.1"
   },
   "devDependencies": {
     "@alcalzone/release-script": "^3.8.0",
