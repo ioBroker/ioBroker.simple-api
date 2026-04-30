@@ -51,7 +51,7 @@
     "axios": "^1.13.2",
     "chai": "^4.5.0",
     "mocha": "^11.7.5",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.2"
   },
   "bugs": {
     "url": "https://github.com/ioBroker/ioBroker.simple-api/issues"
