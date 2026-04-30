@@ -214,8 +214,6 @@ export class SimpleApiAdapter extends Adapter {
                             () => (serverListening = true),
                         );
 
-                        createOAuth2Server;
-
                         this.log.info(`http${this.config.secure ? 's' : ''} server listening on port ${port}`);
                     } else {
                         this.log.error('server initialization failed');
