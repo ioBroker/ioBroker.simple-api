@@ -809,6 +809,8 @@ This adapter supports the following types of authentication:
 ### 0.0.1 (2015-02-06)
 * (bluefox) initial commit
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 The MIT License (MIT)
 
