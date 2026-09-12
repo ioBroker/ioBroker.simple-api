@@ -629,6 +629,9 @@ This adapter supports the following types of authentication:
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
+
+### **WORK IN PROGRESS**
+- (iobroker-bot) Adapter requires node.js >= 22 now.
 ### 3.0.7 (2025-06-16)
 * (@GermanBluefox) corrected reading of history data
 
