@@ -41,7 +41,7 @@
     "@alcalzone/release-script-plugin-license": "^3.7.0",
     "@iobroker/adapter-dev": "^1.5.0",
     "@iobroker/eslint-config": "^2.3.4",
-    "@iobroker/legacy-testing": "^2.0.2",
+    "@iobroker/legacy-testing": "^3.0.1",
     "@iobroker/testing": "^5.2.2",
     "@iobroker/types": "^7.1.0",
     "@types/body-parser": "^1.19.6",
