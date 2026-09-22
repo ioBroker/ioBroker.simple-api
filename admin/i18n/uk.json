@@ -1,7 +1,7 @@
 {
     "Allow only when User is Owner": "Дозволити лише тоді, коли користувач є власником",
     "Allow origin (CORS)": "Дозволити походження (CORS)",
-    "Authentication": "Аутентифікація",
+    "Authentication": "Автентифікація",
     "Authentication was deactivated": "Автентифікацію було вимкнено",
     "Chained certificate": "Прикутий сертифікат",
     "Disable authentication": "Вимкнути автентифікацію",
