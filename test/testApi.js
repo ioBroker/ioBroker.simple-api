@@ -87,7 +87,7 @@ describe('Test RESTful API', function () {
             config.native.port = 18183;
             await setup.setAdapterConfig(config.common, config.native);
 
-            setup.startController((_objects, _states) => {
+            setup.startController(true, null, null, (_objects, _states) => {
                 objects = _objects;
                 states = _states;
 

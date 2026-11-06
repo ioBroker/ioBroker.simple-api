@@ -71,7 +71,7 @@ describe('Test RESTful API as User', function () {
             config.native.defaultUser = 'myuser';
             await setup.setAdapterConfig(config.common, config.native);
 
-            setup.startController(function (_objects, _states) {
+            setup.startController(true, null, null, function (_objects, _states) {
                 objects = _objects;
                 states = _states;
                 // give some time to start server

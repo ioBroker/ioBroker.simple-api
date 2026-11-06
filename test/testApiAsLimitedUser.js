@@ -72,7 +72,7 @@ describe('Test RESTful API as Owner-User', function () {
             config.native.onlyAllowWhenUserIsOwner = true;
             await setup.setAdapterConfig(config.common, config.native);
 
-            setup.startController((_objects, _states) => {
+            setup.startController(true, null, null, (_objects, _states) => {
                 objects = _objects;
                 states = _states;
                 // give some time to start server
