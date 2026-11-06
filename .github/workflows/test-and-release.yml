@@ -29,23 +29,14 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - uses: actions/checkout@v7
-            - name: Use Node.js 22.x
-              uses: actions/setup-node@v7
+            - uses: ioBroker/testing-action-check@v1
               with:
-                  node-version: 22.x
-
-            - name: Install Dependencies
-              run: npm i
-
-    #      - name: Perform a type check
-    #        run: npm run check:ts
-    #        env:
-    #          CI: true
-    # - name: Lint TypeScript code
-    #   run: npm run lint
-    #      - name: Test package files
-    #        run: npm run test:package
+                  node-version: '22.x'
+                  # package-lock.json is not in the repository
+                  install-command: 'npm i'
+                  package-cache: 'false'
+                  type-checking: true
+                  lint: true
 
     # Runs adapter tests on all supported node versions and OSes
     adapter-tests:
@@ -60,28 +51,14 @@ jobs:
                 os: [ubuntu-latest, windows-latest, macos-latest]
 
         steps:
-            - uses: actions/checkout@v7
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v7
+            - uses: ioBroker/testing-action-adapter@v1
               with:
                   node-version: ${{ matrix.node-version }}
-
-            - name: Install Dependencies
-              run: npm i
-
-            - name: Build
-              run: npm run build
-
-            - name: Run local tests
-              run: npm test
-    #      - name: Run unit tests
-    #        run: npm run test:unit
-    #      - name: Run integration tests # (linux/osx)
-    #        if: startsWith(runner.OS, 'windows') == false
-    #        run: DEBUG=testing:* npm run test:integration
-    #      - name: Run integration tests # (windows)
-    #        if: startsWith(runner.OS, 'windows')
-    #        run: set DEBUG=testing:* & npm run test:integration
+                  os: ${{ matrix.os }}
+                  # package-lock.json is not in the repository
+                  install-command: 'npm i'
+                  package-cache: 'false'
+                  build: true
 
     # Deploys the final package to NPM and creates the GitHub release
     deploy:

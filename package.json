@@ -64,6 +64,9 @@
   ],
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha --exit",
+    "test:package": "node node_modules/mocha/bin/mocha test/testPackageFiles.js --exit",
+    "test:integration": "node node_modules/mocha/bin/mocha test/testApi.js test/testApiAsLimitedUser.js test/testApiAsUser.js test/testApiAsUserNoRights.js test/testSsl.js --exit",
+    "check": "tsc --noEmit",
     "build": "tsc -p tsconfig.build.json && node tasks",
     "lint": "eslint -c eslint.config.mjs",
     "release": "release-script",
