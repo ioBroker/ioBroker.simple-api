@@ -83,76 +83,35 @@ jobs:
     #        if: startsWith(runner.OS, 'windows')
     #        run: set DEBUG=testing:* & npm run test:integration
 
-    # Deploys the final package to NPM
+    # Deploys the final package to NPM and creates the GitHub release
     deploy:
-        needs: [adapter-tests]
+        needs: [check-and-lint, adapter-tests]
 
-        # Trigger this step only when a commit on master is tagged with a version number
+        # Permissions are required to create GitHub releases and for npm trusted publishing
+        permissions:
+            contents: write
+            id-token: write
+
+        # Trigger this step only when a commit on any branch is tagged with a version number
         if: |
             contains(github.event.head_commit.message, '[skip ci]') == false &&
             github.event_name == 'push' &&
-            startsWith(github.ref, 'refs/tags/')
+            startsWith(github.ref, 'refs/tags/v')
+
         runs-on: ubuntu-latest
+
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v5
-
-            - name: Use Node.js 20.x
-              uses: actions/setup-node@v6
+            - uses: ioBroker/testing-action-deploy@v1
               with:
-                  node-version: 20.x
-
-            - name: Extract the version and commit body from the tag
-              id: extract_release
-              # The body may be multiline, therefore we need to escape some characters
-              run: |
-                  VERSION="${{ github.ref }}"
-                  VERSION=${VERSION##*/}
-                  VERSION=${VERSION##*v}
-                  echo "::set-output name=VERSION::$VERSION"
-                  BODY=$(git show -s --format=%b)
-                  BODY="${BODY//'%'/'%25'}"
-                  BODY="${BODY//$'\n'/'%0A'}"
-                  BODY="${BODY//$'\r'/'%0D'}"
-                  echo "::set-output name=BODY::$BODY"
-
-            - name: Install Dependencies
-              run: npm i
-
-            - name: Build
-              run: npm run build
-
-            #      - name: Create a clean build
-            #        run: npm run build
-            - name: Publish package to npm
-              run: |
-                  npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
-                  npm whoami
-                  npm publish
-
-            - name: Create Github Release
-              uses: actions/create-release@v1
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              with:
-                  tag_name: ${{ github.ref }}
-                  release_name: Release v${{ steps.extract_release.outputs.VERSION }}
-                  draft: false
-                  # Prerelease versions create pre-releases on GitHub
-                  prerelease: ${{ contains(steps.extract_release.outputs.VERSION, '-') }}
-                  body: ${{ steps.extract_release.outputs.BODY }}
-
-            - name: Notify Sentry.io about the release
-              run: |
-                  npm i -g @sentry/cli
-                  export SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
-                  export SENTRY_URL=https://sentry.iobroker.net
-                  export SENTRY_ORG=iobroker
-                  export SENTRY_PROJECT=iobroker-simple-api
-                  export SENTRY_VERSION=iobroker.simple-api@${{ steps.extract_release.outputs.VERSION }}
-                  sentry-cli releases new $SENTRY_VERSION
-                  sentry-cli releases set-commits $SENTRY_VERSION --auto
-                  sentry-cli releases finalize $SENTRY_VERSION
-
-              # Add the following line BEFORE finalize if sourcemap uploads are needed
-              # sentry-cli releases files $SENTRY_VERSION upload-sourcemaps build/
+                  node-version: '24.x'
+                  # package-lock.json is not in the repository
+                  install-command: 'npm i'
+                  package-cache: 'false'
+                  build: true
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  sentry: true
+                  sentry-token: ${{ secrets.SENTRY_AUTH_TOKEN }}
+                  sentry-project: 'iobroker-simple-api'
+                  sentry-version-prefix: 'iobroker.simple-api'
+                  sentry-url: 'https://sentry.iobroker.net'
+                  sentry-org: 'iobroker'

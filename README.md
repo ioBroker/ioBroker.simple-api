@@ -629,6 +629,9 @@ This adapter supports the following types of authentication:
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
+### **WORK IN PROGRESS**
+- (@GermanBluefox) Publishing to npm goes through trusted publishing now: 4.0.0 could not be published with the old npm token
+
 ### 4.0.0 (2026-11-06)
 - (iobroker-bot) Adapter requires node.js >= 22 now.
 - (@GermanBluefox) Fixed `set` and `toggle` with `wait`: the request got no answer and the state was never unsubscribed. Now it answers with the acknowledged state, or `null` if the driver does not acknowledge in time, as documented
