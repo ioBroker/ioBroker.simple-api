@@ -99,6 +99,14 @@ type IoBrokerStateWithIsoTime =
 
 type CommandName = keyof typeof commandsPermissions;
 
+/** A request that waits for the acknowledgement of the state it has written (`/set/...?wait=...`) */
+type WaitingRequest = {
+    id: string;
+    timer: ioBroker.Timeout | undefined;
+    /** Answers the request with the acknowledged state, or with null when the time is up */
+    done: (state: ioBroker.State | null) => void;
+};
+
 /**
  * SimpleAPI class
  *
@@ -125,13 +133,12 @@ export class SimpleAPI {
     private readonly cachedNames: Map<string, { id: string; name: string; time: number }> = new Map();
     private readonly cachedIds: Map<string, { id: string; name: string; time: number }> = new Map();
 
-    private readonly restApiDelayed: {
-        id: string;
-        timer: ioBroker.Timeout | undefined;
-        resolve: (index: string) => void;
-        index: string;
-        value: ioBroker.StateValue;
-    }[] = [];
+    private readonly restApiDelayed: WaitingRequest[] = [];
+    /**
+     * How many requests wait for the acknowledgement of a state, by state ID. The state stays subscribed until
+     * the last one is answered, counted from the subscription on, before the request is in `restApiDelayed`.
+     */
+    private readonly waitSubscriptions = new Map<string, number>();
 
     constructor(
         _server: Server,
@@ -315,15 +322,9 @@ export class SimpleAPI {
 
     stateChange(id: string, state: ioBroker.State | null | undefined): void {
         if (state?.ack) {
-            for (let i = this.restApiDelayed.length - 1; i >= 0; i--) {
-                if (this.restApiDelayed[i].id === id) {
-                    if (this.restApiDelayed[i].timer) {
-                        this.restApiDelayed[i].timer = undefined;
-                        this.adapter.clearTimeout(this.restApiDelayed[i].timer);
-                        this.restApiDelayed[i].resolve(this.restApiDelayed[i].index);
-                    }
-                    this.restApiDelayed.splice(i, 1);
-                }
+            // Answer every request that waits for the acknowledgement of this state
+            for (const waiting of this.restApiDelayed.filter(it => it.id === id)) {
+                waiting.done(state);
             }
         }
     }
@@ -828,10 +829,6 @@ export class SimpleAPI {
         query: SimpleApiQuery,
         responseType: 'json' | 'plain',
     ): Promise<void> {
-        if (wait) {
-            await this.adapter.subscribeForeignStatesAsync(id);
-        }
-
         let user: `system.user.${string}`;
         if (query.user && !query.user.startsWith('system.user.')) {
             user = `system.user.${query.user}`;
@@ -839,82 +836,87 @@ export class SimpleAPI {
             user = query.user as `system.user.${string}`;
         }
 
+        if (wait) {
+            // Count first, so that a request that ends meanwhile does not unsubscribe the state
+            this.waitSubscriptions.set(id, (this.waitSubscriptions.get(id) || 0) + 1);
+        }
+
         try {
+            if (wait) {
+                await this.adapter.subscribeForeignStatesAsync(id);
+            }
             await this.adapter.setForeignStateAsync(id, value, query.ack, {
                 user,
                 limitToOwnerRights: this.config.onlyAllowWhenUserIsOwner,
             });
-        } catch (err) {
-            if (wait && !this.restApiDelayed.find(it => it.id === id)) {
-                this.adapter.unsubscribeForeignStates(id);
+
+            if (!wait) {
+                this.doResponse(res, responseType, { id, value, val: value }, query);
+            } else {
+                // As documented: the state acknowledged by the driver, or null when it did not answer in time
+                this.doResponse(res, responseType, await this.waitForAck(id, wait), query);
             }
+        } catch (err) {
             if (err.toString().includes(ERROR_PERMISSION)) {
                 this.doErrorResponse(res, responseType, 403, err);
             } else {
                 this.doErrorResponse(res, responseType, 500, err);
             }
-            return;
+        } finally {
+            if (wait) {
+                this.unsubscribeWhenNotWaited(id);
+            }
         }
+    }
 
-        if (!wait) {
-            this.doResponse(res, responseType, { id, value, val: value }, query);
+    /**
+     * Waits until the state is acknowledged (ack=true) or the time is up
+     *
+     * @param id ID of the state
+     * @param wait how long to wait in milliseconds
+     * @returns the acknowledged state, or null when the time is up
+     */
+    private waitForAck(id: string, wait: number): Promise<ioBroker.State | null> {
+        return new Promise<ioBroker.State | null>(resolve => {
+            const waiting: WaitingRequest = {
+                id,
+                timer: undefined,
+                done: (state: ioBroker.State | null): void => {
+                    const pos = this.restApiDelayed.indexOf(waiting);
+                    if (pos !== -1) {
+                        this.restApiDelayed.splice(pos, 1);
+                    }
+                    if (waiting.timer) {
+                        this.adapter.clearTimeout(waiting.timer);
+                        waiting.timer = undefined;
+                    }
+                    resolve(state);
+                },
+            };
+            this.restApiDelayed.push(waiting);
+            waiting.timer = this.adapter.setTimeout(() => {
+                waiting.timer = undefined;
+                waiting.done(null);
+            }, wait);
+            if (!waiting.timer) {
+                // The adapter is stopping and does not start timers any more
+                waiting.done(null);
+            }
+        });
+    }
+
+    /**
+     * Unsubscribes a state, that a request waited for, if no other request waits for it any more
+     *
+     * @param id ID of the state
+     */
+    private unsubscribeWhenNotWaited(id: string): void {
+        const count = (this.waitSubscriptions.get(id) || 1) - 1;
+        if (count) {
+            this.waitSubscriptions.set(id, count);
         } else {
-            // Wait for ack=true
-            await new Promise<string>((resolve, reject): void => {
-                let timer: ioBroker.Timeout | undefined;
-                const index = `${Date.now()}_${Math.round(Math.random() * 1000000)}`;
-
-                timer = this.adapter.setTimeout(() => {
-                    timer = undefined;
-                    reject(new Error(`timeout ${index}`));
-                }, wait);
-                this.restApiDelayed.push({ id, resolve, timer, index, value });
-            })
-                .then((index: string): void => {
-                    // Delete the timer
-                    for (let i = 0; i < this.restApiDelayed.length; i++) {
-                        if (this.restApiDelayed[i].index === index) {
-                            const id = this.restApiDelayed[i].id;
-                            const value = this.restApiDelayed[i].value;
-                            if (this.restApiDelayed[i].timer) {
-                                this.adapter.clearTimeout(this.restApiDelayed[i].timer);
-                                this.restApiDelayed[i].timer = undefined;
-                            }
-                            this.restApiDelayed.splice(i, 1);
-
-                            this.doResponse(res, responseType, { id, value, val: value }, query);
-
-                            // Unsubscribe if no other request is waiting
-                            if (!this.restApiDelayed.find(it => it.id === id)) {
-                                this.adapter.unsubscribeForeignStates(id);
-                            }
-
-                            break;
-                        }
-                    }
-                })
-                .catch((err: Error): void => {
-                    const [error, index] = err.toString().split(' ');
-
-                    for (let i = 0; i < this.restApiDelayed.length; i++) {
-                        if (this.restApiDelayed[i].index === index) {
-                            const id = this.restApiDelayed[i].id;
-                            if (this.restApiDelayed[i].timer) {
-                                this.adapter.clearTimeout(this.restApiDelayed[i].timer);
-                                this.restApiDelayed[i].timer = undefined;
-                            }
-                            this.restApiDelayed.splice(i, 1);
-
-                            if (!this.restApiDelayed.find(it => it.id === id)) {
-                                this.adapter.unsubscribeForeignStates(id);
-                            }
-
-                            this.doErrorResponse(res, responseType, 500, error);
-
-                            break;
-                        }
-                    }
-                });
+            this.waitSubscriptions.delete(id);
+            this.adapter.unsubscribeForeignStates(id);
         }
     }
 

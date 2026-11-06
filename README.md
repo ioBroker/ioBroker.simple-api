@@ -632,6 +632,8 @@ This adapter supports the following types of authentication:
 
 ### **WORK IN PROGRESS**
 - (iobroker-bot) Adapter requires node.js >= 22 now.
+- (@GermanBluefox) Fixed `set` and `toggle` with `wait`: the request got no answer and the state was never unsubscribed. Now it answers with the acknowledged state, or `null` if the driver does not acknowledge in time, as documented
+
 ### 3.0.7 (2025-06-16)
 * (@GermanBluefox) corrected reading of history data
 

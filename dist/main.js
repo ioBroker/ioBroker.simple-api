@@ -183,7 +183,6 @@ class SimpleApiAdapter extends adapter_core_1.Adapter {
                     this.webServer.server.listen(port, !this.config.bind || this.config.bind === '0.0.0.0'
                         ? undefined
                         : this.config.bind || undefined, () => (serverListening = true));
-                    webserver_1.createOAuth2Server;
                     this.log.info(`http${this.config.secure ? 's' : ''} server listening on port ${port}`);
                 }
                 else {

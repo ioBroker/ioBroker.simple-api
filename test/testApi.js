@@ -9,6 +9,7 @@ const axios = require('axios');
 let objects = null;
 let states = null;
 const TEST_STATE_ID = 'simple-api.0.testNumber';
+const TEST_WAIT_ID = 'simple-api.0.testWait';
 
 process.env.NO_PROXY = '127.0.0.1';
 
@@ -52,6 +53,25 @@ function createTestState(cb) {
             states.setState(TEST_STATE_ID, { val: 0, ack: true }, cb && cb);
         },
     );
+}
+
+function createWaitState() {
+    return new Promise(resolve =>
+        objects.setObject(
+            TEST_WAIT_ID,
+            {
+                _id: TEST_WAIT_ID,
+                type: 'state',
+                common: { name: 'Test wait', type: 'number', read: true, write: true, role: 'level' },
+                native: {},
+            },
+            () => resolve(),
+        ),
+    );
+}
+
+function getTestState(id) {
+    return new Promise((resolve, reject) => states.getState(id, (err, state) => (err ? reject(err) : resolve(state))));
 }
 
 describe('Test RESTful API', function () {
@@ -337,6 +357,37 @@ describe('Test RESTful API', function () {
                 console.error(error);
                 done(error);
             });
+    });
+
+    it('Test RESTful API: set - must wait for ack and return the acknowledged state', async function () {
+        this.timeout(10000);
+        await createWaitState();
+        const request = axios.get(`http://127.0.0.1:18183/set/${TEST_WAIT_ID}?val=5&wait=5000`);
+
+        // Acknowledge the value like a driver, as soon as it is written
+        let state;
+        for (let i = 0; i < 50 && !(state?.val === 5 && !state.ack); i++) {
+            await new Promise(resolve => setTimeout(resolve, 100));
+            state = await getTestState(TEST_WAIT_ID);
+        }
+        expect(state.val).to.equal(5);
+        await new Promise(resolve => states.setState(TEST_WAIT_ID, { val: 5, ack: true }, () => resolve()));
+
+        const response = await request;
+        console.log(`set/${TEST_WAIT_ID}?val=5&wait=5000 => ${JSON.stringify(response.data)}`);
+        expect(response.status).to.equal(200);
+        expect(response.data.val).to.equal(5);
+        expect(response.data.ack).to.be.true;
+    });
+
+    it('Test RESTful API: set - must return null if the value is not acknowledged in time', async function () {
+        this.timeout(10000);
+        const start = Date.now();
+        const response = await axios.get(`http://127.0.0.1:18183/set/${TEST_WAIT_ID}?val=6&wait=500`);
+        console.log(`set/${TEST_WAIT_ID}?val=6&wait=500 => ${JSON.stringify(response.data)}`);
+        expect(response.status).to.equal(200);
+        expect(response.data).to.equal(null);
+        expect(Date.now() - start).to.be.at.least(450);
     });
 
     it('Test RESTful API: toggle - must toggle boolean value to false', done => {

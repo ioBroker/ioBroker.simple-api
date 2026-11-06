@@ -45,6 +45,11 @@ export declare class SimpleAPI {
     private readonly cachedNames;
     private readonly cachedIds;
     private readonly restApiDelayed;
+    /**
+     * How many requests wait for the acknowledgement of a state, by state ID. The state stays subscribed until
+     * the last one is answered, counted from the subscription on, before the request is in `restApiDelayed`.
+     */
+    private readonly waitSubscriptions;
     constructor(_server: Server, webSettings: {
         secure: boolean;
         port: number | string;
@@ -77,6 +82,20 @@ export declare class SimpleAPI {
     doErrorResponse(res: Response, responseType: 'json' | 'plain', status: 401 | 403 | 404 | 422 | 500, error?: string): void;
     checkPermissions(user: `system.user.${string}`, command: CommandName): Promise<boolean>;
     setValue(id: string, value: ioBroker.StateValue, res: Response, wait: number, query: SimpleApiQuery, responseType: 'json' | 'plain'): Promise<void>;
+    /**
+     * Waits until the state is acknowledged (ack=true) or the time is up
+     *
+     * @param id ID of the state
+     * @param wait how long to wait in milliseconds
+     * @returns the acknowledged state, or null when the time is up
+     */
+    private waitForAck;
+    /**
+     * Unsubscribes a state, that a request waited for, if no other request waits for it any more
+     *
+     * @param id ID of the state
+     */
+    private unsubscribeWhenNotWaited;
     restApi(req: Request, res: Response, overwriteUrl?: string): Promise<void>;
 }
 export {};
