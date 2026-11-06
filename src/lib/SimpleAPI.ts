@@ -1,7 +1,6 @@
 import type { Server as HttpServer } from 'node:http';
 import type { Server as HttpsServer } from 'node:https';
 import type { Express, Request, Response } from 'express';
-import type { CommandsPermissionsObject } from '@iobroker/types/build/types';
 import type { SimpleApiAdapterConfig } from '../types';
 
 // copied from here: https://github.com/component/escape-html/blob/master/index.js
@@ -94,8 +93,7 @@ type SimpleApiQuery = {
 };
 
 type IoBrokerStateWithIsoTime =
-    | (Omit<ioBroker.State, 'ts' | 'lc'> & { ts?: string | number; lc?: string | number })
-    | null;
+    (Omit<ioBroker.State, 'ts' | 'lc'> & { ts?: string | number; lc?: string | number }) | null;
 
 type CommandName = keyof typeof commandsPermissions;
 
@@ -780,10 +778,7 @@ export class SimpleAPI {
     }
 
     async checkPermissions(user: `system.user.${string}`, command: CommandName): Promise<boolean> {
-        const acl = await this.adapter.calculatePermissionsAsync(
-            user,
-            commandsPermissions as CommandsPermissionsObject,
-        );
+        const acl = await this.adapter.calculatePermissionsAsync(user, commandsPermissions);
         if (user !== 'system.user.admin') {
             // type: file, object, state, other
             // operation: create, read, write, list, delete, sendto, execute, sendto

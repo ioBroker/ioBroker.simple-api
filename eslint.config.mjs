@@ -9,21 +9,11 @@ export default [
                     allowDefaultProject: ['*.mjs'],
                 },
                 tsconfigRootDir: import.meta.dirname,
-                project: './tsconfig.json',
             },
         },
     },
     {
-        ignores: [
-            'admin/**/*',
-            'node_modules/**/*',
-            'test/**/*',
-            'build/**/*',
-            'tasks.js',
-            'tmp/**/*',
-            'dist/**/*',
-            '.**/*',
-        ],
+        ignores: ['admin/**/*', 'node_modules/**/*', 'test/**/*', 'build/**/*', 'tasks.js', 'tmp/**/*', '.**/*'],
     },
     {
         // disable temporary the rule 'jsdoc/require-param' and enable 'jsdoc/require-jsdoc'

@@ -130,7 +130,7 @@
     "mode": "daemon",
     "loglevel": "info",
     "icon": "simple-api.svg",
-    "webExtension": "dist/lib/SimpleAPI.js",
+    "webExtension": "build/lib/SimpleAPI.js",
     "readme": "https://github.com/ioBroker/ioBroker.simple-api/blob/master/README.md",
     "keywords": [
       "web",

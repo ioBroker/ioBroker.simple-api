@@ -30,11 +30,11 @@ Call in browser `http://ipaddress:8087/help` to get the help about API. The resu
   "setBulk": "http://ipaddress:8087/setBulk?stateID1=0.7&stateID2=0&prettyPrint",
   "objects": "http://ipaddress:8087/objects?pattern=system.adapter.admin.0*&prettyPrint",
   "objects": "http://ipaddress:8087/objects?pattern=system.adapter.admin.0*&type=adapter&prettyPrint",
-  "states": "http://ipaddress:8087/states?pattern=system.adapter.admin.0*&prettyPrint"
+  "states": "http://ipaddress:8087/states?pattern=system.adapter.admin.0*&prettyPrint",
   "search": "http://ipaddress:8087/search?pattern=system.adapter.admin.0*&prettyPrint",
-  "query": "http://ipaddress:8087/query/stateID1,stateID2/?prettyPrint"
-  "query": "http://ipaddress:8087/query/stateID1,stateID2/?noHistory=true&prettyPrint"
-  "query": "http://ipaddress:8087/query/stateID1,stateID2/?dateFrom=2019-06-06T12:00:00.000Z&d&prettyPrint"
+  "query": "http://ipaddress:8087/query/stateID1,stateID2/?prettyPrint",
+  "query": "http://ipaddress:8087/query/stateID1,stateID2/?noHistory=true&prettyPrint",
+  "query": "http://ipaddress:8087/query/stateID1,stateID2/?dateFrom=2019-06-06T12:00:00.000Z&d&prettyPrint",
   "query": "http://ipaddress:8087/query/stateID1,stateID2/?dateFrom=2019-06-06T12:00:00.000Z&dateTo=2019-06-06T12:00:00.000Z&aggregate=minmax&count=2000&prettyPrint"
 }
 ```
@@ -629,7 +629,8 @@ This adapter supports the following types of authentication:
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
-### 4.0.1 (2026-11-06)
+### **WORK IN PROGRESS**
+- (@GermanBluefox) Updated packages
 - (@GermanBluefox) Publishing to npm goes through trusted publishing now: 4.0.0 could not be published with the old npm token
 
 ### 4.0.0 (2026-11-06)

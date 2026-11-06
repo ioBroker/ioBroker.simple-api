@@ -11,7 +11,8 @@
         "skipLibCheck": true, // Don't report errors in 3rd party definitions
         "noEmitOnError": true,
         "declaration": true,
-        "outDir": "./dist/",
+        "rootDir": "./src/",
+        "outDir": "./build/",
         "removeComments": false,
         "module": "Node16",
         "moduleResolution": "node16",
@@ -26,5 +27,5 @@
         "types": ["@iobroker/types", "node"]
     },
     "include": ["src/**/*.ts", "src/*.d.ts"],
-    "exclude": ["dist/**", "node_modules/**", "eslint.config.mjs"]
+    "exclude": ["build/**", "node_modules/**", "eslint.config.mjs"]
 }
