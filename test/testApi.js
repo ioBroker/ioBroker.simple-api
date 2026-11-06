@@ -674,6 +674,41 @@ describe('Test RESTful API', function () {
             });
     });
 
+    // #245: a number with a trailing zero was written as text into a number state
+    it('Test RESTful API: setBulk - must convert values to the type of the datapoint', async () => {
+        let response = await axios.get(
+            `http://127.0.0.1:18183/setBulk?${TEST_STATE_ID}=21.0&javascript.0.test-number=23,50&javascript.0.test-string=1.10`,
+        );
+        console.log(`setBulk with trailing zeros => ${JSON.stringify(response.data)}`);
+        assert.strictEqual(response.status, 200);
+        assert.strictEqual(response.data[0].val, 21);
+        assert.strictEqual(response.data[1].val, 23.5);
+        // #209: the text of a string state must stay as it is
+        assert.strictEqual(response.data[2].val, '1.10');
+
+        response = await axios.get(
+            `http://127.0.0.1:18183/getBulk/${TEST_STATE_ID},javascript.0.test-number,javascript.0.test-string`,
+        );
+        assert.strictEqual(response.data[0].val, 21);
+        assert.strictEqual(response.data[1].val, 23.5);
+        assert.strictEqual(response.data[2].val, '1.10');
+    });
+
+    it('Test RESTful API: setBulk(POST) - must convert values to the type of the datapoint', async () => {
+        let response = await axios.post(
+            'http://127.0.0.1:18183/setBulk',
+            `${TEST_STATE_ID}=22.50&javascript.0.test-string=2.0`,
+        );
+        console.log(`setBulk(POST) with trailing zeros => ${JSON.stringify(response.data)}`);
+        assert.strictEqual(response.status, 200);
+        assert.strictEqual(response.data[0].val, 22.5);
+        assert.strictEqual(response.data[1].val, '2.0');
+
+        response = await axios.get(`http://127.0.0.1:18183/getBulk/${TEST_STATE_ID},javascript.0.test-string`);
+        assert.strictEqual(response.data[0].val, 22.5);
+        assert.strictEqual(response.data[1].val, '2.0');
+    });
+
     after('Test RESTful API: Stop js-controller', function (done) {
         this.timeout(9000);
         setup.stopController(normalTerminated => {

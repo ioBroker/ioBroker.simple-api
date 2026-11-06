@@ -64,9 +64,39 @@ export declare class SimpleAPI {
     stateChange(id: string, state: ioBroker.State | null | undefined): void;
     objectChange(id: string, _obj: ioBroker.Object | null | undefined): void;
     static parseQuery(input: string | undefined, query: SimpleApiQuery, values: Record<string, string | null>): void;
+    /**
+     * Reads the body of a POST request as text.
+     *
+     * A body parser in front of the route may have consumed the stream already: the one of the web adapter, when
+     * this API runs as its extension. The stream sends no more "end" then, so the body is taken from what the parser
+     * kept instead of waiting for it.
+     *
+     * @param req the request to read
+     */
+    static readBody(req: Request & {
+        rawBody?: Buffer;
+    }): Promise<string>;
+    /**
+     * Converts a value given as text, in the URL or in the body, to the type of the datapoint.
+     *
+     * Only for a datapoint without a known type the type is guessed from the text. A number state gets a number
+     * from "21.0" or "23,50" too, and a string state keeps the text as it is, e.g. "1.10".
+     *
+     * @param value the value as text
+     * @param type `common.type` of the datapoint; older objects may still have the type "json"
+     */
+    static convertValue(value: string | null, type: string | undefined): ioBroker.StateValue;
+    /**
+     * Reads `common.type` of a datapoint
+     *
+     * @param id ID of the datapoint
+     * @param user the user, who reads the object
+     * @returns undefined if the object cannot be read: the type is guessed from the value then
+     */
+    getStateType(id: string, user: `system.user.${string}`): Promise<ioBroker.CommonType | undefined>;
     setStates(values: Record<string, string | null>, query: SimpleApiQuery): Promise<{
         id?: string;
-        val?: boolean | string | number;
+        val?: ioBroker.StateValue;
         error?: string;
     }[]>;
     restApiPost(req: Request, res: Response, command: CommandName, oId: string[], values: Record<string, string | null>, query: SimpleApiQuery): Promise<void>;

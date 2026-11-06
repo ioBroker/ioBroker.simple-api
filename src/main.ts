@@ -131,8 +131,9 @@ export class SimpleApiAdapter extends Adapter {
                 if (this.config.auth) {
                     // Install OAuth2 handler
                     this.webServer.app.use(cookieParser());
-                    this.webServer.app.use(bodyParser.urlencoded({ extended: true }));
-                    this.webServer.app.use(bodyParser.json());
+                    // The token endpoint needs a parsed body. The parsers run for the OAuth2 routes only: in front of
+                    // every route they would consume the body of a POST to the API, which then waited forever for it.
+                    this.webServer.app.use('/oauth', bodyParser.urlencoded({ extended: true }), bodyParser.json());
 
                     createOAuth2Server(this, {
                         app: this.webServer.app,

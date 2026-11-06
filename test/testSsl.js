@@ -293,6 +293,77 @@ describe('Test RESTful API SSL', function () {
             });
     });
 
+    // #316: with authentication, a POST with a form or JSON body never got an answer
+    it('Test RESTful API SSL: setValueFromBody(POST) with a form body - must answer', async () => {
+        const response = await axios.post(
+            `https://localhost:18183/setValueFromBody/${TEST_STATE_ID}?user=admin&pass=iobroker`,
+            '56',
+            {
+                httpsAgent,
+                timeout: 5000,
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            },
+        );
+        console.log(`setValueFromBody(form) => ${JSON.stringify(response.data)}`);
+        assert.strictEqual(response.status, 200);
+        assert.strictEqual(response.data[0].id, TEST_STATE_ID);
+        assert.strictEqual(response.data[0].val, 56);
+    });
+
+    it('Test RESTful API SSL: setValueFromBody(POST) with a JSON body - must answer', async () => {
+        const response = await axios.post(
+            `https://localhost:18183/setValueFromBody/${TEST_STATE_ID}?user=admin&pass=iobroker`,
+            '57',
+            {
+                httpsAgent,
+                timeout: 5000,
+                headers: { 'Content-Type': 'application/json' },
+            },
+        );
+        console.log(`setValueFromBody(JSON) => ${JSON.stringify(response.data)}`);
+        assert.strictEqual(response.status, 200);
+        assert.strictEqual(response.data[0].val, 57);
+    });
+
+    it('Test RESTful API SSL: setBulk(POST) with a form body - must answer', async () => {
+        const response = await axios.post(
+            'https://127.0.0.1:18183/setBulk?user=admin&pass=iobroker',
+            `${TEST_STATE_ID}=21.0&javascript.0.test-boolean=false`,
+            {
+                httpsAgent,
+                timeout: 5000,
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            },
+        );
+        console.log(`setBulk(form) => ${JSON.stringify(response.data)}`);
+        assert.strictEqual(response.status, 200);
+        assert.strictEqual(response.data[0].val, 21);
+        assert.strictEqual(response.data[1].val, false);
+    });
+
+    // the body parsers run for the OAuth2 routes only now: the token endpoint must still get its form body
+    it('Test RESTful API SSL: OAuth2 token - must answer with a token that grants access', async () => {
+        let response = await axios.post(
+            'https://localhost:18183/oauth/token',
+            'grant_type=password&username=admin&password=iobroker&client_id=ioBroker',
+            {
+                httpsAgent,
+                timeout: 5000,
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            },
+        );
+        assert.strictEqual(response.status, 200);
+        assert.ok(response.data.access_token);
+
+        response = await axios.get('https://localhost:18183/get/system.adapter.simple-api.0.alive', {
+            httpsAgent,
+            timeout: 5000,
+            headers: { Authorization: `Bearer ${response.data.access_token}` },
+        });
+        assert.strictEqual(response.status, 200);
+        assert.strictEqual(response.data.val, true);
+    });
+
     after('Test RESTful API SSL: Stop js-controller', function (done) {
         this.timeout(9000);
         setup.stopController(normalTerminated => {

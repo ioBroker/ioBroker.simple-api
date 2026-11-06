@@ -390,11 +390,120 @@ export class SimpleAPI {
         }
     }
 
+    /**
+     * Reads the body of a POST request as text.
+     *
+     * A body parser in front of the route may have consumed the stream already: the one of the web adapter, when
+     * this API runs as its extension. The stream sends no more "end" then, so the body is taken from what the parser
+     * kept instead of waiting for it.
+     *
+     * @param req the request to read
+     */
+    static async readBody(req: Request & { rawBody?: Buffer }): Promise<string> {
+        if (Buffer.isBuffer(req.rawBody)) {
+            return req.rawBody.toString('utf8');
+        }
+        if (req.readableEnded) {
+            // consumed by a parser that did not keep the raw bytes: rebuild the text from the parsed body
+            const parsed: unknown = req.body;
+            if (parsed === undefined || parsed === null) {
+                return '';
+            }
+            if (Buffer.isBuffer(parsed)) {
+                return parsed.toString('utf8');
+            }
+            if (typeof parsed === 'string') {
+                return parsed;
+            }
+            if (req.is('application/x-www-form-urlencoded')) {
+                return new URLSearchParams(parsed as Record<string, string>).toString();
+            }
+            return JSON.stringify(parsed);
+        }
+        return new Promise<string>((resolve, reject) => {
+            let body = '';
+            req.setEncoding('utf8');
+            req.on('data', (chunk: string): void => {
+                body += chunk;
+            });
+            req.on('end', () => resolve(body));
+            req.on('error', reject);
+        });
+    }
+
+    /**
+     * Converts a value given as text, in the URL or in the body, to the type of the datapoint.
+     *
+     * Only for a datapoint without a known type the type is guessed from the text. A number state gets a number
+     * from "21.0" or "23,50" too, and a string state keeps the text as it is, e.g. "1.10".
+     *
+     * @param value the value as text
+     * @param type `common.type` of the datapoint; older objects may still have the type "json"
+     */
+    static convertValue(value: string | null, type: string | undefined): ioBroker.StateValue {
+        if (value === null || value === undefined) {
+            return null;
+        }
+        switch (type) {
+            case 'number': {
+                if (!value.trim()) {
+                    return null;
+                }
+                const f = parseFloat(value.replace(',', '.'));
+                // text that is no number is written as it is, so js-controller warns about it
+                return isNaN(f) ? value : f;
+            }
+
+            case 'boolean':
+                if (value === 'true' || value === '1') {
+                    return true;
+                }
+                if (value === 'false' || value === '0') {
+                    return false;
+                }
+                return value;
+
+            case 'string':
+            case 'json':
+            case 'object':
+            case 'array':
+                // js-controller expects text for these types
+                return value;
+
+            default: {
+                if (value === 'true') {
+                    return true;
+                }
+                if (value === 'false') {
+                    return false;
+                }
+                const f = parseFloat(value);
+                return !isNaN(f) && value === f.toString() ? f : value;
+            }
+        }
+    }
+
+    /**
+     * Reads `common.type` of a datapoint
+     *
+     * @param id ID of the datapoint
+     * @param user the user, who reads the object
+     * @returns undefined if the object cannot be read: the type is guessed from the value then
+     */
+    async getStateType(id: string, user: `system.user.${string}`): Promise<ioBroker.CommonType | undefined> {
+        try {
+            const obj = await this.adapter.getForeignObjectAsync(id, { user });
+            return obj?.common?.type;
+        } catch {
+            return undefined;
+        }
+    }
+
     async setStates(
         values: Record<string, string | null>,
         query: SimpleApiQuery,
-    ): Promise<{ id?: string; val?: boolean | string | number; error?: string }[]> {
-        const response: { id?: string; val?: boolean | string | number; error?: string }[] = [];
+    ): Promise<{ id?: string; val?: ioBroker.StateValue; error?: string }[]> {
+        const response: { id?: string; val?: ioBroker.StateValue; error?: string }[] = [];
         const names = Object.keys(values);
 
         let user: `system.user.${string}`;
@@ -413,19 +522,7 @@ export class SimpleAPI {
                 if (!id) {
                     response[i] = { error: `datapoint "${stateId}" not found` };
                 } else {
-                    let value: string | number | boolean;
-                    if (values[stateId] === 'true') {
-                        value = true;
-                    } else if (values[stateId] === 'false') {
-                        value = false;
-                    } else {
-                        const f = parseFloat(values[stateId] as string);
-                        if (!isNaN(f) && values[stateId] === f.toString()) {
-                            value = f;
-                        } else {
-                            value = values[stateId] as string;
-                        }
-                    }
+                    const value = SimpleAPI.convertValue(values[stateId], await this.getStateType(id, user));
 
                     await this.adapter.setForeignStateAsync(id, value, !!query.ack, {
                         user,
@@ -453,20 +550,7 @@ export class SimpleAPI {
         values: Record<string, string | null>,
         query: SimpleApiQuery,
     ): Promise<void> {
-        let body = '';
-        if (
-            this.settings.auth &&
-            (req.headers.contentType === 'application/json' ||
-                req.headers.contentType === 'application/x-www-form-urlencoded')
-        ) {
-            // body is already parsed by express
-            body = JSON.stringify(req.body);
-        } else {
-            req.on('data', (data: Buffer): void => {
-                body += data.toString();
-            });
-            await new Promise<void>(resolve => req.on('end', resolve));
-        }
+        const body = await SimpleAPI.readBody(req);
 
         let user: `system.user.${string}`;
         if (query.user && !query.user.startsWith('system.user.')) {
@@ -1352,17 +1436,7 @@ export class SimpleAPI {
                             `GET-${command} for id=${id}, oid=${names[n]}, value=${values[names[n]]}`,
                         );
 
-                        let value: ioBroker.StateValue = values[names[n]];
-                        if (value === 'true') {
-                            value = true;
-                        } else if (value === 'false') {
-                            value = false;
-                        } else if (value) {
-                            const f = parseFloat(value.replace(',', '.'));
-                            if (!isNaN(f) && value === f.toString()) {
-                                value = f;
-                            }
-                        }
+                        const value = SimpleAPI.convertValue(values[names[n]], await this.getStateType(id, user));
 
                         try {
                             await this.adapter.setForeignStateAsync(id, value, query.ack, {

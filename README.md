@@ -141,7 +141,7 @@ Toggles value:
 ### setBulk
 Set many states with one request. This request supports POST method too, for POST data should be in body and not URL.
 
-Please use content type `text/plain` for that.
+The values are converted to the type of the datapoint (`common.type`): a number state gets `21` from `21.0` or `21,0`, and a string state keeps the text as it is, e.g. `1.10`.
 
 ### setValueFromBody
 This command allows setting the value of a given state to be set by the POST body content.
@@ -150,7 +150,7 @@ Call e.g.:
 `http://ipaddress:8087/setValueFromBody/0_userdata.0.example_state`
 with body `hello` where `0_userdata.0.example_state` is the ID of the state.
 
-Please use content type `text/plain` for that.
+The body is taken as it is, whatever its content type, and converted to the type of the datapoint like with `setBulk`.
 
 ### objects
 Read objects of a defined type from DB.
@@ -631,6 +631,8 @@ This adapter supports the following types of authentication:
 ## Changelog
 ### **WORK IN PROGRESS**
 - (@GermanBluefox) Updated packages
+- (@GermanBluefox) Fixed POST requests with authentication: a request with a form or JSON body never got an answer (#316)
+- (@GermanBluefox) `setBulk` and `setValueFromBody` convert the values to the type of the datapoint: a number like `21.0` was written as text into a number state (#245, #298)
 - (@GermanBluefox) Publishing to npm goes through trusted publishing now: 4.0.0 could not be published with the old npm token
 
 ### 4.0.0 (2026-11-06)
