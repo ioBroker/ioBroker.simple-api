@@ -634,6 +634,8 @@ This adapter supports the following types of authentication:
 - (@GermanBluefox) Updated packages
 - (@GermanBluefox) Fixed POST requests with authentication: a request with a form or JSON body never got an answer (#316)
 - (@GermanBluefox) `setBulk` and `setValueFromBody` convert the values to the type of the datapoint: a number like `21.0` was written as text into a number state (#245, #298)
+
+### 4.0.1 (2026-11-06)
 - (@GermanBluefox) Publishing to npm goes through trusted publishing now: 4.0.0 could not be published with the old npm token
 
 ### 4.0.0 (2026-11-06)
