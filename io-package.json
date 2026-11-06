@@ -30,30 +30,17 @@
         "zh-cn": "适配器现在需要 node.js >= 22.19.0\n更新的软件包\n修复了带有身份验证的 POST 请求：带有表单或 JSON 正文的请求从未得到答案 (#316)\n`setBulk` 和 `setValueFromBody` 将值转换为数据点的类型：像 21.0 这样的数字以文本形式写入数字状态 (#245, #298)"
       },
       "4.0.1": {
-        "en": "Publishing to npm goes through trusted publishing now: 4.0.0 could not be published with the old npm token",
-        "de": "Auf NPM veröffentlicht jetzt Trusted Publishing: 4.0.0 konnte mit dem alten NPM-Token nicht veröffentlicht werden",
-        "ru": "Публикация в npm теперь проходит через доверенную публикацию: 4.0.0 не удалось опубликовать со старым токеном npm",
-        "pt": "A publicação no npm é confiável agora: 4.0.0 não pôde ser publicada com o antigo token npm",
-        "nl": "Publiceren naar npm verloopt nu via Trusted Publishing: 4.0.0 kon niet worden gepubliceerd met het oude npm-token",
-        "fr": "La publication sur npm passe désormais par Trusted Publishing : la 4.0.0 ne pouvait pas être publiée avec l'ancien jeton npm",
-        "it": "La pubblicazione su npm ora è affidabile: 4.0.0 non poteva essere pubblicata con il vecchio token npm",
-        "es": "Publicar en npm pasa por publicaciones confiables ahora: 4.0.0 no se pudo publicar con el antiguo token de npm",
-        "pl": "Publikowanie do npm przechodzi teraz przez zaufane publikowanie: 4.0.0 nie można opublikować ze starym tokenem npm",
-        "uk": "Публікація в npm зараз проходить через довірену публікацію: 4.0.0 не вдалося опублікувати за допомогою старого токена npm",
-        "zh-cn": "发布到 npm 现在需要通过可信发布：无法使用旧的 npm 令牌发布 4.0.0"
-      },
-      "4.0.0": {
-        "en": "Adapter requires node.js >= 22 now.\nFixed `set` and `toggle` with `wait`: the request got no answer and the state was never unsubscribed. Now it answers with the acknowledged state, or `null` if the driver does not acknowledge in time, as documented",
-        "de": "Adapter benötigt jetzt node.js >= 22.\nFix „Set“ und „Toggle“ mit „wait“: Die Anfrage wurde nicht beantwortet und der Staat nie abgemeldet. Jetzt antwortet es mit „bestätigt“ oder „Null“, wenn der Fahrer nicht rechtzeitig quittiert,",
-        "ru": "Теперь для адаптера требуется файл node.js >= 22.\nИсправлены ошибки `set` и `toggle` с помощью `wait`: запрос не получил ответа, а подписка на государство так и не была отменена. Теперь в ответе отображается состояние «Подтверждено» или «нуль», если драйвер не подтвердит это вовремя, как описано в документации",
-        "pt": "O adaptador exige node.js >= 2.\nCorrigidos `set` e `toggle` com `wait`: o pedido não foi atendido e o estado nunca cancelou. Agora responde com o estado confirmado, ou `null` se o driver não reconhecer a tempo, como documentado",
-        "nl": "Voor de adapter is nu node.js >= 22 nodig.\n`set` en `toggle` opgelost met `wait`: het verzoek werd niet beantwoord en de status werd nooit afgemeld. Nu antwoordt het met de erkende status, of met „nul” als de chauffeur dit niet op tijd bevestigt, zoals gedocumenteerd",
-        "fr": "Adapter nécessite node.js >= 22.\nCorrigez « set » et « toggle» avec « wait » : la demande est restée sans réponse et l'État n'a jamais été désabonné. Maintenant, il répond par l'état reconnu, ou « nul » si le conducteur n'accuse pas réception à temps, comme indiqué",
-        "it": "Adapter richiede node.js >= 2 ora.\nRisolti `set` e `toggle` con `wait`: la richiesta non ha avuto risposta e lo stato non è mai stato annullato. Ora risponde con lo stato confermato, o «nullo» se l'autista non lo riconosce in tempo, come documentato",
-        "es": "El adaptador necesita node.js >= 22 ahora.\nSe corrigieron «set» y «alternar» por «esperar»: la solicitud no recibió respuesta y el estado nunca se canceló. Ahora responde con el estado reconocido, o «nulo» si el conductor no lo confirma a tiempo, según lo documentado",
-        "pl": "Adapter wymaga teraz node.js >= 22.\nNaprawiono `set` i `toggle` z `czekaj`: żądanie nie otrzymało odpowiedzi, a stan nigdy nie został wypisany. Teraz odpowiada potwierdzonym stanem lub „null”, jeśli kierowca nie potwierdzi na czas, jak udokumentowano",
-        "uk": "Тепер адаптер вимагає node.js >= 22.\nВиправлено `set` і `switchle` з `wait`: запит не отримав відповіді, а стан ніколи не був скасований. Тепер він відповідає визнаним станом, або «нульовим», якщо водій не визнає вчасно, як це задокументовано",
-        "zh-cn": "适配器现在需要 node.js >= 22。\n修复了 “set” 和 “toggle” 与 “等待” 的问题：请求没有得到答复，状态从未取消订阅。现在，它以已确认状态回答，如果驱动程序未及时确认，则回答 “null”，如文档所示"
+        "en": "Adapter requires node.js >= 22 now.\nFixed `set` and `toggle` with `wait`: the request got no answer and the state was never unsubscribed. Now it answers with the acknowledged state, or `null` if the driver does not acknowledge in time, as documented\nPublishing to npm goes through trusted publishing now: 4.0.0 could not be published with the old npm token",
+        "de": "Adapter benötigt jetzt node.js >= 22.\nFix „Set“ und „Toggle“ mit „wait“: Die Anfrage wurde nicht beantwortet und der Staat nie abgemeldet. Jetzt antwortet es mit „bestätigt“ oder „Null“, wenn der Fahrer nicht rechtzeitig quittiert,\nAuf NPM veröffentlicht jetzt Trusted Publishing: 4.0.0 konnte mit dem alten NPM-Token nicht veröffentlicht werden",
+        "ru": "Теперь для адаптера требуется файл node.js >= 22.\nИсправлены ошибки `set` и `toggle` с помощью `wait`: запрос не получил ответа, а подписка на государство так и не была отменена. Теперь в ответе отображается состояние «Подтверждено» или «нуль», если драйвер не подтвердит это вовремя, как описано в документации\nПубликация в npm теперь проходит через доверенную публикацию: 4.0.0 не удалось опубликовать со старым токеном npm",
+        "pt": "O adaptador exige node.js >= 22.\nCorrigidos `set` e `toggle` com `wait`: o pedido não foi atendido e o estado nunca cancelou. Agora responde com o estado confirmado, ou `null` se o driver não reconhecer a tempo, como documentado\nA publicação no npm é confiável agora: 4.0.0 não pôde ser publicada com o antigo token npm",
+        "nl": "Voor de adapter is nu node.js >= 22 nodig.\n`set` en `toggle` opgelost met `wait`: het verzoek werd niet beantwoord en de status werd nooit afgemeld. Nu antwoordt het met de erkende status, of met „nul” als de chauffeur dit niet op tijd bevestigt, zoals gedocumenteerd\nPubliceren naar npm verloopt nu via Trusted Publishing: 4.0.0 kon niet worden gepubliceerd met het oude npm-token",
+        "fr": "Adapter nécessite node.js >= 22.\nCorrigez « set » et « toggle» avec « wait » : la demande est restée sans réponse et l'État n'a jamais été désabonné. Maintenant, il répond par l'état reconnu, ou « nul » si le conducteur n'accuse pas réception à temps, comme indiqué\nLa publication sur npm passe désormais par Trusted Publishing : la 4.0.0 ne pouvait pas être publiée avec l'ancien jeton npm",
+        "it": "Adapter richiede node.js >= 22 ora.\nRisolti `set` e `toggle` con `wait`: la richiesta non ha avuto risposta e lo stato non è mai stato annullato. Ora risponde con lo stato confermato, o «nullo» se l'autista non lo riconosce in tempo, come documentato\nLa pubblicazione su npm ora è affidabile: 4.0.0 non poteva essere pubblicata con il vecchio token npm",
+        "es": "El adaptador necesita node.js >= 22 ahora.\nSe corrigieron «set» y «alternar» por «esperar»: la solicitud no recibió respuesta y el estado nunca se canceló. Ahora responde con el estado reconocido, o «nulo» si el conductor no lo confirma a tiempo, según lo documentado\nPublicar en npm pasa por publicaciones confiables ahora: 4.0.0 no se pudo publicar con el antiguo token de npm",
+        "pl": "Adapter wymaga teraz node.js >= 22.\nNaprawiono `set` i `toggle` z `czekaj`: żądanie nie otrzymało odpowiedzi, a stan nigdy nie został wypisany. Teraz odpowiada potwierdzonym stanem lub „null”, jeśli kierowca nie potwierdzi na czas, jak udokumentowano\nPublikowanie do npm przechodzi teraz przez zaufane publikowanie: 4.0.0 nie można opublikować ze starym tokenem npm",
+        "uk": "Тепер адаптер вимагає node.js >= 22.\nВиправлено `set` і `toggle` з `wait`: запит не отримав відповіді, а стан ніколи не був скасований. Тепер він відповідає визнаним станом, або «нульовим», якщо водій не визнає вчасно, як це задокументовано\nПублікація в npm зараз проходить через довірену публікацію: 4.0.0 не вдалося опублікувати за допомогою старого токена npm",
+        "zh-cn": "适配器现在需要 node.js >= 22。\n修复了 “set” 和 “toggle” 与 “等待” 的问题：请求没有得到答复，状态从未取消订阅。现在，它以已确认状态回答，如果驱动程序未及时确认，则回答 “null”，如文档所示\n发布到 npm 现在需要通过可信发布：无法使用旧的 npm 令牌发布 4.0.0"
       },
       "3.0.7": {
         "en": "corrected reading of history data",
@@ -150,7 +137,7 @@
     ],
     "globalDependencies": [
       {
-        "admin": ">=7.6.17"
+        "admin": ">=7.6.20"
       }
     ],
     "adminUI": {

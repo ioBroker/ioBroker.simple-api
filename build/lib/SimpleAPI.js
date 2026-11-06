@@ -1077,7 +1077,7 @@ class SimpleAPI {
                         value = values.val;
                     }
                     // Ack=true cannot be awaited
-                    const wait = !query.ack ? query.wait || 0 : 0;
+                    const waitMs = !query.ack ? query.wait || 0 : 0;
                     if (!type ||
                         (type !== 'boolean' &&
                             type !== 'number' &&
@@ -1145,7 +1145,7 @@ class SimpleAPI {
                         }
                         // string must not be formatted
                     }
-                    await this.setValue(id, value, res, wait, query, responseType);
+                    await this.setValue(id, value, res, waitMs, query, responseType);
                 }
                 catch (err) {
                     if (err.toString().includes(ERROR_PERMISSION)) {
@@ -1165,7 +1165,7 @@ class SimpleAPI {
                 try {
                     const { id } = await this.findState(oId[0], user);
                     if (id) {
-                        const wait = query.wait || 0;
+                        const waitMs = query.wait || 0;
                         // Read a type of object
                         const obj = await this.adapter.getForeignObjectAsync(id, {
                             user,
@@ -1237,7 +1237,7 @@ class SimpleAPI {
                                         return;
                                     }
                                 }
-                                await this.setValue(id, value, res, wait, query, responseType);
+                                await this.setValue(id, value, res, waitMs, query, responseType);
                                 return;
                             }
                             this.doErrorResponse(res, responseType, 404, `error: state "${oId[0]}" does not exist or null`);

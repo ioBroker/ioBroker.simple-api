@@ -629,6 +629,9 @@ This adapter supports the following types of authentication:
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
+### **WORK IN PROGRESS**
+- (@GermanBluefox) Admin 7.6.20 or newer is required now
+
 ### 4.0.3 (2026-11-06)
 - (@GermanBluefox) Admin 7.6.17 or newer is required now
 - (@GermanBluefox) The adapter does not call `process.exit()` anymore, which would stop the whole host in compact mode
