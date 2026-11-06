@@ -629,7 +629,7 @@ This adapter supports the following types of authentication:
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
-### **WORK IN PROGRESS**
+### 4.0.3 (2026-11-06)
 - (@GermanBluefox) Admin 7.6.17 or newer is required now
 - (@GermanBluefox) The adapter does not call `process.exit()` anymore, which would stop the whole host in compact mode
 - (@GermanBluefox) Added the missing sizes and the missing translation in the settings dialog
@@ -649,13 +649,6 @@ This adapter supports the following types of authentication:
 
 ### 3.0.7 (2025-06-16)
 * (@GermanBluefox) corrected reading of history data
-
-### 3.0.6 (2025-03-15)
-* (bluefox) Added support for 'Access-Control-Allow-Origin'
-* (bluefox) Removed letsencrypt information
-* (bluefox) Added basic and OAuth2 authentication
-* (bluefox) Implemented JSONP response
-* (bluefox) Implemented relative times for query
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 

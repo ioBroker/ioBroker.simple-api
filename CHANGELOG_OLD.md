@@ -1,4 +1,11 @@
 # Older changes
+## 3.0.6 (2025-03-15)
+* (bluefox) Added support for 'Access-Control-Allow-Origin'
+* (bluefox) Removed letsencrypt information
+* (bluefox) Added basic and OAuth2 authentication
+* (bluefox) Implemented JSONP response
+* (bluefox) Implemented relative times for query
+
 ## 3.0.5 (2025-03-13)
 * (bluefox) Corrected the indication of running mode in admin
 * (bluefox) Corrected the writing of numeric values

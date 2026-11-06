@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "simple-api",
-    "version": "4.0.2",
+    "version": "4.0.3",
     "news": {
+      "4.0.3": {
+        "en": "Admin 7.6.17 or newer is required now\nThe adapter does not call `process.exit()` anymore, which would stop the whole host in compact mode\nAdded the missing sizes and the missing translation in the settings dialog",
+        "de": "Admin 7.6.17 oder neuer ist nötig\nDer Adapter ruft `process.exit () `nicht mehr auf, was den ganzen Host im Kompaktmodus stoppen würde\nFehlende Größen und Übersetzung im Einstellungsdialog hinzugefügt",
+        "ru": "Теперь требуется Admin 7.6.17 или новее\nАдаптер больше не вызывает `process.exit () `, что остановит работу всего хоста в компактном режиме\nДобавлены недостающие размеры и недостающий перевод в диалоговом окне настроек",
+        "pt": "Requer o Admin 7.6.17 ou superior\nO adaptador não chama mais `process.exit () `, o que pararia todo o host no modo compacto\nAdicionou os tamanhos e a tradução ausentes no diálogo de configurações",
+        "nl": "Admin 7.6.17 of nieuwer is nu vereist\nDe adapter roept niet meer `process.exit () `aan, waardoor de hele host in compacte modus zou stoppen\nDe ontbrekende formaten en de ontbrekende vertaling toegevoegd in het instellingenvenster",
+        "fr": "Admin 7.6.17 ou plus est requis\nL'adaptateur n'appelle plus `process.exit () `, ce qui arrêterait tout l'hôte en mode compact\nLes tailles et la traduction manquantes ont été ajoutées dans les réglages",
+        "it": "Ora serve Admin 7.6.17 o successivo\nL'adattatore non chiama più process.exit (), il che fermerebbe l'intero host in modalità compatta\nAggiunte le taglie e la traduzione mancanti nelle impostazioni",
+        "es": "Ahora necesita Admin 7.6.17 o más\nEl adaptador ya no llama a `process.exit () `, lo que detendría todo el host en modo compacto\nHa añadido las tallas y la traducción que faltan en el cuadro de diálogo de ajustes",
+        "pl": "Administrator 7.6.17 lub nowszy jest teraz wymagany\nAdapter nie wywołuje już „process.exit ()”, co zatrzyma cały host w trybie kompaktowym\nDodano brakujące rozmiary i brakujące tłumaczenie w oknie dialogowym ustawień",
+        "uk": "Адміністратор 7.6.17 або новіша версія потрібна зараз\nАдаптер більше не викликає `process.exit () `, що зупинить весь хост у компактному режимі\nДодано відсутні розміри та відсутній переклад у діалоговому вікні налаштувань",
+        "zh-cn": "现在需要管理员 7.6.17 或更高版本\n适配器不再调用 `process.exit () `，这将在紧凑模式下停止整个主机\n在设置对话框中添加了缺失的尺寸和缺少的翻译"
+      },
       "4.0.2": {
         "en": "Adapter requires node.js >= 22.19.0 now\nUpdated packages\nFixed POST requests with authentication: a request with a form or JSON body never got an answer (#316)\n`setBulk` and `setValueFromBody` convert the values to the type of the datapoint: a number like `21.0` was written as text into a number state (#245, #298)",
         "de": "Adapter benötigt jetzt node.js >= 22.19.0\nNeue Pakete\nPOST-Anfragen mit Authentifizierung behoben: Formular oder JSON-Text wurden nie beantwortet (#316)\n`SetBulk` und `SetValueFromBody` wandeln die Werte in den Typ des Datenpunkts um: Eine Zahl wie `21.0` wurde als Text in Zahlen geschrieben (#245, #298)",
@@ -80,19 +93,6 @@
         "pl": "Poprawiono wskazanie trybu pracy w admin\nKorekta zapisu wartości liczbowych\nWyczyść pamięć podręczną po 10 minutach",
         "uk": "Виправлено показання режиму роботи в адміні\nВиправлено написання нумеричних значень\nОчистити кеш через 10 хвилин",
         "zh-cn": "纠正管理器中运行模式的提示\n更正数值的写入\n10分钟后清除缓存"
-      },
-      "3.0.0": {
-        "en": "Updated packages\nMigrated to TypeScript\nIf State/Object not found, the response will be 404 (and not 500)\nIf a user has no permission, the response will be 403 (and not 401)",
-        "de": "Aktualisierte Pakete\nZu TypeScript migriert\nWenn Staat/Ziel nicht gefunden wird, wird die Antwort 404 (und nicht 500)\nWenn ein Benutzer keine Erlaubnis hat, wird die Antwort 403 (und nicht 401)",
-        "ru": "Обновленные пакеты\nИммиграция в TypeScript\nЕсли состояние/объект не найден, ответ будет 404 (а не 500)\nЕсли у пользователя нет разрешения, ответ будет 403 (а не 401)",
-        "pt": "Pacotes atualizados\nMigrado para TypeScript\nSe o Estado/Objeto não for encontrado, a resposta será 404 (e não 500)\nSe um usuário não tiver permissão, a resposta será 403 (e não 401)",
-        "nl": "Bijgewerkte pakketten\nNaar typeScript migreren\nAls staat/object niet wordt gevonden, zal het antwoord 404 (en niet 500) zijn\nAls een gebruiker geen toestemming heeft, zal het antwoord 403 zijn (en niet 401)",
-        "fr": "Paquets mis à jour\nMigré vers TypeScript\nSi l'État/l'objet n'est pas trouvé, la réponse sera 404 (et non 500)\nSi un utilisateur n'a pas la permission, la réponse sera 403 (et non 401)",
-        "it": "Pacchetti aggiornati\nMigrato a TypeScript\nSe State/Obiettivo non trovato, la risposta sarà 404 (e non 500)\nSe un utente non ha il permesso, la risposta sarà 403 (e non 401)",
-        "es": "Paquetes actualizados\nMigrado a TipoScript\nSi el Estado/Objeto no se encuentra, la respuesta será 404 (y no 500)\nSi un usuario no tiene permiso, la respuesta será 403 (y no 401)",
-        "pl": "Aktualizacja pakietów\nMigrated to TypeScript\nJeżeli stan / obiekt nie zostanie znaleziony, odpowiedź wyniesie 404 (a nie 500)\nJeśli użytkownik nie ma pozwolenia, odpowiedź będzie 403 (a nie 401)",
-        "uk": "Оновлені пакети\nMigrated до TypeScript\nЯкщо не знайдено державного/об’єкта, відповідь буде 404 (і не 500)\nЯкщо користувач не має дозволу, відповідь буде 403 (і не 401)",
-        "zh-cn": "更新软件包\n移动到类型脚本\n如果国家/目标未找到,答复将是404(而不是500)\n如果用户未获许可,则回复为403(而不是401)"
       }
     },
     "titleLang": {
