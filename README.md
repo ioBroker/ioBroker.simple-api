@@ -629,7 +629,7 @@ This adapter supports the following types of authentication:
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
-### **WORK IN PROGRESS**
+### 4.0.1 (2026-11-06)
 - (@GermanBluefox) Publishing to npm goes through trusted publishing now: 4.0.0 could not be published with the old npm token
 
 ### 4.0.0 (2026-11-06)
