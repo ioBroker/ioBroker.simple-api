@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "simple-api",
-    "version": "4.0.1",
+    "version": "4.0.2",
     "news": {
+      "4.0.2": {
+        "en": "Adapter requires node.js >= 22.19.0 now\nUpdated packages\nFixed POST requests with authentication: a request with a form or JSON body never got an answer (#316)\n`setBulk` and `setValueFromBody` convert the values to the type of the datapoint: a number like `21.0` was written as text into a number state (#245, #298)",
+        "de": "Adapter benötigt jetzt node.js >= 22.19.0\nNeue Pakete\nPOST-Anfragen mit Authentifizierung behoben: Formular oder JSON-Text wurden nie beantwortet (#316)\n`SetBulk` und `SetValueFromBody` wandeln die Werte in den Typ des Datenpunkts um: Eine Zahl wie `21.0` wurde als Text in Zahlen geschrieben (#245, #298)",
+        "ru": "Теперь для адаптера требуется файл node.js >= 22.19.0\nОбновленные пакеты\nИсправлены POST-запросы с аутентификацией: запрос с формой или телом JSON так и не получил ответа (#316)\n`setBulk` и `setValueFromBody` преобразуют значения в тип точки данных: число типа `21.0` было записано в виде текста в числовое состояние (#245, #298)",
+        "pt": "O adaptador exige node.js >= 22.19.0\nPacotes novos\nPedidos POST fixos com autenticação: um formulário ou corpo JSON nunca foi respondido (#316)\n`setBulk` e `setValueFromBody` convertem os valores para o tipo do ponto de dados: `21.0` foi escrito como texto (#245, #298)",
+        "nl": "Voor de adapter is nu node.js >= 22.19.0 nodig\nBijgewerkte pakketten\nPOST-aanvragen met authenticatie opgelost: een verzoek met een formulier of JSON-body heeft nooit een antwoord gekregen (#316)\n`SetBulk` en `SetValueFromBody` zetten de waarden om naar het type datapunt: een getal zoals `21.0` werd als tekst naar een getalstatus geschreven (#245, #298)",
+        "fr": "Adapter nécessite node.js >= 22.19.0\nPackages mis à jour\nDemandes POST authentifiées : aucune réponse n'a été donnée à une requête via un formulaire ou un JSON (#316)\n`SetBulk` et `SetValueFromBody` convertissent les valeurs au type de point de données : un nombre comme « 21.0 » a été écrit sous forme de texte (#245, #298)",
+        "it": "Adapter richiede node.js >= 22.19.0 ora\nPacchi nuovi\nRichieste POST fisse con autenticazione: una richiesta con modulo o corpo JSON (#316)\n`setBulk` e `setValueFromBody` convertono i valori nel tipo di datapoint: un numero come `21.0` è stato scritto (#245, #298)",
+        "es": "El adaptador ahora necesita node.js >= 22.19.0\nPaquetes nuevos\nSolicitudes POST fijas con autenticación: una solicitud con un formulario o un cuerpo JSON nunca responde (#316)\n`SetBulk` y `setValueFromBod` convierten los valores en el tipo de punto de datos: un número como 21,0 se escribía como texto en estado numérico (#245, #298)",
+        "pl": "Adapter wymaga teraz node.js >= 22.19.0\nZaktualizowane pakiety\nNaprawiono żądania POST z uwierzytelnianiem: żądanie z formularzem lub treścią JSON nigdy nie otrzymało odpowiedzi (#316)\n`SetBulk` i `setValueFromBody` konwertują wartości na typ punktu danych: liczba taka jak `21.0` została zapisana jako tekst w stan liczbowy (#245, #298)",
+        "uk": "Адаптер вимагає node.js >= 22.19.0 зараз\nОновлені пакети\nВиправлені запити POST з аутентифікацією: запит з формою або тілом JSON ніколи не отримав відповіді (#316)\n`SetBulk` і `setValueFromBody` перетворюють значення в тип точки даних: число на кшталт `21.0` було записано як текст у стан числа (#245, #298)",
+        "zh-cn": "适配器现在需要 node.js >= 22.19.0\n更新的软件包\n修复了带有身份验证的 POST 请求：带有表单或 JSON 正文的请求从未得到答案 (#316)\n`setBulk` 和 `setValueFromBody` 将值转换为数据点的类型：像 21.0 这样的数字以文本形式写入数字状态 (#245, #298)"
+      },
       "4.0.1": {
         "en": "Publishing to npm goes through trusted publishing now: 4.0.0 could not be published with the old npm token",
         "de": "Auf NPM veröffentlicht jetzt Trusted Publishing: 4.0.0 konnte mit dem alten NPM-Token nicht veröffentlicht werden",
@@ -80,19 +93,6 @@
         "pl": "Aktualizacja pakietów\nMigrated to TypeScript\nJeżeli stan / obiekt nie zostanie znaleziony, odpowiedź wyniesie 404 (a nie 500)\nJeśli użytkownik nie ma pozwolenia, odpowiedź będzie 403 (a nie 401)",
         "uk": "Оновлені пакети\nMigrated до TypeScript\nЯкщо не знайдено державного/об’єкта, відповідь буде 404 (і не 500)\nЯкщо користувач не має дозволу, відповідь буде 403 (і не 401)",
         "zh-cn": "更新软件包\n移动到类型脚本\n如果国家/目标未找到,答复将是404(而不是500)\n如果用户未获许可,则回复为403(而不是401)"
-      },
-      "2.8.0": {
-        "en": "ported to `@iobroker/webserver`",
-        "de": "an `@iobroker/webserver `",
-        "ru": "в порту `@iobroker/webserver \"",
-        "pt": "portado para `@iobroker/webserver \"",
-        "nl": "geporteerd naar .@iobroker/webserver wat",
-        "fr": "porté à `@iobroker/webserver \"",
-        "it": "inviato a `@iobroker/webserver #",
-        "es": "portada a `@iobroker/webserver `",
-        "pl": "wysłany do '@ iobroker / webserver'",
-        "uk": "сайт: www.iobroker.com й",
-        "zh-cn": "移植到 xqio 经纪人/网络服务器 `"
       }
     },
     "titleLang": {
