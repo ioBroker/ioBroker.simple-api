@@ -48,7 +48,6 @@
     "@types/cookie-parser": "^1.4.10",
     "@types/express": "^5.0.6",
     "@types/node": "^22.20.5",
-    "axios": "^1.21.0",
     "typescript": "~6.0.3"
   },
   "bugs": {
@@ -63,9 +62,10 @@
     "LICENSE"
   ],
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha --exit",
+    "test": "npm run test:package && npm run test:integration",
     "test:package": "node node_modules/mocha/bin/mocha test/testPackageFiles.js --exit",
-    "test:integration": "node node_modules/mocha/bin/mocha test/testApi.js test/testApiAsLimitedUser.js test/testApiAsUser.js test/testApiAsUserNoRights.js test/testSsl.js --exit",
+    "test:integration": "node node_modules/mocha/bin/mocha test/integration.js --exit && npm run test:api",
+    "test:api": "node node_modules/mocha/bin/mocha test/testApi.js test/testApiAsLimitedUser.js test/testApiAsUser.js test/testApiAsUserNoRights.js test/testSsl.js --exit",
     "check": "tsc --noEmit",
     "build": "tsc -p tsconfig.build.json && node tasks",
     "lint": "eslint -c eslint.config.mjs",
