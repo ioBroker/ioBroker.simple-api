@@ -2,7 +2,7 @@
 /* jshint strict: false */
 /* jslint node: true */
 /* jshint expr: true*/
-const expect = require('chai').expect;
+const assert = require('node:assert');
 const setup = require('@iobroker/legacy-testing');
 const axios = require('axios');
 
@@ -100,7 +100,7 @@ describe('Test RESTful API', function () {
     it('Test adapter: Check if adapter started and create datapoint', done => {
         checkConnectionOfAdapter(res => {
             res && console.log(res);
-            expect(res).not.to.be.equal('Cannot check connection');
+            assert.notStrictEqual(res, 'Cannot check connection');
             objects.setObject(
                 'javascript.0.test-string',
                 {
@@ -114,9 +114,9 @@ describe('Test RESTful API', function () {
                     type: 'state',
                 },
                 err => {
-                    expect(err).to.be.null;
+                    assert.strictEqual(err, null);
                     states.setState('javascript.0.test-string', '', err => {
-                        expect(err).to.be.null;
+                        assert.strictEqual(err, null);
                         objects.setObject(
                             'javascript.0.test-number',
                             {
@@ -130,9 +130,9 @@ describe('Test RESTful API', function () {
                                 type: 'state',
                             },
                             err => {
-                                expect(err).to.be.null;
+                                assert.strictEqual(err, null);
                                 states.setState('javascript.0.test-number', 0, err => {
-                                    expect(err).to.be.null;
+                                    assert.strictEqual(err, null);
                                     done();
                                 });
                             },
@@ -149,17 +149,17 @@ describe('Test RESTful API', function () {
             .then(response => {
                 console.log(`get/system.adapter.simple-api.0.alive => ${response.data}`);
                 const obj = response.data;
-                expect(obj).to.be.ok;
-                expect(obj.val).to.be.true;
-                expect(obj.ack).to.be.true;
-                expect(obj.ts).to.be.ok;
-                expect(obj.type).to.equal('state');
-                expect(obj._id).to.equal('system.adapter.simple-api.0.alive');
-                expect(obj.common).to.be.ok;
-                expect(obj.native).to.be.ok;
-                expect(obj.common.name).to.equal('simple-api.0 alive');
-                expect(obj.common.role).to.equal('indicator.state');
-                expect(response.status).to.equal(200);
+                assert.ok(obj);
+                assert.strictEqual(obj.val, true);
+                assert.strictEqual(obj.ack, true);
+                assert.ok(obj.ts);
+                assert.strictEqual(obj.type, 'state');
+                assert.strictEqual(obj._id, 'system.adapter.simple-api.0.alive');
+                assert.ok(obj.common);
+                assert.ok(obj.native);
+                assert.strictEqual(obj.common.name, 'simple-api.0 alive');
+                assert.strictEqual(obj.common.role, 'indicator.state');
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {
@@ -170,13 +170,17 @@ describe('Test RESTful API', function () {
 
     it('Test RESTful API: get - must return error', done => {
         axios
-            .get('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive%23test', { validateStatus: false, responseType: 'text' })
+            .get('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive%23test', {
+                validateStatus: false,
+                responseType: 'text',
+            })
             .then(response => {
                 console.log(`get/system.adapter.simple-api.0.alive%23test => ${response.data}`);
-                expect(response.data).to.be.equal(
+                assert.strictEqual(
+                    response.data,
                     '{"error":"datapoint \\"system.adapter.simple-api.0.alive#test\\" not found"}',
                 );
-                expect(response.status).to.equal(404);
+                assert.strictEqual(response.status, 404);
                 done();
             })
             .catch(error => {
@@ -187,13 +191,17 @@ describe('Test RESTful API', function () {
 
     it('Test RESTful API: get - must return error 2', done => {
         axios
-            .get('http://127.0.0.1:18183/get/system.adapter.simple-api.0.%23alive%23test', { validateStatus: false, responseType: 'text' })
+            .get('http://127.0.0.1:18183/get/system.adapter.simple-api.0.%23alive%23test', {
+                validateStatus: false,
+                responseType: 'text',
+            })
             .then(response => {
                 console.log(`get/system.adapter.simple-api.0.alive#%23test => ${response.data}`);
-                expect(response.data).to.be.equal(
+                assert.strictEqual(
+                    response.data,
                     '{"error":"datapoint \\"system.adapter.simple-api.0.#alive#test\\" not found"}',
                 );
-                expect(response.status).to.equal(404);
+                assert.strictEqual(response.status, 404);
                 done();
             })
             .catch(error => {
@@ -207,8 +215,8 @@ describe('Test RESTful API', function () {
             .get('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', { responseType: 'text' })
             .then(response => {
                 console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${response.data}`);
-                expect(response.data).equal('true');
-                expect(response.status).to.equal(200);
+                assert.strictEqual(response.data, 'true');
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {
@@ -223,22 +231,24 @@ describe('Test RESTful API', function () {
             .then(response => {
                 console.log(`set/system.adapter.simple-api.0.alive?val=false => ${response.data}`);
                 const obj = response.data;
-                expect(obj).to.be.ok;
-                expect(obj.val).to.be.false;
-                expect(obj.id).to.equal('system.adapter.simple-api.0.alive');
-                expect(response.status).to.equal(200);
-                return axios.get('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', { responseType: 'text' });
+                assert.ok(obj);
+                assert.strictEqual(obj.val, false);
+                assert.strictEqual(obj.id, 'system.adapter.simple-api.0.alive');
+                assert.strictEqual(response.status, 200);
+                return axios.get('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', {
+                    responseType: 'text',
+                });
             })
             .then(response => {
                 console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${response.data}`);
-                expect(response.data).equal('false');
-                expect(response.status).to.equal(200);
+                assert.strictEqual(response.data, 'false');
+                assert.strictEqual(response.status, 200);
                 return axios.get('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive');
             })
             .then(response => {
                 console.log(`get/system.adapter.simple-api.0.alive => ${response.data}`);
-                expect(response.data.val).equal(false);
-                expect(response.status).to.equal(200);
+                assert.strictEqual(response.data.val, false);
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {
@@ -253,22 +263,24 @@ describe('Test RESTful API', function () {
             .then(response => {
                 console.log(`set/javascript.0.test-string?val=19,1-bla => ${response.data}`);
                 const obj = response.data;
-                expect(obj).to.be.ok;
-                expect(obj.val).equal('19,1-bla');
-                expect(obj.id).to.equal('javascript.0.test-string');
-                expect(response.status).to.equal(200);
-                return axios.get('http://127.0.0.1:18183/getPlainValue/javascript.0.test-string', { responseType: 'text' });
+                assert.ok(obj);
+                assert.strictEqual(obj.val, '19,1-bla');
+                assert.strictEqual(obj.id, 'javascript.0.test-string');
+                assert.strictEqual(response.status, 200);
+                return axios.get('http://127.0.0.1:18183/getPlainValue/javascript.0.test-string', {
+                    responseType: 'text',
+                });
             })
             .then(response => {
                 console.log(`getPlainValue/javascript.0.test-string => ${response.data}`);
-                expect(response.data).equal('"19,1-bla"');
-                expect(response.status).to.equal(200);
+                assert.strictEqual(response.data, '"19,1-bla"');
+                assert.strictEqual(response.status, 200);
                 return axios.get('http://127.0.0.1:18183/get/javascript.0.test-string');
             })
             .then(response => {
                 console.log(`get/javascript.0.test-string => ${response.data}`);
-                expect(response.data.val).equal('19,1-bla');
-                expect(response.status).to.equal(200);
+                assert.strictEqual(response.data.val, '19,1-bla');
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {
@@ -283,22 +295,24 @@ describe('Test RESTful API', function () {
             .then(response => {
                 console.log(`set/javascript.0.test-string?val=bla%20fasel%2efoo => ${response.data}`);
                 const obj = response.data;
-                expect(obj).to.be.ok;
-                expect(obj.val).equal('bla&fasel.foo=hummer hey');
-                expect(obj.id).to.equal('javascript.0.test-string');
-                expect(response.status).to.equal(200);
-                return axios.get('http://127.0.0.1:18183/getPlainValue/javascript.0.test-string', { responseType: 'text' });
+                assert.ok(obj);
+                assert.strictEqual(obj.val, 'bla&fasel.foo=hummer hey');
+                assert.strictEqual(obj.id, 'javascript.0.test-string');
+                assert.strictEqual(response.status, 200);
+                return axios.get('http://127.0.0.1:18183/getPlainValue/javascript.0.test-string', {
+                    responseType: 'text',
+                });
             })
             .then(response => {
                 console.log(`getPlainValue/javascript.0.test-string => ${response.data}`);
-                expect(response.data).equal('"bla&fasel.foo=hummer hey"');
-                expect(response.status).to.equal(200);
+                assert.strictEqual(response.data, '"bla&fasel.foo=hummer hey"');
+                assert.strictEqual(response.status, 200);
                 return axios.get('http://127.0.0.1:18183/get/javascript.0.test-string');
             })
             .then(response => {
                 console.log(`get/javascript.0.test-string => ${response.data}`);
-                expect(response.data.val).equal('bla&fasel.foo=hummer hey');
-                expect(response.status).to.equal(200);
+                assert.strictEqual(response.data.val, 'bla&fasel.foo=hummer hey');
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {
@@ -313,17 +327,19 @@ describe('Test RESTful API', function () {
             .then(response => {
                 console.log(`set/system.adapter.simple-api.0.alive?val=true => ${response.data}`);
                 const obj = response.data;
-                expect(obj).to.be.ok;
-                expect(obj.val).to.be.true;
-                expect(typeof obj.val).to.be.equal('boolean');
-                expect(obj.id).to.equal('system.adapter.simple-api.0.alive');
-                expect(response.status).to.equal(200);
-                return axios.get('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', { responseType: 'text' });
+                assert.ok(obj);
+                assert.strictEqual(obj.val, true);
+                assert.strictEqual(typeof obj.val, 'boolean');
+                assert.strictEqual(obj.id, 'system.adapter.simple-api.0.alive');
+                assert.strictEqual(response.status, 200);
+                return axios.get('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', {
+                    responseType: 'text',
+                });
             })
             .then(response => {
                 console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${response.data}`);
-                expect(response.data).equal('true');
-                expect(response.status).to.equal(200);
+                assert.strictEqual(response.data, 'true');
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {
@@ -338,19 +354,19 @@ describe('Test RESTful API', function () {
             .then(response => {
                 console.log(`set/system.adapter.simple-api.0.alive?val=true => ${response.data}`);
                 const obj = response.data;
-                expect(obj).to.be.ok;
-                expect(obj.val).to.be.true;
-                expect(typeof obj.val).to.be.equal('boolean');
-                expect(obj.id).to.equal('system.adapter.simple-api.0.alive');
-                expect(response.status).to.equal(200);
+                assert.ok(obj);
+                assert.strictEqual(obj.val, true);
+                assert.strictEqual(typeof obj.val, 'boolean');
+                assert.strictEqual(obj.id, 'system.adapter.simple-api.0.alive');
+                assert.strictEqual(response.status, 200);
                 return axios.get('http://127.0.0.1:18183/get/system.adapter.simple-api.0.alive');
             })
             .then(response => {
                 console.log(`get/system.adapter.simple-api.0.alive => ${response.data}`);
                 const body = response.data;
-                expect(body.val).equal(true);
-                expect(body.ack).equal(true);
-                expect(response.status).to.equal(200);
+                assert.strictEqual(body.val, true);
+                assert.strictEqual(body.ack, true);
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {
@@ -370,14 +386,14 @@ describe('Test RESTful API', function () {
             await new Promise(resolve => setTimeout(resolve, 100));
             state = await getTestState(TEST_WAIT_ID);
         }
-        expect(state.val).to.equal(5);
+        assert.strictEqual(state.val, 5);
         await new Promise(resolve => states.setState(TEST_WAIT_ID, { val: 5, ack: true }, () => resolve()));
 
         const response = await request;
         console.log(`set/${TEST_WAIT_ID}?val=5&wait=5000 => ${JSON.stringify(response.data)}`);
-        expect(response.status).to.equal(200);
-        expect(response.data.val).to.equal(5);
-        expect(response.data.ack).to.be.true;
+        assert.strictEqual(response.status, 200);
+        assert.strictEqual(response.data.val, 5);
+        assert.strictEqual(response.data.ack, true);
     });
 
     it('Test RESTful API: set - must return null if the value is not acknowledged in time', async function () {
@@ -385,9 +401,9 @@ describe('Test RESTful API', function () {
         const start = Date.now();
         const response = await axios.get(`http://127.0.0.1:18183/set/${TEST_WAIT_ID}?val=6&wait=500`);
         console.log(`set/${TEST_WAIT_ID}?val=6&wait=500 => ${JSON.stringify(response.data)}`);
-        expect(response.status).to.equal(200);
-        expect(response.data).to.equal(null);
-        expect(Date.now() - start).to.be.at.least(450);
+        assert.strictEqual(response.status, 200);
+        assert.strictEqual(response.data, null);
+        assert.ok(Date.now() - start >= 450);
     });
 
     it('Test RESTful API: toggle - must toggle boolean value to false', done => {
@@ -396,17 +412,19 @@ describe('Test RESTful API', function () {
             .then(response => {
                 console.log(`toggle/system.adapter.simple-api.0.alive => ${response.data}`);
                 const obj = response.data;
-                expect(obj).to.be.ok;
-                expect(obj.val).to.be.false;
-                expect(typeof obj.val).to.be.equal('boolean');
-                expect(obj.id).to.equal('system.adapter.simple-api.0.alive');
-                expect(response.status).to.equal(200);
-                return axios.get('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', { responseType: 'text' });
+                assert.ok(obj);
+                assert.strictEqual(obj.val, false);
+                assert.strictEqual(typeof obj.val, 'boolean');
+                assert.strictEqual(obj.id, 'system.adapter.simple-api.0.alive');
+                assert.strictEqual(response.status, 200);
+                return axios.get('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', {
+                    responseType: 'text',
+                });
             })
             .then(response => {
                 console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${response.data}`);
-                expect(response.data).equal('false');
-                expect(response.status).to.equal(200);
+                assert.strictEqual(response.data, 'false');
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {
@@ -421,16 +439,18 @@ describe('Test RESTful API', function () {
             .then(response => {
                 console.log(`toggle/system.adapter.simple-api.0.alive => ${response.data}`);
                 const obj = response.data;
-                expect(obj).to.be.ok;
-                expect(obj.val).to.be.true;
-                expect(obj.id).to.equal('system.adapter.simple-api.0.alive');
-                expect(response.status).to.equal(200);
-                return axios.get('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', { responseType: 'text' });
+                assert.ok(obj);
+                assert.strictEqual(obj.val, true);
+                assert.strictEqual(obj.id, 'system.adapter.simple-api.0.alive');
+                assert.strictEqual(response.status, 200);
+                return axios.get('http://127.0.0.1:18183/getPlainValue/system.adapter.simple-api.0.alive', {
+                    responseType: 'text',
+                });
             })
             .then(response => {
                 console.log(`getPlainValue/system.adapter.simple-api.0.alive => ${response.data}`);
-                expect(response.data).equal('true');
-                expect(response.status).to.equal(200);
+                assert.strictEqual(response.data, 'true');
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {
@@ -445,17 +465,17 @@ describe('Test RESTful API', function () {
             .then(response => {
                 console.log(`toggle/${TEST_STATE_ID} => ${response.data}`);
                 const obj = response.data;
-                expect(obj).to.be.ok;
-                expect(obj.val).to.be.equal(100);
-                expect(typeof obj.val).to.be.equal('number');
-                expect(obj.id).to.equal(TEST_STATE_ID);
-                expect(response.status).to.equal(200);
+                assert.ok(obj);
+                assert.strictEqual(obj.val, 100);
+                assert.strictEqual(typeof obj.val, 'number');
+                assert.strictEqual(obj.id, TEST_STATE_ID);
+                assert.strictEqual(response.status, 200);
                 return axios.get(`http://127.0.0.1:18183/getPlainValue/${TEST_STATE_ID}`, { responseType: 'text' });
             })
             .then(response => {
                 console.log(`getPlainValue/${TEST_STATE_ID} => ${response.data}`);
-                expect(response.data).equal('100');
-                expect(response.status).to.equal(200);
+                assert.strictEqual(response.data, '100');
+                assert.strictEqual(response.status, 200);
                 return axios.get(`http://127.0.0.1:18183/set/${TEST_STATE_ID}?val=49`);
             })
             .then(response => {
@@ -465,16 +485,16 @@ describe('Test RESTful API', function () {
             .then(response => {
                 console.log(`toggle/${TEST_STATE_ID} => ${response.data}`);
                 const obj = response.data;
-                expect(obj).to.be.ok;
-                expect(obj.val).to.be.equal(51);
-                expect(obj.id).to.equal(TEST_STATE_ID);
-                expect(response.status).to.equal(200);
+                assert.ok(obj);
+                assert.strictEqual(obj.val, 51);
+                assert.strictEqual(obj.id, TEST_STATE_ID);
+                assert.strictEqual(response.status, 200);
                 return axios.get(`http://127.0.0.1:18183/getPlainValue/${TEST_STATE_ID}`, { responseType: 'text' });
             })
             .then(response => {
                 console.log(`getPlainValue/${TEST_STATE_ID} => ${response.data}`);
-                expect(response.data).equal('51');
-                expect(response.status).to.equal(200);
+                assert.strictEqual(response.data, '51');
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {
@@ -489,20 +509,20 @@ describe('Test RESTful API', function () {
             .then(response => {
                 console.log(`setBulk/?${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false => ${response.data}`);
                 const obj = response.data;
-                expect(obj).to.be.ok;
-                expect(obj[0].val).to.be.equal(50);
-                expect(obj[0].id).to.equal(TEST_STATE_ID);
-                expect(obj[1].val).to.be.equal(false);
-                expect(obj[1].id).to.equal('system.adapter.simple-api.0.alive');
-                expect(response.status).to.equal(200);
+                assert.ok(obj);
+                assert.strictEqual(obj[0].val, 50);
+                assert.strictEqual(obj[0].id, TEST_STATE_ID);
+                assert.strictEqual(obj[1].val, false);
+                assert.strictEqual(obj[1].id, 'system.adapter.simple-api.0.alive');
+                assert.strictEqual(response.status, 200);
                 return axios.get(`http://127.0.0.1:18183/getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive`);
             })
             .then(response => {
                 console.log(`getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive => ${response.data}`);
                 const obj = response.data;
-                expect(obj[0].val).equal(50);
-                expect(obj[1].val).equal(false);
-                expect(response.status).to.equal(200);
+                assert.strictEqual(obj[0].val, 50);
+                assert.strictEqual(obj[1].val, false);
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {
@@ -515,8 +535,8 @@ describe('Test RESTful API', function () {
         axios.get('http://127.0.0.1:18183/objects?pattern=system.adapter.*').then(response => {
             console.log(`objects?pattern=system.adapter.* => ${response.data}`);
             const obj = response.data;
-            expect(obj['system.adapter.simple-api.0.alive']._id).to.be.ok;
-            expect(response.status).to.equal(200);
+            assert.ok(obj['system.adapter.simple-api.0.alive']._id);
+            assert.strictEqual(response.status, 200);
             done();
         });
     });
@@ -527,8 +547,8 @@ describe('Test RESTful API', function () {
             .then(response => {
                 console.log(`objects?pattern=system.adapter.* => ${response.data}`);
                 const obj = response.data;
-                expect(obj['system.adapter.simple-api.0']._id).to.be.ok;
-                expect(response.status).to.equal(200);
+                assert.ok(obj['system.adapter.simple-api.0']._id);
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {
@@ -543,8 +563,8 @@ describe('Test RESTful API', function () {
             .then(response => {
                 console.log(`states?pattern=system.adapter.* => ${response.data}`);
                 const states = response.data;
-                expect(states['system.adapter.simple-api.0.uptime'].val).to.be.least(0);
-                expect(response.status).to.equal(200);
+                assert.ok(states['system.adapter.simple-api.0.uptime'].val >= 0);
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {
@@ -564,14 +584,14 @@ describe('Test RESTful API', function () {
                     `setBulk/?${TEST_STATE_ID}=50&system.adapter.simple-api.0.alive=false&javascript.0.test-string=bla%26fasel%2efoo%3Dhummer+hey => ${JSON.stringify(response.data)}`,
                 );
                 const obj = response.data;
-                expect(obj).to.be.ok;
-                expect(obj[0].val).to.be.equal(50);
-                expect(obj[0].id).to.equal(TEST_STATE_ID);
-                expect(obj[1].val).to.be.equal(false);
-                expect(obj[1].id).to.equal('system.adapter.simple-api.0.alive');
-                expect(obj[2].val).to.be.equal('bla&fasel.foo=hummer hey');
-                expect(obj[2].id).to.equal('javascript.0.test-string');
-                expect(response.status).to.equal(200);
+                assert.ok(obj);
+                assert.strictEqual(obj[0].val, 50);
+                assert.strictEqual(obj[0].id, TEST_STATE_ID);
+                assert.strictEqual(obj[1].val, false);
+                assert.strictEqual(obj[1].id, 'system.adapter.simple-api.0.alive');
+                assert.strictEqual(obj[2].val, 'bla&fasel.foo=hummer hey');
+                assert.strictEqual(obj[2].id, 'javascript.0.test-string');
+                assert.strictEqual(response.status, 200);
 
                 return axios.get(
                     `http://127.0.0.1:18183/getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive,javascript.0.test-string`,
@@ -582,13 +602,13 @@ describe('Test RESTful API', function () {
                     `getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive,javascript.0.test-string => ${response.data}`,
                 );
                 const obj = response.data;
-                expect(obj[0].val).equal(50);
-                expect(obj[0].ack).equal(true);
-                expect(obj[1].val).equal(false);
-                expect(obj[1].ack).equal(true);
-                expect(obj[2].val).equal('bla&fasel.foo=hummer hey');
-                expect(obj[2].ack).equal(true);
-                expect(response.status).to.equal(200);
+                assert.strictEqual(obj[0].val, 50);
+                assert.strictEqual(obj[0].ack, true);
+                assert.strictEqual(obj[1].val, false);
+                assert.strictEqual(obj[1].ack, true);
+                assert.strictEqual(obj[2].val, 'bla&fasel.foo=hummer hey');
+                assert.strictEqual(obj[2].ack, true);
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {
@@ -605,21 +625,21 @@ describe('Test RESTful API', function () {
                     `setBulk/?${TEST_STATE_ID}=51&system.adapter.simple-api.0.alive=false => ${JSON.stringify(response.data)}`,
                 );
                 const obj = response.data;
-                expect(obj).to.be.ok;
-                expect(obj[0].val).to.be.equal(51);
-                expect(obj[0].id).to.equal(TEST_STATE_ID);
-                expect(obj[1].val).to.be.equal(false);
-                expect(obj[1].id).to.equal('system.adapter.simple-api.0.alive');
-                expect(response.status).to.equal(200);
+                assert.ok(obj);
+                assert.strictEqual(obj[0].val, 51);
+                assert.strictEqual(obj[0].id, TEST_STATE_ID);
+                assert.strictEqual(obj[1].val, false);
+                assert.strictEqual(obj[1].id, 'system.adapter.simple-api.0.alive');
+                assert.strictEqual(response.status, 200);
 
                 return axios.get(`http://127.0.0.1:18183/getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive`);
             })
             .then(response => {
                 console.log(`getBulk/${TEST_STATE_ID},system.adapter.simple-api.0.alive => ${response.data}`);
                 const obj = response.data;
-                expect(obj[0].val).equal(51);
-                expect(obj[1].val).equal(false);
-                expect(response.status).to.equal(200);
+                assert.strictEqual(obj[0].val, 51);
+                assert.strictEqual(obj[1].val, false);
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {
@@ -634,18 +654,18 @@ describe('Test RESTful API', function () {
             .then(response => {
                 console.log(`setValueFromBody/?${TEST_STATE_ID} => ${JSON.stringify(response.data)}`);
                 const obj = response.data;
-                expect(obj).to.be.ok;
-                expect(obj[0].val).to.be.equal(55);
-                expect(obj[0].id).to.equal(TEST_STATE_ID);
-                expect(response.status).to.equal(200);
+                assert.ok(obj);
+                assert.strictEqual(obj[0].val, 55);
+                assert.strictEqual(obj[0].id, TEST_STATE_ID);
+                assert.strictEqual(response.status, 200);
 
                 return axios.get(`http://127.0.0.1:18183/getBulk/${TEST_STATE_ID}`);
             })
             .then(response => {
                 console.log(`getBulk/${TEST_STATE_ID} => ${response.data}`);
                 const obj = response.data;
-                expect(obj[0].val).equal(55);
-                expect(response.status).to.equal(200);
+                assert.strictEqual(obj[0].val, 55);
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {

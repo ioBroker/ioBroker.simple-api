@@ -1,4 +1,4 @@
-const expect = require('chai').expect;
+const assert = require('node:assert');
 const setup = require('@iobroker/legacy-testing');
 const axios = require('axios');
 const { Agent } = require('node:https');
@@ -105,7 +105,7 @@ describe('Test RESTful API SSL', function () {
                 console.log(res);
             }
 
-            expect(res).not.to.be.equal('Cannot check connection');
+            assert.notStrictEqual(res, 'Cannot check connection');
 
             objects.setObject(
                 'javascript.0.test-boolean',
@@ -120,9 +120,9 @@ describe('Test RESTful API SSL', function () {
                     type: 'state',
                 },
                 err => {
-                    expect(err).to.be.null;
+                    assert.strictEqual(err, null);
                     states.setState('javascript.0.test-boolean', true, err => {
-                        expect(err).to.be.null;
+                        assert.strictEqual(err, null);
                         done();
                     });
                 },
@@ -138,17 +138,17 @@ describe('Test RESTful API SSL', function () {
             .then(response => {
                 console.log(`get/system.adapter.simple-api.0.alive => ${JSON.stringify(response.data)}`);
                 const obj = response.data;
-                expect(obj).to.be.ok;
-                expect(obj.val).to.be.true;
-                expect(obj.ack).to.be.true;
-                expect(obj.ts).to.be.ok;
-                expect(obj.type).to.equal('state');
-                expect(obj._id).to.equal('system.adapter.simple-api.0.alive');
-                expect(obj.common).to.be.ok;
-                expect(obj.native).to.be.ok;
-                expect(obj.common.name).to.equal('simple-api.0 alive');
-                expect(obj.common.role).to.equal('indicator.state');
-                expect(response.status).to.equal(200);
+                assert.ok(obj);
+                assert.strictEqual(obj.val, true);
+                assert.strictEqual(obj.ack, true);
+                assert.ok(obj.ts);
+                assert.strictEqual(obj.type, 'state');
+                assert.strictEqual(obj._id, 'system.adapter.simple-api.0.alive');
+                assert.ok(obj.common);
+                assert.ok(obj.native);
+                assert.strictEqual(obj.common.name, 'simple-api.0 alive');
+                assert.strictEqual(obj.common.role, 'indicator.state');
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {
@@ -169,17 +169,17 @@ describe('Test RESTful API SSL', function () {
             .then(response => {
                 console.log(`get/system.adapter.simple-api.0.alive => ${JSON.stringify(response.data)}`);
                 const obj = response.data;
-                expect(obj).to.be.ok;
-                expect(obj.val).to.be.true;
-                expect(obj.ack).to.be.true;
-                expect(obj.ts).to.be.ok;
-                expect(obj.type).to.equal('state');
-                expect(obj._id).to.equal('system.adapter.simple-api.0.alive');
-                expect(obj.common).to.be.ok;
-                expect(obj.native).to.be.ok;
-                expect(obj.common.name).to.equal('simple-api.0 alive');
-                expect(obj.common.role).to.equal('indicator.state');
-                expect(response.status).to.equal(200);
+                assert.ok(obj);
+                assert.strictEqual(obj.val, true);
+                assert.strictEqual(obj.ack, true);
+                assert.ok(obj.ts);
+                assert.strictEqual(obj.type, 'state');
+                assert.strictEqual(obj._id, 'system.adapter.simple-api.0.alive');
+                assert.ok(obj.common);
+                assert.ok(obj.native);
+                assert.strictEqual(obj.common.name, 'simple-api.0 alive');
+                assert.strictEqual(obj.common.role, 'indicator.state');
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {
@@ -196,7 +196,7 @@ describe('Test RESTful API SSL', function () {
             })
             .then(response => {
                 console.log(`get/system.adapter.simple-api.0.alive => ${JSON.stringify(response.data)}`);
-                expect(response.status).to.be.equal(401);
+                assert.strictEqual(response.status, 401);
                 done();
             })
             .catch(error => {
@@ -210,7 +210,7 @@ describe('Test RESTful API SSL', function () {
             .get('https://localhost:18183/get/system.adapter.simple-api.0.alive', { validateStatus: false, httpsAgent })
             .then(response => {
                 console.log(`get/system.adapter.simple-api.0.alive => ${JSON.stringify(response.data)}`);
-                expect(response.status).to.be.equal(401);
+                assert.strictEqual(response.status, 401);
                 done();
             })
             .catch(error => {
@@ -229,12 +229,12 @@ describe('Test RESTful API SSL', function () {
             .then(response => {
                 console.log(`setBulk/?${TEST_STATE_ID}=50&javascript.0.test-boolean=true => ${response.data}`);
                 const obj = JSON.parse(response.data);
-                expect(obj).to.be.ok;
-                expect(obj[0].val).to.be.equal(50);
-                expect(obj[0].id).to.equal(TEST_STATE_ID);
-                expect(obj[1].val).to.be.equal(true);
-                expect(obj[1].id).to.equal('javascript.0.test-boolean');
-                expect(response.status).to.equal(200);
+                assert.ok(obj);
+                assert.strictEqual(obj[0].val, 50);
+                assert.strictEqual(obj[0].id, TEST_STATE_ID);
+                assert.strictEqual(obj[1].val, true);
+                assert.strictEqual(obj[1].id, 'javascript.0.test-boolean');
+                assert.strictEqual(response.status, 200);
 
                 return axios.get(
                     `https://localhost:18183/getBulk/${TEST_STATE_ID},javascript.0.test-boolean?user=admin&pass=iobroker`,
@@ -248,9 +248,9 @@ describe('Test RESTful API SSL', function () {
             .then(response => {
                 console.log(`getBulk/${TEST_STATE_ID},javascript.0.test-boolean => ${response.data}`);
                 const obj = JSON.parse(response.data);
-                expect(obj[0].val).equal(50);
-                expect(obj[1].val).equal(true);
-                expect(response.status).to.equal(200);
+                assert.strictEqual(obj[0].val, 50);
+                assert.strictEqual(obj[1].val, true);
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {
@@ -269,10 +269,10 @@ describe('Test RESTful API SSL', function () {
             .then(response => {
                 console.log(`setValueFromBody/?${TEST_STATE_ID} => ${response.data}`);
                 const obj = JSON.parse(response.data);
-                expect(obj).to.be.ok;
-                expect(obj[0].val).to.be.equal(55);
-                expect(obj[0].id).to.equal(TEST_STATE_ID);
-                expect(response.status).to.equal(200);
+                assert.ok(obj);
+                assert.strictEqual(obj[0].val, 55);
+                assert.strictEqual(obj[0].id, TEST_STATE_ID);
+                assert.strictEqual(response.status, 200);
 
                 return axios.get(`https://localhost:18183/getBulk/${TEST_STATE_ID}?user=admin&pass=iobroker`, {
                     validateStatus: false,
@@ -283,8 +283,8 @@ describe('Test RESTful API SSL', function () {
             .then(response => {
                 console.log(`getBulk/${TEST_STATE_ID} => ${response.data}`);
                 const obj = JSON.parse(response.data);
-                expect(obj[0].val).equal(55);
-                expect(response.status).to.equal(200);
+                assert.strictEqual(obj[0].val, 55);
+                assert.strictEqual(response.status, 200);
                 done();
             })
             .catch(error => {
