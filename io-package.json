@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "simple-api",
-    "version": "3.0.7",
+    "version": "4.0.0",
     "news": {
+      "4.0.0": {
+        "en": "Adapter requires node.js >= 22 now.\nFixed `set` and `toggle` with `wait`: the request got no answer and the state was never unsubscribed. Now it answers with the acknowledged state, or `null` if the driver does not acknowledge in time, as documented",
+        "de": "Adapter benötigt jetzt node.js >= 22.\nFix „Set“ und „Toggle“ mit „wait“: Die Anfrage wurde nicht beantwortet und der Staat nie abgemeldet. Jetzt antwortet es mit „bestätigt“ oder „Null“, wenn der Fahrer nicht rechtzeitig quittiert,",
+        "ru": "Теперь для адаптера требуется файл node.js >= 22.\nИсправлены ошибки `set` и `toggle` с помощью `wait`: запрос не получил ответа, а подписка на государство так и не была отменена. Теперь в ответе отображается состояние «Подтверждено» или «нуль», если драйвер не подтвердит это вовремя, как описано в документации",
+        "pt": "O adaptador exige node.js >= 2.\nCorrigidos `set` e `toggle` com `wait`: o pedido não foi atendido e o estado nunca cancelou. Agora responde com o estado confirmado, ou `null` se o driver não reconhecer a tempo, como documentado",
+        "nl": "Voor de adapter is nu node.js >= 22 nodig.\n`set` en `toggle` opgelost met `wait`: het verzoek werd niet beantwoord en de status werd nooit afgemeld. Nu antwoordt het met de erkende status, of met „nul” als de chauffeur dit niet op tijd bevestigt, zoals gedocumenteerd",
+        "fr": "Adapter nécessite node.js >= 22.\nCorrigez « set » et « toggle» avec « wait » : la demande est restée sans réponse et l'État n'a jamais été désabonné. Maintenant, il répond par l'état reconnu, ou « nul » si le conducteur n'accuse pas réception à temps, comme indiqué",
+        "it": "Adapter richiede node.js >= 2 ora.\nRisolti `set` e `toggle` con `wait`: la richiesta non ha avuto risposta e lo stato non è mai stato annullato. Ora risponde con lo stato confermato, o «nullo» se l'autista non lo riconosce in tempo, come documentato",
+        "es": "El adaptador necesita node.js >= 22 ahora.\nSe corrigieron «set» y «alternar» por «esperar»: la solicitud no recibió respuesta y el estado nunca se canceló. Ahora responde con el estado reconocido, o «nulo» si el conductor no lo confirma a tiempo, según lo documentado",
+        "pl": "Adapter wymaga teraz node.js >= 22.\nNaprawiono `set` i `toggle` z `czekaj`: żądanie nie otrzymało odpowiedzi, a stan nigdy nie został wypisany. Teraz odpowiada potwierdzonym stanem lub „null”, jeśli kierowca nie potwierdzi na czas, jak udokumentowano",
+        "uk": "Тепер адаптер вимагає node.js >= 22.\nВиправлено `set` і `switchle` з `wait`: запит не отримав відповіді, а стан ніколи не був скасований. Тепер він відповідає визнаним станом, або «нульовим», якщо водій не визнає вчасно, як це задокументовано",
+        "zh-cn": "适配器现在需要 node.js >= 22。\n修复了 “set” 和 “toggle” 与 “等待” 的问题：请求没有得到答复，状态从未取消订阅。现在，它以已确认状态回答，如果驱动程序未及时确认，则回答 “null”，如文档所示"
+      },
       "3.0.7": {
         "en": "corrected reading of history data",
         "de": "korrigiertes lesen von geschichte-daten",
@@ -79,18 +92,6 @@
         "es": "Prepararse para futuras versiones js-controller",
         "pl": "Prepare for future js-controller version",
         "zh-cn": "今后防污版本的编制"
-      },
-      "2.7.1": {
-        "en": "Check if the port is occupied only on defined interface\nAdded JSON config",
-        "de": "Überprüfen Sie, ob der Port nur auf definierter Schnittstelle besetzt ist\nJSON config",
-        "ru": "Проверьте, занят ли порт только на определенном интерфейсе\nДобавлено JSON config",
-        "pt": "Verifique se a porta está ocupada apenas na interface definida\nAdicionado JSON config",
-        "nl": "Controleer of de haven alleen bezet is op definitieve interface\n_",
-        "fr": "Vérifiez si le port n'est occupé que sur l'interface définie\nAjouté JSON config",
-        "it": "Controllare se la porta è occupata solo su interfaccia definita\nAggiunto JSON config",
-        "es": "Compruebe si el puerto está ocupado sólo en la interfaz definida\nConfiguración JSON",
-        "pl": "Jeśli port jest zajęty tylko na określonym interfejsie\nStrona internetowa JSON",
-        "zh-cn": "如果港口只在界定的界线上被占有,则该港口将被扣押。\n增 编"
       }
     },
     "titleLang": {
