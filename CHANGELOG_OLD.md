@@ -1,4 +1,7 @@
 # Older changes
+## 3.0.7 (2025-06-16)
+* (@GermanBluefox) corrected reading of history data
+
 ## 3.0.6 (2025-03-15)
 * (bluefox) Added support for 'Access-Control-Allow-Origin'
 * (bluefox) Removed letsencrypt information

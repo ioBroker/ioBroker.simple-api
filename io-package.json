@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "simple-api",
-    "version": "4.0.3",
+    "version": "4.0.4",
     "news": {
+      "4.0.4": {
+        "en": "Admin 7.6.20 or newer is required now",
+        "de": "Admin 7.6.20 oder neuer ist nötig",
+        "ru": "Теперь требуется Admin 7.6.20 или новее",
+        "pt": "Requer o Admin 7.6.20 ou superior",
+        "nl": "Admin 7.6.20 of nieuwer is nu vereist",
+        "fr": "Admin 7.6.20 ou plus est requis",
+        "it": "Ora serve Admin 7.6.20 o successivo",
+        "es": "Ahora necesita Admin 7.6.20 o más",
+        "pl": "Administrator 7.6.20 lub nowszy jest teraz wymagany",
+        "uk": "Адміністратор 7.6.20 або новіша версія потрібна зараз",
+        "zh-cn": "现在需要管理员 7.6.20 或更高版本"
+      },
       "4.0.3": {
         "en": "Admin 7.6.17 or newer is required now\nThe adapter does not call `process.exit()` anymore, which would stop the whole host in compact mode\nAdded the missing sizes and the missing translation in the settings dialog",
         "de": "Admin 7.6.17 oder neuer ist nötig\nDer Adapter ruft `process.exit () `nicht mehr auf, was den ganzen Host im Kompaktmodus stoppen würde\nFehlende Größen und Übersetzung im Einstellungsdialog hinzugefügt",
