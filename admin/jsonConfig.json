@@ -14,6 +14,7 @@
                     "sm": 12,
                     "md": 6,
                     "lg": 3,
+                    "xl": 3,
                     "adapter": "web"
                 },
                 "bind": {
@@ -25,7 +26,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 8,
-                    "lg": 5
+                    "lg": 5,
+                    "xl": 5
                 },
                 "port": {
                     "hidden": "!!data.webInstance",
@@ -36,7 +38,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 4,
-                    "lg": 3
+                    "lg": 3,
+                    "xl": 3
                 },
                 "secure": {
                     "hidden": "!!data.webInstance",
@@ -46,7 +49,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 6,
-                    "lg": 2
+                    "lg": 2,
+                    "xl": 2
                 },
                 "certPublic": {
                     "type": "certificate",
@@ -57,7 +61,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 6,
-                    "lg": 2
+                    "lg": 2,
+                    "xl": 2
                 },
                 "certPrivate": {
                     "hidden": "!data.secure || !!data.webInstance",
@@ -68,7 +73,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 6,
-                    "lg": 2
+                    "lg": 2,
+                    "xl": 2
                 },
                 "certChained": {
                     "hidden": "!data.secure || !!data.webInstance",
@@ -78,7 +84,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 6,
-                    "lg": 2
+                    "lg": 2,
+                    "xl": 2
                 },
                 "auth": {
                     "newLine": true,
@@ -97,7 +104,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 6,
-                    "lg": 2
+                    "lg": 2,
+                    "xl": 2
                 },
                 "defaultUser": {
                     "hidden": "!!data.auth || !!data.webInstance",
@@ -106,14 +114,18 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 6,
-                    "lg": 2
+                    "lg": 2,
+                    "xl": 2
                 },
                 "onlyAllowWhenUserIsOwner": {
                     "newLine": true,
                     "type": "checkbox",
                     "label": "Allow only when User is Owner",
                     "xs": 12,
-                    "sm": 12
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12,
+                    "xl": 12
                 },
                 "dataSource": {
                     "newLine": true,
@@ -123,6 +135,7 @@
                     "sm": 12,
                     "md": 6,
                     "lg": 3,
+                    "xl": 3,
                     "adapter": "_dataSources"
                 },
                 "allDatapoints": {
@@ -132,7 +145,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 6,
-                    "lg": 3
+                    "lg": 3,
+                    "xl": 3
                 },
                 "accessControlAllowOrigin": {
                     "type": "text",
@@ -141,7 +155,8 @@
                     "xs": 12,
                     "sm": 12,
                     "md": 6,
-                    "lg": 3
+                    "lg": 3,
+                    "xl": 3
                 }
             }
         }

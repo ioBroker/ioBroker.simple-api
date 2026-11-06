@@ -52,7 +52,7 @@ class SimpleApiAdapter extends adapter_core_1.Adapter {
             console.log('Adapter runs as a part of web service');
             this.log.warn('Adapter runs as a part of web service');
             await this.setState('info.extension', true, true);
-            return this.setForeignState(`system.adapter.${this.namespace}.alive`, false, true, () => this.setTimeout(() => (this.terminate ? this.terminate() : process.exit()), 1000));
+            return this.setForeignState(`system.adapter.${this.namespace}.alive`, false, true, () => this.setTimeout(() => this.terminate(), 1000));
         }
         await this.setState('info.extension', false, true);
         if (this.config.secure) {
@@ -124,16 +124,12 @@ class SimpleApiAdapter extends adapter_core_1.Adapter {
             }
             catch (err) {
                 this.log.error(`Cannot create webserver: ${err}`);
-                this.terminate
-                    ? this.terminate(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION)
-                    : process.exit(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
+                this.terminate(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
                 return;
             }
             if (!this.webServer.server) {
                 this.log.error(`Cannot create webserver`);
-                this.terminate
-                    ? this.terminate(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION)
-                    : process.exit(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
+                this.terminate(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
                 return;
             }
             this.webServer.app.use((req, res) => this.webServer.api?.restApi(req, res));
@@ -141,12 +137,7 @@ class SimpleApiAdapter extends adapter_core_1.Adapter {
         }
         else {
             this.log.error('port missing');
-            if (this.terminate) {
-                this.terminate(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
-            }
-            else {
-                process.exit(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
-            }
+            this.terminate(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
             return;
         }
         if (this.webServer.server) {
@@ -162,20 +153,13 @@ class SimpleApiAdapter extends adapter_core_1.Adapter {
                     this.log.error(`Cannot start server on ${this.config.bind || '0.0.0.0'}:${serverPort}: ${e}`);
                 }
                 if (!serverListening) {
-                    this.terminate
-                        ? this.terminate(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION)
-                        : process.exit(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
+                    this.terminate(adapter_core_1.EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
                 }
             });
             this.getPort(this.config.port, !this.config.bind || this.config.bind === '0.0.0.0' ? undefined : this.config.bind || undefined, port => {
                 if (port !== this.config.port) {
                     this.log.error(`port ${this.config.port} already in use`);
-                    if (this.terminate) {
-                        this.terminate(1);
-                    }
-                    else {
-                        process.exit(1);
-                    }
+                    this.terminate(1);
                     return;
                 }
                 serverPort = port;
@@ -188,12 +172,7 @@ class SimpleApiAdapter extends adapter_core_1.Adapter {
                 }
                 else {
                     this.log.error('server initialization failed');
-                    if (this.terminate) {
-                        this.terminate(1);
-                    }
-                    else {
-                        process.exit(1);
-                    }
+                    this.terminate(1);
                 }
             });
         }

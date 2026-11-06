@@ -629,6 +629,11 @@ This adapter supports the following types of authentication:
 	### **WORK IN PROGRESS**
 -->
 ## Changelog
+### **WORK IN PROGRESS**
+- (@GermanBluefox) Admin 7.6.17 or newer is required now
+- (@GermanBluefox) The adapter does not call `process.exit()` anymore, which would stop the whole host in compact mode
+- (@GermanBluefox) Added the missing sizes and the missing translation in the settings dialog
+
 ### 4.0.2 (2026-11-06)
 - (iobroker-bot) Adapter requires node.js >= 22.19.0 now
 - (@GermanBluefox) Updated packages

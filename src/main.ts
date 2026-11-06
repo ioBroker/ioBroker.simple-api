@@ -59,7 +59,7 @@ export class SimpleApiAdapter extends Adapter {
             this.log.warn('Adapter runs as a part of web service');
             await this.setState('info.extension', true, true);
             return this.setForeignState(`system.adapter.${this.namespace}.alive`, false, true, () =>
-                this.setTimeout(() => (this.terminate ? this.terminate() : process.exit()), 1000),
+                this.setTimeout(() => this.terminate(), 1000),
             );
         }
 
@@ -143,16 +143,12 @@ export class SimpleApiAdapter extends Adapter {
                 }
             } catch (err) {
                 this.log.error(`Cannot create webserver: ${err}`);
-                this.terminate
-                    ? this.terminate(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION)
-                    : process.exit(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
+                this.terminate(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
                 return;
             }
             if (!this.webServer.server) {
                 this.log.error(`Cannot create webserver`);
-                this.terminate
-                    ? this.terminate(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION)
-                    : process.exit(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
+                this.terminate(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
                 return;
             }
 
@@ -161,11 +157,7 @@ export class SimpleApiAdapter extends Adapter {
             this.webServer.server.__server = this.webServer;
         } else {
             this.log.error('port missing');
-            if (this.terminate) {
-                this.terminate(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
-            } else {
-                process.exit(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
-            }
+            this.terminate(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
             return;
         }
 
@@ -184,9 +176,7 @@ export class SimpleApiAdapter extends Adapter {
                     this.log.error(`Cannot start server on ${this.config.bind || '0.0.0.0'}:${serverPort}: ${e}`);
                 }
                 if (!serverListening) {
-                    this.terminate
-                        ? this.terminate(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION)
-                        : process.exit(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
+                    this.terminate(EXIT_CODES.ADAPTER_REQUESTED_TERMINATION);
                 }
             });
 
@@ -196,11 +186,7 @@ export class SimpleApiAdapter extends Adapter {
                 port => {
                     if (port !== this.config.port) {
                         this.log.error(`port ${this.config.port} already in use`);
-                        if (this.terminate) {
-                            this.terminate(1);
-                        } else {
-                            process.exit(1);
-                        }
+                        this.terminate(1);
                         return;
                     }
                     serverPort = port;
@@ -218,11 +204,7 @@ export class SimpleApiAdapter extends Adapter {
                         this.log.info(`http${this.config.secure ? 's' : ''} server listening on port ${port}`);
                     } else {
                         this.log.error('server initialization failed');
-                        if (this.terminate) {
-                            this.terminate(1);
-                        } else {
-                            process.exit(1);
-                        }
+                        this.terminate(1);
                     }
                 },
             );
