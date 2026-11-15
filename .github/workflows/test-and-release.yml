@@ -29,7 +29,7 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - uses: ioBroker/testing-action-check@v1
+            - uses: ioBroker/testing-action-check@v2
               with:
                   node-version: '22.x'
                   # package-lock.json is not in the repository
